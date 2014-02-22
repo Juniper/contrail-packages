@@ -1,0 +1,77 @@
+Source: contrail
+Section: net
+Priority: optional
+Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Build-Depends:
+ debhelper (>= 8.0.0),
+ python-all (>= 2.7),
+ scons (>= 2.1.0),
+ flex,
+ bison,
+ make,
+ vim-common,
+ libexpat-dev,
+ libgettextpo0,
+ libcurl4-openssl-dev,
+ python-dev,
+ autoconf,
+ automake,
+ build-essential,
+ libtool
+Build-Depends-Indep:
+XS-Python-Version: >= 2.7
+
+Package: contrail-analytics
+Architecture: any
+Depends:
+ cassandra,
+ redis-server (>= 2.6.13-1),
+ python-redis,
+ contrail-lib (= ${source:Version}),
+ ${python:Depends}
+Description: The OpenContrail analytics software collects events and flow
+ information from compute-nodes and other OpenContrail components and
+ makes the information available in a time-series database.
+
+Package: contrail-config
+Architecture: all
+Depends:
+ cassandra,
+ redis,
+ python-contrail (= ${source:Version}),
+ ${python:Depends}
+Description: OpenContrail configuration management. OpenContrail is a network
+ virtualization solution that provides an overlay virtual-network to
+ virtual-machines, containers or network namespaces.
+
+Package: contrail-control
+Depends:
+ contrail-lib (= ${source:Version}),
+ ${shlib:Depends}
+Architecture: any
+Description: The OpenContrail control-node is responsible to distribute
+ configuration and routing information to the compute
+ nodes. Control-nodes peers with each other or with external routers in
+ order to exchange routing information via the BGP routing protocol.
+
+Package: contrail-compute
+Depends:
+ contrail-vrouter (= ${source:Version}),
+ contrail-lib (= ${source:Version}),
+ ${shlib:Depends}
+Architecture: any
+Description: OpenContrail compute-node user space agent.
+
+Package: python-contrail
+Architecture: all
+Depends:
+ ${python:Depends}
+Description: The python OpenContrail API library.
+
+Package: contrail-lib
+Architecture: any
+Description: Support libraries used by OpenContrail control and compute nodes.
+
+Package: contrail-vrouter
+Architecture: os-any
+Description: OpenContrail linux kernel module.

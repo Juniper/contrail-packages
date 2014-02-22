@@ -1,0 +1,7 @@
+Format: http://deb.debian.net/deps/dep5
+Upstream-Name: contrail
+Source: http://github.com/Juniper/contrail-controller
+
+Files: *
+Copyright: 2013 Juniper Networks, Inc.
+License: Apache-2

@@ -1,0 +1,3 @@
+usr/bin/collector
+usr/bin/query_engine
+usr/lib/python*/dist-packages/opserver*
