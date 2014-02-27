@@ -39,6 +39,7 @@ Architecture: all
 Depends:
  cassandra,
  redis-server,
+ zookeeper,
  python-redis,
  python-contrail (= ${source:Version}),
  ${python:Depends}
