@@ -38,7 +38,8 @@ Package: contrail-config
 Architecture: all
 Depends:
  cassandra,
- redis,
+ redis-server,
+ python-redis,
  python-contrail (= ${source:Version}),
  ${python:Depends}
 Description: OpenContrail configuration management. OpenContrail is a network
