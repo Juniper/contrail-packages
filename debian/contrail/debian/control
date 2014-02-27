@@ -2,6 +2,7 @@ Source: contrail
 Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Vcs-Git: github.com/Juniper/contrail-controller
 Build-Depends:
  debhelper (>= 8.0.0),
  python-all (>= 2.7),
@@ -73,5 +74,5 @@ Architecture: any
 Description: Support libraries used by OpenContrail control and compute nodes.
 
 Package: contrail-vrouter
-Architecture: os-any
+Architecture: any
 Description: OpenContrail linux kernel module.

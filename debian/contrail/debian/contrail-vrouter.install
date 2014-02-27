@@ -1,0 +1,11 @@
+lib/modules/*/extra/net/vrouter/vrouter.ko
+usr/bin/dropstats
+usr/bin/flow
+usr/bin/mirror
+usr/bin/mpls
+usr/bin/nh
+usr/bin/rt
+usr/bin/vrfstats
+usr/bin/vif
+usr/bin/vxlan
+
