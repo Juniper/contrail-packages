@@ -34,13 +34,21 @@ Description: The OpenContrail analytics software collects events and flow
  information from compute-nodes and other OpenContrail components and
  makes the information available in a time-series database.
 
+#
+# Missing dependencies:
+#  python-pycassa,
+#  python-geventhttpclient,
+#  python-kazoo,
+#  python-stevedore
+#
 Package: contrail-config
 Architecture: all
 Depends:
  cassandra,
  redis-server,
  zookeeper,
- python-redis,
+ python-redis (>= 2.7.1),
+ python-netifaces,
  python-contrail (= ${source:Version}),
  ${python:Depends}
 Description: OpenContrail configuration management. OpenContrail is a network

@@ -1,3 +1,5 @@
+usr/bin/contrail-api
+etc/contrail/contrail-api.conf
 usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
