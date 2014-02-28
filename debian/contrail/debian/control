@@ -39,7 +39,8 @@ Description: The OpenContrail analytics software collects events and flow
 #  python-pycassa,
 #  python-geventhttpclient,
 #  python-kazoo,
-#  python-stevedore
+#  python-stevedore,
+#  python-ncclient
 #
 Package: contrail-config
 Architecture: all
@@ -48,6 +49,7 @@ Depends:
  redis-server,
  zookeeper,
  python-redis (>= 2.7.1),
+ python-requests (>= 2.0.0),
  python-netifaces,
  python-contrail (= ${source:Version}),
  ${python:Depends}

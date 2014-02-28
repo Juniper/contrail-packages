@@ -11,3 +11,8 @@ export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(INSTALL_ROOT)/usr/lib
 
 override_dh_auto_build:
 	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+
+override_dh_installinit:
+	dh_installinit
+	dh_installinit --name=contrail-api
+	dh_installinit --name=contrail-schema
