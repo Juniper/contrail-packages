@@ -40,7 +40,7 @@ Depends: cassandra,
          redis-server (>= 2.6.13-1),
          ${misc:Depends},
          ${python:Depends}
-Description: The OpenContrail analytics software collects events and flow
+Description: OpenContrail analytics software collects events and flow
  information from compute-nodes and other OpenContrail components and
  makes the information available in a time-series database.
 
@@ -61,7 +61,7 @@ Description: OpenContrail configuration management. OpenContrail is a network
 Package: contrail-control
 Depends: contrail-lib (= ${source:Version}), ${misc:Depends}, ${shlib:Depends}
 Architecture: any
-Description: The OpenContrail control-node is responsible to distribute
+Description: OpenContrail control-node is responsible to distribute
  configuration and routing information to the compute
  nodes. Control-nodes peers with each other or with external routers in
  order to exchange routing information via the BGP routing protocol.
@@ -72,19 +72,23 @@ Depends: contrail-lib (= ${source:Version}),
          ${misc:Depends},
          ${shlib:Depends}
 Architecture: any
-Description: OpenContrail compute-node user space agent.
+Description: The package contrail-compute provides the OpenContrail
+ compute-node user space agent.
 
 Package: python-contrail
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}
-Description: The python OpenContrail API library.
+Description: The package python-contrail provides the OpenContrail
+ API library.
 
 Package: contrail-lib
 Architecture: any
-Description: Support libraries used by OpenContrail control and compute nodes.
 Depends: ${misc:Depends}
+Description: The package contrail-lib provides a support libraries used by
+ OpenContrail control and compute nodes.
 
 Package: contrail-vrouter
 Architecture: any
-Description: OpenContrail linux kernel module.
 Depends: ${misc:Depends}
+Description: The package contrail-vrouter provides the OpenContrail
+ linux kernel module.
