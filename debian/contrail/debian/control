@@ -77,6 +77,7 @@ Description: The package contrail-compute provides the OpenContrail
 
 Package: python-contrail
 Architecture: all
+Section: python
 Depends: ${misc:Depends}, ${python:Depends}
 Description: The package python-contrail provides the OpenContrail
  API library.
