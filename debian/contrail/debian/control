@@ -46,10 +46,9 @@ Package: contrail-config
 Architecture: all
 Depends:
  cassandra,
- redis-server,
  zookeeper,
- python-redis (>= 2.7.1),
- python-requests (>= 2.0.0),
+ python-bottle,
+ python-requests (>= 1.1.0),
  python-netifaces,
  python-contrail (= ${source:Version}),
  ${python:Depends}
