@@ -6,7 +6,6 @@ Vcs-Git: github.com/Juniper/contrail-controller
 Build-Depends: autoconf,
                automake,
                bison,
-               build-essential,
                debhelper (>= 8.0.0),
                flex,
                libcurl4-openssl-dev,
