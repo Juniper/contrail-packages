@@ -2,7 +2,12 @@ Source: contrail
 Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
-Vcs-Git: github.com/Juniper/contrail-controller
+Uploaders: Pedro Marques <roque@juniper.net>, Sebastien Badia <seb@sebian.fr>
+Standards-Version: 3.9.5
+Homepage: https://github.com/Juniper/contrail-controller/
+Vcs-Git: git://github.com/Juniper/contrail-controller.git
+Vcs-Browser: https://github.com/Juniper/contrail-controller/
+
 Build-Depends: autoconf,
                automake,
                bison,
