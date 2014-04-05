@@ -16,3 +16,4 @@ override_dh_installinit:
 	dh_installinit
 	dh_installinit --name=contrail-api
 	dh_installinit --name=contrail-schema
+	dh_installinit --name=discovery-server
