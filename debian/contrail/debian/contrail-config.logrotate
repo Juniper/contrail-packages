@@ -1,20 +1,9 @@
-/var/log/contrail/contrail-api.log {
-    daily
-    missingok
-    compress
-    delaycompress
-    notifempty
-}
-
-/var/log/contrail/contrail-discovery.log {
-    daily
-    missingok
-    compress
-    delaycompress
-    notifempty
-}
-
-/var/log/contrail/contrail-schema.log {
+/var/log/contrail/api.log
+/var/log/contrail/discovery.log
+/var/log/contrail/discovery.log
+/var/log/contrail/schema.log
+/var/log/contrail/svc-monitor.log
+{
     daily
     missingok
     compress
