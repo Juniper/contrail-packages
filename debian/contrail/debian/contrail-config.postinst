@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ] || [ "$1" = "reconfigure" ] ; then
+
+  mkdir -p /var/log/opencontrail
+  chown -R opencontrail:adm /var/log/opencontrail
+  chmod 0750 /var/log/opencontrail
+
+fi
+
+#DEBHELPER#
