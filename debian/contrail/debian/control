@@ -2,7 +2,6 @@ Source: contrail
 Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
-Uploaders: Pedro Marques <roque@juniper.net>, Sebastien Badia <seb@sebian.fr>
 Standards-Version: 3.9.5
 Homepage: https://github.com/Juniper/contrail-controller/
 Vcs-Git: git://github.com/Juniper/contrail-controller.git
@@ -24,13 +23,16 @@ Build-Depends: autoconf,
 Build-Depends-Indep:
 XS-Python-Version: >= 2.7
 
-# Missing dependencies:
-#  python-pycassa,
-#  python-geventhttpclient,
-#  python-kazoo,
-#  python-stevedore,
-#  python-ncclient
-
+# Dependencies:
+#  python-pycassa https://github.com/pycassa/pycassa/pull/231
+#  python-thrift http://ftp.de.debian.org/debian/pool/main/p/python-thrift/python-thrift_0.9.0-1_amd64.deb
+#  python-kazoo http://ftp.de.debian.org/debian/pool/main/k/kazoo/python-kazoo_1.3.1-1_all.deb
+#  python-stevedore http://ftp.de.debian.org/debian/pool/main/s/stevedore/python-stevedore_0.14.1-1_all.deb
+#  python-ncclient http://anonscm.debian.org/gitweb/?p=collab-maint/python-ncclient.git
+#  python-lxml http://ftp.de.debian.org/debian/pool/main/l/lxml/python-lxml_3.3.1-1~bpo70+1_amd64.deb
+# Missing:
+#  python-geventhttpclient https://github.com/gwik/geventhttpclient
+#
 Package: contrail-analytics
 Architecture: any
 Depends: cassandra,
