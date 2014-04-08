@@ -2,88 +2,95 @@ Source: contrail
 Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
-Vcs-Git: github.com/Juniper/contrail-controller
-Build-Depends:
- debhelper (>= 8.0.0),
- python-all (>= 2.7),
- scons (>= 2.1.0),
- flex,
- bison,
- make,
- vim-common,
- libexpat-dev,
- libgettextpo0,
- libcurl4-openssl-dev,
- python-dev,
- autoconf,
- automake,
- build-essential,
- libtool
+Standards-Version: 3.9.5
+Homepage: https://github.com/Juniper/contrail-controller/
+Vcs-Git: git://github.com/Juniper/contrail-controller.git
+Vcs-Browser: https://github.com/Juniper/contrail-controller/
+Build-Depends: autoconf,
+               automake,
+               bison,
+               debhelper (>= 8.0.0),
+               flex,
+               libcurl4-openssl-dev,
+               libexpat-dev,
+               libgettextpo0,
+               libtool,
+               make,
+               python-all (>= 2.7),
+               python-dev,
+               scons (>= 2.1.0),
+               vim-common
 Build-Depends-Indep:
 XS-Python-Version: >= 2.7
 
+# Dependencies:
+#  python-pycassa https://github.com/pycassa/pycassa/pull/231
+#  python-thrift http://ftp.de.debian.org/debian/pool/main/p/python-thrift/python-thrift_0.9.0-1_amd64.deb
+#  python-kazoo http://ftp.de.debian.org/debian/pool/main/k/kazoo/python-kazoo_1.3.1-1_all.deb
+#  python-stevedore http://ftp.de.debian.org/debian/pool/main/s/stevedore/python-stevedore_0.14.1-1_all.deb
+#  python-ncclient http://anonscm.debian.org/gitweb/?p=collab-maint/python-ncclient.git
+#  python-lxml http://ftp.de.debian.org/debian/pool/main/l/lxml/python-lxml_3.3.1-1~bpo70+1_amd64.deb
+# Missing:
+#  python-geventhttpclient https://github.com/gwik/geventhttpclient
+#
 Package: contrail-analytics
 Architecture: any
-Depends:
- cassandra,
- redis-server (>= 2.6.13-1),
- python-redis,
- contrail-lib (= ${source:Version}),
- ${python:Depends}
-Description: The OpenContrail analytics software collects events and flow
+Depends: cassandra,
+         contrail-lib (= ${source:Version}),
+         python-redis,
+         redis-server (>= 2.6.13-1),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenContrail analytics software collects events and flow
  information from compute-nodes and other OpenContrail components and
  makes the information available in a time-series database.
 
-#
-# Missing dependencies:
-#  python-pycassa,
-#  python-geventhttpclient,
-#  python-kazoo,
-#  python-stevedore,
-#  python-ncclient
-#
 Package: contrail-config
 Architecture: all
-Depends:
- cassandra,
- zookeeper,
- python-bottle,
- python-requests (>= 1.1.0),
- python-netifaces,
- python-contrail (= ${source:Version}),
- ${python:Depends}
+Depends: cassandra,
+         python-bottle,
+         python-contrail (= ${source:Version}),
+         python-netifaces,
+         python-requests (>= 1.1.0),
+         zookeeper,
+         ${misc:Depends},
+         ${python:Depends}
 Description: OpenContrail configuration management. OpenContrail is a network
  virtualization solution that provides an overlay virtual-network to
  virtual-machines, containers or network namespaces.
 
 Package: contrail-control
-Depends:
- contrail-lib (= ${source:Version}),
- ${shlib:Depends}
+Depends: contrail-lib (= ${source:Version}), ${misc:Depends}, ${shlib:Depends}
 Architecture: any
-Description: The OpenContrail control-node is responsible to distribute
+Description: OpenContrail control-node is responsible to distribute
  configuration and routing information to the compute
  nodes. Control-nodes peers with each other or with external routers in
  order to exchange routing information via the BGP routing protocol.
 
 Package: contrail-compute
-Depends:
- contrail-vrouter (= ${source:Version}),
- contrail-lib (= ${source:Version}),
- ${shlib:Depends}
+Depends: contrail-lib (= ${source:Version}),
+         contrail-vrouter (= ${source:Version}),
+         ${misc:Depends},
+         ${shlib:Depends}
 Architecture: any
-Description: OpenContrail compute-node user space agent.
+Description: The package contrail-compute provides the OpenContrail
+ compute-node user space agent.
 
 Package: python-contrail
 Architecture: all
-Depends:
- ${python:Depends}
-Description: The python OpenContrail API library.
+Section: python
+Depends: ${misc:Depends}, ${python:Depends}
+Description: The package python-contrail provides the OpenContrail
+ API library.
 
 Package: contrail-lib
 Architecture: any
-Description: Support libraries used by OpenContrail control and compute nodes.
+Depends: ${misc:Depends}
+Description: The package contrail-lib provides a support libraries used by
+ OpenContrail control and compute nodes.
 
 Package: contrail-vrouter
 Architecture: any
-Description: OpenContrail linux kernel module.
+Depends: ${misc:Depends}
+Description: The package contrail-vrouter provides the OpenContrail
+ linux kernel module.
