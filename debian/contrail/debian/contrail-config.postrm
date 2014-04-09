@@ -4,7 +4,15 @@ set -e
 
 if [ "${1}" = "purge" ] ; then
 
-  rm -rf /var/log/opencontrail
+  rm -rf /var/log/contrail /var/lib/contrail
+
+  if (which deluser && getent passwd contrail) > /dev/null 2>&1; then
+    deluser --system --quiet --backup-to /var/lib contrail
+  fi
+
+  if (which delgroup && getent group contrail) > /dev/null 2>&1; then
+    delgroup --system --quiet contrail
+  fi
 
 fi
 
