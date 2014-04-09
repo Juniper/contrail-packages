@@ -1,4 +1,12 @@
 zc_zookeeper_static python-zookeeper
-pycassa
-geventhttpclient
-
+pycassa python-pycassa
+geventhttpclient python-geventhttpclient
+gevent python-gevent
+netaddr python-netaddr
+bitarray python-bitarray
+psutil python-psutil
+zope.interface python-zope.interface
+redis python-redis
+xmltodict python-xml2dict
+prettytable python-prettytable
+novaclient python-novaclient
