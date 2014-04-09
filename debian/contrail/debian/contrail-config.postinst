@@ -4,9 +4,21 @@ set -e
 
 if [ "$1" = "configure" ] || [ "$1" = "reconfigure" ] ; then
 
-  mkdir -p /var/log/opencontrail
-  chown -R opencontrail:adm /var/log/opencontrail
-  chmod 0750 /var/log/opencontrail
+  if ! getent group contrail > /dev/null 2>&1
+  then
+    addgroup --system contrail >/dev/null
+  fi
+
+  if ! getent passwd contrail > /dev/null 2>&1
+  then
+    adduser --system --home /var/lib/contrail --ingroup contrail --no-create-home --shell /bin/false contrail
+  fi
+
+  mkdir -p /var/log/contrail
+  chown -R contrail:adm /var/log/contrail
+  chmod 0750 /var/log/contrail
+  chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+  chmod -R 0750 /etc/contrail/
 
 fi
 
