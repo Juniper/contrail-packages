@@ -11,9 +11,10 @@
 ### Work in progress (backport)
 
 * [python-ncclient](http://anonscm.debian.org/gitweb/?p=collab-maint/python-ncclient.git)
-* [python-pycassa](https://github.com/pycassa/pycassa/pull/231)
 * [python-geventhttpclient](https://github.com/sbadia/python-geventhttpclient)
 * [python-xml2dict](https://github.com/sbadia/python-xml2dict)
+* [python-pycassa](http://anonscm.debian.org/gitweb/?p=collab-maint/pycassa.git)
+* [ifmap-python-client](https://github.com/sbadia/ifmap-python-client)
 
 ### Need investigations
 
