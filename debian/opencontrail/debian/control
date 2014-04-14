@@ -37,7 +37,8 @@ Description: OpenContrail analytics software collects events and flow
 
 Package: opencontrail-config
 Architecture: all
-Depends: python-bitarray (>= 0.8.0),
+Depends: adduser,
+         python-bitarray (>= 0.8.0),
          python-bottle (>= 0.11.6),
          python-opencontrail (= ${source:Version}),
          python-geventhttpclient,
