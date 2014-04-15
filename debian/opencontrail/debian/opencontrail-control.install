@@ -1,2 +1,2 @@
 usr/bin/control-node
-/etc/contrail/control-node.conf
+etc/contrail/control-node.conf /etc/opencontrail

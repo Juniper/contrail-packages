@@ -8,7 +8,7 @@ respawn
 
 script
 	COMMAND=/usr/bin/discovery-server
-	OPTS="--conf_file /etc/contrail/discovery.conf"
+	OPTS="--conf_file /etc/opencontrail/discovery.conf"
 	if [ -f /etc/default/$UPSTART_JOB ]; then
 		. /etc/default/$UPSTART_JOB
 	fi

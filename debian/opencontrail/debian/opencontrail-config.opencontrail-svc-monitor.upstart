@@ -8,7 +8,7 @@ respawn
 
 script
 	COMMAND=/usr/bin/contrail-svc-monitor
-	OPTS="--conf_file /etc/contrail/svc-monitor.conf"
+	OPTS="--conf_file /etc/opencontrail/svc-monitor.conf"
 	if [ -f /etc/default/$UPSTART_JOB ]; then
 		. /etc/default/$UPSTART_JOB
 	fi

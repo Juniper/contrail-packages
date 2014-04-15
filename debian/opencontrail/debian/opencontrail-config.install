@@ -2,10 +2,10 @@ usr/bin/contrail-api
 usr/bin/contrail-schema
 usr/bin/discovery-server
 usr/bin/contrail-svc-monitor
-etc/contrail/contrail-api.conf
-etc/contrail/contrail-schema.conf
-etc/contrail/discovery.conf
-etc/contrail/svc_monitor.conf
+etc/contrail/contrail-api.conf /etc/opencontrail
+etc/contrail/contrail-schema.conf /etc/opencontrail
+etc/contrail/discovery.conf /etc/opencontrail
+etc/contrail/svc_monitor.conf /etc/opencontrail
 usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
