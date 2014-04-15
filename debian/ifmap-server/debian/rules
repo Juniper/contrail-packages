@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+PACKAGE = ifmap-server
+UPSTREAM_NAME = irond
+SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
+TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
+get-orig-source:
+	rm -rf get-orig-bin $(TARBALL)
+	mkdir get-orig-bin
+	#wget -q http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+	wget -q http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip
+	cd get-orig-bin; unzip $(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip
+	GZIP=--best tar czf $(TARBALL) -C get-orig-bin $(UPSTREAM_NAME)-$(SRC_VERSION)-bin
+	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
+	cp -r get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin/* .
+	rm -rf get-orig-bin
+	echo "../$(TARBALL) created"
+
+.PHONY: get-orig-source

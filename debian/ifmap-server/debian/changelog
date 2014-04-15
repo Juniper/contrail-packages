@@ -1,0 +1,5 @@
+ifmap-server (0.3.2-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Sebastien Badia <seb@sebian.fr>  Thu, 10 Apr 2014 15:30:30 +0200
