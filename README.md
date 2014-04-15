@@ -9,7 +9,7 @@ In order to build the debian packages execute the following set of commands from
 packages:
 
         mkdir -p build/packages
-        cp -R tools/packages/debian/contrail/debian build/packages
+        cp -R tools/packages/debian/opencontrail/debian build/packages
         chmod u+x build/packages/debian/rules
         (cd build/packages; fakeroot debian/rules binary)
 ```
