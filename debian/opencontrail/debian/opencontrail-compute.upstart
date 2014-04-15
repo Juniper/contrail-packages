@@ -8,7 +8,7 @@ respawn
 
 script
        COMMAND=/usr/bin/vnswad
-       OPTS="--conf-file /etc/contrail/agent.conf"
+       OPTS="--config-file /etc/contrail/agent.conf"
        if [ -f /etc/default/$UPSTART_JOB ]; then
                . /etc/default/$UPSTART_JOB
        fi
