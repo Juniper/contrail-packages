@@ -8,7 +8,7 @@ respawn
 
 script
 	COMMAND=/usr/bin/contrail-schema
-	OPTS="--conf_file /etc/contrail/contrail-schema.conf"
+	OPTS="--conf_file /etc/opencontrail/contrail-schema.conf"
 	if [ -f /etc/default/$UPSTART_JOB ]; then
 		. /etc/default/$UPSTART_JOB
 	fi

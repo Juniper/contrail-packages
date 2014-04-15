@@ -1,8 +1,7 @@
-/var/log/contrail/api.log
-/var/log/contrail/discovery.log
-/var/log/contrail/discovery.log
-/var/log/contrail/schema.log
-/var/log/contrail/svc-monitor.log
+/var/log/opencontrail/api.log
+/var/log/opencontrail/discovery.log
+/var/log/opencontrail/schema.log
+/var/log/opencontrail/svc-monitor.log
 {
     daily
     missingok
