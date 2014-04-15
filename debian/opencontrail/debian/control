@@ -25,21 +25,19 @@ XS-Python-Version: >= 2.7
 
 Package: opencontrail-analytics
 Architecture: any
-Depends: cassandra,
-         opencontrail-lib (= ${source:Version}),
+Depends: opencontrail-lib (= ${source:Version}),
          python-redis,
          python-xml2dict,
-         redis-server (>= 2.6.13-1),
          ${misc:Depends},
          ${python:Depends}
+Suggests: cassandra, redis-server (>= 2.6.13-1)
 Description: OpenContrail analytics software collects events and flow
  information from compute-nodes and other OpenContrail components and
  makes the information available in a time-series database.
 
 Package: opencontrail-config
 Architecture: all
-Depends: cassandra,
-         python-bitarray (>= 0.8.0),
+Depends: python-bitarray (>= 0.8.0),
          python-bottle (>= 0.11.6),
          python-opencontrail (= ${source:Version}),
          python-geventhttpclient,
@@ -53,9 +51,9 @@ Depends: cassandra,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
          python-zookeeper,
-         zookeeper,
          ${misc:Depends},
          ${python:Depends}
+Suggests: cassandra, zookeeper
 Description: OpenContrail configuration management. OpenContrail is a network
  virtualization solution that provides an overlay virtual-network to
  virtual-machines, containers or network namespaces.
