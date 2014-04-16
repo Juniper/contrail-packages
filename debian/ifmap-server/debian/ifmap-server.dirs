@@ -1,2 +1,3 @@
 etc/ifmap-server
 var/log/opencontrail
+/var/lib/opencontrail

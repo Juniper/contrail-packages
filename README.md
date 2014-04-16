@@ -30,3 +30,18 @@ ifmap-client:
         fakeroot debian/rules get-orig-source
         fakeroot debian/rules binary
 ```
+
+## ifmap-server
+
+[ifmap-server](https://github.com/trustathsh/irond) with OpenContrail configs
+
+```make
+ifmap-server:
+
+        mkdir -p build/packages
+        cp -R tools/packages/debian/ifmap-server/debian build/packages/ifmap-server
+        chmod u+x build/packages/ifmap-server/debian/rules
+        cd build/packages/ifmap-server
+        fakeroot debian/rules get-orig-source
+        fakeroot debian/rules binary
+```
