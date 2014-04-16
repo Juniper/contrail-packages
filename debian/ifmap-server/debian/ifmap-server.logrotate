@@ -1,0 +1,10 @@
+/var/log/opencontrail/ifmap-server.log
+/var/log/opencontrail/ifmap-server-raw.log
+/var/log/opencontrail/ifmap-server-console.log
+{
+  daily
+  missingok
+  compress
+  delaycompress
+  notifempty
+}
