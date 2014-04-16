@@ -5,7 +5,7 @@ usr/bin/contrail-svc-monitor
 etc/contrail/contrail-api.conf /etc/opencontrail
 etc/contrail/contrail-schema.conf /etc/opencontrail
 etc/contrail/discovery.conf /etc/opencontrail
-etc/contrail/svc_monitor.conf /etc/opencontrail
+etc/contrail/svc-monitor.conf /etc/opencontrail
 usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
