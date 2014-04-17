@@ -27,7 +27,7 @@ Package: opencontrail-analytics
 Architecture: any
 Depends: opencontrail-lib (= ${binary:Version}),
          python-redis,
-         python-xml2dict,
+         python-xmltodict,
          ${misc:Depends},
          ${python:Depends}
 Suggests: cassandra, redis-server (>= 2.6.13-1)
