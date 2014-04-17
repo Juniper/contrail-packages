@@ -1,22 +1,21 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh $@ --with javahelper
 
 PACKAGE = ifmap-server
 UPSTREAM_NAME = irond
 SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
 TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
 get-orig-source:
-	rm -rf get-orig-bin $(TARBALL)
-	mkdir get-orig-bin
 	#wget -q http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
-	wget -q http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip
-	cd get-orig-bin; unzip $(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip
-	GZIP=--best tar czf $(TARBALL) -C get-orig-bin $(UPSTREAM_NAME)-$(SRC_VERSION)-bin
-	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
-	cp -r get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin/* .
-	rm -rf get-orig-bin
-	echo "../$(TARBALL) created"
+	# wget -q http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip
+	rm -rf keystore schema soapui-examples src
+	mkdir -p debian/tmp
+	# TODO: use a cache location for the source archive
+	cp ~/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip debian/tmp
+	unzip -u debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+	ls $(UPSTREAM_NAME)-$(SRC_VERSION)-src | xargs -n 1 -I'{}' mv $(UPSTREAM_NAME)-$(SRC_VERSION)-src/'{}' .
+	rmdir $(UPSTREAM_NAME)-$(SRC_VERSION)-src
 
 .PHONY: get-orig-source
