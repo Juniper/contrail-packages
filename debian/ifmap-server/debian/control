@@ -14,11 +14,14 @@ Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
 Build-Depends: ant,
 	       default-jdk,
+	       liblog4j1.2-java,
 	       libhttpcore-java,
 	       libcommons-codec-java,
-	       liblog4j1.2-java,
-	       libguava-java,
-Depends: ${java:Depends}, ${misc:Depends}
+Depends: liblog4j1.2-java,
+	 libhttpcore-java,
+	 libcommons-codec-java,
+	 ${java:Depends},
+	 ${misc:Depends}
 Recommends: ${java:Recommends}
 Description: irond is a IF-MAP MAP server.
  irond is an experimental IF-MAP 2.0 compliant MAP server written in
