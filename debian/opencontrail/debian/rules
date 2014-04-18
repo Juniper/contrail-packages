@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export INSTALL_ROOT=$(shell pwd)
+SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages/.*\1/")
+
+export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(INSTALL_ROOT)/usr/lib
+
+%:
+	dh $@ --with python2
+
+override_dh_auto_build:
+	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+
+override_dh_installinit:
+	dh_installinit
+	dh_installinit --name=opencontrail-api
+	dh_installinit --name=opencontrail-schema
+	dh_installinit --name=opencontrail-svc-monitor
+	dh_installinit --name=opencontrail-discovery

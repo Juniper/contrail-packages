@@ -1,0 +1,16 @@
+description "Contrail discovery server"
+author "OpenContrail <dev@lists.opencontrail.org>"
+
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [!2345]
+
+respawn
+
+script
+	COMMAND=/usr/bin/discovery-server
+	OPTS="--conf_file /etc/opencontrail/discovery.conf"
+	if [ -f /etc/default/$UPSTART_JOB ]; then
+		. /etc/default/$UPSTART_JOB
+	fi
+        "$COMMAND" $OPTS
+end script

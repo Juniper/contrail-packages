@@ -1,0 +1,4 @@
+opencontrail-config: binary-without-manpage usr/bin/contrail-api
+opencontrail-config: binary-without-manpage usr/bin/contrail-schema
+opencontrail-config: binary-without-manpage usr/bin/contrail-svc-monitor
+opencontrail-config: binary-without-manpage usr/bin/discovery-server

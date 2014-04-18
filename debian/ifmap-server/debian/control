@@ -1,0 +1,31 @@
+Source: ifmap-server
+Section: java
+Priority: optional
+Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Uploaders: Sebastien Badia <seb@sebian.fr>
+Build-Depends: debhelper (>= 9), javahelper
+Standards-Version: 3.9.5
+Vcs-Browser: https://github.com/Juniper/contrail-packages/
+Vcs-Git: git://github.com/Juniper/contrail-packages.git
+Homepage: https://github.com/trustathsh/irond/
+
+Package: ifmap-server
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Build-Depends: ant,
+	       default-jdk,
+	       liblog4j1.2-java,
+	       libhttpcore-java,
+	       libcommons-codec-java,
+Depends: liblog4j1.2-java,
+	 libhttpcore-java,
+	 libcommons-codec-java,
+	 ${java:Depends},
+	 ${misc:Depends}
+Recommends: ${java:Recommends}
+Description: irond is a IF-MAP MAP server.
+ irond is an experimental IF-MAP 2.0 compliant MAP server written in
+ JAVA. irond supports both basic authentication and certificate-based
+ authentication (using X.509 certificates) of MAP clients. irond is maintained
+ by the Trust@HsH group at the Hochschule Hannover, initial development was
+ carried out during the ESUKOM research project.

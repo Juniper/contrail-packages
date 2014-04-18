@@ -1,0 +1,11 @@
+/var/log/opencontrail/api.log
+/var/log/opencontrail/discovery.log
+/var/log/opencontrail/schema.log
+/var/log/opencontrail/svc-monitor.log
+{
+    daily
+    missingok
+    compress
+    delaycompress
+    notifempty
+}
