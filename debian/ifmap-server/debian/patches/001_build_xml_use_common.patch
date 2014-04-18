@@ -1,5 +1,5 @@
---- build.xml~	2014-04-16 17:18:27.939433000 -0700
-+++ build.xml	2014-04-16 17:21:05.511433000 -0700
+--- ifmap-server/build.xml.orig	2014-04-17 18:26:57.503433000 -0700
++++ ifmap-server/build.xml	2014-04-17 18:27:20.359433000 -0700
 @@ -3,7 +3,7 @@
  <project name="MAPS" default="build" basedir=".">
    <property name="srcDir" location="src" />

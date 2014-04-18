@@ -1,19 +1,18 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@ --with javahelper
+	dh $@ --with javahelper --with quilt
 
 PACKAGE = ifmap-server
 UPSTREAM_NAME = irond
 SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
 TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
 get-orig-source:
-	#wget -q http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
-	# wget -q http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip -O get-orig-bin/$(UPSTREAM_NAME)-$(SRC_VERSION)-bin.zip
 	rm -rf keystore schema soapui-examples src
 	mkdir -p debian/tmp
-	# TODO: use a cache location for the source archive
-	cp ~/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip debian/tmp
+#	TODO: site is unreliable use a cache location for the source
+#	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 	unzip -u debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 	ls $(UPSTREAM_NAME)-$(SRC_VERSION)-src | xargs -n 1 -I'{}' mv $(UPSTREAM_NAME)-$(SRC_VERSION)-src/'{}' .
 	rmdir $(UPSTREAM_NAME)-$(SRC_VERSION)-src
