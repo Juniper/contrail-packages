@@ -1,0 +1,11 @@
+--- ifmap-server/build.xml.orig	2014-04-17 18:26:57.503433000 -0700
++++ ifmap-server/build.xml	2014-04-17 18:27:20.359433000 -0700
+@@ -3,7 +3,7 @@
+ <project name="MAPS" default="build" basedir=".">
+   <property name="srcDir" location="src" />
+   <property name="binDir" location="build/bin" />
+-  <property name="libDir" location="lib" />
++  <property name="libDir" location="/usr/share/java" />
+   <property name="buildDir" location="build" />
+   <property name="manifest" value="MANIFEST.MF" />
+   <property name="jarFile" location="${buildDir}/irond.jar" />

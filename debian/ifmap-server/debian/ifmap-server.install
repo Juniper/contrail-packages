@@ -1,6 +1,5 @@
 debian/scripts/ifmap-server usr/bin/
-irond.jar usr/share/ifmap-server/
-lib/ usr/share/ifmap-server/
+build/irond.jar usr/share/ifmap-server/
 keystore/ etc/ifmap-server/
 schema/ etc/ifmap-server/
 debian/confs/ifmap.properties etc/ifmap-server/
