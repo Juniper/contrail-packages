@@ -2,7 +2,7 @@
 # -*- makefile -*-
 
 export INSTALL_ROOT=$(shell pwd)
-SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages/.*\1/")
+SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages\/.*/\1/")
 
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(INSTALL_ROOT)/usr/lib
 
