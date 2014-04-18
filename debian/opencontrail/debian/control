@@ -32,9 +32,22 @@ Depends: opencontrail-lib (= ${binary:Version}),
          ${python:Depends},
          ${shlibs:Depends}
 Suggests: cassandra, redis-server (>= 2.6.13-1)
-Description: OpenContrail analytics software collects events and flow
- information from compute-nodes and other OpenContrail components and
- makes the information available in a time-series database.
+Description: OpenContrail analytics
+ Analytics nodes are responsible for collecting, collating and presenting
+ analytics information for trouble shooting problems and for understanding
+ network usage. Each component of the OpenContrail System generates detailed
+ event records for every significant event in the system. These event records
+ are sent to one of multiple instances (for scale-out) of the analytics node
+ that collate and store the information in a horizontally scalable database
+ using a format that is optimized for time-series analysis and queries. The
+ analytics nodes have mechanism to automatically trigger the collection of more
+ detailed records when certain event occur; the goal is to be able to get to the
+ root cause of any issue without having to reproduce it. The analytics nodes
+ provide a north-bound analytics query REST API.
+ .
+ Analytics nodes collect, store, correlate, and analyze information from
+ network elements, virtual or physical. This information includes statistics,
+ logs, events, and errors.
 
 Package: opencontrail-config
 Architecture: all
@@ -57,19 +70,52 @@ Depends: adduser,
          ${python:Depends},
          ${shlibs:Depends}
 Suggests: cassandra, zookeeper
-Description: OpenContrail configuration management. OpenContrail is a network
- virtualization solution that provides an overlay virtual-network to
- virtual-machines, containers or network namespaces.
+Description: OpenContrail configuration management
+ Configuration nodes are responsible for the management layer. The
+ configuration nodes provide a north-bound Representational State Transfer
+ (REST) Application Programming Interface (API) that can be used to configure
+ the system or extract operational status of the system. The instantiated
+ services are represented by objects in a horizontally scalable database that is
+ described by a formal service data model (more about data models later on). The
+ configuration nodes also contain a transformation engine (sometimes referred to
+ as a compiler) that transforms the objects in the high-level service data model
+ into corresponding more lower-level objects in the technology data model.
+ Whereas the high-level service data model describes what services need to be
+ implemented, the low-level technology data model describes how those services
+ need to be implemented. The configuration nodes publish the contents of the
+ low-level technology data model to the control nodes using the Interface for
+ Metadata Access Points (IF-MAP) protocol.
+ .
+ Configuration nodes keep a persistent copy of the intended configuration state
+ and translate the high-level data model into the lower level model suitable for
+ interacting with network elements. Both these are kept in a NoSQL database.
 
 Package: opencontrail-control
 Depends: opencontrail-lib (= ${binary:Version}),
          ${misc:Depends},
          ${shlib:Depends}
 Architecture: any
-Description: OpenContrail control-node is responsible to distribute
- configuration and routing information to the compute
- nodes. Control-nodes peers with each other or with external routers in
- order to exchange routing information via the BGP routing protocol.
+Description: OpenContrail control-node
+ Control nodes implement the logically centralized portion of the control
+ plane. Not all control plane functions are logically centralized – some control
+ plane functions are still implemented in a distributed fashion on the physical
+ and virtual routers and switches in the network. The control nodes use the
+ IF-MAP protocol to monitor the contents of the low-level technology data model
+ as computed by the configuration nodes that describes the desired state of the
+ network. The control nodes use a combination of south-bound protocols to “make
+ it so”, i.e. to make the actual state of the network equal to the desired state
+ of the network. In the initial version of the OpenContrail System these
+ south-bound protocols include Extensible Messaging and Presence Protocol (XMPP)
+ to control the OpenContrail vRouters as well as a combination of the Border
+ Gateway Protocol (BGP) and the Network Configuration (Netconf) protocols to
+ control physical routers. The control nodes also use BGP for state
+ synchronization amongst each other when there are multiple instances of the
+ control node for scale-out and high-availability reasons.
+ .
+ Control nodes implement a logically centralized control plane that is
+ responsible for maintaining ephemeral network state. Control nodes interact
+ with each other and with network elements to ensure that network state is
+ eventually consistent.
 
 Package: opencontrail-compute
 Depends: opencontrail-lib (= ${binary:Version}),
@@ -77,29 +123,52 @@ Depends: opencontrail-lib (= ${binary:Version}),
          ${misc:Depends},
          ${shlib:Depends}
 Architecture: any
-Description: The package opencontrail-compute provides the OpenContrail
- compute-node user space agent.
+Description: OpenContrail compute
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ This package provides the compute-node user space agent.
 
 Package: python-opencontrail
 Architecture: all
 Section: python
-Description: The package python-opencontrail provides the OpenContrail
- API library.
 Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
+Description: OpenContrail python-libs
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ The package python-opencontrail provides the OpenContrail API library.
 
 Package: opencontrail-lib
 Architecture: any
-Description: The package opencontrail-lib provides a support libraries used by
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: OpenContrail libraries
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ The package opencontrail-lib provides a support libraries used by
  OpenContrail control and compute nodes.
 
 Package: opencontrail-vrouter
 Architecture: any
-Description: The package opencontrail-vrouter provides the OpenContrail
- linux kernel module.
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: OpenContrail VRouter
+ The OpenContrail vRouter is a forwarding plane (of a distributed router) that
+ runs in the hypervisor of a virtualized server. It extends the network from the
+ physical routers and switches in a data center into a virtual overlay network
+ hosted in the virtualized servers (the concept of an overlay network is
+ explained in more detail in section 1.4 below). The OpenContrail vRouter is
+ conceptually similar to existing commercial and open source vSwitches such as
+ for example the Open vSwitch (OVS) but it also provides routing and higher
+ layer services (hence vRouter instead of vSwitch).
+ .
+ The package opencontrail-vrouter provides the OpenContrail linux kernel module.
 
 Package: opencontrail-nova-driver
 Architecture: any
 Depends: python-thrift, ${misc:Depends}, ${python:Depends}
 Description: OpenStack Nova compute-node driver for OpenContrail
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ This package contains the OpenStack Nova compute-node driver for OpenContrail.
