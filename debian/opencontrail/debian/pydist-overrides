@@ -7,7 +7,7 @@ bitarray python-bitarray
 psutil python-psutil
 zope.interface python-zope.interface
 redis python-redis
-xmltodict python-xml2dict
+xmltodict python-xmltodict
 prettytable python-prettytable
 novaclient python-novaclient
 keystoneclient python-keystoneclient
