@@ -11,3 +11,4 @@ xmltodict python-xmltodict
 prettytable python-prettytable
 novaclient python-novaclient
 keystoneclient python-keystoneclient
+requests python-requests
