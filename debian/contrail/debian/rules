@@ -14,8 +14,8 @@ override_dh_auto_build:
 
 override_dh_installinit:
 	dh_installinit
-	dh_installinit --name=opencontrail-api
+	dh_installinit --name=contrail-api
+	dh_installinit --name=contrail-discovery
 	dh_installinit --name=contrail-dns
-	dh_installinit --name=opencontrail-schema
-	dh_installinit --name=opencontrail-svc-monitor
-	dh_installinit --name=opencontrail-discovery
+	dh_installinit --name=contrail-schema
+	dh_installinit --name=contrail-svc-monitor

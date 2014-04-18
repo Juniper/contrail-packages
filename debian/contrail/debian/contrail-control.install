@@ -1,4 +1,4 @@
 usr/bin/control-node
 usr/bin/dnsd
-etc/contrail/control-node.conf /etc/opencontrail
+etc/contrail/control-node.conf
 etc/contrail/dns.conf
