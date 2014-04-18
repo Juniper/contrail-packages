@@ -29,7 +29,8 @@ Depends: opencontrail-lib (= ${binary:Version}),
          python-redis,
          python-xmltodict,
          ${misc:Depends},
-         ${python:Depends}
+         ${python:Depends},
+         ${shlibs:Depends}
 Suggests: cassandra, redis-server (>= 2.6.13-1)
 Description: OpenContrail analytics software collects events and flow
  information from compute-nodes and other OpenContrail components and
@@ -40,7 +41,6 @@ Architecture: all
 Depends: adduser,
          python-bitarray (>= 0.8.0),
          python-bottle (>= 0.11.6),
-         python-opencontrail (= ${source:Version}),
          python-geventhttpclient,
          python-kazoo (>= 1.3.1),
          python-keystoneclient,
@@ -48,19 +48,23 @@ Depends: adduser,
          python-ncclient,
          python-netifaces,
          python-novaclient,
+         python-opencontrail (= ${source:Version}),
          python-pycassa,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
          python-zookeeper,
          ${misc:Depends},
-         ${python:Depends}
+         ${python:Depends},
+         ${shlibs:Depends}
 Suggests: cassandra, zookeeper
 Description: OpenContrail configuration management. OpenContrail is a network
  virtualization solution that provides an overlay virtual-network to
  virtual-machines, containers or network namespaces.
 
 Package: opencontrail-control
-Depends: opencontrail-lib (= ${binary:Version}), ${misc:Depends}, ${shlib:Depends}
+Depends: opencontrail-lib (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlib:Depends}
 Architecture: any
 Description: OpenContrail control-node is responsible to distribute
  configuration and routing information to the compute
@@ -79,21 +83,21 @@ Description: The package opencontrail-compute provides the OpenContrail
 Package: python-opencontrail
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}
 Description: The package python-opencontrail provides the OpenContrail
  API library.
+Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
 
 Package: opencontrail-lib
 Architecture: any
-Depends: ${misc:Depends}
 Description: The package opencontrail-lib provides a support libraries used by
+Depends: ${misc:Depends}, ${shlibs:Depends}
  OpenContrail control and compute nodes.
 
 Package: opencontrail-vrouter
 Architecture: any
-Depends: ${misc:Depends}
 Description: The package opencontrail-vrouter provides the OpenContrail
  linux kernel module.
+Depends: ${misc:Depends}, ${shlibs:Depends}
 
 Package: opencontrail-nova-driver
 Architecture: any
