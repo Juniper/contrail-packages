@@ -9,6 +9,7 @@ package-ifmap-server: debian-ifmap-server
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); ln -s /usr/share/java lib)
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules binary)
 
 package-%: debian-%
