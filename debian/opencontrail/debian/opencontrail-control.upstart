@@ -7,10 +7,10 @@ stop on runlevel [!2345]
 respawn
 
 script
-        COMMAND=/usr/bin/control-node
-	OPTS=
-        if [ -f /etc/default/$UPSTART_JOB ]; then
-                . /etc/default/$UPSTART_JOB
-        fi
-        "$COMMAND" $OPTS
+  COMMAND=/usr/bin/control-node
+  OPTS="--conf_file /etc/contrail/control-node.conf)"
+  if [ -f /etc/default/$UPSTART_JOB ]; then
+    . /etc/default/$UPSTART_JOB
+  fi
+  "$COMMAND" $OPTS
 end script
