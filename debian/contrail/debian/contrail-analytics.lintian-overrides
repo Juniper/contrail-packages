@@ -1,0 +1,2 @@
+contrail-analytics: binary-without-manpage usr/bin/collector
+contrail-analytics: binary-without-manpage usr/bin/query_engine

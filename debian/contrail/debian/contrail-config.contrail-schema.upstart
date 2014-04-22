@@ -7,8 +7,8 @@ stop on runlevel [!2345]
 respawn
 
 script
-	COMMAND=/usr/bin/contrail-api
-	OPTS="--conf_file /etc/opencontrail/contrail-api.conf"
+	COMMAND=/usr/bin/contrail-schema
+	OPTS="--conf_file /etc/contrail/contrail-schema.conf"
 	if [ -f /etc/default/$UPSTART_JOB ]; then
 		. /etc/default/$UPSTART_JOB
 	fi

@@ -1,9 +1,0 @@
-opencontrail-vrouter: binary-without-manpage usr/bin/dropstats
-opencontrail-vrouter: binary-without-manpage usr/bin/flow
-opencontrail-vrouter: binary-without-manpage usr/bin/mirror
-opencontrail-vrouter: binary-without-manpage usr/bin/mpls
-opencontrail-vrouter: binary-without-manpage usr/bin/nh
-opencontrail-vrouter: binary-without-manpage usr/bin/rt
-opencontrail-vrouter: binary-without-manpage usr/bin/vif
-opencontrail-vrouter: binary-without-manpage usr/bin/vrfstats
-opencontrail-vrouter: binary-without-manpage usr/bin/vxlan

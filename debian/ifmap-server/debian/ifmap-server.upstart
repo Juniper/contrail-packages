@@ -8,7 +8,7 @@ chdir /var/run
 
 script
   COMMAND=/usr/bin/ifmap-server
-  USER=opencontrail
+  USER=contrail
 
   if [ -f /etc/default/$UPSTART_JOB ]; then
     . /etc/default/$UPSTART_JOB
