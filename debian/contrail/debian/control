@@ -1,4 +1,4 @@
-Source: opencontrail
+Source: contrail
 Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
@@ -23,9 +23,9 @@ Build-Depends: autoconf,
 Build-Depends-Indep:
 XS-Python-Version: >= 2.7
 
-Package: opencontrail-analytics
+Package: contrail-analytics
 Architecture: any
-Depends: opencontrail-lib (= ${binary:Version}),
+Depends: contrail-lib (= ${binary:Version}),
          python-redis,
          python-xmltodict,
          ${misc:Depends},
@@ -49,11 +49,12 @@ Description: OpenContrail analytics
  network elements, virtual or physical. This information includes statistics,
  logs, events, and errors.
 
-Package: opencontrail-config
+Package: contrail-config
 Architecture: all
 Depends: adduser,
          python-bitarray (>= 0.8.0),
          python-bottle (>= 0.11.6),
+         python-contrail (= ${source:Version}),
          python-geventhttpclient,
          python-kazoo (>= 1.3.1),
          python-keystoneclient,
@@ -61,7 +62,6 @@ Depends: adduser,
          python-ncclient,
          python-netifaces,
          python-novaclient,
-         python-opencontrail (= ${source:Version}),
          python-pycassa,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
@@ -90,10 +90,8 @@ Description: OpenContrail configuration management
  and translate the high-level data model into the lower level model suitable for
  interacting with network elements. Both these are kept in a NoSQL database.
 
-Package: opencontrail-control
-Depends: opencontrail-lib (= ${binary:Version}),
-         ${misc:Depends},
-         ${shlib:Depends}
+Package: contrail-control
+Depends: contrail-lib (= ${binary:Version}), ${misc:Depends}, ${shlib:Depends}
 Architecture: any
 Description: OpenContrail control-node
  Control nodes implement the logically centralized portion of the control
@@ -117,9 +115,9 @@ Description: OpenContrail control-node
  with each other and with network elements to ensure that network state is
  eventually consistent.
 
-Package: opencontrail-compute
-Depends: opencontrail-lib (= ${binary:Version}),
-         opencontrail-vrouter (= ${binary:Version}),
+Package: contrail-compute
+Depends: contrail-lib (= ${binary:Version}),
+         contrail-vrouter (= ${binary:Version}),
          ${misc:Depends},
          ${shlib:Depends}
 Architecture: any
@@ -129,7 +127,7 @@ Description: OpenContrail compute
  .
  This package provides the compute-node user space agent.
 
-Package: python-opencontrail
+Package: python-contrail
 Architecture: all
 Section: python
 Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
@@ -139,7 +137,7 @@ Description: OpenContrail python-libs
  .
  The package python-opencontrail provides the OpenContrail API library.
 
-Package: opencontrail-lib
+Package: contrail-lib
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail libraries
@@ -149,7 +147,7 @@ Description: OpenContrail libraries
  The package opencontrail-lib provides a support libraries used by
  OpenContrail control and compute nodes.
 
-Package: opencontrail-vrouter
+Package: contrail-vrouter
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail VRouter
@@ -164,7 +162,7 @@ Description: OpenContrail VRouter
  .
  The package opencontrail-vrouter provides the OpenContrail linux kernel module.
 
-Package: opencontrail-nova-driver
+Package: contrail-nova-driver
 Architecture: any
 Depends: python-thrift, ${misc:Depends}, ${python:Depends}
 Description: OpenStack Nova compute-node driver for OpenContrail

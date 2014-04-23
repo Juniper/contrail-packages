@@ -1,7 +1,7 @@
 #
 # This Makefile is copied by repo to the top of the sandbox
 #
-all: package-opencontrail \
+all: package-contrail \
      package-ifmap-server \
      package-ifmap-python-client
 
