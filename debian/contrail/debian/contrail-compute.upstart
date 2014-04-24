@@ -5,10 +5,11 @@ start on (local-filesystems and net-device-up IFACE!=lo)
 stop on runlevel [!2345]
 
 chdir /var/run
+respawn
 
 script
   COMMAND="/usr/bin/vnswad"
-  CONF="/etc/contrail/agent.conf"
+  CONF="/etc/contrail/contrail-vrouter-agent.conf"
   USER="contrail"
   OPTS="--config-file ${CONF}"
 
@@ -18,7 +19,7 @@ script
   fi
 
   if ! [ -r "$CONF" ] ; then
-    echo "Cloud not read ${CONF}: exiting"
+    echo "Could not read ${CONF}: exiting"
     exit 0
   fi
 
