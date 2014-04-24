@@ -18,7 +18,7 @@ if [ "$1" = "configure" ] || [ "$1" = "reconfigure" ] ; then
   chown -R contrail:adm /var/log/contrail
   chmod 0750 /var/log/contrail
   chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
-  chmod -R 0750 /etc/contrail/
+  chmod 0750 /etc/contrail/
 
 fi
 
