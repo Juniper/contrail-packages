@@ -1,16 +1,27 @@
-description "Contrail API server"
+description "Contrail Schema server"
 author "OpenContrail <dev@lists.opencontrail.org>"
 
 start on (local-filesystems and net-device-up IFACE!=lo)
 stop on runlevel [!2345]
 
-respawn
+chdir /var/run
 
 script
-	COMMAND=/usr/bin/contrail-schema
-	OPTS="--conf_file /etc/contrail/contrail-schema.conf"
-	if [ -f /etc/default/$UPSTART_JOB ]; then
-		. /etc/default/$UPSTART_JOB
-	fi
-        "$COMMAND" $OPTS
+  COMMAND="/usr/bin/contrail-schema"
+  CONF="/etc/contrail/contrail-schema.conf"
+  USER="contrail"
+  OPTS="--config_file ${CONF}"
+
+  # Allow override of command/conf and opts by /etc/default/daemon-name
+  if [ -f /etc/default/$UPSTART_JOB ]; then
+    . /etc/default/$UPSTART_JOB
+  fi
+
+  if ! [ -r "$CONF" ] ; then
+    echo "Cloud not read ${CONF}: exiting"
+    exit 0
+  fi
+
+  exec start-stop-daemon --start --chuid $USER:$USER --exec $COMMAND -- $OPTS
+
 end script
