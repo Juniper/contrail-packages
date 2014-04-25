@@ -1,4 +1,3 @@
-zc_zookeeper_static python-zookeeper
 pycassa python-pycassa
 geventhttpclient python-geventhttpclient
 gevent python-gevent
