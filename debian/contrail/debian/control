@@ -18,6 +18,8 @@ Build-Depends: autoconf,
                make,
                python-all (>= 2.7),
                python-dev,
+	       python-lxml,
+	       python-setuptools,
                scons (>= 2.1.0),
                vim-common
 Build-Depends-Indep:
@@ -147,20 +149,28 @@ Description: OpenContrail libraries
  The package opencontrail-lib provides a support libraries used by
  OpenContrail control and compute nodes.
 
-Package: contrail-vrouter
+Package: contrail-vrouter-utils
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail VRouter
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
+ runs in the hypervisor of a virtualized server.
+ .
+ The package opencontrail-vrouter-utils provides command line utilities to configure and diagnose the OpenContrail linux kernel module.
+
+Package: contrail-vrouter-source
+Architecture: all
+Depends: module-assistant, bzip2, debhelper
+Description: OpenContrail VRouter
+ The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server. It extends the network from the
  physical routers and switches in a data center into a virtual overlay network
- hosted in the virtualized servers (the concept of an overlay network is
- explained in more detail in section 1.4 below). The OpenContrail vRouter is
+ hosted in the virtualized servers. The OpenContrail vRouter is
  conceptually similar to existing commercial and open source vSwitches such as
  for example the Open vSwitch (OVS) but it also provides routing and higher
  layer services (hence vRouter instead of vSwitch).
  .
- The package opencontrail-vrouter provides the OpenContrail linux kernel module.
+ The package opencontrail-vrouter-source provides the OpenContrail linux kernel module in source code format.
 
 Package: contrail-nova-driver
 Architecture: any

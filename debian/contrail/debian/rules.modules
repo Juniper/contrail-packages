@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export INSTALL_ROOT=$(shell pwd)
+SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages(.*)/\1/")
+
+MA_DIR ?= /usr/share/modass
+
+-include $(MA_DIR)/include/generic.make
+-include $(MA_DIR)/include/common-rules.make
+
+kdist_config: prep-deb-files
+binary-modules: kdist_config
+	dh_testdir
+	dh_testroot
+	dh_prep
+# build and install the module
+	(cd ${SB_TOP}; scons --opt=production --kernel-dir=/lib/modules/$(KVERS)/build build-kmodule --root=${INSTALL_ROOT})
+	dh_install
+	dh_installdocs 
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installmodules
+	dh_installdeb
+	dh_gencontrol -- -v$(VERSION)
+	dh_md5sums
+	dh_builddeb
+
+	

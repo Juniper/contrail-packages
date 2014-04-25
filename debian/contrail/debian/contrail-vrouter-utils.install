@@ -1,4 +1,3 @@
-lib/modules/*/extra/net/vrouter/vrouter.ko
 usr/bin/dropstats
 usr/bin/flow
 usr/bin/mirror
