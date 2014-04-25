@@ -26,5 +26,3 @@ binary-modules: kdist_config
 	dh_gencontrol -- -v$(VERSION)
 	dh_md5sums
 	dh_builddeb
-
-	
