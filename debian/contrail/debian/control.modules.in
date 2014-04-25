@@ -1,0 +1,25 @@
+Source: contrail
+Section: net
+Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Standards-Version: 3.9.5
+Homepage: https://github.com/Juniper/contrail-vrouter/
+Vcs-Git: git://github.com/Juniper/contrail-vrouter.git
+Vcs-Browser: https://github.com/Juniper/contrail-vrouter/
+
+Package: contrail-vrouter-_KVERS_
+Architecture: all
+Recommends: kernel-image-_KVERS_, contrail-vrouter-utils
+Provides: contrail-vrouter
+Description: OpenContrail VRouter
+ The OpenContrail vRouter is a forwarding plane (of a distributed router) that
+ runs in the hypervisor of a virtualized server. It extends the network from the
+ physical routers and switches in a data center into a virtual overlay network
+ hosted in the virtualized servers. The OpenContrail vRouter is
+ conceptually similar to existing commercial and open source vSwitches such as
+ for example the Open vSwitch (OVS) but it also provides routing and higher
+ layer services (hence vRouter instead of vSwitch).
+ .
+ This package contains the someproject loadable kernel modules for the
+ kernel-image-_KVERS_ package.
+ .
+
