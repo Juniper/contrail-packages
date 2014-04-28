@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@ --with javahelper --with quilt
+	dh $@ --with javahelper
 
 PACKAGE = ifmap-server
 UPSTREAM_NAME = irond
@@ -11,8 +11,8 @@ get-orig-source:
 	rm -rf keystore schema soapui-examples src
 	mkdir -p debian/tmp
 #	TODO: site is unreliable use a cache location for the source
-#	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
-	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+#	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 	unzip -u debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 	ls $(UPSTREAM_NAME)-$(SRC_VERSION)-src | xargs -n 1 -I'{}' mv $(UPSTREAM_NAME)-$(SRC_VERSION)-src/'{}' .
 	rmdir $(UPSTREAM_NAME)-$(SRC_VERSION)-src

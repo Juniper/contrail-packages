@@ -1,0 +1,6 @@
+PACKAGE_NAME=vrouter
+PACKAGE_VERSION="__VERSION__"
+MAKE[0]="'make' -C . KERNELDIR=/lib/modules/${kernelver}/build"
+CLEAN[0]="'make' -C . KERNELDIR=/lib/modules/${kernelver}/build"
+BUILT_MODULE_NAME[0]="vrouter"
+DEST_MODULE_LOCATION[0]="/kernel/net/vrouter"

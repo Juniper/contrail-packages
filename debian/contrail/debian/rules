@@ -6,11 +6,22 @@ SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages(.*)/\1/")
 
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(INSTALL_ROOT)/usr/lib
 
+DEB_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:)*([^-]+).*,\2,p')
+
+package-dkms=contrail-vrouter-dkms
+
 %:
 	dh $@ --with python2
 
 override_dh_auto_build:
 	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+	mkdir -p ${INSTALL_ROOT}/_debian/tmp
+	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
+	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
+
+override_dh_install:
+	@echo "usr/src/vrouter/* usr/src/vrouter-$(DEB_UPSTREAM_VERSION)" > debian/$(package-dkms).install
+	dh_install
 
 override_dh_installinit:
 	dh_installinit
