@@ -1,2 +1,6 @@
-contrail-analytics: binary-without-manpage usr/bin/collector
-contrail-analytics: binary-without-manpage usr/bin/query_engine
+contrail-analytics: binary-without-manpage usr/bin/contrail-collector
+contrail-analytics: binary-without-manpage usr/bin/contrail-query-engine
+contrail-analytics: binary-without-manpage usr/bin/contrail-analytics-api
+contrail-analytics: binary-without-manpage usr/bin/contrail-logs
+contrail-analytics: binary-without-manpage usr/bin/contrail-stats
+contrail-analytics: binary-without-manpage usr/bin/contrail-flows
