@@ -1,0 +1,5 @@
+contrail-nova-driver (1.1.0-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Sebastien Badia <seb@sebian.fr>  Thu, 10 Apr 2014 15:30:30 +0200

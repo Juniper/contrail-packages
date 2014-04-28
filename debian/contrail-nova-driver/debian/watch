@@ -1,0 +1,3 @@
+version=3
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/contrail-nova-vif-driver-$1\.tar\.gz/ \
+  https://github.com/Juniper/contrail-nova-vif-driver/tags .*/v?(\d\S*)\.tar\.gz
