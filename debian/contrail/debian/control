@@ -176,7 +176,8 @@ Description: OpenContrail VRouter
 
 Package: contrail-vrouter-dkms
 Architecture: all
-Depends: dkms, make, contrail-vrouter-source, ${misc:Depends}
+Depends: dkms, make, ${misc:Depends}
+Provides: contrail-vrouter
 Description: OpenContrail VRouter
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server. It extends the network from the
