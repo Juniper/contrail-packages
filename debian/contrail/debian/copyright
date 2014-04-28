@@ -1,5 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: contrail
+Upstream-Contact: OpenContrail developers <dev@lists.opencontrail.org>
 Source: git://github.com/Juniper/contrail-controller.git
 
 Files: debian/*
