@@ -1,0 +1,34 @@
+contrail-schema(1) -- OpenContrail Schema
+=========================================
+
+## SYNOPSIS
+
+`contrail-schema` [<options>]
+
+## DESCRIPTION
+
+Schema transformer that learns about changes in the high level data model over the Redis message bus and transforms (or compiles) these changes in the high level data model into corresponding changes in the low level data model.
+
+## OPTIONS
+
+* `-h`, `--help`:
+  Show this help message and exit
+
+* `-c` <FILE>, `--conf_file` <FILE>:
+  Specify config file
+
+## BUGS
+
+Contrail is hosted in Launchpad so you can view current bugs at https://bugs.launchpad.net/opencontrail/.
+
+## AUTHOR
+
+OpenContrail developers <dev@lists.opencontrail.org>
+
+## COPYRIGHT
+
+Copyright © 2014 OpenContrail
+
+## SEE ALSO
+
+contrail-api(1), discovery-server(1), contrail-svc-monitor(1)

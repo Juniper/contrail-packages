@@ -1,0 +1,118 @@
+contrail-api(1) -- OpenContrail API
+===================================
+
+## SYNOPSIS
+
+`contrail-api` [<options>]
+
+## DESCRIPTION
+
+API Server that provides the north-bound interface to an Orchestration System or other application. This interface is used to install configuration state using the high-level data model.
+
+This is the main module in vnc_cfg_api_server package. It manages interaction between HTTP/REST, address management, authentication and database interfaces.
+
+## OPTIONS
+
+* `-h`, `--help`:
+  Show this help message and exit
+
+* `-c` <FILE>, `--conf_file` <FILE>:
+  Specify config file
+
+* `--ifmap_server_ip`: <IFMAP_SERVER_IP>
+  IP address of ifmap server
+
+* `--ifmap_server_port`: <IFMAP_SERVER_PORT>
+  Port of ifmap server
+
+* `--ifmap_username`: <IFMAP_USERNAME>
+  Username known to ifmap server
+
+* `--ifmap_password`: <IFMAP_PASSWORD>
+  Password known to ifmap server
+
+* `--cassandra_server_list`: <CASSANDRA_SERVER_LIST> [<CASSANDRA_SERVER_LIST>]
+  List of cassandra servers in IP *Address:Port* format
+
+* `--redis_server_ip`: <REDIS_SERVER_IP>
+  IP address of redis server
+
+* `--redis_server_port`: <REDIS_SERVER_PORT>
+  Port of redis server
+
+* `--auth`: <keystone>
+  Type of authentication for user-requests
+
+* `--reset_config`:
+  Warning! Destroy previous configuration and start clean
+
+* `--wipe_config`:
+  Warning! Destroy previous configuration
+
+* `--listen_ip_addr`: <LISTEN_IP_ADDR>
+  IP address to provide service on, default 0.0.0.0
+
+* `--listen_port`: <LISTEN_PORT>
+  Port to provide service on, default 8082
+
+* `--collectors`: <COLLECTORS> [<COLLECTORS>]
+  List of VNC collectors in *ip:port* format
+
+* `--http_server_port`: <HTTP_SERVER_PORT>
+  Port of local HTTP server
+
+* `--ifmap_server_loc`: <IFMAP_SERVER_LOC>
+  Location of IFMAP server
+
+* `--log_local`:
+  Enable local logging of sandesh messages
+
+* `--log_level`: <LOG_LEVEL>
+  Severity level for local logging of sandesh messages
+
+* `--logging_level`: <LOGGING_LEVEL>
+  Log level for python logging: DEBUG, INFO, WARN, ERROR
+  default: WARN
+
+* `--log_category`: <LOG_CATEGORY>
+  Category filter for local logging of sandesh messages
+
+* `--log_file LOG_FILE`:
+  Filename for the logs to be written to
+
+* `--multi_tenancy`:
+  Validate resource permissions (implies token validation)
+
+* `--worker_id`: <WORKER_ID>
+  Worker Id
+
+* `--zk_server_ip`: <ZK_SERVER_IP>
+  Ip *address:port* of zookeeper server
+
+* `--rabbit_server`: <RABBIT_SERVER>
+  Rabbitmq server address
+
+* `--rabbit_user`: <RABBIT_USER>
+  Username for rabbit
+
+* `--rabbit_vhost`: <RABBIT_VHOST>
+  Vhost for rabbit
+
+* `--rabbit_password`: <RABBIT_PASSWORD>
+  Password for rabbit
+
+## BUGS
+
+Contrail is hosted in Launchpad so you can view current bugs at https://bugs.launchpad.net/opencontrail/.
+
+## AUTHOR
+
+OpenContrail developers <dev@lists.opencontrail.org>
+
+## COPYRIGHT
+
+Copyright © 2014 OpenContrail
+
+## SEE ALSO
+
+contrail-schema(1), discovery-server(1), contrail-svc-monitor(1)

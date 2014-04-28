@@ -15,15 +15,16 @@ Build-Depends: autoconf,
                libexpat-dev,
                libgettextpo0,
                libtool,
+               libxml2-utils,
                make,
                python-all (>= 2.7),
                python-dev,
                python-lxml,
                python-setuptools,
+               ruby-ronn,
                scons (>= 2.1.0),
-               vim-common,
-               libxml2-utils,
-               unzip
+               unzip,
+               vim-common
 Build-Depends-Indep:
 XS-Python-Version: >= 2.7
 
