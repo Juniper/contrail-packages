@@ -41,7 +41,7 @@ package-ifmap-server: debian-ifmap-server
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
-	(cd build/packages/$(PACKAGE); fakeroot debian/rules binary)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
 package-contrail: debian-contrail
 	$(eval PACKAGE := contrail)

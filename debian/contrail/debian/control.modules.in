@@ -5,6 +5,7 @@ Standards-Version: 3.9.5
 Homepage: https://github.com/Juniper/contrail-vrouter/
 Vcs-Git: git://github.com/Juniper/contrail-vrouter.git
 Vcs-Browser: https://github.com/Juniper/contrail-vrouter/
+Build-Depends: module-assistant
 
 Package: contrail-vrouter-_KVERS_
 Architecture: all
