@@ -152,6 +152,15 @@ Description: OpenContrail libraries
  The package opencontrail-lib provides a support libraries used by
  OpenContrail control and compute nodes.
 
+Package: python-contrail-vrouter-api
+Architecture: all
+Section: python
+Depends: ${misc:Depends}, ${python:Depends}, contrail-vrouter-agent
+Description: OpenContrail vrouter agent api
+ The VRouter Agent API is used to inform the VRouter agent of the association
+ between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
+ in the OpenContrail API server.
+
 Package: contrail-vrouter-utils
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
