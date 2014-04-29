@@ -11,7 +11,7 @@ script
   COMMAND="/usr/bin/contrail-api"
   CONF="/etc/contrail/contrail-api.conf"
   USER="contrail"
-  OPTS="--config_file ${CONF}"
+  OPTS="--conf_file ${CONF}"
 
   # Allow override of command/conf and opts by /etc/default/daemon-name
   if [ -f /etc/default/$UPSTART_JOB ]; then
