@@ -11,7 +11,7 @@ Package: contrail-vrouter-_KVERS_
 Architecture: all
 Recommends: kernel-image-_KVERS_, contrail-vrouter-utils
 Provides: contrail-vrouter
-Description: OpenContrail VRouter
+Description: OpenContrail VRouter - module-assistant version
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server. It extends the network from the
  physical routers and switches in a data center into a virtual overlay network
@@ -22,5 +22,3 @@ Description: OpenContrail VRouter
  .
  This package contains the someproject loadable kernel modules for the
  kernel-image-_KVERS_ package.
- .
-
