@@ -1,4 +1,4 @@
-description "Contrail agent"
+description "Contrail Vrouter Agent"
 author "OpenContrail developers <dev@lists.opencontrail.org>"
 
 start on (local-filesystems and net-device-up IFACE!=lo)

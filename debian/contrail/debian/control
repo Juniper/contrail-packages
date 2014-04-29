@@ -120,17 +120,17 @@ Description: OpenContrail control-node
  with each other and with network elements to ensure that network state is
  eventually consistent.
 
-Package: contrail-compute
+Package: contrail-vrouter-agent
 Depends: contrail-lib (= ${binary:Version}),
          contrail-vrouter (= ${binary:Version}),
          ${misc:Depends},
          ${shlib:Depends}
 Architecture: any
-Description: OpenContrail compute
+Description: OpenContrail vrouter agent
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
  .
- This package provides the compute-node user space agent.
+ This package provides the contrail-vrouter user space agent.
 
 Package: python-contrail
 Architecture: all
