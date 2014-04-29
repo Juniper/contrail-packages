@@ -7,7 +7,7 @@
 # Use the git reference of the controller repository as a version id.
 # TODO: store the git refs for all projects in the manifest in a file
 #
-GIT_REF := $(shell (cd controller; git show --oneline) | awk '/[0-9a-f]+/ { print $$1; }')
+GIT_REF := $(shell (cd controller; git log --oneline -1) | awk '/[0-9a-f]+/ { print $$1; }')
 
 #
 # Version:
