@@ -3,7 +3,7 @@ Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
 Standards-Version: 3.9.5
-Homepage: https://github.com/Juniper/contrail-controller/
+Homepage: http://opencontrail.org/
 Vcs-Git: git://github.com/Juniper/contrail-controller.git
 Vcs-Browser: https://github.com/Juniper/contrail-controller/
 Build-Depends: autoconf,
@@ -25,7 +25,6 @@ Build-Depends: autoconf,
                scons (>= 2.1.0),
                unzip,
                vim-common
-Build-Depends-Indep:
 XS-Python-Version: >= 2.7
 
 Package: contrail-analytics
@@ -164,7 +163,7 @@ Description: OpenContrail vrouter agent api
 Package: contrail-vrouter-utils
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: OpenContrail VRouter
+Description: OpenContrail VRouter - Utilities
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server.
  .
@@ -174,7 +173,7 @@ Description: OpenContrail VRouter
 Package: contrail-vrouter-source
 Architecture: all
 Depends: bzip2, debhelper, module-assistant
-Description: OpenContrail VRouter
+Description: OpenContrail VRouter - Source
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server. It extends the network from the
  physical routers and switches in a data center into a virtual overlay network
@@ -190,7 +189,7 @@ Package: contrail-vrouter-dkms
 Architecture: all
 Depends: dkms, make, ${misc:Depends}
 Provides: contrail-vrouter
-Description: OpenContrail VRouter
+Description: OpenContrail VRouter - DKMS version
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server. It extends the network from the
  physical routers and switches in a data center into a virtual overlay network
