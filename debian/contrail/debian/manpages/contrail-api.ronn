@@ -111,7 +111,7 @@ OpenContrail developers <dev@lists.opencontrail.org>
 
 ## COPYRIGHT
 
-Copyright © 2014 OpenContrail
+Copyright (c) 2014 OpenContrail
 
 ## SEE ALSO
 
