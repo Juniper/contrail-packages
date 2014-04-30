@@ -35,3 +35,6 @@ override_dh_installinit:
 	dh_installinit --name=contrail-dns
 	dh_installinit --name=contrail-schema
 	dh_installinit --name=contrail-svc-monitor
+	dh_installinit --name=contrail-query-engine
+	dh_installinit --name=contrail-analytics-api
+	dh_installinit --name=contrail-collector
