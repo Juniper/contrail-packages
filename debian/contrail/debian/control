@@ -30,7 +30,11 @@ XS-Python-Version: >= 2.7
 Package: contrail-analytics
 Architecture: any
 Depends: contrail-lib (= ${binary:Version}),
+         python-bottle (>= 0.11.6),
+         python-contrail (= ${source:Version}),
+         python-pkg-resources,
          python-redis,
+         python-requests (>= 1.1.0),
          python-xmltodict,
          ${misc:Depends},
          ${python:Depends},
@@ -155,7 +159,7 @@ Description: OpenContrail libraries
 Package: python-contrail-vrouter-api
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}, contrail-vrouter-agent
+Depends: contrail-vrouter-agent, ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter agent api
  The VRouter Agent API is used to inform the VRouter agent of the association
  between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
