@@ -1,2 +1,3 @@
 usr/bin/vnswad
 etc/contrail/contrail-vrouter-agent.conf
+debian/scripts/contrail-version /usr/bin/
