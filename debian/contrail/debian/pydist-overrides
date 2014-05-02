@@ -11,3 +11,4 @@ prettytable python-prettytable
 novaclient python-novaclient
 keystoneclient python-keystoneclient
 requests python-requests
+uuid 2.5-
