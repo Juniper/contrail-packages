@@ -12,8 +12,9 @@ GIT_REF := $(shell (cd controller; git log --oneline -1) | awk '/[0-9a-f]+/ { pr
 #
 # Version:
 #    For development packages: <release><branch>~<ref>
+#    For snapshots: <release><branch>~$(shell date +%Y%m%d)
 #
-VERSION := 1.1master~$(GIT_REF)
+VERSION ?= 1.1master~$(GIT_REF)
 
 #
 # KVERS

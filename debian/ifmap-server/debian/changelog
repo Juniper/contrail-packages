@@ -1,3 +1,11 @@
+ifmap-server (0.3.2-1contrail1) precise; urgency=low
+
+  * Don't apply initial message segmentation patch; subscriptions
+    fail when it is present.
+
+ -- Pedro Marques <roque@juniper.net>  Fri, 2 Apr 2014 17:15:00 -0800
+
+
 ifmap-server (0.3.2-2) precise; urgency=low
 
   * Initial release.
