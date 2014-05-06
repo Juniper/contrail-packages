@@ -18,7 +18,8 @@ Homepage: https://github.com/trustathsh/irond/
 Package: ifmap-server
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: libcommons-codec-java,
+Depends: default-jre-headless | java-runtime-headless,
+         libcommons-codec-java,
          libhttpcore-java,
          liblog4j1.2-java,
          ${java:Depends},
