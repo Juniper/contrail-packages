@@ -1,9 +1,11 @@
 pycassa python-pycassa
+kazoo python-kazoo
 geventhttpclient python-geventhttpclient
 gevent python-gevent
 netaddr python-netaddr
 bitarray python-bitarray
 psutil python-psutil
+lxml python-lxml
 zope.interface python-zope.interface
 redis python-redis
 xmltodict python-xmltodict
