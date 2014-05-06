@@ -4,6 +4,8 @@ set -e
 
 if [ "${1}" = "purge" ] ; then
 
+  pkill -9 -f -u contrail irond.jar
+
   rm -rf /var/log/contrail /var/lib/contrail
 
   if (which deluser && getent passwd contrail) > /dev/null 2>&1; then
