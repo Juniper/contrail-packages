@@ -6,7 +6,7 @@
 # Temporary get-orig-source
 # https://github.com/Juniper/contrail-neutron-plugin/releases tag list is empty (so uscan doesn't work (debian/watch)).
 #
-PACKAGE = neutron-plugin-contrail-agent
+PACKAGE = neutron-plugin-contrail
 SRC_PACKAGE = contrail-neutron-plugin
 SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
 TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
