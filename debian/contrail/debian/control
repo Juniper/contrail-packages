@@ -29,7 +29,8 @@ XS-Python-Version: >= 2.7
 
 Package: contrail-analytics
 Architecture: any
-Depends: contrail-lib (= ${binary:Version}),
+Depends: adduser,
+         contrail-lib (= ${binary:Version}),
          python-bottle (>= 0.11.6),
          python-contrail (= ${source:Version}),
          python-pkg-resources,
@@ -130,7 +131,8 @@ Description: OpenContrail control-node
  eventually consistent.
 
 Package: contrail-vrouter-agent
-Depends: contrail-lib (= ${binary:Version}),
+Depends: adduser,
+         contrail-lib (= ${binary:Version}),
          contrail-vrouter,
          ${misc:Depends},
          ${shlib:Depends}
@@ -178,7 +180,7 @@ Description: OpenContrail VRouter - Utilities
  runs in the hypervisor of a virtualized server.
  .
  The package opencontrail-vrouter-utils provides command line utilities to
- configure and diagnose the OpenContrail linux kernel module.
+ configure and diagnose the OpenContrail Linux kernel module.
 
 Package: contrail-vrouter-source
 Architecture: all
@@ -192,7 +194,7 @@ Description: OpenContrail VRouter - Source
  for example the Open vSwitch (OVS) but it also provides routing and higher
  layer services (hence vRouter instead of vSwitch).
  .
- The package opencontrail-vrouter-source provides the OpenContrail linux kernel
+ The package opencontrail-vrouter-source provides the OpenContrail Linux kernel
  module in source code format.
 
 Package: contrail-vrouter-dkms
@@ -208,7 +210,7 @@ Description: OpenContrail VRouter - DKMS version
  for example the Open vSwitch (OVS) but it also provides routing and higher
  layer services (hence vRouter instead of vSwitch).
  .
- The package opencontrail-vrouter-dkms provides the OpenContrail linux kernel
+ The package opencontrail-vrouter-dkms provides the OpenContrail Linux kernel
  module.
 
 Package: contrail-nova-driver
