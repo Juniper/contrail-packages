@@ -70,10 +70,16 @@ source-package-ifmap-server: clean-ifmap-server source-ifmap-server debian-ifmap
 	$(eval PACKAGE := ifmap-server)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
+package-neutron-plugin-contrail: debian-neutron-plugin-contrail
+	$(eval PACKAGE = neutron-plugin-contrail)
+	cp -R openstack/neutron_plugin/* build/packages/neutron-plugin-contrail
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
 package-%: debian-%
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
-	(cd build/packages/$(PACKAGE); fakeroot debian/rules binary)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
 debian-%:
 	$(eval PACKAGE := $(patsubst debian-%,%,$@))
