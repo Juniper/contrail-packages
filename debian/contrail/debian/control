@@ -106,7 +106,7 @@ Package: contrail-control
 Depends: adduser,
          contrail-lib (= ${binary:Version}),
          ${misc:Depends},
-         ${shlib:Depends}
+         ${shlibs:Depends}
 Architecture: any
 Description: OpenContrail control-node
  Control nodes implement the logically centralized portion of the control
@@ -135,7 +135,7 @@ Depends: adduser,
          contrail-lib (= ${binary:Version}),
          contrail-vrouter,
          ${misc:Depends},
-         ${shlib:Depends}
+         ${shlibs:Depends}
 Architecture: any
 Description: OpenContrail vrouter agent
  OpenContrail is a network virtualization solution that provides an overlay
