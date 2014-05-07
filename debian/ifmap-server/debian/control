@@ -26,7 +26,7 @@ Depends: adduser,
          ${java:Depends},
          ${misc:Depends}
 Recommends: ${java:Recommends}
-Description: irond is a IF-MAP MAP server.
+Description: irond is a IF-MAP MAP server
  irond is an experimental IF-MAP 2.0 compliant MAP server written in
  JAVA. irond supports both basic authentication and certificate-based
  authentication (using X.509 certificates) of MAP clients. irond is maintained
