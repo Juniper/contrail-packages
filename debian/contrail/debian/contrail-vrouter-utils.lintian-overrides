@@ -1,9 +1,0 @@
-contrail-vrouter: binary-without-manpage usr/bin/dropstats
-contrail-vrouter: binary-without-manpage usr/bin/flow
-contrail-vrouter: binary-without-manpage usr/bin/mirror
-contrail-vrouter: binary-without-manpage usr/bin/mpls
-contrail-vrouter: binary-without-manpage usr/bin/nh
-contrail-vrouter: binary-without-manpage usr/bin/rt
-contrail-vrouter: binary-without-manpage usr/bin/vif
-contrail-vrouter: binary-without-manpage usr/bin/vrfstats
-contrail-vrouter: binary-without-manpage usr/bin/vxlan
