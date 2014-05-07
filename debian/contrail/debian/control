@@ -102,7 +102,10 @@ Description: OpenContrail configuration management
  interacting with network elements. Both these are kept in a NoSQL database.
 
 Package: contrail-control
-Depends: contrail-lib (= ${binary:Version}), ${misc:Depends}, ${shlib:Depends}
+Depends: adduser,
+         contrail-lib (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlib:Depends}
 Architecture: any
 Description: OpenContrail control-node
  Control nodes implement the logically centralized portion of the control
