@@ -66,13 +66,11 @@ Depends: adduser,
          python-contrail (= ${source:Version}),
          python-geventhttpclient (>= 1.0),
          python-kazoo (>= 1.3.1),
-         python-keystoneclient,
          python-kombu,
          python-lxml (>= 2.3.2),
          python-ncclient,
          python-netaddr (>= 0.7.5),
          python-netifaces,
-         python-novaclient,
          python-pycassa (>= 1.7.2),
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
@@ -101,6 +99,20 @@ Description: OpenContrail configuration management
  Configuration nodes keep a persistent copy of the intended configuration state
  and translate the high-level data model into the lower level model suitable for
  interacting with network elements. Both these are kept in a NoSQL database.
+
+Package: contrail-config-openstack
+Architecture: all
+Depends: python-config (= ${source:Version}),
+	 python-contrail (= ${source:Version}),
+	 python-bottle (>= 0.11.6),
+	 python-keystoneclient,
+         python-novaclient,
+	 ${python:Versions},
+	 ${python:Depends},
+	 ${misc:Depends}
+Description: OpenContrail configuration OpenStack module
+ This package contains the configuration management modules that interface
+ with OpenStack.
 
 Package: contrail-control
 Depends: adduser,
@@ -146,7 +158,7 @@ Description: OpenContrail vrouter agent
 Package: python-contrail
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${python:Depends}
 Description: OpenContrail python-libs
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
