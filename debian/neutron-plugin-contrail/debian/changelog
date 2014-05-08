@@ -1,4 +1,4 @@
-neutron-plugin-contrail (1.1.0-1) unstable; urgency=low
+neutron-plugin-contrail (VERSION) precise; urgency=low
 
   * Initial release.
 
