@@ -1,4 +1,3 @@
 debian/manpages/contrail-api.1
 debian/manpages/contrail-schema.1
-debian/manpages/contrail-svc-monitor.1
 debian/manpages/discovery-server.1
