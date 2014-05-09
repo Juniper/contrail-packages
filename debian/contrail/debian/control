@@ -75,7 +75,6 @@ Depends: adduser,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
          python-xmltodict,
-         python-zookeeper,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
