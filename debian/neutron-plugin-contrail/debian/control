@@ -3,9 +3,7 @@ Section: python
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
 Uploaders: Sebastien Badia <seb@sebian.fr>
-Build-Depends: debhelper (>= 9),
-               python-all (>= 2.6.6-3~),
-               python-setuptools
+Build-Depends: debhelper (>= 9), python-all (>= 2.6.6-3~), python-setuptools
 Standards-Version: 3.9.5
 Vcs-Browser: https://github.com/Juniper/contrail-neutron-plugin/
 Vcs-Git: git://github.com/Juniper/contrail-neutron-plugin.git
@@ -14,7 +12,7 @@ Homepage: https://github.com/Juniper/contrail-neutron-plugin/
 Package: neutron-plugin-contrail
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: ${misc:Depends}, ${python:Depends}
+Depends: neutron-common, python-contrail, ${misc:Depends}, ${python:Depends}
 Recommends: ${python:Recommends}
 Description: OpenStack virtual network service - Opencontrail
  Neutron provides an API to dynamically request and configure virtual networks.
