@@ -101,14 +101,14 @@ Description: OpenContrail configuration management
 
 Package: contrail-config-openstack
 Architecture: all
-Depends: python-config (= ${source:Version}),
-	 python-contrail (= ${source:Version}),
-	 python-bottle (>= 0.11.6),
-	 python-keystoneclient,
+Depends: contrail-config (= ${source:Version}),
+         python-bottle (>= 0.11.6),
+         python-contrail (= ${source:Version}),
+         python-keystoneclient,
          python-novaclient,
-	 ${python:Versions},
-	 ${python:Depends},
-	 ${misc:Depends}
+         ${misc:Depends},
+         ${python:Depends},
+         ${python:Versions}
 Description: OpenContrail configuration OpenStack module
  This package contains the configuration management modules that interface
  with OpenStack.
