@@ -210,7 +210,10 @@ Description: OpenContrail VRouter - Source
 
 Package: contrail-vrouter-dkms
 Architecture: all
-Depends: dkms, make, ${misc:Depends}
+Depends: contrail-vrouter-utils (= ${binary:Version}),
+         dkms,
+         make,
+         ${misc:Depends}
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - DKMS version
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
