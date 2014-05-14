@@ -1,2 +1,3 @@
 etc/neutron/plugins
+etc/contrail
 usr/lib/python*/dist-packages/neutron*
