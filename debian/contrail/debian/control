@@ -105,8 +105,7 @@ Depends: contrail-config (= ${source:Version}),
          python-keystoneclient,
          python-novaclient,
          ${misc:Depends},
-         ${python:Depends},
-         ${python:Versions}
+         ${python:Depends}
 Description: OpenContrail configuration OpenStack module
  This package contains the configuration management modules that interface
  with OpenStack.
