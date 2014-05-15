@@ -34,7 +34,7 @@ get-orig-source:
 	rm -rf get-orig-source $(TARBALL)
 	mkdir get-orig-source
 	cd get-orig-source;git clone git@github.com:Juniper/$(SRC_PACKAGE).git
-	cd get-orig-source/$(SRC_PACKAGE);make repos;make fetch-pkgs-prod;rm -rf $(SRC_PACKAGE)/web-third-party/
+	cd get-orig-source/$(SRC_PACKAGE);make repos;make fetch-pkgs-prod
 	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(SRC_PACKAGE) $(SRC2_PACKAGE)
 	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
 	cp -r get-orig-source/* .
