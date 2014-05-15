@@ -3,7 +3,10 @@
 %:
 	dh $@
 
-#v1.05 tarball is not working…
+override_dh_auto_build:
+	cd $(SRC_PACKAGE);make package
+	
+#v1.05 tarball is not working
 #PACKAGE = contrail-webui
 #SRC_PACKAGE = contrail-web-core
 #SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
@@ -24,14 +27,15 @@
 
 PACKAGE = contrail-webui
 SRC_PACKAGE = contrail-web-core
+SRC2_PACKAGE = contrail-web-controller
 SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
 TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
 get-orig-source:
 	rm -rf get-orig-source $(TARBALL)
 	mkdir get-orig-source
 	cd get-orig-source;git clone git@github.com:Juniper/$(SRC_PACKAGE).git
-	cd get-orig-source/$(SRC_PACKAGE);make repos;make fetch-pkgs-prod
-	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(SRC_PACKAGE)
+	cd get-orig-source/$(SRC_PACKAGE);make repos;make fetch-pkgs-prod;rm -rf $(SRC_PACKAGE)/web-third-party/
+	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(SRC_PACKAGE) $(SRC2_PACKAGE)
 	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
 	cp -r get-orig-source/* .
 	rm -rf get-orig-source
