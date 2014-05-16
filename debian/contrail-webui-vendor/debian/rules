@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+export QUILT_PATCHES=debian/patches
+
 %:
 	dh $@
 
