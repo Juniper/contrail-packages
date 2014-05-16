@@ -25,7 +25,7 @@ override_dh_auto_build:
 #
 #.PHONY: get-orig-source
 
-PACKAGE = contrail-webui
+PACKAGE = contrail-webui-vendor
 SRC_PACKAGE = contrail-web-core
 SRC2_PACKAGE = contrail-web-controller
 SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')

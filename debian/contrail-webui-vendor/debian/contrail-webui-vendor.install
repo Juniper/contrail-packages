@@ -1,0 +1,10 @@
+contrail-web-core/config /var/lib/contrail-webui-vendor
+contrail-web-core/Gruntfile.js /var/lib/contrail-webui-vendor
+contrail-web-core/keys /var/lib/contrail-webui-vendor
+contrail-web-core/package.json /var/lib/contrail-webui-vendor
+contrail-web-core/webroot /var/lib/contrail-webui-vendor
+contrail-web-core/distro /var/lib/contrail-webui-vendor
+contrail-web-core/jobServerStart.js /var/lib/contrail-webui-vendor
+contrail-web-core/node_modules /var/lib/contrail-webui-vendor
+contrail-web-core/src /var/lib/contrail-webui-vendor
+contrail-web-core/webServerStart.js /var/lib/contrail-webui-vendor
