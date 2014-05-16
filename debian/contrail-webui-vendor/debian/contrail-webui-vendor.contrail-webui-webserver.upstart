@@ -23,6 +23,9 @@ script
     exit 0
   fi
 
-  exec start-stop-daemon --start --chuid $USER:$USER --exec $COMMAND -- $OPTS
+  exec start-stop-daemon --start --chuid $USER:$USER \
+        -d /var/lib/contrail-webui-vendor \
+        --pidfile /var/run/contrail-webui-webserver.pid \
+        --exec $COMMAND -- $OPTS
 
 end script
