@@ -5,6 +5,11 @@
 
 override_dh_auto_build:
 	cd $(SRC_PACKAGE);make package
+
+override_dh_installinit:
+	dh_installinit
+	dh_installinit --name=contrail-webui-jobserver
+	dh_installinit --name=contrail-webui-jobserver
 	
 #v1.05 tarball is not working
 #PACKAGE = contrail-webui
