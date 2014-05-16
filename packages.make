@@ -33,6 +33,12 @@ package-ifmap-server: debian-ifmap-server
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
+package-contrail-webui-vendor: debian-contrail-webui-vendor
+	$(eval PACKAGE := $(patsubst package-%,%,$@))
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
 package-contrail: debian-contrail
 	$(eval PACKAGE := contrail)
 	@echo "Building package $(PACKAGE)"
