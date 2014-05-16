@@ -8,10 +8,9 @@ if [ "$1" = "configure" ]; then
   if ! getent passwd contrail > /dev/null 2>&1
   then
     adduser --quiet --system --group --home /var/lib/contrail-webui-vendor \
-      --no-create-home
-      --shell /bin/false
-      --gecos "Juniper OpenContrail daemon" \
-        contrail
+      --no-create-home \
+      --shell /bin/false \
+      --gecos "Juniper OpenContrail daemon" contrail
   fi
 
   # Create the "contrail" group if it is missing and set the primary group
