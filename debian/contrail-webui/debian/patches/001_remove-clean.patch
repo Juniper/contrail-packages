@@ -1,0 +1,17 @@
+Description: Remove node clean package (managed by get-orig)
+Author: Sebastien Badia <seb@sebian.fr>
+Last-Update: 2014-05-15
+
+Index: contrail-webui-vendor/contrail-web-core/Makefile
+===================================================================
+--- contrail-webui-vendor.orig/contrail-web-core/Makefile	2014-05-15 15:19:36.190840639 +0000
++++ contrail-webui-vendor/contrail-web-core/Makefile	2014-05-15 15:19:50.630787215 +0000
+@@ -27,8 +27,6 @@
+ 	./fetch_packages.sh dev
+ 
+ package:
+-	make clean
+-	make fetch-pkgs-prod 
+ 	rm -f webroot/html/dashboard.html
+ 	rm -f webroot/html/login.html
+ 	rm -f webroot/html/login-error.html
