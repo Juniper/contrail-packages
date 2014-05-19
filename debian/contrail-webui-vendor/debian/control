@@ -12,7 +12,8 @@ Homepage: https://github.com/Juniper/contrail-web-core/
 Package: contrail-webui-vendor
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: nodejs (>= 0.8.15), redis-server, ${misc:Depends}
+Depends: nodejs (>= 0.8.15), ${misc:Depends}
+Recommends: redis-server
 Description: OpenContrail WebUI
  OpenContrail Web UI for the management of Contrail network virtualization
  solution. This module interacts with other components of both Contrail network
