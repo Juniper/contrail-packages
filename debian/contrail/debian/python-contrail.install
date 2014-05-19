@@ -4,3 +4,4 @@ usr/lib/python*/dist-packages/pysandesh*
 usr/lib/python*/dist-packages/sandesh-0.1dev*
 usr/lib/python*/dist-packages/sandesh_common*
 usr/lib/python*/dist-packages/vnc_api*
+etc/contrail/vnc_api_lib.ini
