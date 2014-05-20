@@ -1,4 +1,4 @@
-Source: contrail-webui-vendor
+Source: contrail-webui-bundle
 Section: web
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
@@ -9,7 +9,7 @@ Vcs-Browser: https://github.com/Juniper/contrail-packages/
 Vcs-Git: git://github.com/Juniper/contrail-packages.git
 Homepage: https://github.com/Juniper/contrail-web-core/
 
-Package: contrail-webui-vendor
+Package: contrail-webui-bundle
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
 Depends: nodejs (>= 0.8.15), ${misc:Depends}

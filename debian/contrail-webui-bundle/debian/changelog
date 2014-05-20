@@ -1,4 +1,4 @@
-contrail-webui-vendor (VERSION) precise; urgency=low
+contrail-webui-bundle (VERSION) precise; urgency=low
 
   * Initial release.
 
