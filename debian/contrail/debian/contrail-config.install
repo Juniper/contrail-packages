@@ -1,5 +1,6 @@
 usr/bin/contrail-api
 usr/bin/contrail-schema
+usr/bin/ifmap-view
 usr/bin/discovery-server
 etc/contrail/contrail-api.conf
 etc/contrail/contrail-schema.conf

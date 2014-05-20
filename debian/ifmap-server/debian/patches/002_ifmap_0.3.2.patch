@@ -1,0 +1,454 @@
+diff --git a/basicauthusers.properties b/basicauthusers.properties
+index 7b8344f..7a4c06b 100644
+--- a/basicauthusers.properties
++++ b/basicauthusers.properties
+@@ -1,4 +1,20 @@
+ test:test
++test2:test2
++test3:test3
++api-server:api-server
++schema-transformer:schema-transformer
++svc-monitor:svc-monitor
++control-user:control-user-passwd
++control-node-1:control-node-1
++control-node-2:control-node-2
++control-node-3:control-node-3
++control-node-4:control-node-4
++control-node-5:control-node-5
++control-node-6:control-node-6
++control-node-7:control-node-7
++control-node-8:control-node-8
++control-node-9:control-node-9
++control-node-10:control-node-10
+ dhcp:dhcp
+ visual:visual
+ sensor:sensor
+diff --git a/ifmap.ini b/ifmap.ini
+new file mode 100644
+index 0000000..5848676
+--- /dev/null
++++ b/ifmap.ini
+@@ -0,0 +1,11 @@
++[program:ifmap]
++directory=/usr/share/irond
++command=/usr/bin/java -Dlog4j.configuration=file:////etc/irond/log4j.properties -jar /usr/libexec/irond.jar
++priority=440
++autostart=true
++killasgroup=true
++stopsignal=KILL
++serverurl=http://localhost:9004
++redirect_stderr=true
++stdout_logfile=/var/log/contrail/ifmap.log
++stderr_logfile=/dev/null
+diff --git a/ifmap.initd.supervisord b/ifmap.initd.supervisord
+new file mode 100644
+index 0000000..bb546e5
+--- /dev/null
++++ b/ifmap.initd.supervisord
+@@ -0,0 +1,6 @@
++#!/usr/bin/env bash
++
++# chkconfig: 2345 99 01
++# description: Juniper Network Virtualization Schema Transformer
++
++supervisorctl -s http://localhost:9004 ${1} `basename ${0}`
+diff --git a/ifmap.kill b/ifmap.kill
+new file mode 100644
+index 0000000..32816ba
+--- /dev/null
++++ b/ifmap.kill
+@@ -0,0 +1 @@
++irond.jar
+diff --git a/ifmap.properties b/ifmap.properties
+index ca15722..ed57a69 100644
+--- a/ifmap.properties
++++ b/ifmap.properties
+@@ -1,102 +1,34 @@
+-# irond main configuration file
+-# =============================
+-
+-# Path to the file where username:password mappings for
+-# basic authentication can be found
+-irond.auth.basic.users.file=basicauthusers.properties
+-
+-# Path to the file where <client identification=publisher-id>
+-# mappings can be found
+-irond.ifmap.publishers.file=publisher.properties
+-
+-# Path to the file where authorization information for MAPC
+-# can be found. Mappings have the following form:
+-# <client identification>=[ro|rw]
+-irond.ifmap.authorization.file=authorization.properties
+-
+-# Path to the java keystore
+-irond.auth.cert.keystore.file=./keystore/irond.jks
+-
+-# Password for the java keystore
+-# This store contains the private key of the MAPS
+-irond.auth.cert.keystore.pass=mapserver
+-
+-# Path to the java truststore
+-# This store contains the trusted MAPC certificates
+-irond.auth.cert.truststore.file=./keystore/irond.jks
+-
+-# Password for the java truststore
+-irond.auth.cert.truststore.pass=mapserver
+-
+-# Port to be used for communication with clients using
+-# basic authentication
++#Sun May 27 15:36:23 PDT 2012
+ irond.comm.basicauth.port=8443
+-
+-# Port to be used for communication wie clients using
+-# certificate-based authentication
+ irond.comm.certauth.port=8444
+-
+-# Specifies whether raw requests are to be logged.
+-# This makes everything a lot slower, but might be
+-# useful in some circumstances. The file to log
+-# into can be adjusted in the log4j.properties file
+ irond.comm.rawlog=false
+-
+-# Whether the administrative-domain field of identifiers
+-# should be treated case-sensitive.
++irond.ifmap.casesensitive.sipUri=true
++irond.auth.cert.truststore.pass=mapserver
++irond.proc.event.forwarders=2
++irond.ifmap.casesensitive.telUri=true
++irond.ifmap.restrict.purgepublisher=true
++irond.proc.event.workers=4
++irond.ifmap.casesensitive.hipHit=true
+ irond.ifmap.casesensitive.administrativedomain=true
+-
+-# Whether the values of different Identity subtypes
+-# should be treated case-sensitive.
++irond.proc.action.workers=1
++irond.xml.schema.0=schema/soap12.xsd
++irond.xml.validate=true
++irond.ifmap.casesensitive.trustedPlatformModule=true
++irond.proc.action.forwarders=1
++irond.ifmap.casesensitive.userName=true
+ irond.ifmap.casesensitive.aikName=true
++irond.ifmap.session.timeout=180
++irond.ifmap.default.maxpollresultsize=50000000
++irond.ifmap.default.searchresultsize=50000000
++irond.auth.basic.users.file=/etc/irond/basicauthusers.properties
++irond.auth.cert.keystore.file=/usr/share/irond/keystore/irond.jks
++irond.ifmap.casesensitive.emailAddress=true
+ irond.ifmap.casesensitive.distinguishedName=true
+ irond.ifmap.casesensitive.dnsName=true
+-irond.ifmap.casesensitive.emailAddress=true
+-irond.ifmap.casesensitive.hipHit=true
+-irond.ifmap.casesensitive.kerberosPrincipal=true
++irond.auth.cert.keystore.pass=mapserver
+ irond.ifmap.casesensitive.other=true
+-irond.ifmap.casesensitive.sipUri=true
+-irond.ifmap.casesensitive.telUri=true
+-irond.ifmap.casesensitive.trustedPlatformModule=true
+-irond.ifmap.casesensitive.userName=true
+-
+-# The default max-poll-result-size for subscriptions value in bytes
+-irond.ifmap.default.maxpollresultsize=5000000
+-
+-# The default max-size value for search requests in bytes
+-irond.ifmap.default.searchresultsize=100000
+-
+-# If this is true, only purging of the own metadata is possible
+-irond.ifmap.restrict.purgepublisher=true
+-
+-# Setting this to true will enable certain sanity checks on graph data. 
+-# Enabling will cause performance penalties. 
++irond.ifmap.casesensitive.kerberosPrincipal=true
+ irond.ifmap.default.sanitychecks=false
+-
+-# Whether or not the received schema is checked against the
+-# IF-MAP 2.0 base schema. Turning this off might expose bugs,
+-# because some parts of irond rely on the XML validation to
+-# filter out bad requests.
+-irond.xml.validate=true
+-
+-# Which schema to validate requests against.
+-# Note, the schema/soap12.xsd includes the
+-# schema/ifmap-base-2.0v17.xsd file.
+-irond.xml.schema.0=schema/soap12.xsd
+-
+-# If, for some reason you need to specify another schema list
+-# it here. Note, however, all elements under a <metadata> element
+-# are not validate, so specifying the schemas for metadata won't
+-# work.
+-# irond.xml.schema.1=schema/somethingelse.xsd
+-
+-# irond works with two queues. The number of forwarder and worker
+-# threads to be used for event and action processing can be
+-# configured here.
+-# If you don't know what they are good for, leave them as they
+-# are. In any case, leave the irond.proc.action.* entries set
+-# to 1. This part is not yet thread safe.
+-irond.proc.action.forwarders=1
+-irond.proc.action.workers=1
+-irond.proc.event.forwarders=2
+-irond.proc.event.workers=4
++irond.ifmap.publishers.file=/etc/irond/publisher.properties
++irond.ifmap.authorization.file=/etc/irond/authorization.properties
++irond.auth.cert.truststore.file=/usr/share/irond/keystore/irond.jks
+diff --git a/irond.spec b/irond.spec
+new file mode 100644
+index 0000000..f64e8b3
+--- /dev/null
++++ b/irond.spec
+@@ -0,0 +1,105 @@
++Summary: IFMap server %{?_gitVer}
++%if 0%{?_buildTag:1}
++%define         _relstr      %{_buildTag}
++%else
++%define         _relstr      %(date -u +%y%m%d%H%M)
++%endif
++%{echo: "Building release %{_relstr}\n"}
++
++Name: irond
++Version: 1.0
++License: Apache License, Version 2.0
++Release: %{_relstr}
++Group: Contrail
++URL: http://trust.inform.fh-hannover.de
++Source0: %{name}-%{version}.tar.gz
++#BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
++
++BuildArch: noarch
++BuildRequires: ant
++
++Requires: jre >= 1.6
++Requires: log4j
++Requires: slf4j
++Requires: apache-commons-codec
++
++%description
++
++%prep
++if [ ! -d ifmap-server  ]; then
++    git clone ssh://git@bitbucket.org/contrail_admin/ifmap-server
++else
++    (cd ifmap-server; git pull)
++fi
++
++%build
++(cd ifmap-server; ant)
++
++%install
++pushd ifmap-server
++install -p -D -m 640 build/irond.jar %{buildroot}%{_libexecdir}/irond.jar
++install -d -m 755 %{buildroot}%{_bindir}
++cat > %{buildroot}%{_bindir}/%{name} << EOF
++#!/usr/bin/env bash
++java -jar %{_libexecdir}/irond.jar
++(cd %{_datadir}/%{name}; /usr/bin/java -Dlog4j.configuration=file:///%{_sysconfdir}/%{name}/log4j.properties -jar /usr/libexec/irond.jar)
++EOF
++
++chmod 755 %{buildroot}%{_bindir}/%{name}
++install -d -m 755 %{buildroot}%{_datadir}/%{name}/schema
++install -d -m 755 %{buildroot}%{_datadir}/%{name}/keystore
++install -d -m 755 %{buildroot}%{_datadir}/%{name}/lib
++install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}/
++install -p -D -m 644 schema/*.xsd %{buildroot}%{_datadir}/%{name}/schema
++install -p -D -m 644 schema/ifmap-2.0.wsdl %{buildroot}%{_datadir}/%{name}/schema
++install -p -D -m 644 ifmap.properties %{buildroot}%{_sysconfdir}/%{name}/ifmap.properties.rpmsave
++install -p -D -m 644 log4j.properties %{buildroot}%{_sysconfdir}/%{name}/log4j.properties.rpmsave
++install -p -D -m 644 publisher.properties %{buildroot}%{_sysconfdir}/%{name}/publisher.properties.rpmsave
++install -p -D -m 644 authorization.properties %{buildroot}%{_sysconfdir}/%{name}/authorization.properties.rpmsave
++install -p -D -m 644 basicauthusers.properties %{buildroot}%{_sysconfdir}/%{name}/basicauthusers.properties.rpmsave
++install -p -D -m 644 keystore/irond.jks %{buildroot}%{_datadir}/%{name}/keystore
++install -p -D -m 644 keystore/irond.pem %{buildroot}%{_datadir}/%{name}/keystore
++install -p -D -m 644 keystore/irond.pem %{buildroot}%{_datadir}/%{name}/keystore
++install -p -D -m 644 lib/astyanax-0.8.12-SNAPSHOT.jar %{buildroot}%{_datadir}/%{name}/lib
++install -p -D -m 644 lib/guava-12.0.jar %{buildroot}%{_datadir}/%{name}/lib
++install -p -D -m 644 lib/high-scale-lib-1.1.2.jar %{buildroot}%{_datadir}/%{name}/lib
++install -p -D -m 644 lib/httpcore-4.2.jar %{buildroot}%{_datadir}/%{name}/lib
++install -p -D -m 644 lib/commons-codec-1.5.jar %{buildroot}%{_datadir}/%{name}/lib/commons-codec.jar
++install -p -D -m 644 lib/log4j-1.2.16.jar %{buildroot}%{_datadir}/%{name}/lib/log4j.jar
++install -p -D -m 755 ifmap.ini %{buildroot}%{_sysconfdir}/contrail/supervisord_config_files/ifmap.ini
++install -p -D -m 755 ifmap.kill %{buildroot}%{_sysconfdir}/contrail/supervisord_config_files/ifmap.kill
++install -p -D -m 755 ifmap.initd.supervisord %{buildroot}/etc/init.d/ifmap
++
++%clean
++rm -rf $RPM_BUILD_ROOT
++
++%files
++%defattr(-,root,root,-)
++%doc
++%{_bindir}/%{name}
++%{_libexecdir}/irond.jar
++%{_sysconfdir}/%{name}/*.properties.rpmsave
++%{_datadir}/%{name}/schema
++%{_datadir}/%{name}/keystore
++%{_datadir}/%{name}/lib
++%{_sysconfdir}/contrail/supervisord_config_files/ifmap.ini
++%{_sysconfdir}/contrail/supervisord_config_files/ifmap.kill
++/etc/init.d/ifmap
++
++%post
++%if 0%{?fedora} >= 17
++if [ $1 -eq 1 ] ; then
++   /bin/systemctl daemon-reload > /dev/null
++fi
++%endif
++
++[ -f %{_sysconfdir}/%{name}/ifmap.properties ] || mv %{_sysconfdir}/%{name}/ifmap.properties.rpmsave  %{_sysconfdir}/%{name}/ifmap.properties
++[ -f %{_sysconfdir}/%{name}/log4j.properties ] || mv %{_sysconfdir}/%{name}/log4j.properties.rpmsave  %{_sysconfdir}/%{name}/log4j.properties
++[ -f %{_sysconfdir}/%{name}/publisher.properties ] || mv %{_sysconfdir}/%{name}/publisher.properties.rpmsave  %{_sysconfdir}/%{name}/publisher.properties
++[ -f %{_sysconfdir}/%{name}/authorization.properties ] || mv %{_sysconfdir}/%{name}/authorization.properties.rpmsave  %{_sysconfdir}/%{name}/authorization.properties
++[ -f %{_sysconfdir}/%{name}/basicauthusers.properties ] || mv %{_sysconfdir}/%{name}/basicauthusers.properties.rpmsave  %{_sysconfdir}/%{name}/basicauthusers.properties
++
++%changelog
++* Wed Dec 12 2012 Pedro Marques <roque@build02> - 
++- Initial build.
++
+diff --git a/log4j.properties b/log4j.properties
+index 40bb47e..741fa21 100644
+--- a/log4j.properties
++++ b/log4j.properties
+@@ -2,25 +2,25 @@
+ log4j.rootLogger=TRACE, CONSOLE
+ log4j.error
+ 
+-log4j.logger.de.fhhannover.inform.irond.proc=TRACE, A1, A2
+-log4j.additivity.de.fhhannover.inform.irond.proc=false
++#log4j.logger.de.fhhannover.inform.irond.proc=TRACE, A1, A2
++#log4j.additivity.de.fhhannover.inform.irond.proc=false
+ 
+-log4j.appender.A1=org.apache.log4j.ConsoleAppender
+-log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+-log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p %x - %m%n
++#log4j.appender.A1=org.apache.log4j.ConsoleAppender
++#log4j.appender.A1.layout=org.apache.log4j.PatternLayout
++#log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p %x - %m%n
+ 
+-log4j.appender.A2=org.apache.log4j.FileAppender
+-log4j.appender.A2.File=irond.log
+-log4j.appender.A2.layout=org.apache.log4j.PatternLayout
+-log4j.appender.A2.layout.ConversionPattern=%d [%t] %-5p %x - %m%n
++#log4j.appender.A2=org.apache.log4j.FileAppender
++#log4j.appender.A2.File=/var/log/irond.log
++#log4j.appender.A2.layout=org.apache.log4j.PatternLayout
++#log4j.appender.A2.layout.ConversionPattern=%d [%t] %-5p %x - %m%n
+ 
+-log4j.logger.de.fhhannover.inform.irond.rawrequests=TRACE, A3
+-log4j.additivity.de.fhhannover.inform.irond.rawrequests=false
+-log4j.appender.A3=org.apache.log4j.FileAppender
+-log4j.appender.A3.file=irond_raw.log
+-log4j.appender.A3.layout=org.apache.log4j.PatternLayout
+-log4j.appender.A3.layout.ConversionPattern=%d %-5p %x - %m%n
++#log4j.logger.de.fhhannover.inform.irond.rawrequests=TRACE, A3
++#log4j.additivity.de.fhhannover.inform.irond.rawrequests=false
++#log4j.appender.A3=org.apache.log4j.FileAppender
++#log4j.appender.A3.file=/var/log/irond_raw.log
++#log4j.appender.A3.layout=org.apache.log4j.PatternLayout
++#log4j.appender.A3.layout.ConversionPattern=%d %-5p %x - %m%n
+ 
+-log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
+-log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
+-log4j.appender.CONSOLE.layout.ConversionPattern=%-8r [%t] %-5p %C{1} %x - %m%n
++#log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
++#log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
++#log4j.appender.CONSOLE.layout.ConversionPattern=%-8r [%t] %-5p %C{1} %x - %m%n
+diff --git a/publisher.properties b/publisher.properties
+index e69de29..90d2a88 100644
+--- a/publisher.properties
++++ b/publisher.properties
+@@ -0,0 +1,16 @@
++#Sun May 27 15:47:44 PDT 2012
++visual=visual--1877135140-1
++test=test--1870931913-1
++test2=test2--1870931914-1
++test3=test3--1870931915-1
++api-server=api-server-1--0000000001-1
++control-node-1=control-node-1--1870931921-1
++control-node-2=control-node-1--1870931922-1
++control-node-3=control-node-1--1870931923-1
++control-node-4=control-node-1--1870931924-1
++control-node-5=control-node-1--1870931925-1
++control-node-6=control-node-1--1870931926-1
++control-node-7=control-node-1--1870931927-1
++control-node-8=control-node-1--1870931928-1
++control-node-9=control-node-1--1870931929-1
++control-node-10=control-node-10--1870931930-1
+diff --git a/src/de/fhhannover/inform/iron/mapserver/Main.java b/src/de/fhhannover/inform/iron/mapserver/Main.java
+index 3170645..1d1755f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/Main.java
++++ b/src/de/fhhannover/inform/iron/mapserver/Main.java
+@@ -21,6 +21,7 @@
+ 
+ package de.fhhannover.inform.iron.mapserver;
+ 
++import java.lang.System;
+ import javax.xml.bind.Unmarshaller;
+ 
+ import org.apache.log4j.Logger;
+@@ -77,7 +78,7 @@ public class Main {
+ 	/**
+ 	 * The name of the default configuration file.
+ 	 */
+-	private static final String MAIN_CONFIGUARTION_FILE = "ifmap.properties";
++	private static final String MAIN_CONFIGURATION_FILE = "/etc/ifmap-server/ifmap.properties";
+ 	
+ 	/**
+ 	 * Our static logger instance
+@@ -194,7 +195,9 @@ public class Main {
+ 	private void init() throws ServerInitialException {
+ 		
+ 		try {
+-			mServerConfig = new ServerConfigurationProviderPropImpl(MAIN_CONFIGUARTION_FILE);
++		        String filename = System.getProperty("irond.configuration",
++							 MAIN_CONFIGURATION_FILE);
++			mServerConfig = new ServerConfigurationProviderPropImpl(filename);
+ 			mPublisherIdProvider = new PublisherIdProviderPropImpl(mServerConfig);
+ 			mPublisherIdGenerator = new PublisherIdGeneratorImpl();
+ 			mSessionIdProvider = new RandomSessionIdProvider();
+diff --git a/src/de/fhhannover/inform/iron/mapserver/provider/BasicAuthProviderPropImpl.java b/src/de/fhhannover/inform/iron/mapserver/provider/BasicAuthProviderPropImpl.java
+index 510baed..bbfe36f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/provider/BasicAuthProviderPropImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/provider/BasicAuthProviderPropImpl.java
+@@ -40,7 +40,8 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  */
+ public class BasicAuthProviderPropImpl implements BasicAuthProvider {
+ 
+-	private PropertiesReaderWriter mProperties;
++	private String mPropertiesFileName;
++
+ 	
+ 	public BasicAuthProviderPropImpl(ServerConfigurationProvider serverConf)
+ 										throws ProviderInitializationException{
+@@ -49,8 +50,14 @@ public class BasicAuthProviderPropImpl implements BasicAuthProvider {
+ 	
+ 	@Override
+ 	public boolean verify(String username, String password) {
+-		String passFile = mProperties.getProperty(username);
+-		return password.equals(passFile);
++		try {
++			PropertiesReaderWriter props = new PropertiesReaderWriter(mPropertiesFileName, true);
++			String passFile = props.getProperty(username);
++			return password.equals(passFile);
++		} catch (IOException e) {
++			return false;
++		}
++
+ 	}
+ 
+ 	private void loadPropertiesFile(ServerConfigurationProvider serverConf)
+@@ -62,7 +69,8 @@ public class BasicAuthProviderPropImpl implements BasicAuthProvider {
+ 				throw new ProviderInitializationException(
+ 						"basic auth user/pass file not given");
+ 			}
+-			mProperties = new PropertiesReaderWriter(fileName, true);
++			PropertiesReaderWriter testProps = new PropertiesReaderWriter(fileName, true);
++                        mPropertiesFileName = fileName;
+ 		} catch (IOException e) {
+ 			throw new ProviderInitializationException(e.getMessage());
+ 		}
+diff --git a/start.sh b/start.sh
+index e8b464a..95f29f2 100755
+--- a/start.sh
++++ b/start.sh
+@@ -1,2 +1,2 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ java -jar irond.jar
