@@ -21,16 +21,3 @@ Description: OpenStack virtual network service - Opencontrail
  network capabilities, including QoS, ACLs, and network monitoring.
  .
  This package provides the OpenContrail neutron server plugin.
-
-Package: neutron-plugin-contrail-agent
-Architecture: all
-Pre-Depends: dpkg (>= 1.15.6~)
-Depends: ${misc:Depends}, ${python:Depends}, python-contrail-vrouter-api
-Recommends: ${python:Recommends}
-Description: OpenStack virtual network service - Opencontrail agent
- Neutron provides an API to dynamically request and configure virtual networks.
- These networks connect "interfaces" from other OpenStack services (such as
- vNICs from Nova VMs). The Neutron API supports extensions to provide advanced
- network capabilities, including QoS, ACLs, and network monitoring.
- .
- This package provides the OpenContrail agent.
