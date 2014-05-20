@@ -172,6 +172,16 @@ Description: OpenContrail libraries
  The package opencontrail-lib provides a support libraries used by
  OpenContrail control and compute nodes.
 
+Package: contrail-utils
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: OpenContrail tools and utilities
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ The package contrail-utils provides command line utilities and examples
+ scripts to configure and diagnose OpenContrail.
+
 Package: python-contrail-vrouter-api
 Architecture: all
 Section: python
