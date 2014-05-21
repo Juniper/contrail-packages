@@ -24,6 +24,11 @@ override_dh_auto_clean:
 	dh_auto_clean
 	rm -f debian/manpages/*.1
 
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} -i -j 2 -U test 2>&1)
+endif
+
 override_dh_install:
 	@echo "usr/src/vrouter/* usr/src/vrouter-$(DEB_UPSTREAM_VERSION)" > debian/$(package-dkms).install
 	dh_install
