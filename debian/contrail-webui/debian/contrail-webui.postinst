@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ]; then
+
+  # Create the "contrail" user
+  if ! getent passwd contrail > /dev/null 2>&1
+  then
+    adduser --quiet --system --group --home /var/lib/contrail-webui \
+      --no-create-home \
+      --shell /bin/false \
+      --gecos "Juniper OpenContrail daemon" contrail
+  fi
+
+  # Create the "contrail" group if it is missing and set the primary group
+  # of the "contrail" user to this group.
+  if ! getent group contrail > /dev/null 2>&1
+  then
+    addgroup --quiet --system contrail
+    usermod -g contrail contrail
+  fi
+
+  mkdir -p /var/log/contrail-webui
+  chown -R contrail:adm /var/log/contrail-webui
+  chmod 0750 /var/log/contrail-webui
+  chown -R contrail:contrail /var/lib/contrail-webui/ /etc/contrail-webui/
+  chmod 0750 /etc/contrail-webui/
+
+fi
+
+#DEBHELPER#

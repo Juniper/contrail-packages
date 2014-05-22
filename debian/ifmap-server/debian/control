@@ -18,14 +18,15 @@ Homepage: https://github.com/trustathsh/irond/
 Package: ifmap-server
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: default-jre-headless | java-runtime-headless,
+Depends: adduser,
+         default-jre-headless | java-runtime-headless,
          libcommons-codec-java,
          libhttpcore-java,
          liblog4j1.2-java,
          ${java:Depends},
          ${misc:Depends}
 Recommends: ${java:Recommends}
-Description: irond is a IF-MAP MAP server.
+Description: irond is a IF-MAP MAP server
  irond is an experimental IF-MAP 2.0 compliant MAP server written in
  JAVA. irond supports both basic authentication and certificate-based
  authentication (using X.509 certificates) of MAP clients. irond is maintained

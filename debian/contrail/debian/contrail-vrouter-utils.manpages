@@ -1,0 +1,9 @@
+debian/manpages/dropstats.1
+debian/manpages/flow.1
+debian/manpages/mirror.1
+debian/manpages/mpls.1
+debian/manpages/nh.1
+debian/manpages/rt.1
+debian/manpages/vif.1
+debian/manpages/vrfstats.1
+debian/manpages/vxlan.1

@@ -3,18 +3,7 @@
 # This Makefile is copied by repo to the top of the sandbox
 #
 
-#
-# Use the git reference of the controller repository as a version id.
-# TODO: store the git refs for all projects in the manifest in a file
-#
-GIT_REF := $(shell (cd controller; git log --oneline -1) | awk '/[0-9a-f]+/ { print $$1; }')
-
-#
-# Version:
-#    For development packages: <release><branch>~<ref>
-#    For snapshots: <release><branch>~$(shell date +%Y%m%d)
-#
-VERSION ?= 1.1master~$(GIT_REF)
+include tools/packages/versions.mk
 
 #
 # KVERS
@@ -47,16 +36,16 @@ package-ifmap-server: debian-ifmap-server
 package-contrail: debian-contrail
 	$(eval PACKAGE := contrail)
 	@echo "Building package $(PACKAGE)"
-	sed -i 's/VERSION/$(VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 	chmod u+x build/packages/contrail/debian/rules.modules
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules.modules KVERS=$(KVERS) binary-modules)
 
 source-package-contrail: clean-contrail debian-contrail
 	$(eval PACKAGE := contrail)
-	sed -i 's/VERSION/$(VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
 	(cd vrouter; git clean -f -d)
-	tar zcf build/packages/contrail_$(VERSION).orig.tar.gz $(SOURCE_CONTRAIL_ARCHIVE)
+	tar zcf build/packages/contrail_$(CONTRAIL_VERSION).orig.tar.gz $(SOURCE_CONTRAIL_ARCHIVE)
 	@echo "Building source package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
@@ -73,8 +62,20 @@ source-package-ifmap-server: clean-ifmap-server source-ifmap-server debian-ifmap
 package-neutron-plugin-contrail: debian-neutron-plugin-contrail
 	$(eval PACKAGE = neutron-plugin-contrail)
 	cp -R openstack/neutron_plugin/* build/packages/neutron-plugin-contrail
+	sed -i 's/VERSION/$(NEUTRON_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
+source-package-neutron-plugin-contrail: clean-neutron-plugin-contrail debian-neutron-plugin-contrail source-neutron-plugin-contrail
+	$(eval PACKAGE = neutron-plugin-contrail)
+	cp -R openstack/neutron_plugin/* build/packages/neutron-plugin-contrail
+	sed -i 's/VERSION/$(NEUTRON_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	@echo "Building source package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
+
+source-neutron-plugin-contrail: build/packages/neutron-plugin-contrail_$(NEUTRON_VERSION).orig.tar.gz
+build/packages/neutron-plugin-contrail_$(NEUTRON_VERSION).orig.tar.gz:
+	(cd openstack/neutron_plugin && tar zcvf ../../build/packages/neutron-plugin-contrail_$(NEUTRON_VERSION).orig.tar.gz .)
 
 package-%: debian-%
 	$(eval PACKAGE := $(patsubst package-%,%,$@))

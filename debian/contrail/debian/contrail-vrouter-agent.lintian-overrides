@@ -1,1 +1,1 @@
-contrail-compute: binary-without-manpage usr/bin/vnswad
+contrail-vrouter-agent: binary-without-manpage usr/bin/vnswad

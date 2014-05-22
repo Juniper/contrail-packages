@@ -1,0 +1,48 @@
+vif(1) -- OpenContrail vRouter utils
+====================================
+
+## SYNOPSIS
+
+`vif` [<options>]
+
+## DESCRIPTION
+
+The OpenContrail vRouter is a forwarding plane (of a distributed router) that runs in the hypervisor of a virtualized server.
+
+The package opencontrail-vrouter-utils provides command line utilities to configure and diagnose the OpenContrail linux kernel module.
+
+## OPTIONS
+
+* `-h`, `--help`:
+  Show this help message and exit
+
+* `--add`:
+  Add a vif interface (specify [--add <intf_name> --mac <mac> --vrf <vrf>]--type [vhost|agent|physical|virtual][--policy, --mode <mode:x>]]
+
+* `--delete`:
+  Delete a vif interface
+
+* `--get`:
+  Get vif id
+
+* `--set`:
+  Set vif id/vlan
+
+* `--list`:
+  List all vif
+
+## BUGS
+
+Contrail is hosted in Launchpad so you can view current bugs at https://bugs.launchpad.net/opencontrail/.
+
+## AUTHOR
+
+OpenContrail developers <dev@lists.opencontrail.org>
+
+## COPYRIGHT
+
+Copyright (c) 2014 OpenContrail
+
+## SEE ALSO
+
+mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1)

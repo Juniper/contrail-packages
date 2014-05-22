@@ -4,16 +4,14 @@ set -e
 
 if [ "${1}" = "purge" ] ; then
 
-  pkill -9 -f -u contrail irond.jar
-
-  rm -rf /var/log/contrail /var/lib/contrail
+  rm -rf /var/log/contrail-webui /var/lib/contrail-webui
 
   if (which deluser && getent passwd contrail) > /dev/null 2>&1; then
-    deluser --system --quiet --backup-to /var/lib contrail
+    deluser --system --quiet contrail || true
   fi
 
   if (which delgroup && getent group contrail) > /dev/null 2>&1; then
-    delgroup --system --quiet contrail
+    delgroup --system --quiet contrail || true
   fi
 
 fi
