@@ -1,0 +1,5 @@
+contrail-webui-bundle (VERSION) precise; urgency=low
+
+  * Initial release.
+
+ -- Sebastien Badia <seb@sebian.fr>  Fri, 16 May 2014 14:47:27 +0200

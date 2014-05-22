@@ -1,0 +1,3 @@
+/etc/contrail-webui-bundle
+/var/log/contrail-webui-bundle
+/var/lib/contrail-webui-bundle/config

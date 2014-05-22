@@ -1,0 +1,28 @@
+Source: contrail-webui-bundle
+Section: web
+Priority: optional
+Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Uploaders: Sebastien Badia <seb@sebian.fr>
+Build-Depends: debhelper (>= 9), git, nodejs, quilt, redis-server, unzip
+Standards-Version: 3.9.5
+Vcs-Browser: https://github.com/Juniper/contrail-packages/
+Vcs-Git: git://github.com/Juniper/contrail-packages.git
+Homepage: https://github.com/Juniper/contrail-web-core/
+
+Package: contrail-webui-bundle
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: nodejs (>= 0.8.15), ${misc:Depends}
+Recommends: redis-server
+Description: OpenContrail WebUI
+ OpenContrail Web UI for the management of Contrail network virtualization
+ solution. This module interacts with other components of both Contrail network
+ virtualization solution and underlying orchestration systems like Openstack,
+ Cloudstack.
+ .
+ The API requests from web client to web server and web server to other
+ components are REST based.
+ .
+ The code that implements various features of the Web UI (such as Dashboard,
+ Configuration, Monitoring, Reporting) is available in a separate code
+ repository Contrail Web Controller.
