@@ -112,6 +112,7 @@ Description: OpenContrail configuration OpenStack module
 
 Package: contrail-control
 Depends: adduser,
+         authbind,
          contrail-lib (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
