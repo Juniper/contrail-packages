@@ -64,8 +64,8 @@ Depends: node-JSONPath (>= 0.9.1),
          node-winston (>= 0.6.2),
          node-xml2js (>= 0.2.3),
          nodejs (>= 0.8.15),
-         redis-server,
          ${misc:Depends}
+Recommends: redis-server
 Description: OpenContrail WebUI
  OpenContrail Web UI for the management of Contrail network virtualization
  solution. This module interacts with other components of both Contrail network
