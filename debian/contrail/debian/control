@@ -102,7 +102,7 @@ Description: OpenContrail configuration management
 Package: contrail-config-openstack
 Architecture: all
 Depends: contrail-config (= ${source:Version}),
-         python-keystoneclient,
+         python-keystoneclient (>= 0.2.2),
          python-novaclient,
          ${misc:Depends},
          ${python:Depends}
