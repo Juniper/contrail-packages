@@ -11,7 +11,7 @@ script
   COMMAND="/usr/bin/node"
   CONF="/etc/contrail-webui/config.global.js"
   USER="contrail"
-  OPTS="webServerStart.js"
+  OPTS="webServerStart.js > /var/log/contrail-webui/webserver.log 2>&1"
 
   # Allow override of command/conf and opts by /etc/default/daemon-name
   if [ -f /etc/default/$UPSTART_JOB ]; then
