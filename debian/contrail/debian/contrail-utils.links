@@ -4,3 +4,5 @@ usr/share/contrail-utils/provision_vrouter.py usr/sbin/contrail-provision-vroute
 usr/share/contrail-utils/provision_encap.py usr/sbin/contrail-provision-encap
 usr/share/contrail-utils/provision_mx.py usr/sbin/contrail-provision-mx
 usr/share/contrail-utils/provision_vgw_interface.py usr/sbin/contrail-provision-vgw-interface
+usr/share/contrail-utils/add_route_target.py usr/sbin/contrail-add-route-target
+usr/share/contrail-utils/del_route_target.py usr/sbin/contrail-del-route-target
