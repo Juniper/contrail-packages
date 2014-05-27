@@ -8,6 +8,7 @@ psutil python-psutil
 lxml python-lxml
 zope.interface python-zope.interface
 redis python-redis
+thrift python-thrift
 xmltodict python-xmltodict
 prettytable python-prettytable
 novaclient python-novaclient
