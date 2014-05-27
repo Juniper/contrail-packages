@@ -1,0 +1,6 @@
+usr/share/contrail-utils/provision_control.py usr/sbin/contrail-provision-control
+usr/share/contrail-utils/provision_linklocal.py usr/sbin/contrail-provision-linklocal
+usr/share/contrail-utils/provision_vrouter.py usr/sbin/contrail-provision-vrouter
+usr/share/contrail-utils/provision_encap.py usr/sbin/contrail-provision-encap
+usr/share/contrail-utils/provision_mx.py usr/sbin/contrail-provision-mx
+usr/share/contrail-utils/provision_vgw_interface.py usr/sbin/contrail-provision-vgw-interface
