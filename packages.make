@@ -55,11 +55,9 @@ source-package-contrail: clean-contrail debian-contrail
 	@echo "Building source package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
-source-ifmap-server: build/packages/ifmap-server_0.3.2.orig.tar.gz
-build/packages/ifmap-server_0.3.2.orig.tar.gz:
+source-ifmap-server:
 	$(eval PACKAGE := ifmap-server)
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
-	(cd build/packages/$(PACKAGE); tar zcf ../ifmap-server_0.3.2.orig.tar.gz .)
 
 source-package-ifmap-server: clean-ifmap-server source-ifmap-server debian-ifmap-server
 	$(eval PACKAGE := ifmap-server)

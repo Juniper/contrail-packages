@@ -8,13 +8,16 @@ UPSTREAM_NAME = irond
 SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
 TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
 get-orig-source:
-	rm -rf keystore schema soapui-examples src
-	mkdir -p debian/tmp
-#	TODO: site is unreliable use a cache location for the source
-	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
-#	wget -O debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
-	unzip -u debian/tmp/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
-	ls $(UPSTREAM_NAME)-$(SRC_VERSION)-src | xargs -n 1 -I'{}' mv $(UPSTREAM_NAME)-$(SRC_VERSION)-src/'{}' .
-	rmdir $(UPSTREAM_NAME)-$(SRC_VERSION)-src
+	rm -rf get-orig-source $(TARBALL)
+	mkdir get-orig-source
+#	site is unreliable use a cache location for the source
+	wget -O get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+#	wget -O get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+	cd get-orig-source;unzip $(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(UPSTREAM_NAME)-$(SRC_VERSION)-src
+	mv $(TARBALL) ..
+	ls get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src | xargs -n 1 -I'{}' mv get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src/'{}' .
+	rm -rf get-orig-source
+	echo "../$(TARBALL) created"
 
 .PHONY: get-orig-source
