@@ -61,7 +61,7 @@ build/packages/ifmap-server_0.3.2.orig.tar.gz:
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); tar zcf ../ifmap-server_0.3.2.orig.tar.gz .)
 
-source-package-ifmap-server: clean-ifmap-server source-ifmap-server debian-ifmap-server
+source-package-ifmap-server: clean-ifmap-server debian-ifmap-server source-ifmap-server
 	$(eval PACKAGE := ifmap-server)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
