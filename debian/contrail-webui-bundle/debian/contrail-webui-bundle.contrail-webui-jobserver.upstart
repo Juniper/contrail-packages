@@ -1,17 +1,17 @@
-description "Contrail WebUI Web Server"
+description "Contrail WebUI Job Server"
 author "OpenContrail developers <dev@lists.opencontrail.org>"
 
 start on (local-filesystems and net-device-up IFACE!=lo)
 stop on runlevel [!2345]
 
-chdir /var/lib/contrail-webui
+chdir /var/lib/contrail-webui-bundle
 respawn
 
 script
   COMMAND="/usr/bin/node"
-  CONF="/etc/contrail-webui/config.global.js"
+  CONF="/etc/contrail-webui-bundle/config.global.js"
   USER="contrail"
-  OPTS="webServerStart.js > /var/log/contrail-webui/webserver.log 2>&1"
+  OPTS="jobServerStart.js > /var/log/contrail-webui-bundle/jobserver.log 2>&1"
 
   # Allow override of command/conf and opts by /etc/default/daemon-name
   if [ -f /etc/default/$UPSTART_JOB ]; then
@@ -24,8 +24,8 @@ script
   fi
 
   exec start-stop-daemon --start --chuid $USER:$USER \
-        -d /var/lib/contrail-webui \
-        --pidfile /var/run/contrail-webui-webserver.pid \
+        -d /var/lib/contrail-webui-bundle \
+        --pidfile /var/run/contrail-webui-jobserver.pid \
         --exec $COMMAND -- $OPTS
 
 end script

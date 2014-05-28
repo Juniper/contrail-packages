@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+
+export QUILT_PATCHES=debian/patches
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	cd $(SRC_PACKAGE);make package
+
+override_dh_installinit:
+	dh_installinit
+	dh_installinit --name=contrail-webui-jobserver
+	dh_installinit --name=contrail-webui-webserver
+	
+#v1.05 tarball is not working
+#PACKAGE = contrail-webui
+#SRC_PACKAGE = contrail-web-core
+#SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
+#TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
+#get-orig-source:
+#	rm -rf get-orig-source $(TARBALL)
+#	mkdir get-orig-source
+#	wget -q https://github.com/Juniper/$(SRC_PACKAGE)/archive/v$(SRC_VERSION).tar.gz -O get-orig-source/v$(SRC_VERSION).tar.gz
+#	cd get-orig-source; tar xzf v$(SRC_VERSION).tar.gz
+#	cd get-orig-source/$(SRC_PACKAGE)-$(SRC_VERSION);make repos;make fetch-pkgs-prod
+#	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(SRC_PACKAGE)-$(SRC_VERSION)
+#	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
+#	cp -r get-orig-source/$(SRC_PACKAGE)-$(SRC_VERSION)/* .
+#	rm -rf get-orig-source
+#	echo "../$(TARBALL) created"
+#
+#.PHONY: get-orig-source
+
+PACKAGE = contrail-webui-bundle
+SRC_PACKAGE = contrail-web-core
+SRC2_PACKAGE = contrail-web-controller
+SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
+TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
+get-orig-source:
+	rm -rf get-orig-source $(TARBALL)
+	mkdir get-orig-source
+	cd get-orig-source;git clone git@github.com:Juniper/$(SRC_PACKAGE).git
+	cd get-orig-source/$(SRC_PACKAGE);make repos;make fetch-pkgs-prod
+	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(SRC_PACKAGE) $(SRC2_PACKAGE)
+	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
+	cp -r get-orig-source/* .
+	rm -rf get-orig-source
+	echo "../$(TARBALL) created"
+
+.PHONY: get-orig-source
