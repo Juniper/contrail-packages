@@ -139,6 +139,17 @@ Description: OpenContrail control-node
  with each other and with network elements to ensure that network state is
  eventually consistent.
 
+
+Package: contrail-dns
+Depends: contrail-lib (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Architecture: any
+Description: OpenContrail control-dns
+ DNS provides dnsd, named, rndc deamons
+ .
+ Provides vrouter services
+
 Package: contrail-vrouter-agent
 Depends: adduser,
          contrail-lib (= ${binary:Version}),
