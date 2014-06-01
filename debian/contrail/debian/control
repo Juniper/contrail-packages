@@ -141,7 +141,8 @@ Description: OpenContrail control-node
 
 
 Package: contrail-dns
-Depends: contrail-lib (= ${binary:Version}),
+Depends: authbind,
+         contrail-lib (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Architecture: any

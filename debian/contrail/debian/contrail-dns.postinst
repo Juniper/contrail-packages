@@ -20,6 +20,12 @@ if [ "$1" = "configure" ] || [ "$1" = "reconfigure" ] ; then
   chown -R contrail:contrail /etc/contrail/dns
   chmod 0750 /etc/contrail/dns
 
+  # Use authbind to bind amed on a reserved port,
+  # with contrail user privileges
+  touch /etc/authbind/byport/53
+  chown contrail. /etc/authbind/byport/53
+  chmod 0755 /etc/authbind/byport/53
+
 fi
 
 #DEBHELPER#
