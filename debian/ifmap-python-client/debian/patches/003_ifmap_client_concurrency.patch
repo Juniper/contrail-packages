@@ -1,0 +1,36 @@
+diff --git a/third_party/ifmap-python-client/ifmap/client.py b/third_party/ifmap-python-client/ifmap/client.py
+index 8040268..d2e22b1 100644
+--- a/third_party/ifmap-python-client/ifmap/client.py
++++ b/third_party/ifmap-python-client/ifmap/client.py
+@@ -47,6 +47,14 @@ namespaces = {
+ 	'meta'  :   "http://www.trustedcomputinggroup.org/2010/IFMAP-METADATA/2"
+ }
+ 
++# NOTE(sahid): It seems that the geventhttpclient uses gevent.queue.LifoQueue
++# to maintain a pool of connections and according to the doc it is possible
++# to configure the maxsize of the queue with None or a value less than 0 to
++# set the number of connections ulimited otherwise It is actually not possible
++# to set it to None or less than 0 since lock.BoundedSemaphore will return an
++# exception. https://github.com/gwik/geventhttpclient/blob/master/src/geventhttpclient/connectionpool.py#L37
++concurrency = 100 # arbitrary value since it is not possible to use ulimited.
++
+ class client:
+ 	"""
+ 	IF-MAP client
+@@ -97,12 +105,14 @@ class client:
+                                         connection_timeout = None,
+                                         network_timeout = None,
+                                         ssl_options = self.__ssl_options,
+-                                        insecure = True)
++                                        insecure = True,
++                                        concurrency = concurrency)
+                 except TypeError:
+                     self._http = HTTPClient(*self.__url, ssl = True,
+                                         connection_timeout = None,
+                                         network_timeout = None,
+-                                        ssl_options = self.__ssl_options)
++                                        ssl_options = self.__ssl_options,
++                                        concurrency = concurrency)
+ 
+ 
+ 	def last_sent(self):
