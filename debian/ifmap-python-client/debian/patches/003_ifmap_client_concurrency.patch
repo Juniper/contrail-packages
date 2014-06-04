@@ -1,8 +1,15 @@
-diff --git a/third_party/ifmap-python-client/ifmap/client.py b/third_party/ifmap-python-client/ifmap/client.py
-index 8040268..d2e22b1 100644
---- a/third_party/ifmap-python-client/ifmap/client.py
-+++ b/third_party/ifmap-python-client/ifmap/client.py
-@@ -47,6 +47,14 @@ namespaces = {
+Description: adds a concurrency setting for the ifmap client
+ to accept concurrent connections.
+Origin: OpenContrail, https://raw.githubusercontent.com/Juniper/contrail-third-party/master/ifmap-python-patch3.diff
+Forwarded: no
+Last-Update: 2014-06-03
+Author: Sahid Orentino Ferdjaoui <sahid.ferdjaoui@cloudwatt.com>
+Reviewed-by: Edouard Thuleau <edouard.thuleau@cloudwatt.com>
+Index: ifmap-python-client/ifmap/client.py
+===================================================================
+--- ifmap-python-client.orig/ifmap/client.py	2014-06-04 13:14:06.969309974 +0000
++++ ifmap-python-client/ifmap/client.py	2014-06-04 13:15:52.912677639 +0000
+@@ -47,6 +47,14 @@
  	'meta'  :   "http://www.trustedcomputinggroup.org/2010/IFMAP-METADATA/2"
  }
  
@@ -17,7 +24,7 @@ index 8040268..d2e22b1 100644
  class client:
  	"""
  	IF-MAP client
-@@ -97,12 +105,14 @@ class client:
+@@ -97,12 +105,14 @@
                                          connection_timeout = None,
                                          network_timeout = None,
                                          ssl_options = self.__ssl_options,
