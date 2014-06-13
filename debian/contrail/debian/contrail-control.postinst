@@ -1,23 +1,31 @@
 #!/bin/sh
+# OpenContrail developers <dev@lists.opencontrail.org>
 
 set -e
 
-if [ "$1" = "configure" ] || [ "$1" = "reconfigure" ] ; then
+if [ "$1" = "configure" ]; then
 
-  if ! getent group contrail > /dev/null 2>&1
-  then
-    addgroup --system contrail >/dev/null
-  fi
-
+  # Create the "contrail" user
   if ! getent passwd contrail > /dev/null 2>&1
   then
-    adduser --system --home /var/lib/contrail --ingroup contrail --no-create-home --shell /bin/false contrail
+    adduser --quiet --system --group --home /var/lib/contrail \
+      --no-create-home \
+      --shell /bin/false \
+      --gecos "OpenContrail daemon" contrail
+  fi
+
+  # Create the "contrail" group if it is missing and set the primary group
+  # of the "contrail" user to this group.
+  if ! getent group contrail > /dev/null 2>&1
+  then
+    addgroup --quiet --system contrail
+    usermod -g contrail contrail
   fi
 
   mkdir -p /var/log/contrail
   chown -R contrail:adm /var/log/contrail
   chmod 0750 /var/log/contrail
-  chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+  chown -R contrail. /var/lib/contrail/ /etc/contrail/
   chmod 0750 /etc/contrail/
 
   # Use authbind to bind contrail-control on a reserved port,

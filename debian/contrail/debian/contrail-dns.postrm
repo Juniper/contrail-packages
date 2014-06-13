@@ -15,7 +15,7 @@ if [ "${1}" = "purge" ] ; then
     delgroup --system --quiet contrail || true
   fi
 
-  rm -rf /var/log/contrail /var/lib/contrail
+  rm -rf /var/log/named /var/lib/contrail
 
 fi
 
