@@ -1,4 +1,5 @@
 #!/bin/sh
+# OpenContrail developers <dev@lists.opencontrail.org>
 
 set -e
 
@@ -10,7 +11,7 @@ if [ "$1" = "configure" ]; then
     adduser --quiet --system --group --home /var/lib/contrail-webui \
       --no-create-home \
       --shell /bin/false \
-      --gecos "Juniper OpenContrail daemon" contrail
+      --gecos "OpenContrail daemon" contrail
   fi
 
   # Create the "contrail" group if it is missing and set the primary group
@@ -24,7 +25,7 @@ if [ "$1" = "configure" ]; then
   mkdir -p /var/log/contrail-webui
   chown -R contrail:adm /var/log/contrail-webui
   chmod 0750 /var/log/contrail-webui
-  chown -R contrail:contrail /var/lib/contrail-webui/ /etc/contrail-webui/
+  chown -R contrail. /var/lib/contrail-webui/ /etc/contrail-webui/
   chmod 0750 /etc/contrail-webui/
 
 fi
