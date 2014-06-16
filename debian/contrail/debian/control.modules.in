@@ -9,7 +9,7 @@ Build-Depends: module-assistant
 
 Package: contrail-vrouter-_KVERS_
 Architecture: all
-Recommends: kernel-image-_KVERS_
+Recommends: linux-image-_KVERS_
 Depends: contrail-vrouter-utils (= ${binary:Version}), ${misc:Depends}
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - precompiled module version
@@ -22,4 +22,4 @@ Description: OpenContrail VRouter - precompiled module version
  layer services (hence vRouter instead of vSwitch).
  .
  This package contains the someproject loadable kernel modules for the
- kernel-image-_KVERS_ package.
+ linux-image-_KVERS_ package.

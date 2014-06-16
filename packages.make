@@ -27,13 +27,19 @@ all: package-contrail \
      package-ifmap-server \
      package-ifmap-python-client
 
-package-ifmap-server: debian-ifmap-server
+package-ifmap-server: clean-ifmap-server debian-ifmap-server
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
-package-contrail-webui-vendor: debian-contrail-webui-vendor
+package-ifmap-python-client: clean-ifmap-python-client debian-ifmap-python-client
+	$(eval PACKAGE := $(patsubst package-%,%,$@))
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
+package-contrail-webui-bundle: clean-contrail-webui-bundle debian-contrail-webui-bundle
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
