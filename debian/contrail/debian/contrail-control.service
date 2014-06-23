@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# control-node systemd
+#
+[Unit]
+Description=Contrail Control Node
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/control-node.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/authbind /usr/bin/control-node --conf_file /etc/contrail/control-node.conf
+
+[Install]
+WantedBy=multi-user.target

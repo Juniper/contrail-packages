@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# dnsd systemd
+#
+[Unit]
+Description=Contrail DNS Server
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/dnsd.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/dnsd --conf_file /etc/contrail/dns.conf
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# contrail-schema systemd
+#
+[Unit]
+Description=Contrail Schema server
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/contrail-schema.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/contrail-schema --conf_file /etc/contrail/contrail-schema.conf
+
+[Install]
+WantedBy=multi-user.target

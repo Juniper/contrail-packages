@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# named systemd
+#
+[Unit]
+Description=Contrail DNS Server
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/named.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/authbind /usr/bin/named -c /etc/contrail/named.conf
+
+[Install]
+WantedBy=multi-user.target

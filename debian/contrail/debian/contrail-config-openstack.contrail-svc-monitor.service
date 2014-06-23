@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# contrail-svc-monitor systemd
+#
+[Unit]
+Description=Contrail VNC Service Monitor
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/contrail-svc-monitor.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/contrail-svc-monitor --conf_file /etc/contrail/contrail-svc-monitor.conf
+
+[Install]
+WantedBy=multi-user.target

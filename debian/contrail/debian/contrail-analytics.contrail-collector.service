@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# contrail-collector systemd
+#
+[Unit]
+Description=Contrail Analytics Collector
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/contrail-collector.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/contrail-collector --conf_file /etc/contrail/contrail-collector.conf
+
+[Install]
+WantedBy=multi-user.target

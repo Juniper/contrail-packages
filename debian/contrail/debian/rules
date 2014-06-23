@@ -11,7 +11,7 @@ DEB_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:
 package-dkms=contrail-vrouter-dkms
 
 %:
-	dh $@ --with python2
+	dh $@ --with python2,systemd
 
 override_dh_auto_build:
 	cd debian/manpages; ronn -r *.ronn
@@ -27,6 +27,16 @@ override_dh_auto_clean:
 override_dh_install:
 	@echo "usr/src/vrouter/* usr/src/vrouter-$(DEB_UPSTREAM_VERSION)" > debian/$(package-dkms).install
 	dh_install
+
+override_dh_systemd_enable:
+	dh_systemd_enable --name=contrail-api
+	dh_systemd_enable --name=contrail-discovery
+	dh_systemd_enable --name=contrail-dns
+	dh_systemd_enable --name=contrail-schema
+	dh_systemd_enable --name=contrail-svc-monitor
+	dh_systemd_enable --name=contrail-query-engine
+	dh_systemd_enable --name=contrail-analytics-api
+	dh_systemd_enable --name=contrail-collector
 
 override_dh_installinit:
 	dh_installinit

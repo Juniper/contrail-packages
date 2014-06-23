@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# contrail-api systemd
+#
+[Unit]
+Description=Contrail API server
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/contrail-api.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/contrail-api --conf_file /etc/contrail/contrail-api.conf
+
+[Install]
+WantedBy=multi-user.target

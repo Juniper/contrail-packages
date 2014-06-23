@@ -1,0 +1,14 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# vnswad systemd
+#
+[Unit]
+Description=Contrail Vrouter Agent
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/vnswad.pid
+ExecStart=/usr/bin/vnswad --config_file /etc/contrail/contrail-vrouter-agent.conf
+
+[Install]
+WantedBy=multi-user.target

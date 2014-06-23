@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# contrail-query-engine systemd
+#
+[Unit]
+Description=Contrail Query Engine
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/contrail-query-engine.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/contrail-query-engine --conf_file /etc/contrail/contrail-query-engine.conf
+
+[Install]
+WantedBy=multi-user.target

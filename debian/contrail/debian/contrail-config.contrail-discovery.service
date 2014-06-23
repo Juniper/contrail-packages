@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# discovery-server systemd
+#
+[Unit]
+Description=Contrail discovery server
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/discovery-server.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/discovery-server --conf_file /etc/contrail/discovery.conf
+
+[Install]
+WantedBy=multi-user.target

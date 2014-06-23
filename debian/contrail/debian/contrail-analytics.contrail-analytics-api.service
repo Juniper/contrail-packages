@@ -1,0 +1,16 @@
+# OpenContrail developers <dev@lists.opencontrail.org>
+# contrail-analytics-api systemd
+#
+[Unit]
+Description=Contrail Analytics API Implementation
+After=syslog.target network.target local-fs.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/contrail-analytics-api.pid
+User=contrail
+Group=contrail
+ExecStart=/usr/bin/contrail-analytics-api --conf_file /etc/contrail/contrail-analytics-api.conf
+
+[Install]
+WantedBy=multi-user.target
