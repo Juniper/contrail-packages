@@ -33,6 +33,12 @@ package-ifmap-server: clean-ifmap-server debian-ifmap-server
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
+package-ifmap-python-client: clean-ifmap-python-client debian-ifmap-python-client
+	$(eval PACKAGE := $(patsubst package-%,%,$@))
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
 package-contrail-webui-bundle: clean-contrail-webui-bundle debian-contrail-webui-bundle
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
