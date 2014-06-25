@@ -1,2 +1,2 @@
-usr/bin/vnswad
+usr/bin/contrail-vrouter-agent
 etc/contrail/contrail-vrouter-agent.conf
