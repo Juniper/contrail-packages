@@ -8,7 +8,7 @@ chdir /var/run
 respawn
 
 script
-  COMMAND="/usr/bin/vnswad"
+  COMMAND="/usr/bin/contrail-vrouter-agent"
   CONF="/etc/contrail/contrail-vrouter-agent.conf"
   USER="contrail"
   OPTS="--config_file ${CONF}"
