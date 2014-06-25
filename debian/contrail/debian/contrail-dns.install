@@ -4,4 +4,3 @@ usr/bin/rndc
 etc/contrail/dns/dns.conf
 etc/contrail/dns/rndc.conf
 etc/contrail/dns/named.conf
-
