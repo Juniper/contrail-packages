@@ -1,4 +1,5 @@
 #!/bin/sh
+# OpenContrail developers <dev@lists.opencontrail.org>
 
 set -e
 
