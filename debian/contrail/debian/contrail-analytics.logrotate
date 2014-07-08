@@ -1,0 +1,10 @@
+/var/log/contrail/contrail-analytic-api.log
+/var/log/contrail/contrail-collector.log
+/var/log/contrail/query-engine.log
+{
+    daily
+    missingok
+    compress
+    delaycompress
+    notifempty
+}
