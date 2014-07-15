@@ -12,7 +12,7 @@ Homepage: https://github.com/Juniper/contrail-neutron-plugin/
 Package: neutron-plugin-contrail
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: neutron-common, python-contrail, ${misc:Depends}, ${python:Depends}
+Depends: python-contrail, ${misc:Depends}, ${python:Depends}
 Recommends: ${python:Recommends}
 Description: OpenStack virtual network service - Opencontrail
  Neutron provides an API to dynamically request and configure virtual networks.
