@@ -42,8 +42,9 @@ Depends: adduser,
          python-xmltodict,
          ${misc:Depends},
          ${python:Depends},
-         ${shlibs:Depends}
-Recommends: cassandra, redis-server (>= 2.6.13-1)
+         ${shlibs:Depends},
+         redis-server (>= 2.6.13-1)
+Recommends: cassandra12
 Description: OpenContrail analytics
  Analytics nodes are responsible for collecting, collating and presenting
  analytics information for trouble shooting problems and for understanding
