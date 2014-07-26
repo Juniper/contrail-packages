@@ -8,8 +8,8 @@ chdir /var/run
 respawn
 
 script
-  COMMAND="/usr/bin/authbind /usr/bin/control-node"
-  CONF="/etc/contrail/control-node.conf"
+  COMMAND="/usr/bin/authbind /usr/bin/contrail-control"
+  CONF="/etc/contrail/contrail-control.conf"
   USER="contrail"
   OPTS="--conf_file ${CONF}"
 
