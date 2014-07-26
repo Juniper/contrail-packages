@@ -8,8 +8,8 @@ chdir /var/run
 respawn
 
 script
-  COMMAND="/usr/bin/discovery-server"
-  CONF="/etc/contrail/discovery.conf"
+  COMMAND="/usr/bin/contrail-discovery"
+  CONF="/etc/contrail/contrail-discovery.conf"
   USER="contrail"
   OPTS="--conf_file ${CONF}"
 
