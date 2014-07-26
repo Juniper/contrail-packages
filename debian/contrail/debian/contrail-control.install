@@ -1,2 +1,2 @@
-usr/bin/control-node
+usr/bin/contrail-control
 etc/contrail/control-node.conf

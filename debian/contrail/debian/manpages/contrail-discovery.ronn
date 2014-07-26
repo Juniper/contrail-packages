@@ -1,9 +1,9 @@
-discovery-server(1) -- OpenContrail Discovery
+contrail-discovery(1) -- OpenContrail Discovery
 =============================================
 
 ## SYNOPSIS
 
-`discovery-server` [<options>]
+`contrail-discovery` [<options>]
 
 ## DESCRIPTION
 

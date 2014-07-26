@@ -1,4 +1,4 @@
-usr/bin/dnsd
+usr/bin/contrail-dns
 usr/bin/named
 usr/bin/rndc
 etc/contrail/dns/dns.conf

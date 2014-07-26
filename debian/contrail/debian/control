@@ -150,7 +150,7 @@ Depends: authbind,
          ${shlibs:Depends}
 Architecture: any
 Description: OpenContrail control-dns
- DNS provides dnsd, named, rndc deamons
+ DNS provides contrail-dns, named, rndc deamons
  .
  Provides vrouter services
 
