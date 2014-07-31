@@ -171,6 +171,8 @@ Package: python-contrail
 Architecture: all
 Section: python
 Depends: ${misc:Depends}, ${python:Depends}
+Replaces: contrail-libs, contrail-api-lib
+Conflicts: contrail-libs, contrail-api-lib
 Description: OpenContrail python-libs
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
