@@ -161,6 +161,9 @@ Summary:            Contrail Python Lib
 
 Group:              Applications/System
 Obsoletes:          contrail-api-lib
+Requires:	    python-importlib
+Requires:	    python-bottle
+Requires:	    python-gevent
 
 %description -n python-contrail
 Contrail Virtual Router utils package
