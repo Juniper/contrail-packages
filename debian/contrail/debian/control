@@ -212,6 +212,13 @@ Description: OpenContrail vrouter agent api
  between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
  in the OpenContrail API server.
 
+Package: python-opencontrail-vrouter-netns
+Architecture: all
+Section: python
+Depends: contrail-vrouter-agent, ${misc:Depends}, ${python:Depends}
+Description: OpenContrail vrouter network namespace package
+ Script to start or destroy a Linux network namespace.
+
 Package: contrail-vrouter-utils
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
