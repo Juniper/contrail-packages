@@ -1,0 +1,8 @@
+Verified+2: Zuul <zuul@lists.opencontrail.org>
+Approved+1: Sachin Bansal <sachin@contrailsystems.com>
+Code-Review+2: Sachin Bansal <sachin@contrailsystems.com>
+Submitted-by: Zuul <zuul@lists.opencontrail.org>
+Submitted-at: Mon, 18 Aug 2014 23:31:26 -0700
+Reviewed-on: https://review.opencontrail.org/1940
+Project: Juniper/contrail-packages
+Branch: refs/heads/R1.10
