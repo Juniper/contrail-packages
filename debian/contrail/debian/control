@@ -170,7 +170,11 @@ Description: OpenContrail vrouter agent
 Package: python-contrail
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}
+Depends: ${misc:Depends},
+    ${python:Depends}, 
+    python-importlib,
+    python-bottle,
+    python-gevent
 Replaces: contrail-libs, contrail-api-lib
 Conflicts: contrail-libs, contrail-api-lib
 Description: OpenContrail python-libs
