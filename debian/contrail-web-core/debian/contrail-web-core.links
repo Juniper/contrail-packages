@@ -1,0 +1,2 @@
+etc/contrail/config.global.js var/lib/contrail-webui/contrail-web-core/config/config.global.js
+var/lib/contrail-webui/node_modules var/lib/contrail-webui/contrail-web-core/node_modules

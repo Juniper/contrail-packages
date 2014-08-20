@@ -45,6 +45,34 @@ package-contrail-webui-bundle: clean-contrail-webui-bundle debian-contrail-webui
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
+package-contrail-web-core: clean-contrail-web-core debian-contrail-web-core
+	$(eval PACKAGE := $(patsubst package-%,%,$@))
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' debian/changelog)
+	(cd build/packages/$(PACKAGE); make -f debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
+source-package-contrail-web-core: clean-contrail-web-core debian-contrail-web-core
+	$(eval PACKAGE := $(patsubst source-package-%,%,$@))
+	@echo "Building source package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' debian/changelog)
+	(cd build/packages/$(PACKAGE); make -f debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
+
+package-contrail-web-controller: clean-contrail-web-controller debian-contrail-web-controller
+	$(eval PACKAGE := $(patsubst package-%,%,$@))
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' debian/changelog)
+	(cd build/packages/$(PACKAGE); make -f debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
+source-package-contrail-web-controller: clean-contrail-web-controller debian-contrail-web-controller
+	$(eval PACKAGE := $(patsubst source-package-%,%,$@))
+	@echo "Building source package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' debian/changelog)
+	(cd build/packages/$(PACKAGE); make -f debian/rules get-orig-source)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
+
 package-contrail: debian-contrail
 	$(eval PACKAGE := contrail)
 	@echo "Building package $(PACKAGE)"

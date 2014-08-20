@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+BRANCH=--branch R1.06
+PACKAGE = contrail-web-core
+SRC_PACKAGE = contrail-web-core
+SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)/\3/p')
+TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
+DEB_DIR := $(shell pwd)
+
+get-orig-source:
+	echo "Building R1.06... "
+	rm -rf get-orig-source ../$(TARBALL)
+	mkdir get-orig-source
+	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/$(SRC_PACKAGE).git;
+	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/contrail-third-party.git third_party
+	cd get-orig-source/third_party;python ./fetch_packages.py
+	cd get-orig-source/$(SRC_PACKAGE);make package REPO=$(DEB_DIR)/get-orig-source/contrail-web-core
+	cd get-orig-source/$(SRC_PACKAGE); rm -rf Makefile
+	cd get-orig-source/$(SRC_PACKAGE); git clean -f -d
+	GZIP=--best tar czf ../$(TARBALL) -C get-orig-source/$(SRC_PACKAGE) .
+	rm -rf get-orig-source
+	echo "../$(TARBALL) created"
+
+.PHONY: get-orig-source
