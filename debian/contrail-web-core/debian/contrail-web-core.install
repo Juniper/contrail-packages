@@ -1,0 +1,10 @@
+Gruntfile.js /var/lib/contrail-webui/contrail-web-core
+keys /var/lib/contrail-webui/contrail-web-core
+package.json /var/lib/contrail-webui/contrail-web-core
+webroot /var/lib/contrail-webui/contrail-web-core
+jobServerStart.js /var/lib/contrail-webui/contrail-web-core
+node_modules /var/lib/contrail-webui
+src /var/lib/contrail-webui/contrail-web-core
+webServerStart.js /var/lib/contrail-webui/contrail-web-core
+config/config.global.js /etc/contrail
+config/default.config.global.js /var/lib/contrail-webui/contrail-web-core/config
