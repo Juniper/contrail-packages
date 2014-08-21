@@ -397,6 +397,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-logs
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-stats
+/usr/share/doc/python-contrail-analytics-api
 
 %post analytics
 set -e

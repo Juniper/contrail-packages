@@ -8,3 +8,4 @@ etc/contrail/contrail-collector.conf
 etc/contrail/contrail-query-engine.conf
 etc/contrail/contrail-analytics-api.conf
 usr/lib/python*/dist-packages/opserver*
+usr/share/doc/python-contrail-analytics-api usr/share/doc
