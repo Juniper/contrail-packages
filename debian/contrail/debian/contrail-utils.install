@@ -1,1 +1,3 @@
 usr/share/contrail/* usr/share/contrail-utils/
+usr/share/contrail/contrail-status.py  usr/bin/contrail-status
+usr/share/contrail/contrail-version  usr/bin/contrail-version

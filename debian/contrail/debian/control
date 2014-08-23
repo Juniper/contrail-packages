@@ -195,7 +195,11 @@ Description: OpenContrail libraries
 
 Package: contrail-utils
 Architecture: any
-Depends: python-contrail, ${misc:Depends}, ${shlibs:Depends}
+Depends: python-lxml,
+         python-requests,
+         python-contrail (= ${source:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
 Description: OpenContrail tools and utilities
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
