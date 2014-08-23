@@ -35,7 +35,7 @@ Depends: adduser,
          contrail-lib (= ${binary:Version}),
          libprotobuf7,
          python-bottle (>= 0.11.6),
-         python-contrail (= ${source:Version}),
+         python-contrail (>= ${source:Version}),
          python-pkg-resources,
          python-redis (>= 2.8.0-1contrail1),
          python-requests (>= 1.1.0),
@@ -66,7 +66,7 @@ Architecture: all
 Depends: adduser,
          python-bitarray (>= 0.8.0),
          python-bottle (>= 0.11.6),
-         python-contrail (= ${source:Version}),
+         python-contrail (>= ${source:Version}),
          python-geventhttpclient (>= 1.0),
          python-kazoo (>= 1.3.1),
          python-kombu,
@@ -195,7 +195,11 @@ Description: OpenContrail libraries
 
 Package: contrail-utils
 Architecture: any
-Depends: python-contrail, ${misc:Depends}, ${shlibs:Depends}
+Depends: python-lxml,
+         python-requests,
+         python-contrail (>= ${source:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
 Description: OpenContrail tools and utilities
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
