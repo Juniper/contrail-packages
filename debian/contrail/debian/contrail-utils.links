@@ -12,3 +12,5 @@ usr/share/contrail-utils/associate_virtual_dns.py usr/sbin/contrail-associate-vi
 usr/share/contrail-utils/del_virtual_dns.py usr/sbin/contrail-del-virtual-dns
 usr/share/contrail-utils/del_virtual_dns_record.py usr/sbin/contrail-del-virtual-dns-record
 usr/share/contrail-utils/disassociate_virtual_dns.py usr/sbin/contrail-disassociate-virtual-dns
+usr/share/contrail-utils//contrail-status.py usr/bin/contrail-status
+usr/share/contrail-utils//contrail-version usr/bin/contrail-version
