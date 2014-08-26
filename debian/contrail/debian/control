@@ -106,6 +106,7 @@ Package: contrail-config-openstack
 Architecture: all
 Depends: contrail-config (= ${source:Version}),
          python-keystoneclient (>= 0.2.2),
+         python-neutron,
          python-novaclient,
          ${misc:Depends},
          ${python:Depends}
@@ -195,9 +196,9 @@ Description: OpenContrail libraries
 
 Package: contrail-utils
 Architecture: any
-Depends: python-lxml,
+Depends: python-contrail (>= ${source:Version}),
+         python-lxml,
          python-requests,
-         python-contrail (>= ${source:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: OpenContrail tools and utilities
