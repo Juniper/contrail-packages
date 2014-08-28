@@ -222,21 +222,19 @@ This package provides the contrail-vrouter user space agent.
 %{_bindir}/contrail-vrouter-agent
 %{_contrailetc}/contrail-vrouter-agent.conf
 
-%post vrouter-agent
+%pre vrouter-agent
 set -e
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-  getent group contrail >/dev/null || groupadd -r contrail
-  getent passwd contrail >/dev/null || \
-    useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-    -c "OpenContail daemon" contrail
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
 
-  mkdir -p /var/log/contrail
-  chown -R contrail:adm /var/log/contrail
-  chmod 0750 /var/log/contrail
-  chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
-  chmod 0750 /etc/contrail/
-fi
+%post vrouter-agent
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
 
 %package control
 Summary:          Contrail Control
@@ -258,26 +256,27 @@ plane. Not all control plane functions are logically centralized \u2013 some con
 %{_bindir}/contrail-control
 %config(noreplace) %{_contrailetc}/contrail-control.conf
 
+%pre control
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
 %post control
 set -e
-if [ $1 -eq 1 ] ; then
-  # Create the "contrail" user
-  getent group contrail >/dev/null || groupadd -r contrail
-  getent passwd contrail >/dev/null || \
-    useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-    -c "OpenContail daemon" contrail
-
-  mkdir -p /var/log/contrail
-  chown -R contrail:adm /var/log/contrail
-  chmod 0750 /var/log/contrail
-  chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
-  chmod 0750 /etc/contrail/
-  # Use authbind to bind contrail-control on a reserved port,
-  # with contrail user privileges
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
+# Use authbind to bind contrail-control on a reserved port,
+# with contrail user privileges
+if [ ! -f /etc/authbind/byport/179 ]; then
   touch /etc/authbind/byport/179
   chown contrail. /etc/authbind/byport/179
   chmod 0755 /etc/authbind/byport/179
-
 fi
 
 %package python-contrail-vrouter-netns
@@ -349,21 +348,21 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
 
+%pre config
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
 %post config
 set -e
-if [ $1 -eq 1 ] ; then
-  # Create the "contrail" user
-  getent group contrail >/dev/null || groupadd -r contrail
-  getent passwd contrail >/dev/null || \
-    useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-    -c "OpenContail daemon" contrail
-
-  mkdir -p /var/log/contrail
-  chown -R contrail:adm /var/log/contrail
-  chmod 0750 /var/log/contrail
-  chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
-  chmod 0750 /etc/contrail/
-fi
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
 
 %package analytics
 Summary:            Contrail Analytics
@@ -403,21 +402,21 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-stats
 
+%pre analytics
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
 %post analytics
 set -e
-if [ $1 -eq 1 ] ; then
-  # Create the "contrail" user
-  getent group contrail >/dev/null || groupadd -r contrail
-  getent passwd contrail >/dev/null || \
-    useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-    -c "OpenContail daemon" contrail
-
-  mkdir -p /var/log/contrail
-  chown -R contrail:adm /var/log/contrail
-  chmod 0750 /var/log/contrail
-  chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
-  chmod 0750 /etc/contrail/
-fi
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
 
 %package dns
 Summary:            Contrail Dns
@@ -430,25 +429,25 @@ Contrail dns  package
 DNS provides dnsd, named, rndc deamons
 Provides vrouter services
 
+%pre dns
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
 %post dns
 set -e
+mkdir -p /var/log/named /etc/contrail/dns
+chown -R contrail:adm /var/log/named
+chmod 0750 /var/log/named
+chown -R contrail. /etc/contrail/dns
+chmod 0750 /etc/contrail/dns
 
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-  # Create the "contrail" user
-  getent group contrail >/dev/null || groupadd -r contrail
-  getent passwd contrail >/dev/null || \
-    useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-    -c "OpenContail daemon" contrail
-
-  mkdir -p /var/log/named
-  chown -R contrail:adm /var/log/named
-  chmod 0750 /var/log/named
-  chown -R contrail. /etc/contrail/dns
-  chmod 0750 /etc/contrail/dns
-
- # Use authbind to bind amed on a reserved port,
- # with contrail user privileges
+# Use authbind to bind amed on a reserved port,
+# with contrail user privileges
+if [ ! -f /etc/authbind/byport/53 ]; then
   touch /etc/authbind/byport/53
   chown contrail. /etc/authbind/byport/53
   chmod 0755 /etc/authbind/byport/53
