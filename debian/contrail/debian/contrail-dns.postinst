@@ -22,7 +22,7 @@ if [ "$1" = "configure" ]; then
     usermod -g contrail contrail
   fi
 
-  mkdir -p /var/log/named
+  mkdir -p /var/log/named /etc/contrail/dns
   chown -R contrail:adm /var/log/named
   chmod 0750 /var/log/named
   chown -R contrail. /etc/contrail/dns
@@ -30,9 +30,11 @@ if [ "$1" = "configure" ]; then
 
   # Use authbind to bind amed on a reserved port,
   # with contrail user privileges
-  touch /etc/authbind/byport/53
-  chown contrail. /etc/authbind/byport/53
-  chmod 0755 /etc/authbind/byport/53
+  if [ ! -f /etc/authbind/byport/53 ]; then 
+    touch /etc/authbind/byport/53
+    chown contrail. /etc/authbind/byport/53
+    chmod 0755 /etc/authbind/byport/53
+  fi
 
 fi
 
