@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ]; then
+  sed -i -e 's/6383/6379/' /etc/contrail/config.global.js
+  sed -i -e 's/config.discoveryService.enable = true/config.discoveryService.enable = false/' /etc/contrail/config.global.js
+  sed -i -e 's/\/usr\/src\/contrail/\/var\/lib\/contrail-webui/' /etc/contrail/config.global.js
+fi
+
+#DEBHELPER#
