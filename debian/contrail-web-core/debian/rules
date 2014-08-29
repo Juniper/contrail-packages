@@ -1,0 +1,36 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+#BRANCH=--branch R1.06
+#TAGS=tags/v1.06
+SRC_PACKAGE = contrail-web-core
+SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)/\3/p')
+TARBALL = $(SRC_PACKAGE)_$(SRC_VERSION).orig.tar.gz
+DEB_DIR := $(shell pwd)
+
+get-orig-source:
+	if [ "$(BRANCH)x" != "x" ] ; then \
+	    echo "Building $(BRANCH)... "; \
+	else \
+	    echo "Building mainline... "; \
+	fi
+	rm -rf get-orig-source ../$(TARBALL)
+	mkdir get-orig-source
+	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/$(SRC_PACKAGE).git
+	if [ "$(TAGS)x" != "x" ] ; then \
+	    cd get-orig-source/$(SRC_PACKAGE);git checkout $(TAGS); \
+	fi
+	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/contrail-webui-third-party.git
+	if [ "$(TAGS)x" != "x" ] ; then \
+	    cd get-orig-source/contrail-webui-third-party;git checkout $(TAGS); \
+	fi
+	cd get-orig-source/contrail-webui-third-party;python ./fetch_packages.py
+	cd get-orig-source/$(SRC_PACKAGE);make package REPO=$(DEB_DIR)/get-orig-source/contrail-web-core
+	cd get-orig-source/$(SRC_PACKAGE); rm -rf Makefile
+	GZIP=--best tar czf ../$(TARBALL) -C get-orig-source/$(SRC_PACKAGE) .
+	rm -rf get-orig-source
+	echo "../$(TARBALL) created"
+
+.PHONY: get-orig-source
