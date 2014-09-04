@@ -35,7 +35,6 @@ Package: contrail-analytics
 Architecture: any
 Depends: adduser,
          contrail-lib (= ${binary:Version}),
-         libprotobuf7,
          python-bottle (>= 0.11.6),
          python-contrail (>= ${source:Version}),
          python-pkg-resources,
