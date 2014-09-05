@@ -15,5 +15,5 @@
  Manifest-Version: 1.0
  Main-Class: de.fhhannover.inform.iron.mapserver.Main
 -Class-Path: . lib/log4j-1.2.16.jar lib/commons-codec-1.5.jar lib/httpcore-4.1.3.jar
-+Class-Path: . /usr/share/java/log4j-1.2.jar /usr/share/java/commons-codec-1.5.jar /usr/share/java/httpcore.jar
++Class-Path: . /usr/share/java/log4j-1.2.jar /usr/share/java/commons-codec.jar /usr/share/java/httpcore.jar
  
