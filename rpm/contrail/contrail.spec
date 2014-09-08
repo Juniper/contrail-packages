@@ -403,6 +403,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-logs
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-stats
+/usr/share/doc/contrail-analytics-api
 
 %pre analytics
 set -e
