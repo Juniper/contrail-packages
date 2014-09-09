@@ -22,6 +22,7 @@ KEYOPT=-k$(KEYID)
 #
 SOURCE_CONTRAIL_DIRS:=$(shell xmllint --xpath '//manifest/project/@path' .repo/manifest.xml | sed -r 's/path=\"([^\"]+)\"/\1/g' | sed 's/tools\/packages//')
 SOURCE_CONTRAIL_ARCHIVE:=SConstruct $(SOURCE_CONTRAIL_DIRS)
+SERIES=$(shell lsb_release -c -s)
 
 all: package-contrail \
      package-ifmap-server \
@@ -49,6 +50,9 @@ package-contrail: debian-contrail
 	$(eval PACKAGE := contrail)
 	@echo "Building package $(PACKAGE)"
 	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+	(cd build/packages/$(PACKAGE)/debian; sed -i '/BUILDDEP_SERIES/r builddep.$(SERIES)' control)
+	sed -i '/BUILDDEP_SERIES/d' build/packages/$(PACKAGE)/debian/control
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 	chmod u+x build/packages/contrail/debian/rules.modules
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules.modules KVERS=$(KVERS) binary-modules)
@@ -56,6 +60,9 @@ package-contrail: debian-contrail
 source-package-contrail: clean-contrail debian-contrail
 	$(eval PACKAGE := contrail)
 	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+	(cd build/packages/$(PACKAGE)/debian; sed -i '/BUILDDEP_SERIES/r builddep.$(SERIES)' control)
+	sed -i '/BUILDDEP_SERIES/d' build/packages/$(PACKAGE)/debian/control
 	(cd vrouter; git clean -f -d)
 	tar zcf build/packages/contrail_$(CONTRAIL_VERSION).orig.tar.gz $(SOURCE_CONTRAIL_ARCHIVE)
 	@echo "Building source package $(PACKAGE)"
