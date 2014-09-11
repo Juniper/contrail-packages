@@ -143,7 +143,6 @@ Description: OpenContrail control-node
  with each other and with network elements to ensure that network state is
  eventually consistent.
 
-
 Package: contrail-dns
 Depends: authbind,
          contrail-lib (= ${binary:Version}),
@@ -171,13 +170,13 @@ Description: OpenContrail vrouter agent
 Package: python-contrail
 Architecture: all
 Section: python
-Depends: ${misc:Depends},
-    ${python:Depends}, 
-    python-importlib,
-    python-bottle,
-    python-gevent
-Replaces: contrail-libs, contrail-api-lib
-Conflicts: contrail-libs, contrail-api-lib
+Depends: python-bottle,
+         python-gevent,
+         python-importlib,
+         ${misc:Depends},
+         ${python:Depends}
+Replaces: contrail-api-lib, contrail-libs
+Conflicts: contrail-api-lib, contrail-libs
 Description: OpenContrail python-libs
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
@@ -218,9 +217,9 @@ Description: OpenContrail vrouter agent api
  in the OpenContrail API server.
 
 Package: python-opencontrail-vrouter-netns
-Architecture: all
+Architecture: any
 Section: python
-Depends: contrail-vrouter-agent, ${misc:Depends}, ${python:Depends}
+Depends: ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter network namespace package
  Script to start or destroy a Linux network namespace.
 
@@ -254,6 +253,7 @@ Architecture: all
 Depends: contrail-vrouter-utils (= ${binary:Version}),
          dkms,
          make,
+         python-opencontrail-vrouter-netns (= ${binary:Version}),
          ${misc:Depends}
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - DKMS version

@@ -10,7 +10,9 @@ Build-Depends: module-assistant
 Package: contrail-vrouter-_KVERS_
 Architecture: all
 Recommends: linux-image-_KVERS_
-Depends: contrail-vrouter-utils (= ${binary:Version}), ${misc:Depends}
+Depends: contrail-vrouter-utils (= ${binary:Version}),
+         python-opencontrail-vrouter-netns (= ${binary:Version}),
+         ${misc:Depends}
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - precompiled module version
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
