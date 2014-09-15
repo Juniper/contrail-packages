@@ -9,3 +9,11 @@ etc/contrail/contrail-query-engine.conf
 etc/contrail/contrail-analytics-api.conf
 usr/lib/python*/dist-packages/opserver*
 usr/share/doc/contrail-analytics-api
+etc/init.d/contrail-collector
+etc/init.d/contrail-query-engine
+etc/init.d/contrail-analytics-api
+etc/contrail/supervisord_analytics.conf
+etc/contrail/supervisord_analytics_files/contrail-analytics.rules
+etc/contrail/supervisord_analytics_files/contrail-collector.ini
+etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
+etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini

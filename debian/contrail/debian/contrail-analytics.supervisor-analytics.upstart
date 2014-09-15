@@ -1,0 +1,29 @@
+description     "Supervisord for VNC Config"
+
+start on runlevel [2345]
+stop on runlevel [016]
+limit core unlimited unlimited
+
+pre-start script
+    ulimit -s unlimited
+    ulimit -c unlimited
+    ulimit -d unlimited
+    ulimit -v unlimited
+    ulimit -n 4096
+end script
+
+script
+    supervisord --nodaemon -c /etc/contrail/supervisord_analytics.conf || true
+    echo "supervisor-analytics start failed...."
+    (lsof | grep -i supervisord_analytics.sock) || true
+    pid=`lsof | grep -i supervisord_analytics.sock | cut -d' ' -f3` || true
+    if [ "x$pid" != "x" ]; then
+        ps uw -p $pid
+    fi
+end script
+
+pre-stop script
+    supervisorctl -s unix:///tmp/supervisord_analytics.sock stop all
+    supervisorctl -s unix:///tmp/supervisord_analytics.sock shutdown
+    /usr/bin/supervisor_killall /etc/contrail/supervisord_analytics_files
+end script
