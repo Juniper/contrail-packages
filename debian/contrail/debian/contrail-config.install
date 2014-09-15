@@ -9,3 +9,15 @@ usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
 usr/lib/python*/dist-packages/vnc_cfg_api_server*
+etc/init.d/contrail-api
+etc/init.d/contrail-schema
+etc/init.d/contrail-svc-monitor
+etc/init.d/contrail-discovery
+etc/init.d/ifmap
+etc/contrail/supervisord_config.conf
+etc/contrail/supervisord_config_files/contrail-api.ini
+etc/contrail/supervisord_config_files/contrail-schema.ini
+etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
+etc/contrail/supervisord_config_files/contrail-discovery.ini
+etc/contrail/supervisord_config_files/contrail-config.rules
+etc/contrail/supervisord_config_files/ifmap.ini
