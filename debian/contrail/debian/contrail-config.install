@@ -9,3 +9,4 @@ usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
 usr/lib/python*/dist-packages/vnc_cfg_api_server*
+usr/share/doc/contrail-config
