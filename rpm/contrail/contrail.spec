@@ -2,6 +2,7 @@
 %define         _contrailutils /opt/contrail/utils
 %define         _distropkgdir tools/packaging/common/control_files
 %define         _contraildns /etc/contrail/dns
+%define         _distrorpmpkgdir tools/packages/rpm/contrail
 
 %if 0%{?_kernel_dir:1}
 %define         _osVer  %(cat %{_kernel_dir}/include/linux/utsrelease.h | cut -d'"' -f2)
@@ -86,6 +87,14 @@ pushd %{_sbtop}/build/noarch/nova_contrail_vif
 python setup.py install --root=%{buildroot}
 popd
 
+# Install supervisor files
+pushd %{_builddir}/..
+install -p -m 755 %{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
+install -p -m 755 %{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
+install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
+install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
+popd
+
 # Install contrail utilities
 install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-version %{buildroot}%{_bindir}/contrail-version
 install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-status.py %{buildroot}%{_bindir}/contrail-status
@@ -148,7 +157,12 @@ This package contains the configuration management modules that interface with O
 %{python_sitelib}/vnc_openstack*
 %{_bindir}/contrail-svc-monitor
 %{_contrailetc}/svc-monitor.conf
+/etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 /usr/share/contrail
+/etc/init.d/contrail-svc-monitor
+
+%post config-openstack
+chmod +x /etc/init.d/contrail-svc-monitor
 
 %package -n python-contrail-vrouter-api
 Summary:            Contrail vrouter api
@@ -223,6 +237,10 @@ This package provides the contrail-vrouter user space agent.
 %defattr(-, root, root)
 %{_bindir}/contrail-vrouter-agent
 %{_contrailetc}/contrail-vrouter-agent.conf
+%{_contrailetc}/supervisord_vrouter.conf
+/etc/init.d/contrail-vrouter-agent
+/etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
+/etc/init.d/supervisor-vrouter
 
 %pre vrouter-agent
 set -e
@@ -237,6 +255,8 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
+chmod +x /etc/init.d/contrail-vrouter-agent
+chmod +x /etc/init.d/supervisor-vrouter
 
 %package control
 Summary:          Contrail Control
@@ -257,6 +277,11 @@ plane. Not all control plane functions are logically centralized \u2013 some con
 %defattr(-,root,root,-)
 %{_bindir}/contrail-control
 %config(noreplace) %{_contrailetc}/contrail-control.conf
+/etc/contrail/supervisord_control.conf
+/etc/contrail/supervisord_control_files/contrail-control.ini
+/etc/contrail/supervisord_control_files/contrail-control.rules
+/etc/init.d/contrail-control
+/etc/init.d/supervisor-control
 
 %pre control
 set -e
@@ -280,6 +305,8 @@ if [ ! -f /etc/authbind/byport/179 ]; then
   chown contrail. /etc/authbind/byport/179
   chmod 0755 /etc/authbind/byport/179
 fi
+chmod +x /etc/init.d/supervisor-control
+chmod +x /etc/init.d/contrail-control
 
 %package python-contrail-vrouter-netns
 
@@ -352,6 +379,15 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %if 0%{?rhel} > 6
 /usr/share/doc/contrail-config/*
 %endif
+/etc/contrail/supervisord_config.conf
+/etc/contrail/supervisord_config_files/contrail-api.ini
+/etc/contrail/supervisord_config_files/contrail-config.rules
+/etc/contrail/supervisord_config_files/contrail-discovery.ini
+/etc/contrail/supervisord_config_files/contrail-schema.ini
+/etc/init.d/contrail-discovery
+/etc/init.d/contrail-schema
+/etc/init.d/contrail-api
+/etc/init.d/supervisor-config
 
 %pre config
 set -e
@@ -368,6 +404,11 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
+chmod +x /etc/init.d/ifmap
+chmod +x /etc/init.d/contrail-api
+chmod +x /etc/init.d/contrail-schema
+chmod +x /etc/init.d/contrail-discovery
+chmod +x /etc/init.d/supervisor-config
 
 %package analytics
 Summary:            Contrail Analytics
@@ -407,6 +448,15 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-stats
 /usr/share/doc/contrail-analytics-api
+/etc/contrail/supervisord_analytics.conf
+/etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
+/etc/contrail/supervisord_analytics_files/contrail-analytics.rules
+/etc/contrail/supervisord_analytics_files/contrail-collector.ini
+/etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
+/etc/init.d/contrail-analytics-api
+/etc/init.d/contrail-collector
+/etc/init.d/contrail-query-engine
+/etc/init.d/supervisor-analytics
 
 %pre analytics
 set -e
@@ -423,6 +473,10 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
+chmod +x /etc/init.d/supervisor-analytics
+chmod +x /etc/init.d/contrail-analytics-api
+chmod +x /etc/init.d/contrail-collector
+chmod +x /etc/init.d/contrail-query-engine
 
 %package dns
 Summary:            Contrail Dns
@@ -450,6 +504,8 @@ chown -R contrail:adm /var/log/named
 chmod 0750 /var/log/named
 chown -R contrail. /etc/contrail/dns
 chmod 0750 /etc/contrail/dns
+chmod +x /etc/init.d/contrail-dns
+chmod +x /etc/init.d/contrail-named
 
 # Use authbind to bind amed on a reserved port,
 # with contrail user privileges
@@ -472,6 +528,10 @@ fi
 %if 0%{?rhel} > 6
 /usr/lib/python2.7/site-packages/doc/*
 %endif
+/etc/contrail/supervisord_control_files/contrail-dns.ini
+/etc/contrail/supervisord_control_files/contrail-named.ini
+/etc/init.d/contrail-dns
+/etc/init.d/contrail-named
 
 %package nova-vif
 Summary:            Contrail nova vif driver

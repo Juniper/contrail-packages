@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+# chkconfig: 2345 11 01
+# description: Supervisord instance for Contrail Agent Package
+
+ulimit -c unlimited
+. /etc/init.d/functions
+
+function log_success_msg() {
+    success
+}
+function log_failure_msg() {
+    failure
+}
+
+PID_FILE=/var/run/supervisord-vrouter.pid
+
+function daemon_start() {
+     echo  -n "Starting Supervisor Daemon for Contrail Agent Package"
+     /etc/contrail/vnagent_ExecStartPre.sh
+     ulimit -s unlimited
+     ulimit -c unlimited
+     ulimit -d unlimited
+     ulimit -v unlimited
+     ulimit -n 4096
+     /usr/bin/supervisord -c /etc/contrail/supervisord_vrouter.conf 
+     /etc/contrail/vnagent_ExecStartPost.sh
+     RETVAL=$?
+
+     if [ $RETVAL -ne 0 ]; then
+        echo "supervisor-vrouter start failed. checking lsof.."
+        lsof | grep -i supervisord_vrouter.sock
+        if [ $? -eq 0 ]; then
+            echo "Another program listening on same socket"
+            pid=`lsof | grep -i supervisord_vrouter.sock | cut -d' ' -f3`
+            if [ "x$pid" != "x" ] ; then
+                ps uw -p $pid
+            fi
+        fi
+     fi
+
+}
+
+function daemon_stop() {
+    /usr/bin/supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
+    /usr/bin/supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
+    if [ -f $PID_FILE ]; then
+        kill `cat $PID_FILE`
+        rm -f $PID_FILE
+    fi
+    /etc/contrail/vnagent_ExecStopPost.sh
+
+}
+
+daemon_status() {
+    declare -f -F status > /dev/null
+    if [ "$?" = "0" ]; then
+        status -p $PID_FILE supervisord
+    else
+        declare -f -F status_of_proc > /dev/null
+        if [ "$?" = "0" ]; then
+            status_of_proc -p $PID_FILE supervisord vrouter
+        fi
+    fi
+}
+
+daemon_status_q() {
+    daemon_status >/dev/null 2>&1
+}
+
+case $1 in
+     start)
+     daemon_status_q && exit 0
+     daemon_start
+     ;;
+
+     stop)
+     daemon_status_q || exit 0
+     daemon_stop
+     ;;
+
+     restart)
+     daemon_stop
+     daemon_start
+     ;;
+
+     status)
+        daemon_status
+     ;;
+esac
