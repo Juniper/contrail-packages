@@ -108,6 +108,7 @@ package-neutron-plugin-contrail: debian-neutron-plugin-contrail
 	$(eval PACKAGE = neutron-plugin-contrail)
 	cp -R openstack/neutron_plugin/* build/packages/neutron-plugin-contrail
 	sed -i 's/VERSION/$(NEUTRON_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
@@ -115,6 +116,7 @@ source-package-neutron-plugin-contrail: clean-neutron-plugin-contrail debian-neu
 	$(eval PACKAGE = neutron-plugin-contrail)
 	cp -R openstack/neutron_plugin/* build/packages/neutron-plugin-contrail
 	sed -i 's/VERSION/$(NEUTRON_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
 	@echo "Building source package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
