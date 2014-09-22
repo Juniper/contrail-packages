@@ -466,6 +466,7 @@ fi
 %{_bindir}/named
 %{_bindir}/rndc
 %{_bindir}/dnsd
+/usr/lib/python2.7/site-packages/doc/*
 
 %package nova-vif
 Summary:            Contrail nova vif driver
