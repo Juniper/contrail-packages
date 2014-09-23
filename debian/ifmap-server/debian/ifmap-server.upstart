@@ -8,21 +8,37 @@ chdir /var/run
 respawn
 
 script
-  COMMAND="/usr/bin/ifmap-server"
   CONF="/etc/ifmap-server/ifmap.properties"
   USER="contrail"
-  OPTS=""
+  NAME="ifmap-server"
+  PIDFILE=/var/run/$NAME.pid
+  JARFILE="irond.jar"
+  LOG_ARGS="> /var/log/contrail/ifmap-server-console.log 2>&1"
 
-  # Allow override of command/conf and opts by /etc/default/daemon-name
-  if [ -f /etc/default/$UPSTART_JOB ]; then
-    . /etc/default/$UPSTART_JOB
+  if [ -r "/etc/default/ifmap-server" ]; then
+    . /etc/default/ifmap-server
+  else
+    echo "Error: /etc/default/ifmap-server is not readable"
+    exit 0
   fi
+
+  # Move any heap dumps aside
+  if [ -e "/var/log/contrail/ifmap-server-oom.hprof" ] ; then
+    mv -f "/var/log/contrail/ifmap-server-oom.hprof" "/var/log/contrail/ifmap-server-oom.hprof.prev"
+  fi
+
+  JAVA_ARGS="${JAVA_ARGS} -cp ./lib/ -jar ./${JARFILE}"
 
   if ! [ -r "$CONF" ] ; then
     echo "Could not read ${CONF}: exiting"
     exit 0
   fi
 
-  exec start-stop-daemon --start --chuid $USER:$USER --exec $COMMAND -- $OPTS
+  # Exit if the package is not installed
+  [ -x "$JAVA_BIN" ] || exit 0
+
+  exec start-stop-daemon --start --chuid $USER:$USER --quiet \
+      --pidfile $PIDFILE --chdir $INSTALL_DIR --exec $JAVA_BIN -- \
+      -XX:OnOutOfMemoryError="kill -9 %p" $JAVA_ARGS $LOG_ARGS
 
 end script
