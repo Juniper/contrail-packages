@@ -349,6 +349,9 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %{python_sitelib}/discovery-*
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
+%if 0%{?rhel} > 6
+/usr/share/doc/contrail-config/*
+%endif
 
 %pre config
 set -e
