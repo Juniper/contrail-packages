@@ -27,7 +27,8 @@ Build-Depends: autoconf,
                ruby-ronn,
                scons (>= 2.1.0),
                unzip,
-               vim-common
+               vim-common,
+	       BUILDDEP_SERIES
 XS-Python-Version: >= 2.7
 
 Package: contrail-analytics
