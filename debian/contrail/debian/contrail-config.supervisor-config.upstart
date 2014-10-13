@@ -26,10 +26,4 @@ end script
 pre-stop script
     supervisorctl -s unix:///tmp/supervisord_config.sock stop all
     supervisorctl -s unix:///tmp/supervisord_config.sock shutdown
-    # replacing supervisor_killall
-    pkill -9 -f 'irond.jar'
-    pkill -9 -f 'svc-monitor.py'
-    pkill -9 -f 'to_bgp.py'
-    pkill -9 -f 'vnc_cfg_api_server.py'
-    pkill -9 -f 'disc_server_zk.py'
 end script
