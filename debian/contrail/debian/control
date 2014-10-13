@@ -6,6 +6,7 @@ Standards-Version: 3.9.5
 Homepage: http://opencontrail.org/
 Vcs-Git: git://github.com/Juniper/contrail-controller.git
 Vcs-Browser: https://github.com/Juniper/contrail-controller/
+XS-Python-Version: >= 2.7
 Build-Depends: autoconf,
                automake,
                bison,
@@ -29,7 +30,6 @@ Build-Depends: autoconf,
                unzip,
                vim-common,
 	       BUILDDEP_SERIES
-XS-Python-Version: >= 2.7
 
 Package: contrail-analytics
 Architecture: any
@@ -41,6 +41,7 @@ Depends: adduser,
          python-redis (>= 2.8.0),
          python-requests (>= 1.1.0),
          python-xmltodict,
+         supervisor,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
@@ -79,6 +80,7 @@ Depends: adduser,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
          python-xmltodict,
+         supervisor,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
@@ -119,6 +121,7 @@ Package: contrail-control
 Depends: adduser,
          authbind,
          contrail-lib (= ${binary:Version}),
+         supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
 Architecture: any
@@ -159,6 +162,7 @@ Package: contrail-vrouter-agent
 Depends: adduser,
          contrail-lib (= ${binary:Version}),
          contrail-vrouter,
+         supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
 Architecture: any
