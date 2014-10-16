@@ -4,6 +4,7 @@ usr/bin/contrail-analytics-api
 usr/bin/contrail-logs
 usr/bin/contrail-stats
 usr/bin/contrail-flows
+usr/bin/contrail-logs-api-audit
 etc/contrail/contrail-collector.conf
 etc/contrail/contrail-query-engine.conf
 etc/contrail/contrail-analytics-api.conf

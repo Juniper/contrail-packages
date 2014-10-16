@@ -4,3 +4,4 @@ contrail-analytics: binary-without-manpage usr/bin/contrail-analytics-api
 contrail-analytics: binary-without-manpage usr/bin/contrail-logs
 contrail-analytics: binary-without-manpage usr/bin/contrail-stats
 contrail-analytics: binary-without-manpage usr/bin/contrail-flows
+contrail-analytics: binary-without-manpage usr/bin/contrail-logs-api-audit
