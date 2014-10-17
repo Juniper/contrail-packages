@@ -367,15 +367,18 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %config(noreplace) %{_sysconfdir}/contrail/contrail-api.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-schema.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-discovery.conf
+%config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
 %defattr(-,root,root,-)
 %{_bindir}/contrail-api
 %{_bindir}/contrail-schema
 %{_bindir}/contrail-discovery
+%{_bindir}/contrail-device-manager
 %{_bindir}/ifmap-view
 %{python_sitelib}/discovery
 %{python_sitelib}/discovery-*
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
+%{python_sitelib}/device_manager*
 %if 0%{?rhel} > 6
 /usr/share/doc/contrail-config/*
 %endif
@@ -384,8 +387,10 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 /etc/contrail/supervisord_config_files/contrail-config.rules
 /etc/contrail/supervisord_config_files/contrail-discovery.ini
 /etc/contrail/supervisord_config_files/contrail-schema.ini
+/etc/contrail/supervisord_config_files/contrail-device-manager.ini
 /etc/init.d/contrail-discovery
 /etc/init.d/contrail-schema
+/etc/init.d/contrail-device-manager
 /etc/init.d/contrail-api
 /etc/init.d/supervisor-config
 
@@ -407,6 +412,7 @@ chmod 0750 /etc/contrail/
 chmod +x /etc/init.d/ifmap
 chmod +x /etc/init.d/contrail-api
 chmod +x /etc/init.d/contrail-schema
+chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/contrail-discovery
 chmod +x /etc/init.d/supervisor-config
 
