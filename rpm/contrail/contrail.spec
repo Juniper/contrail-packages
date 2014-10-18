@@ -156,7 +156,7 @@ This package contains the configuration management modules that interface with O
 %{python_sitelib}/svc_monitor*
 %{python_sitelib}/vnc_openstack*
 %{_bindir}/contrail-svc-monitor
-%{_contrailetc}/svc-monitor.conf
+%{_contrailetc}/contrail-svc-monitor.conf
 /etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 /usr/share/contrail
 /etc/init.d/contrail-svc-monitor

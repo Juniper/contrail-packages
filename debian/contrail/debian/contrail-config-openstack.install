@@ -1,4 +1,4 @@
 usr/bin/contrail-svc-monitor
-etc/contrail/svc-monitor.conf
+etc/contrail/contrail-svc-monitor.conf
 usr/lib/python*/dist-packages/svc_monitor*
 usr/lib/python*/dist-packages/vnc_openstack*
