@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+#
+
+export INSTALL_ROOT=$(shell pwd)
+PACKAGE := contrail-heat
+SRC_PACKAGE := contrail-heat
+SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
+TARBALL := $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
+
+%:
+	echo "src ver = $(SRC_VERSION) path=`pwd`"
+	dh $@ --with python2
+
+override_dh_auto_build:
+	(cd ${SB_TOP}/openstack/contrail-heat; python setup.py install --root=${INSTALL_ROOT})
+
+get-orig-source:
+	rm -rf get-orig-source $(TARBALL)
+	mkdir get-orig-source
+	wget -q https://github.com/Juniper/contrail-heat/archive/master.zip -O get-orig-source/master.zip
+	cd get-orig-source; unzip master.zip
+	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(SRC_PACKAGE)-master
+	mv $(PACKAGE)_$(SRC_VERSION).orig.tar.gz ../
+	cp -r get-orig-source/$(SRC_PACKAGE)-master/* .
+	rm -rf get-orig-source
+	echo "../$(TARBALL) created"
+
+.PHONY: get-orig-source

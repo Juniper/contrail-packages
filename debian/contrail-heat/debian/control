@@ -1,0 +1,18 @@
+Source: contrail-heat
+Section: python
+Priority: optional
+Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Uploaders: Praneet Bachheti <praneetb@juniper.net>
+Build-Depends: debhelper (>= 9), python-all (>= 2.6.6-3~), python-setuptools
+Standards-Version: 3.9.5
+Vcs-Browser: https://github.com/Juniper/contrail-heat/
+Vcs-Git: git://github.com/Juniper/contrail-heat.git
+Homepage: https://github.com/Juniper/contrail-heat/
+
+Package: contrail-heat
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: python-contrail, ${misc:Depends}, ${python:Depends}
+Recommends: ${python:Recommends}
+Description: OpenStack virtual network service - Opencontrail
+ This package provides the OpenContrail heat resources and a few templates .

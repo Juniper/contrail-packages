@@ -1,0 +1,3 @@
+version=3
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/contrail-heat-$1\.tar\.gz/ \
+  https://github.com/Juniper/contrail-heat/tags .*/v?(\d\S*)\.tar\.gz
