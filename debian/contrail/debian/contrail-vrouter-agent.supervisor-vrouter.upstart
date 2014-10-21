@@ -5,7 +5,6 @@ stop on runlevel [016]
 limit core unlimited unlimited
 
 pre-start script
-    /opt/contrail/bin/vrouter-pre-start.sh
     ulimit -s unlimited
     ulimit -c unlimited
     ulimit -d unlimited
@@ -24,11 +23,10 @@ script
 end script
 
 post-start script
-    /opt/contrail/bin/vrouter-post-start.sh
+
 end script
 
 pre-stop script
     supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
     supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
-    /opt/contrail/bin/vrouter-pre-stop.sh
 end script
