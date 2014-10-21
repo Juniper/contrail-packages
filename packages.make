@@ -124,6 +124,26 @@ source-neutron-plugin-contrail: build/packages/neutron-plugin-contrail_$(NEUTRON
 build/packages/neutron-plugin-contrail_$(NEUTRON_VERSION).orig.tar.gz:
 	(cd openstack/neutron_plugin && tar zcvf ../../build/packages/neutron-plugin-contrail_$(NEUTRON_VERSION).orig.tar.gz .)
 
+package-contrail-heat: debian-contrail-heat
+	$(eval PACKAGE = contrail-heat)
+	cp -R openstack/contrail-heat/* build/packages/contrail-heat
+	sed -i 's/VERSION/$(CONTRAIL_HEAT_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+	@echo "Building package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
+
+source-package-contrail-heat: clean-contrail-heat debian-contrail-heat source-contrail-heat
+	$(eval PACKAGE = contrail-heat)
+	cp -R openstack/contrail-heat/* build/packages/contrail-heat
+	sed -i 's/VERSION/$(CONTRAIL_HEAT_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+	@echo "Building source package $(PACKAGE)"
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
+
+source-contrail-heat: build/packages/contrail-heat_$(CONTRAIL_HEAT_VERSION).orig.tar.gz
+build/packages/contrail-heat_$(CONTRAIL_HEAT_VERSION).orig.tar.gz:
+	(cd openstack/contrail-heat && tar zcvf ../../build/packages/contrail-heat_$(CONTRAIL_HEAT_VERSION).orig.tar.gz .)
+
 package-%: debian-%
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
