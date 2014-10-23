@@ -24,9 +24,15 @@ SOURCE_CONTRAIL_DIRS:=$(shell xmllint --xpath '//manifest/project/@path' .repo/m
 SOURCE_CONTRAIL_ARCHIVE:=SConstruct $(SOURCE_CONTRAIL_DIRS)
 SERIES=$(shell lsb_release -c -s)
 
+# DPDK vRouter is currently supported only on Ubuntu 12.04 Precise
+ifeq ($(SERIES),precise)
+    CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
+endif
+
 all: package-contrail \
      package-ifmap-server \
-     package-ifmap-python-client
+     package-ifmap-python-client \
+     $(CONTRAIL_VROUTER_DPDK)
 
 package-ifmap-server: clean-ifmap-server debian-ifmap-server
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
@@ -163,6 +169,13 @@ source-package-contrail-heat: clean-contrail-heat debian-contrail-heat source-co
 source-contrail-heat: build/packages/contrail-heat_$(CONTRAIL_HEAT_VERSION).orig.tar.gz
 build/packages/contrail-heat_$(CONTRAIL_HEAT_VERSION).orig.tar.gz:
 	(cd openstack/contrail-heat && tar zcvf ../../build/packages/contrail-heat_$(CONTRAIL_HEAT_VERSION).orig.tar.gz .)
+
+package-contrail-vrouter-dpdk: debian-contrail-vrouter-dpdk
+	$(eval PACKAGE := contrail-vrouter-dpdk)
+	@echo "Building package $(PACKAGE)"
+	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
+	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
 package-%: debian-%
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
