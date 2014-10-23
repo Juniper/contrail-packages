@@ -297,6 +297,17 @@ Description: OpenContrail VRouter - DKMS version
  The package opencontrail-vrouter-dkms provides the OpenContrail Linux kernel
  module.
 
+Package: contrail-vrouter-dpdk
+Architecture: all
+Depends: contrail-vrouter-utils (= ${binary:Version}),
+         ${misc:Depends}
+Description: OpenContrail VRouter - DPDK version
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ This package contains the OpenContrail vrouter/DPDK.
+
+
 Package: contrail-nova-driver
 Architecture: any
 Depends: python-thrift, ${misc:Depends}, ${python:Depends}
