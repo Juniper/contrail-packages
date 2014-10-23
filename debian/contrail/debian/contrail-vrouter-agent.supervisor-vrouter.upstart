@@ -3,6 +3,9 @@ description     "Supervisord for VNC Vrouter"
 start on runlevel [2345]
 stop on runlevel [016]
 limit core unlimited unlimited
+# For DPDK vRouter we need longer timeout to let KNI devices shut down
+# gracefully
+kill timeout 20
 
 pre-start script
     if [ -f /opt/contrail/bin/vrouter-pre-start.sh ]; then
@@ -36,5 +39,11 @@ pre-stop script
     supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
     if [ -f /opt/contrail/bin/vrouter-pre-stop.sh ]; then
         /opt/contrail/bin/vrouter-pre-stop.sh
+    fi
+end script
+
+post-stop script
+    if [ -f /opt/contrail/bin/vrouter-post-stop.sh ]; then
+        /opt/contrail/bin/vrouter-post-stop.sh
     fi
 end script
