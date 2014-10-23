@@ -1,0 +1,5 @@
+Name: contrail-vrouter-dpdk-init
+Maintainer: builder@juniper.net
+License: Apache
+Files: *
+Copyright (c) 2015 Semihalf. All rights reserved.
