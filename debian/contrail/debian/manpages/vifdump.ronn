@@ -1,0 +1,40 @@
+vifdump(1) -- OpenContrail vRouter utils
+========================================
+
+## SYNOPSIS
+
+`vifdump` [-i] <vif> [<tcpdump_options>]
+
+`vifdump` `stop` <monitoring_if>
+
+## DESCRIPTION
+
+The OpenContrail vRouter is a forwarding plane (of a distributed router) that runs in the hypervisor of a virtualized server.
+
+The package opencontrail-vrouter-utils provides command line utilities to configure and diagnose the OpenContrail linux kernel module.
+
+The vifdump(1) utility runs tcpdump on a specific vif interface and should be used for the DPDK version of OpenContrail vRouter only.
+For the non-DPDK Linux kernel module version the tcpdump(8) utility should be used instead.
+
+The `vifdump` `stop` command stops and cleans up the specified monitoring interface.
+
+## EXAMPLES
+
+* `vifdump` `-i` `vif0/1` `-nvv`:
+  Run tcpdump on vif0/1 with `-nvv` arguments
+
+## BUGS
+
+Contrail is hosted in Launchpad so you can view current bugs at https://bugs.launchpad.net/opencontrail/.
+
+## AUTHOR
+
+OpenContrail developers <dev@lists.opencontrail.org>
+
+## COPYRIGHT
+
+Copyright (c) 2014 OpenContrail
+
+## SEE ALSO
+
+tcpdump(8), vif(1), mirror(1)
