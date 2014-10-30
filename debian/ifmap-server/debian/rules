@@ -10,8 +10,9 @@ TARBALL = $(PACKAGE)_$(SRC_VERSION).orig.tar.gz
 get-orig-source:
 	rm -rf get-orig-source $(TARBALL)
 	mkdir get-orig-source
-#	site is unreliable use a cache location for the source
-	wget -O get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+#	site is unreliable using github as cache for the source
+	wget -O get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip https://raw.github.com/Juniper/contrail-third-party-cache/master/irond/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
+#	wget -O get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://trust.f4.hs-hannover.de/download/iron/archive/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 #	wget -O get-orig-source/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip http://apt.sebian.fr/iron/$(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 	cd get-orig-source;unzip $(UPSTREAM_NAME)-$(SRC_VERSION)-src.zip
 	GZIP=--best tar czf $(TARBALL) -C get-orig-source $(UPSTREAM_NAME)-$(SRC_VERSION)-src
