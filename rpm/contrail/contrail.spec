@@ -319,8 +319,8 @@ Contrail Virtual Router NetNS package
 
 %files python-contrail-vrouter-netns
 %defattr(-,root,root)
-%{python_sitelib}/opencontrail_vrouter_netns*
-%{_bindir}/opencontrail-vrouter-netns
+%{python_sitelib}/opencontrail_vrouter_*
+%{_bindir}/opencontrail-vrouter-*
 
 
 %package lib
