@@ -1,2 +1,2 @@
-usr/bin/opencontrail-vrouter-netns
-usr/lib/python*/dist-packages/opencontrail_vrouter_netns*
+usr/bin/opencontrail-vrouter-*
+usr/lib/python*/dist-packages/opencontrail_vrouter_*
