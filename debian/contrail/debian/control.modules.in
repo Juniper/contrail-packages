@@ -9,7 +9,8 @@ Build-Depends: module-assistant
 
 Package: contrail-vrouter-_KVERS_
 Architecture: all
-Recommends: linux-image-_KVERS_
+Recommends: linux-image-_KVERS_,
+            linux-image-extra-_KVERS_
 Depends: contrail-vrouter-utils (= ${binary:Version}),
          python-opencontrail-vrouter-netns (= ${binary:Version}),
          ${misc:Depends}
