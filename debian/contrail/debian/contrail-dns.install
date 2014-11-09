@@ -1,6 +1,8 @@
 usr/bin/dnsd
 usr/bin/named
 usr/bin/rndc
+usr/bin/rndc-confgen
 etc/contrail/dns/dns.conf
 etc/contrail/dns/rndc.conf
 etc/contrail/dns/named.conf
+etc/contrail/dns/COPYRIGHT
