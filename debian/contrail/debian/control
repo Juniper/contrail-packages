@@ -203,6 +203,7 @@ Architecture: any
 Depends: python-contrail (>= ${source:Version}),
          python-lxml,
          python-requests,
+         dpkg-dev,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: OpenContrail tools and utilities
