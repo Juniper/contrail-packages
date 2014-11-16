@@ -8,7 +8,7 @@ chdir /var/run
 respawn
 
 script
-  COMMAND="/usr/bin/dnsd"
+  COMMAND="/usr/bin/contrail-dns"
   CONF="/etc/contrail/dns.conf"
   USER="contrail"
   OPTS="--conf_file ${CONF}"
