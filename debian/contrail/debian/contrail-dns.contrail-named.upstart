@@ -8,8 +8,8 @@ chdir /var/run
 respawn
 
 script
-  COMMAND="/usr/bin/authbind /usr/bin/named"
-  CONF="/etc/contrail/named.conf"
+  COMMAND="/usr/bin/authbind /usr/bin/contrail-named"
+  CONF="/etc/contrail/dns/contrail-named.conf"
   USER="contrail"
   OPTS="-c ${CONF}"
 
