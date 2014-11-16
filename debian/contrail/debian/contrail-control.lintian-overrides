@@ -1,2 +1,2 @@
 contrail-control: binary-without-manpage usr/bin/contrail-control
-contrail-control: binary-without-manpage usr/bin/dnsd
+contrail-control: binary-without-manpage usr/bin/contrail-dns

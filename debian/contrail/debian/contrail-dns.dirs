@@ -1,2 +1,2 @@
 etc/contrail/dns
-var/log/named
+var/log/contrail

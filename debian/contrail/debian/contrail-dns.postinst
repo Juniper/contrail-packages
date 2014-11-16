@@ -22,9 +22,9 @@ if [ "$1" = "configure" ]; then
     usermod -g contrail contrail
   fi
 
-  mkdir -p /var/log/named
-  chown -R contrail:adm /var/log/named
-  chmod 0750 /var/log/named
+  mkdir -p /var/log/contrail
+  chown -R contrail:adm /var/log/contrail
+  chmod 0750 /var/log/contrail
   chown -R contrail. /etc/contrail/dns
   chmod 0750 /etc/contrail/dns
 
