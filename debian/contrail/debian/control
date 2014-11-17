@@ -282,3 +282,22 @@ Description: OpenStack Nova compute-node driver for OpenContrail
  virtual-network to virtual-machines, containers or network namespaces.
  .
  This package contains the OpenStack Nova compute-node driver for OpenContrail.
+
+Package: contrail-vcenter-plugin
+Architecture: any
+Depends: libgoogle-gson-java (>= 2.2.4),
+         libguava-java (>= 15.0),
+         libcommons-lang-java (>= 2.6),
+         libcommons-exec-java (>= 1.2),
+         libcommons-net-java (>= 1.4.1),
+         libhttpclient-java (>= 4.3.2),
+         libhttpcore-java (>= 4.3.2),
+         libthrift-java (>= 0.9.0),
+         libcommons-logging-java (>= 1.1.3),
+         libdom4j-java (>= 1.6.1)
+Description: OpenContrail vCenter Plugin.
+ OpenContrail vCenter Plugin is a config plane component. It reads port-group,
+ ip pool and Virtual Machine information from vCenter and translates it
+ into api-server events. Plugin keeps track of add/delete/update events
+ on the objects and refelects it on api-server.
+ This package contains the vCenter Plugin for OpenContrail.

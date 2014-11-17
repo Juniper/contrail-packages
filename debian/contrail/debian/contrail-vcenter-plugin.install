@@ -1,0 +1,7 @@
+usr/share/contrail-vcenter-plugin/juniper-contrail-api.jar
+usr/share/contrail-vcenter-plugin/juniper-contrail-vrouter-api.jar
+usr/share/contrail-vcenter-plugin/juniper-contrail-vijava.jar
+usr/share/contrail-vcenter-plugin/juniper-contrail-vcenter.jar
+usr/bin/contrail-vcenter-plugin
+etc/contrail/supervisord_config_files/contrail-vcenter-plugin.ini
+etc/init.d/contrail-vcenter-plugin
