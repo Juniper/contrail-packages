@@ -1,5 +1,4 @@
 etc/contrail/dns
-var/log/named
 etc/contrail
 var/lib/contrail
 var/log/contrail
