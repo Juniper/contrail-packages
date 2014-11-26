@@ -530,6 +530,7 @@ fi
 %{_contraildns}/contrail-rndc.conf
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
+%config(noreplace) %{_contrailetc}/contrail-dns.conf
 %{_bindir}/contrail-named
 %{_bindir}/contrail-rndc
 %{_bindir}/contrail-rndc-confgen

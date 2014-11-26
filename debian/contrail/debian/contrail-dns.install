@@ -2,6 +2,7 @@ usr/bin/contrail-dns
 usr/bin/contrail-named
 usr/bin/contrail-rndc
 usr/bin/contrail-rndc-confgen
+etc/contrail/contrail-dns.conf
 etc/contrail/dns/contrail-rndc.conf
 etc/contrail/dns/contrail-named.conf
 etc/contrail/dns/COPYRIGHT
