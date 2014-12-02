@@ -430,6 +430,7 @@ Requires:           python-psutil
 Requires:           python-prettytable
 Requires:           python-geventhttpclient
 Requires:           protobuf
+Requires:           net-snmp-python
 
 %description analytics
 Contrail Analytics package
@@ -445,25 +446,36 @@ Analytics nodes collect, store, correlate, and analyze information from
 %config(noreplace) %{_contrailetc}/contrail-collector.conf
 %config(noreplace) %{_contrailetc}/contrail-analytics-api.conf
 %config(noreplace) %{_contrailetc}/contrail-query-engine.conf
+%config(noreplace) %{_contrailetc}/contrail-snmp-collector.conf
+%config(noreplace) %{_contrailetc}/contrail-topology.conf
 %defattr(-, root, root)
 %{_bindir}/contrail-collector
 %{_bindir}/contrail-query-engine
 %{_bindir}/contrail-analytics-api
 %{python_sitelib}/opserver*
+%{python_sitelib}/contrail_snmp_collector*
+%{python_sitelib}/contrail_topology*
 %{_bindir}/contrail-logs
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-stats
 %{_bindir}/contrail-logs-api-audit
+%{_bindir}/contrail-snmp-collector
+%{_bindir}/contrail-topology
 /usr/share/doc/contrail-analytics-api
 /etc/contrail/supervisord_analytics.conf
 /etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
 /etc/contrail/supervisord_analytics_files/contrail-analytics.rules
 /etc/contrail/supervisord_analytics_files/contrail-collector.ini
 /etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
+%{_contrailetc}/supervisord_analytics_files/contrail-snmp-collector.ini
+%{_contrailetc}/supervisord_analytics_files/contrail-topology.ini
 /etc/init.d/contrail-analytics-api
 /etc/init.d/contrail-collector
 /etc/init.d/contrail-query-engine
 /etc/init.d/supervisor-analytics
+/etc/init.d/contrail-snmp-collector
+/etc/init.d/contrail-topology
+/usr/share/mibs/netsnmp
 
 %pre analytics
 set -e
@@ -484,6 +496,8 @@ chmod +x /etc/init.d/supervisor-analytics
 chmod +x /etc/init.d/contrail-analytics-api
 chmod +x /etc/init.d/contrail-collector
 chmod +x /etc/init.d/contrail-query-engine
+chmod +x /etc/init.d/contrail-snmp-collector
+chmod +x /etc/init.d/contrail-topology
 
 %package dns
 Summary:            Contrail Dns
