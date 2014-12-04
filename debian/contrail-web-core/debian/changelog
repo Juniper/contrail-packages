@@ -1,5 +1,5 @@
 contrail-web-core (VERSION) precise; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release.
 
  -- Raj Reddy <rajreddy@juniper.net>  Wed, 06 Aug 2014 10:43:13 -0700
