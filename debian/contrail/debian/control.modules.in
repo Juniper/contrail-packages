@@ -1,16 +1,16 @@
 Source: contrail
 Section: net
+Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
 Standards-Version: 3.9.5
 Homepage: https://github.com/Juniper/contrail-vrouter/
 Vcs-Git: git://github.com/Juniper/contrail-vrouter.git
 Vcs-Browser: https://github.com/Juniper/contrail-vrouter/
-Build-Depends: module-assistant
+Build-Depends: debhelper (>= 8.0.0), module-assistant
 
 Package: contrail-vrouter-_KVERS_
 Architecture: all
-Recommends: linux-image-_KVERS_,
-            linux-image-extra-_KVERS_
+Recommends: linux-image-_KVERS_, linux-image-extra-_KVERS_
 Depends: contrail-vrouter-utils (= ${binary:Version}),
          python-opencontrail-vrouter-netns (= ${binary:Version}),
          ${misc:Depends}
