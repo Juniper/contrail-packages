@@ -29,7 +29,7 @@ Build-Depends: autoconf,
                scons (>= 2.1.0),
                unzip,
                vim-common,
-	       BUILDDEP_SERIES
+               BUILDDEP_SERIES
 
 Package: contrail-analytics
 Architecture: any
@@ -41,8 +41,8 @@ Depends: adduser,
          python-redis (>= 2.8.0),
          python-requests (>= 1.1.0),
          python-xmltodict,
-         supervisor,
          redis-server (>= 2.6.13-1),
+         supervisor,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
@@ -113,6 +113,25 @@ Depends: contrail-config (= ${source:Version}),
          ${misc:Depends},
          ${python:Depends}
 Description: OpenContrail configuration OpenStack module
+ Configuration nodes are responsible for the management layer. The
+ configuration nodes provide a north-bound Representational State Transfer
+ (REST) Application Programming Interface (API) that can be used to configure
+ the system or extract operational status of the system. The instantiated
+ services are represented by objects in a horizontally scalable database that is
+ described by a formal service data model (more about data models later on). The
+ configuration nodes also contain a transformation engine (sometimes referred to
+ as a compiler) that transforms the objects in the high-level service data model
+ into corresponding more lower-level objects in the technology data model.
+ Whereas the high-level service data model describes what services need to be
+ implemented, the low-level technology data model describes how those services
+ need to be implemented. The configuration nodes publish the contents of the
+ low-level technology data model to the control nodes using the Interface for
+ Metadata Access Points (IF-MAP) protocol.
+ .
+ Configuration nodes keep a persistent copy of the intended configuration state
+ and translate the high-level data model into the lower level model suitable for
+ interacting with network elements. Both these are kept in a NoSQL database.
+ .
  This package contains the configuration management modules that interface
  with OpenStack.
 
@@ -147,7 +166,8 @@ Description: OpenContrail control-node
  eventually consistent.
 
 Package: contrail-dns
-Depends: authbind,
+Depends: adduser,
+         authbind,
          contrail-lib (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
@@ -200,11 +220,12 @@ Description: OpenContrail libraries
 
 Package: contrail-utils
 Architecture: any
-Depends: python-contrail (>= ${source:Version}),
+Depends: dpkg-dev,
+         python-contrail (>= ${source:Version}),
          python-lxml,
          python-requests,
-         dpkg-dev,
          ${misc:Depends},
+         ${python:Depends},
          ${shlibs:Depends}
 Description: OpenContrail tools and utilities
  OpenContrail is a network virtualization solution that provides an overlay
@@ -241,7 +262,7 @@ Description: OpenContrail VRouter - Utilities
 
 Package: contrail-vrouter-source
 Architecture: all
-Depends: bzip2, debhelper, module-assistant
+Depends: bzip2, debhelper, module-assistant, ${misc:Depends}
 Description: OpenContrail VRouter - Source
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server. It extends the network from the
@@ -258,7 +279,6 @@ Package: contrail-vrouter-dkms
 Architecture: all
 Depends: contrail-vrouter-utils (= ${binary:Version}),
          dkms,
-         make,
          python-opencontrail-vrouter-netns (= ${binary:Version}),
          ${misc:Depends}
 Provides: contrail-vrouter
