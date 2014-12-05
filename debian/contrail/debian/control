@@ -151,6 +151,7 @@ Depends: authbind,
          contrail-lib (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
+Replaces: contrail-openstack-control
 Architecture: any
 Description: OpenContrail control-dns
  DNS provides contrail-dns, contrail-named, contrail-rndc
