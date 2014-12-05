@@ -1,0 +1,8 @@
+Verified+2: Zuul <zuul@lists.opencontrail.org>
+Approved+1: Shweta Naik <stnaik@juniper.net>
+Code-Review+2: Shweta Naik <stnaik@juniper.net>
+Submitted-by: Zuul <zuul@lists.opencontrail.org>
+Submitted-at: Fri, 05 Dec 2014 14:45:54 -0800
+Reviewed-on: https://review.opencontrail.org/5298
+Project: Juniper/contrail-packages
+Branch: refs/heads/R2.0
