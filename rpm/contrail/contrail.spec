@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 0
 %define         _contrailetc /etc/contrail
 %define         _contrailutils /opt/contrail/utils
 %define         _distropkgdir tools/packaging/common/control_files
@@ -468,7 +469,6 @@ Analytics nodes collect, store, correlate, and analyze information from
 /etc/contrail/supervisord_analytics_files/contrail-collector.ini
 /etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
 %{_contrailetc}/supervisord_analytics_files/contrail-snmp-collector.ini
-%{_contrailetc}/supervisord_analytics_files/contrail-topology.ini
 /etc/init.d/contrail-analytics-api
 /etc/init.d/contrail-collector
 /etc/init.d/contrail-query-engine
