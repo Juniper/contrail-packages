@@ -1,9 +1,0 @@
-/var/log/contrail-webui/webserver.log
-/var/log/contrail-webui/jobserver.log
-{
-    daily
-    missingok
-    compress
-    delaycompress
-    notifempty
-}
