@@ -345,7 +345,7 @@ Requires: python-contrail >= %{_verstr}-%{_relstr}
 Requires: python-bitarray >= 0.8.0
 Requires: python-gevent
 Requires: python-geventhttpclient
-Requires: python-lxml
+Requires: python-lxml >= 2.3.2
 Requires: python-pycassa
 Requires: python-thrift >= 0.9.1
 Requires: python-keystone
@@ -571,7 +571,7 @@ Contrail Nova Vif driver package
 Summary: Contrail utility sctipts.
 Group: Applications/System
 
-Requires: python-lxml
+Requires: python-lxml >= 2.3.2
 Requires: python-requests
 Requires: python-contrail >= %{_verstr}-%{_relstr}
 
