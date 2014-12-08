@@ -38,6 +38,7 @@ get-orig-source:
 	fi
 	cd get-orig-source/contrail-web-core;make package REPO=$(DEB_DIR)/get-orig-source/contrail-web-controller,webController
 	GZIP=--best tar czf ../$(TARBALL) -C get-orig-source/$(SRC_PACKAGE) .
+	ls get-orig-source/$(SRC_PACKAGE) | xargs -n 1 -I'{}' mv get-orig-source/$(SRC_PACKAGE)/'{}' .
 	rm -rf get-orig-source
 	echo "../$(TARBALL) created"
 
