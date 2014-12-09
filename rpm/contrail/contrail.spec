@@ -60,6 +60,7 @@ BuildRequires:  vim-common
 BuildRequires:  protobuf
 BuildRequires:  protobuf-compiler
 BuildRequires:  protobuf-devel
+BuildRequires:  net-snmp-python
 
 %prep
 
