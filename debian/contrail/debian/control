@@ -29,6 +29,7 @@ Build-Depends: autoconf,
                scons (>= 2.1.0),
                unzip,
                vim-common,
+               libsnmp-python,
                BUILDDEP_SERIES
 
 Package: contrail-analytics
