@@ -387,7 +387,6 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 /etc/contrail/supervisord_config_files/contrail-config.rules
 /etc/contrail/supervisord_config_files/contrail-discovery.ini
 /etc/contrail/supervisord_config_files/contrail-schema.ini
-/etc/contrail/supervisord_config_files/contrail-device-manager.ini
 /etc/init.d/contrail-discovery
 /etc/init.d/contrail-schema
 /etc/init.d/contrail-device-manager
