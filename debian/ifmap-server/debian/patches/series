@@ -2,3 +2,4 @@
 002_ifmap_0.3.2.patch
 003_ifmap_split_results.patch
 004_ifmap_split_config.patch
+005_ifmap_fix_utf_8_encoded_xml.patch
