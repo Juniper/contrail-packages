@@ -30,6 +30,7 @@ Build-Depends: autoconf,
                unzip,
                vim-common,
                libsnmp-python,
+               libipfix,
                BUILDDEP_SERIES
 
 Package: contrail-analytics
