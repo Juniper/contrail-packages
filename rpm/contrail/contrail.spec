@@ -1,3 +1,4 @@
+%define         _unpackaged_files_terminate_build 0
 %define         _contrailetc /etc/contrail
 %define         _contrailutils /opt/contrail/utils
 %define         _distropkgdir tools/packaging/common/control_files
