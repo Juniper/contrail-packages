@@ -1,4 +1,5 @@
 usr/bin/contrail-vrouter-agent
+usr/bin/contrail-tor-agent
 etc/contrail/contrail-vrouter-agent.conf
 etc/init.d/contrail-vrouter-agent
 etc/contrail/supervisord_vrouter.conf
