@@ -9,6 +9,9 @@ MA_DIR ?= /usr/share/modass
 -include $(MA_DIR)/include/generic.make
 -include $(MA_DIR)/include/common-rules.make
 
+# Make 'fakeroot blah clean' not be an error
+clean:;
+
 kdist_config: prep-deb-files
 binary-modules: kdist_config
 	dh_testdir
