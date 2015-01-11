@@ -1,2 +1,3 @@
 contrail-vrouter-agent: binary-without-manpage usr/bin/contrail-vrouter-agent
 contrail-vrouter-agent: binary-without-manpage usr/bin/contrail-tor-agent
+contrail-vrouter-agent: binary-without-manpage usr/bin/port_manager
