@@ -239,6 +239,7 @@ This package provides the contrail-vrouter user space agent.
 %defattr(-, root, root)
 %{_bindir}/contrail-vrouter-agent
 %{_bindir}/contrail-tor-agent
+%{_bindir}/port_manager
 %{_contrailetc}/contrail-vrouter-agent.conf
 %{_contrailetc}/supervisord_vrouter.conf
 /etc/init.d/contrail-vrouter-agent
