@@ -311,16 +311,19 @@ fi
 chmod +x /etc/init.d/supervisor-control
 chmod +x /etc/init.d/contrail-control
 
-%package python-contrail-vrouter-netns
+%package -n python-opencontrail-vrouter-netns
 
-Summary:            Contrail vRouter netns
+Summary:            OpenContrail vRouter netns
 
 Group:              Applications/System
+Requires:           python-docker-py
+Requires:           python-unittest2
+Requires:           iproute >= 3.1.0
 
-%description python-contrail-vrouter-netns
+%description -n python-opencontrail-vrouter-netns
 Contrail Virtual Router NetNS package
 
-%files python-contrail-vrouter-netns
+%files -n python-opencontrail-vrouter-netns
 %defattr(-,root,root)
 %{python_sitelib}/opencontrail_vrouter_*
 %{_bindir}/opencontrail-vrouter-*
