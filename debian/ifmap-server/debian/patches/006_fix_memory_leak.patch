@@ -1,0 +1,798 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/CleanupService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/CleanupService.java
+new file mode 100644
+index 0000000..2892a4d
+--- /dev/null
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/CleanupService.java
+@@ -0,0 +1,77 @@
++/*
++ * Project: irond
++ * Package: src.de.fhhannover.inform.iron.mapserver.datamodel
++ * File:    PublishService.java
++ *
++ * Copyright (C) 2010-2011 Fachhochschule Hannover
++ * Ricklinger Stadtweg 118, 30459 Hannover, Germany 
++ *
++ * Licensed under the Apache License, Version 2.0 (the License);
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an AS IS BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package de.fhhannover.inform.iron.mapserver.datamodel;
++
++import java.util.List;
++
++import org.apache.log4j.Logger;
++
++import de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElement;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.Subscription;
++import de.fhhannover.inform.iron.mapserver.provider.DataModelServerConfigurationProvider;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
++
++public class CleanupService extends Thread {
++    private final static Logger sLogger = LoggingProvider.getTheLogger();
++    private final DataModelServerConfigurationProvider mConf;
++    private final PublishService mPub;
++    private final PublisherRep mRep;
++    private long lastNonMeaningfulCleanup;
++  
++    public CleanupService(DataModelServerConfigurationProvider conf, PublishService pub, PublisherRep rep) {
++        mConf = conf;
++        mPub = pub;
++        mRep = rep;
++        lastNonMeaningfulCleanup = System.currentTimeMillis();
++    }
++
++    public void run() {
++        while(true) {
++            long  now = System.currentTimeMillis();
++            if (lastNonMeaningfulCleanup + mConf.getNonMeaningfulCleanupFrequency() < now) {
++                List<GraphElement> removed = mPub.processCleanupNonMeaningfulElements();
++
++                cleanupSubscribtions(removed);
++                sLogger.info(removed.size() + " non meaningful elements cleaned up");
++                
++                lastNonMeaningfulCleanup = System.currentTimeMillis();
++            }
++            
++            try {
++                Thread.sleep(1000);
++            } catch (InterruptedException e) {
++                e.printStackTrace();
++            }
++        }
++    }
++
++    private void cleanupSubscribtions(List<GraphElement> removed) {
++        for (GraphElement ge : removed) {
++            for (Publisher pub : mRep.getPublishers()) {
++                List<Subscription> subs = pub.getSubscriptionState().getSubscriptions();
++                for (Subscription sub : subs) {
++                    sub.removeGraphElementUnsafe(ge);
++                }
++            }
++        }
++    }
++}
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+index 5404343..96f0151 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+@@ -81,12 +81,13 @@ public class DataModelService implements SubscriptionNotifier {
+ 	private final GraphElementRepository mGraph;
+ 	private final MetadataHolderFactory mMetaHolderFac;
+ 	private final SearchingFactory mSearchingFac;
++	private final CleanupService mCleanupService;
+ 	
+ 	private DataModelService() {
+ 	
+ 		publisherRep = new PublisherRep();
+ 		
+-		mGraph = GraphElementRepositoryImpl.newInstance();
++		mGraph = GraphElementRepositoryImpl.newInstance(sServerConfiguration);
+ 		mMetaHolderFac = MetadataHolderFactoryImpl.newInstance();
+ 		mSearchingFac = SearchingFactoryImpl.newInstance();
+ 
+@@ -100,6 +101,9 @@ public class DataModelService implements SubscriptionNotifier {
+ 				mMetaHolderFac, subscriptionService);
+ 		
+ 		clientService = new ClientService(publisherRep, subscriptionService);
++		
++		mCleanupService = new CleanupService(sServerConfiguration, publishService, publisherRep);
++		mCleanupService.start();
+ 	}
+  
+ 	
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublishService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublishService.java
+index ecbe421..1013516 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublishService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublishService.java
+@@ -180,6 +180,10 @@ class PublishService {
+ 			}
+ 		}
+ 	}
++
++	public List<GraphElement> processCleanupNonMeaningfulElements() {
++	    return mGraph.cleanupNonMeaningfulElements();
++	}
+ 	
+ 	private void addOperationalAttributes(Metadata m, String timeNow, String pId) {
+ 		m.setTimestamp(timeNow);
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+index 6b08de6..95a3d41 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+@@ -21,6 +21,7 @@
+ 
+ package de.fhhannover.inform.iron.mapserver.datamodel;
+ 
++import java.util.Collection;
+ import java.util.HashMap;
+ 
+ import org.apache.log4j.Logger;
+@@ -158,5 +159,9 @@ class PublisherRep {
+ 	void removePublisherSession(String sessionId) {
+ 		sessions.remove(sessionId);
+ 	}
++
++    public Collection<Publisher> getPublishers() {
++        return publishers.values();
++    }
+ }
+  
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
+index fa48aa1..4277982 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
+@@ -113,4 +113,9 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 	public String toString() {
+ 		return "dlink{" + getNode1() + ", " + getNode2() + "}";
+ 	}
++
++    @Override
++    public long getLastMetadataUpdate() {
++        return 0;
++    }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+index bf9d1c5..6563e52 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+@@ -113,4 +113,14 @@ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 	public String toString() {
+ 		return "dnode{" + getIdentifier() + "}";
+ 	}
++
++    @Override
++    public long getLastMetadataUpdate() {
++        return 0;
++    }
++
++    @Override
++    public boolean containsLink(Link l) {
++        return false;
++    }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
+index c9ce00e..6929a37 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
+@@ -198,4 +198,11 @@ public interface GraphElement extends SearchAble {
+ 	 * 			{@link GraphElement} object.
+ 	 */
+ 	public void removeAllRemovedSubscriptionEntries();
++
++	/**
++	 * Mark the element as deleted, so potentially going to be removed from
++	 * the repository later
++	 * Return time when occurred the last update
++	 */
++	public long getLastMetadataUpdate();
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
+index 9f13ed2..14bc535 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
+@@ -40,17 +40,20 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  * @author aw
+  */
+ abstract class GraphElementImpl implements GraphElement {
+-	
++
++	private long lastUpdate;
+ 	private final List<MetadataHolder> mMetadataHolder;
+ 	private final Map<Subscription, SubscriptionEntry> mSubscriptionEntries;
+ 	private final Map<Subscription, SubscriptionEntry> mRemovedSubscriptionEntries;
+ 	
++
+ 	protected GraphElementImpl() {
+ 		mMetadataHolder = CollectionHelper.provideListFor(MetadataHolder.class);
+ 		mSubscriptionEntries = CollectionHelper.provideMapFor(Subscription.class,
+ 				SubscriptionEntry.class);
+ 		mRemovedSubscriptionEntries = CollectionHelper.provideMapFor(
+ 				Subscription.class, SubscriptionEntry.class);
++		lastUpdate = System.currentTimeMillis();
+ 	}
+ 
+ 	@Override
+@@ -133,6 +136,8 @@ abstract class GraphElementImpl implements GraphElement {
+ 					+ this);
+ 		
+ 		mMetadataHolder.add(m);
++
++		lastUpdate = System.currentTimeMillis();
+ 	}
+ 
+ 	@Override
+@@ -144,11 +149,15 @@ abstract class GraphElementImpl implements GraphElement {
+ 			throw new SystemErrorException("MetadataHolder " + m + " not on " + this);
+ 		
+ 		mMetadataHolder.remove(idx);
++
++		lastUpdate = System.currentTimeMillis();
+ 	}
+ 
+ 	@Override
+ 	public void removeAllMetadataHolders() {
+ 		mMetadataHolder.clear();
++
++		lastUpdate = System.currentTimeMillis();
+ 	}
+ 
+ 	@Override
+@@ -225,4 +234,8 @@ abstract class GraphElementImpl implements GraphElement {
+ 	}
+ 	
+ 	protected abstract String provideToStringStart();
++
++	public long getLastMetadataUpdate() {
++	    return lastUpdate;
++	}
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+index 670735d..7686489 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+@@ -22,6 +22,7 @@
+ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
++import java.util.List;
+ 
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
+ 
+@@ -95,4 +96,12 @@ public interface GraphElementRepository {
+ 	 * Make some debugging output about the content of the graph.
+ 	 */
+ 	public void dumpContents();
++
++    /**
++     * Delete ophan graph element which means element without any metadata after
++     * a delay
++     * @return {@link GraphElementRepository}. Note returns related element to
++     * remove, like links.
++     */
++	public List<GraphElement> cleanupNonMeaningfulElements();
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+index aafa438..10237a6 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+@@ -4,7 +4,7 @@
+  * File:    GraphElementRepositoryImpl.java
+  *
+  * Copyright (C) 2010-2011 Fachhochschule Hannover
+- * Ricklinger Stadtweg 118, 30459 Hannover, Germany 
++ * Ricklinger Stadtweg 118, 30459 Hannover, Germany
+  *
+  * Licensed under the Apache License, Version 2.0 (the License);
+  * you may not use this file except in compliance with the License.
+@@ -22,8 +22,13 @@
+ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
++import java.util.List;
++
++import org.apache.log4j.Logger;
+ 
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
++import de.fhhannover.inform.iron.mapserver.provider.DataModelServerConfigurationProvider;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+ import de.fhhannover.inform.iron.mapserver.utils.CollectionHelper;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiArrayListMap;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiMap;
+@@ -32,28 +37,34 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+ /**
+  * TODO: Need some way of cleaning up... Either remembering the used Nodes/Links
+  *       and upon a cleanup() call checking whether any of the can be removed.
+- * 
++ *
+  * @since 0.3.0
+  * @author aw
+  */
+ public class GraphElementRepositoryImpl implements GraphElementRepository {
+-	
++	private final static Logger sLogger = LoggingProvider.getTheLogger();
++	private final DataModelServerConfigurationProvider mConf;
+ 	private MultiMap<Integer, Node> mNodes;
+ 	private MultiMap<Integer, Link> mLinks;
+-	
++	private long lastNonMeaningfulCleanup;
++
+ 	/**
++	 * @param config
+ 	 * @return a new Instance of a {@link GraphElementRepository} instance.
+ 	 */
+-	public static GraphElementRepository newInstance() {
+-		return new GraphElementRepositoryImpl();
++	public static GraphElementRepository newInstance(DataModelServerConfigurationProvider conf) {
++	    return new GraphElementRepositoryImpl(conf);
+ 	}
+-	
++
+ 	/**
+ 	 * Private constructor
++	 * @param conf
+ 	 */
+-	private GraphElementRepositoryImpl() {
++	private GraphElementRepositoryImpl(DataModelServerConfigurationProvider conf) {
+ 		mNodes = new MultiArrayListMap<Integer, Node>();
+ 		mLinks = new MultiArrayListMap<Integer, Link>();
++		lastNonMeaningfulCleanup = System.currentTimeMillis();
++		mConf = conf;
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -67,13 +78,13 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		 */
+ 		NullCheck.check(i, "Identifier is null");
+ 		Node node = findExistingNodeFor(i);
+-		
++
+ 		// there is no such Node, create a new one
+ 		if (node == null) {
+ 			node = new NodeImpl(i);
+ 			mNodes.put(nodeKey(node), node);
+ 		}
+-		
++
+ 		return node;
+ 	}
+ 
+@@ -83,7 +94,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	@Override
+ 	public Link getLinkFor(Identifier i1, Identifier i2) {
+ 		Link l = findExistingLinkFor(i1, i2);
+-	
++
+ 		// if there is no such Link, create a new one based on Nodes from the
+ 		// repository. These might be created in turn as well.
+ 		if (l == null) {
+@@ -91,13 +102,13 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 			Node linkNode2 = getNodeFor(i2);
+ 			l = new LinkImpl(linkNode1, linkNode2);
+ 			linkNode1.addLink(l);
+-			
++
+ 			if (linkNode1 != linkNode2)
+ 				linkNode2.addLink(l);
+-			
++
+ 			mLinks.put(linkKey(l), l);
+ 		}
+-		
++
+ 		return l;
+ 	}
+ 
+@@ -124,24 +135,24 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	@Override
+ 	public Collection<Node> getAllNodes() {
+ 		Collection<Node> ret = CollectionHelper.provideCollectionFor(Node.class);
+-		
++
+ 		for (Node n : mNodes.values())
+ 			ret.add(n.dummy());
+-		
++
+ 		return ret;
+ 	}
+ 
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#getAllLinks()
+ 	 */
+-	
++
+ 	@Override
+ 	public Collection<Link> getAllLinks() {
+ 		Collection<Link> ret = CollectionHelper.provideCollectionFor(Link.class);
+-		
++
+ 		for (Link l : mLinks.values())
+ 			ret.add(l.dummy());
+-		
++
+ 		return ret;
+ 	}
+ 
+@@ -172,7 +183,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		}
+ 		System.out.println("END LINKS");
+ 	}
+-	
++
+ 	/**
+ 	 * Helper to find a {@link Node} instance which has the given
+ 	 * {@link Identifier} instance attached.
+@@ -183,7 +194,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		for (Node node : mNodes.getAll(nodeKey(i)))
+ 			if (node.getIdentifier().equals(i))
+ 				return node;
+-		
++
+ 		return null;
+ 	}
+ 
+@@ -198,14 +209,14 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		for (Link link : mLinks.getAll(linkKey(i1, i2)))
+ 			if (linkHasIdentifiers(link, i1, i2))
+ 					return link;
+-		
++
+ 		return null;
+ 	}
+ 
+ 	/**
+ 	 * Helper to check whether a given {@link Link} instance contains the given
+ 	 * {@link Identifier} instances on the contained {@link Node} instances.
+-	 * 
++	 *
+ 	 * @param link
+ 	 * @param i1
+ 	 * @param i2
+@@ -216,7 +227,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		Identifier li2 = link.getNode2().getIdentifier();
+ 		return i1.equals(li1) && i2.equals(li2) || i1.equals(li2) && i2.equals(li1);
+ 	}
+-	
++
+ 	private int linkKey(Link l) {
+ 		return linkKey(l.getNode1(), l.getNode2());
+ 	}
+@@ -224,16 +235,97 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	private int linkKey(Node n1, Node n2) {
+ 		return linkKey(n1.getIdentifier(), n2.getIdentifier());
+ 	}
+-	
++
+ 	private int linkKey(Identifier i1, Identifier i2) {
+ 		return nodeKey(i1) + nodeKey(i2);
+ 	}
+-	
++
+ 	private int nodeKey(Node n) {
+ 		return nodeKey(n.getIdentifier());
+ 	}
+-	
++
+ 	private int nodeKey(Identifier i) {
+ 		return i.hashCode();
+ 	}
++
++	/**
++	 * A confirmed non meaninful element  is an element
++	 * without any metadata after a delay
++	 */
++	private boolean isMeaningful(long now, GraphElement element) {
++	    if (element.getMetadataHolder().size() > 0)
++	        return true;
++
++	    if (element.getLastMetadataUpdate() + mConf.getMeaningfulTimeout() > now)
++	        return true;
++
++	    return false;
++	}
++
++	private boolean areLinked(Node node, Link link) {
++	    return link.getNode1().equals(node) || link.getNode2().equals(node);
++	}
++
++	private boolean hasMeaningfulLink(long now, Node node) {
++	    for (Node rNode : mNodes.values()) {
++           	for (Link link : rNode.getLinks()) {
++                   if (areLinked(node, link) && isMeaningful(now, link)) {
++                   	return true;
++                   }
++            	}
++           }
++
++           return false;
++	}
++
++	private void cleanupNonMeaningfulNodes(long now, List<GraphElement> removed) {
++           sLogger.trace("Start non the meaningful Nodes cleanup");
++           for (Node node : mNodes.values()) {
++           	if (! isMeaningful(now, node) && ! hasMeaningfulLink(now, node)) {
++                   sLogger.trace("Removing a non meaningful node: " + node);
++                   mNodes.remove(nodeKey(node.getIdentifier()), node);
++
++                   removed.add(node);
++               }
++           }
++    	}
++
++    	private void cleanupNonMeaningfulLinks(long now, List<GraphElement> removed) {
++           sLogger.trace("Start the non meaningful Links cleanup");
++           for (Link link : mLinks.values()) {
++               if (! isMeaningful(now, link)) {
++                   sLogger.trace("Removing a non meaningful link: " + link);
++                   mLinks.remove(linkKey(link), link);
++
++                   removed.add(link);
++
++                   /*
++                    * remove this link from related node
++                    */
++                   link.getNode1().removeLink(link);
++                   link.getNode2().removeLink(link);
++               }
++           }
++    	}
++
++	@Override
++	public List<GraphElement> cleanupNonMeaningfulElements() {
++           List<GraphElement> removed = CollectionHelper.provideListFor(GraphElement.class);
++
++           if (! mConf.isNonMeaningfulCleanupEnabled())
++               return removed;
++
++           long  now = System.currentTimeMillis();
++           if (lastNonMeaningfulCleanup + mConf.getNonMeaningfulCleanupFrequency() > now)
++               return removed;
++
++           sLogger.info("Start a meaningful Elements cleanup");
++
++           cleanupNonMeaningfulLinks(now, removed);
++           cleanupNonMeaningfulNodes(now, removed);
++
++           lastNonMeaningfulCleanup = now;
++
++           return removed;
++	}
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+index 9290904..11d3c14 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+@@ -73,4 +73,10 @@ public interface Node extends GraphElement {
+ 	@Override
+ 	public Node dummy();
+ 
++    /**
++      * @return true if {@link Link} object is present in {@link Node} object.
++      *
++      * @param l
++      */
++	public boolean containsLink(Link l);
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+index cd00fdb..eacf9db 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+@@ -39,7 +39,7 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 		super();
+ 		NullCheck.check(i, "Identifier is null");
+ 		mIdentifier = i;
+-		mLinks = CollectionHelper.provideMapFor(Integer.class, Link.class);
++		mLinks = CollectionHelper.provideConcurrentMapFor(Integer.class, Link.class);
+ 		mDummy = new DummyNodeImpl(i);
+ 	}
+ 
+@@ -101,4 +101,9 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 	public int getByteCount() {
+ 		return getIdentifier().getByteCount();
+ 	}
++
++    @Override
++    public boolean containsLink(Link l) {
++        return mLinks.containsKey(l.hashCode());
++    }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+index dbdfe80..1bcd11f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+@@ -76,6 +76,7 @@ class W3cXmlMetadata extends Metadata {
+ 			xpathFactory = XPathFactory.newInstance();
+ 			documentBuilderFactory = DocumentBuilderFactory.newInstance();
+ 			documentBuilderFactory.setNamespaceAware(true);
++			documentBuilderFactory.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
+ 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 			transformerFactory = TransformerFactory.newInstance();
+ 		} catch (ParserConfigurationException e) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+index e850dfa..64456dd 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+@@ -65,4 +65,6 @@ public interface Subscription {
+ 
+ 	public void setExceededSize();
+ 
++	public void removeGraphElementUnsafe(GraphElement mc);
++
+ }
+\ No newline at end of file
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+index 6df3b61..68b3689 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+@@ -237,4 +237,10 @@ class SubscriptionImpl implements Subscription {
+ 		// TODO: Cache
+ 		return "sub{" + getName() + ", " + getPublisherReference() + "}";
+ 	}
++
++    @Override
++    public void removeGraphElementUnsafe(GraphElement ge) {
++        NullCheck.check(ge, "mc is null");
++        mGraphElements.remove(ge);
++    }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/provider/DataModelServerConfigurationProvider.java b/src/de/fhhannover/inform/iron/mapserver/provider/DataModelServerConfigurationProvider.java
+index a9d97c8..e3ee4ce 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/provider/DataModelServerConfigurationProvider.java
++++ b/src/de/fhhannover/inform/iron/mapserver/provider/DataModelServerConfigurationProvider.java
+@@ -61,4 +61,19 @@ public interface DataModelServerConfigurationProvider {
+ 	 * @return true if certain validations and/or null checks should be enabled. 
+ 	 */
+ 	public boolean isSanityChecksEnabled();
++
++	/**
++        * @return true if the orphan cleanup is enabled
++        */
++	public boolean isNonMeaningfulCleanupEnabled();
++
++	/**
++        * @return return the frequency of the orphan cleanup
++        */
++	public long getNonMeaningfulCleanupFrequency();
++    
++	/**
++        * @return return the element orphan timeout
++        */
++	public long getMeaningfulTimeout();
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/provider/ServerConfigurationProviderPropImpl.java b/src/de/fhhannover/inform/iron/mapserver/provider/ServerConfigurationProviderPropImpl.java
+index ad452ac..c934c78 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/provider/ServerConfigurationProviderPropImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/provider/ServerConfigurationProviderPropImpl.java
+@@ -104,6 +104,15 @@ public class ServerConfigurationProviderPropImpl implements ServerConfigurationP
+ 
+ 	private static final String XML_SCHEMA_KEY = PROP_PREFIX + "xml.schema.";
+ 	private static final String XML_SCHEMA_DEFAULT_VALUE = "schema/soap12.xsd";
++
++	private static final String IFMAP_ENABLE_NON_MEANINGFUL_CLEANUP = PROP_PREFIX + "ifmap.default.nonmeaningfulcleanup";
++	private static final String IFMAP_ENABLE_NON_MEANINGFUL_CLEANUP_DEFAULT = "false";
++	 
++	private static final String IFMAP_NON_MEANINGFUL_CLEANUP_FREQUENCY_KEY = PROP_PREFIX + "ifmap.default.nonmeaningfulcleanupfrequency";
++	private static final String IFMAP_NON_MEANINGFUL_CLEANUP_FREQUENCY_DEFAULT = "300";
++	
++	private static final String IFMAP_MEANINGFUL_TIMEOUT_KEY = PROP_PREFIX + "ifmap.default.meaningfultimeout";
++	private static final String IFMAP_MEANINGFUL_TIMEOUT_DEFAULT = "60";
+ 
+ 
+ 	private PropertiesReaderWriter mProperties;
+@@ -334,5 +343,27 @@ public class ServerConfigurationProviderPropImpl implements ServerConfigurationP
+ 		}
+ 		
+ 		return fileNames.toArray(new String[fileNames.size()]);
+-	}
++	}
++    
++    @Override
++    public boolean isNonMeaningfulCleanupEnabled() {
++        return new Boolean(getOrSetDefaultAndGet(IFMAP_ENABLE_NON_MEANINGFUL_CLEANUP, 
++            IFMAP_ENABLE_NON_MEANINGFUL_CLEANUP_DEFAULT));
++    }
++    
++    @Override
++    public long getNonMeaningfulCleanupFrequency() {
++        String val = getOrSetDefaultAndGet(IFMAP_NON_MEANINGFUL_CLEANUP_FREQUENCY_KEY,
++            IFMAP_NON_MEANINGFUL_CLEANUP_FREQUENCY_DEFAULT);
++        return Integer.parseInt(val) * 1000;
++    }
++    
++    
++    
++    @Override
++    public long getMeaningfulTimeout() {
++        String val = getOrSetDefaultAndGet(IFMAP_MEANINGFUL_TIMEOUT_KEY,
++            IFMAP_MEANINGFUL_TIMEOUT_DEFAULT);
++        return Integer.parseInt(val) * 1000;
++    }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java b/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+index 45a1e84..a7e2cb0 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
++++ b/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+@@ -28,6 +28,7 @@ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+  * Lets make use of this to allocate the same type of list, collection and
+@@ -57,6 +58,10 @@ public class CollectionHelper {
+ 	public static <T, V> Map<T, V> provideMapFor(Class<T> c1, Class<V> c2) {
+ 		return new HashMap<T, V>();
+ 	}
++	
++	public static <T, V> Map<T, V> provideConcurrentMapFor(Class<T> c1, Class<V> c2) {
++	    return new ConcurrentHashMap<T, V>();
++	}
+ 
+ 	public static <T> Set<T> provideSetFor(Class<T> c) {
+ 		return new HashSet<T>();
+diff --git a/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java b/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+index da9b357..c363c23 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
++++ b/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+@@ -23,11 +23,11 @@ package de.fhhannover.inform.iron.mapserver.utils;
+ 
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	
+@@ -36,7 +36,7 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	private int mSize;
+ 	
+ 	public MultiArrayListMap() {
+-		mMapOfLists = new HashMap<K, List<V>>();
++		mMapOfLists = new ConcurrentHashMap<K, List<V>>();
+ 		mSize = 0;
+ 	}
+ 
+@@ -69,15 +69,20 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 		/* If there never was a list, put a new one in.
+ 		 * If there was an element already, remove it.
+ 		 */
+-		if (list == null) {
+-			list = new ArrayList<V>();
+-			mMapOfLists.put(key, list);
+-		} else if (idx >= 0) {
+-			ret = list.remove(idx);
+-			mSize--;
+-		}
+-		
+-		list.add(value);
++  		if (list == null) {
++  			list = new ArrayList<V>();
++  			mMapOfLists.put(key, list);
++  			idx = -1;
++  		} 
++  		synchronized (list) {
++      		if (idx >= 0) {
++      			ret = list.remove(idx);
++      			mSize--;
++      		}
++      		
++      		list.add(value);
++  		}
++        
+ 		mSize++;
+ 		return ret;
+ 	}
