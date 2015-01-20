@@ -1,0 +1,328 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+index b7a1a6e..c3c8764 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+@@ -86,7 +86,7 @@ public class DataModelService implements SubscriptionNotifier {
+ 	
+ 		publisherRep = new PublisherRep();
+ 		
+-		mGraph = GraphElementRepositoryImpl.newInstance();
++		mGraph = GraphElementRepositoryImpl.newInstance(publisherRep);
+ 		mMetaHolderFac = MetadataHolderFactoryImpl.newInstance();
+ 		mSearchingFac = SearchingFactoryImpl.newInstance();
+ 
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+index d181650..ba9fd65 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+@@ -21,6 +21,7 @@
+ 
+ package de.fhhannover.inform.iron.mapserver.datamodel;
+ 
++import java.util.Collection;
+ import java.util.HashMap;
+ 
+ import org.apache.log4j.Logger;
+@@ -35,7 +36,7 @@ import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+  * @since 0.1.0
+  * @author aw, vp
+  */
+-class PublisherRep {
++public class PublisherRep {
+ 	
+ 	private static Logger logger;
+ 	
+@@ -159,5 +160,9 @@ class PublisherRep {
+ 	void removePublisherSession(String sessionId) {
+ 		sessions.remove(sessionId);
+ 	}
++
++	public Collection<Publisher> getPublishers() {
++		return publishers.values();
++	}
+ }
+  
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+index 1ad0449..a5d890c 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+@@ -561,6 +561,8 @@ public class SubscriptionService {
+ 		
+ 		// remove reference from publisher
+ 		mh.getPublisher().removeMetadataHolder(mh);
++
++		mGraph.metadataHoldeRemoved(ge);
+ 	}
+ 	
+ 	private void checkForAddedSubGraph(GraphElement ge, MetadataHolder mh) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+index 670735d..2fccaf8 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+@@ -95,4 +95,9 @@ public interface GraphElementRepository {
+ 	 * Make some debugging output about the content of the graph.
+ 	 */
+ 	public void dumpContents();
++
++	/**
++	 * Notify the repository that metadataholder has been removed
++	 */
++	public void metadataHoldeRemoved(GraphElement ge);
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+index aafa438..3ea3fb5 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+@@ -22,8 +22,16 @@
+ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
++import java.util.List;
+ 
++import org.apache.log4j.Logger;
++
++import de.fhhannover.inform.iron.mapserver.datamodel.Publisher;
++import de.fhhannover.inform.iron.mapserver.datamodel.PublisherRep;
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.Subscription;
++import de.fhhannover.inform.iron.mapserver.exceptions.SystemErrorException;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+ import de.fhhannover.inform.iron.mapserver.utils.CollectionHelper;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiArrayListMap;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiMap;
+@@ -37,23 +45,27 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  * @author aw
+  */
+ public class GraphElementRepositoryImpl implements GraphElementRepository {
+-	
++	private final static Logger sLogger = LoggingProvider.getTheLogger();
+ 	private MultiMap<Integer, Node> mNodes;
+ 	private MultiMap<Integer, Link> mLinks;
+-	
++	private PublisherRep mPublisherRep;
++
+ 	/**
++	 * @param publisherRep
+ 	 * @return a new Instance of a {@link GraphElementRepository} instance.
+ 	 */
+-	public static GraphElementRepository newInstance() {
+-		return new GraphElementRepositoryImpl();
++	public static GraphElementRepository newInstance(PublisherRep publisherRep) {
++	    return new GraphElementRepositoryImpl(publisherRep);
+ 	}
+ 	
+ 	/**
+ 	 * Private constructor
++	 * @param publisherRep
+ 	 */
+-	private GraphElementRepositoryImpl() {
++	private GraphElementRepositoryImpl(PublisherRep publisherRep) {
+ 		mNodes = new MultiArrayListMap<Integer, Node>();
+ 		mLinks = new MultiArrayListMap<Integer, Link>();
++		mPublisherRep = publisherRep;
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -236,4 +248,82 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	private int nodeKey(Identifier i) {
+ 		return i.hashCode();
+ 	}
++
++	/**
++	 * A confirmed non meaninful element  is an element
++	 * without any metadata after a delay
++	 */
++	private boolean isMeaningful(GraphElement element) {
++		if (element.getMetadataHolder().size() > 0)
++			return true;
++
++		return false;
++	}
++
++	private boolean hasMeaningfulLink(Node node) {
++		for (Link link : node.getLinks()) {
++			if (isMeaningful(link)) {
++				return true;
++			}
++		}
++
++		return false;
++	}
++
++	private void cleanupNonMeaningfulNode(Node node) {
++		if (isMeaningful(node) || hasMeaningfulLink(node)) {
++			return;
++		}
++
++		sLogger.trace("Removing a non meaningful node: " + node);
++		mNodes.remove(nodeKey(node.getIdentifier()), node);
++		cleanupSubscribtions(node);
++
++		for (Link link : node.getLinks()) {
++			link.getNode1().removeLink(link);
++			link.getNode1().removeLink(link);
++
++			sLogger.trace("Removing a non meaningful link: " + link);
++			mLinks.remove(linkKey(link), link);
++			cleanupSubscribtions(link);
++		}
++	}
++
++	private void cleanupNonMeaningfulLink(Link link) {
++		// should never happen since this is called from a method that just
++		// removed the metadatas
++		if (isMeaningful(link)) {
++			return;
++		}
++
++		sLogger.trace("Removing a non meaningful link: " + link);
++		mLinks.remove(linkKey(link), link);
++		cleanupSubscribtions(link);
++
++		link.getNode1().removeLink(link);
++		cleanupNonMeaningfulNode(link.getNode1());
++
++		link.getNode2().removeLink(link);
++		cleanupNonMeaningfulNode(link.getNode2());
++	}
++
++	private void cleanupSubscribtions(GraphElement removed) {
++		for (Publisher pub : mPublisherRep.getPublishers()) {
++			List<Subscription> subs = pub.getSubscriptionState().getSubscriptions();
++			for (Subscription sub : subs) {
++				sLogger.trace("Removing a non meaningful element " + removed +
++					" from subscriber : " + sub);
++				sub.removeGraphElementRemoved(removed);
++			}
++		}
++	}
++
++	public void metadataHoldeRemoved(GraphElement ge) {
++		if (ge instanceof Node)
++			cleanupNonMeaningfulNode((Node) ge);
++		else if (ge instanceof Link)
++			cleanupNonMeaningfulLink((Link) ge);
++		else
++			throw new SystemErrorException("GraphElement not Link nor Identifier");
++	}
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+index cd00fdb..58f5846 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+@@ -39,7 +39,7 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 		super();
+ 		NullCheck.check(i, "Identifier is null");
+ 		mIdentifier = i;
+-		mLinks = CollectionHelper.provideMapFor(Integer.class, Link.class);
++		mLinks = CollectionHelper.provideConcurrentMapFor(Integer.class, Link.class);
+ 		mDummy = new DummyNodeImpl(i);
+ 	}
+ 
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+index dbdfe80..1bcd11f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+@@ -76,6 +76,7 @@ class W3cXmlMetadata extends Metadata {
+ 			xpathFactory = XPathFactory.newInstance();
+ 			documentBuilderFactory = DocumentBuilderFactory.newInstance();
+ 			documentBuilderFactory.setNamespaceAware(true);
++			documentBuilderFactory.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
+ 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 			transformerFactory = TransformerFactory.newInstance();
+ 		} catch (ParserConfigurationException e) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+index e850dfa..6a51733 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+@@ -65,4 +65,6 @@ public interface Subscription {
+ 
+ 	public void setExceededSize();
+ 
++	public void removeGraphElementRemoved(GraphElement mc);
++
+ }
+\ No newline at end of file
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+index 6df3b61..2ec0398 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+@@ -237,4 +237,10 @@ class SubscriptionImpl implements Subscription {
+ 		// TODO: Cache
+ 		return "sub{" + getName() + ", " + getPublisherReference() + "}";
+ 	}
++
++	@Override
++	public void removeGraphElementRemoved(GraphElement ge) {
++		NullCheck.check(ge, "ge is null");
++		mGraphElements.remove(ge);
++	}
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java b/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+index 45a1e84..7233264 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
++++ b/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+@@ -28,6 +28,7 @@ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+  * Lets make use of this to allocate the same type of list, collection and
+@@ -58,6 +59,10 @@ public class CollectionHelper {
+ 		return new HashMap<T, V>();
+ 	}
+ 
++	public static <T, V> Map<T, V> provideConcurrentMapFor(Class<T> c1, Class<V> c2) {
++		return new ConcurrentHashMap<T, V>();
++	}
++
+ 	public static <T> Set<T> provideSetFor(Class<T> c) {
+ 		return new HashSet<T>();
+ 	}
+diff --git a/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java b/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+index da9b357..0bd6eda 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
++++ b/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+@@ -23,11 +23,11 @@ package de.fhhannover.inform.iron.mapserver.utils;
+ 
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	
+@@ -36,7 +36,7 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	private int mSize;
+ 	
+ 	public MultiArrayListMap() {
+-		mMapOfLists = new HashMap<K, List<V>>();
++		mMapOfLists = new ConcurrentHashMap<K, List<V>>();
+ 		mSize = 0;
+ 	}
+ 
+@@ -72,12 +72,17 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 		if (list == null) {
+ 			list = new ArrayList<V>();
+ 			mMapOfLists.put(key, list);
+-		} else if (idx >= 0) {
++			idx = -1;
++		}
++		synchronized (list) {
++		if (idx >= 0) {
+ 			ret = list.remove(idx);
+ 			mSize--;
+ 		}
+ 		
+ 		list.add(value);
++	}
++
+ 		mSize++;
+ 		return ret;
+ 	}
