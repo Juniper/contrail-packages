@@ -196,7 +196,7 @@ The VRouter Agent API is used to inform the VRouter agent of the association bet
 %{python_sitelib}/cfgm_common*
 %{python_sitelib}/discoveryclient*
 %{python_sitelib}/pysandesh*
-%{python_sitelib}/sandesh-0.1dev*
+%{python_sitelib}/sandesh-0.1.dev*
 %{python_sitelib}/sandesh_common*
 %{python_sitelib}/vnc_api*
 %{_contrailetc}/vnc_api_lib.ini
