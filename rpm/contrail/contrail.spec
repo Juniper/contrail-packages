@@ -438,6 +438,7 @@ Requires:           python-prettytable
 Requires:           python-geventhttpclient
 Requires:           protobuf
 Requires:           net-snmp-python
+Requires:           librdkafka1
 
 %description analytics
 Contrail Analytics package
