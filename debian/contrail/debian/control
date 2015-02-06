@@ -303,7 +303,8 @@ Description: OpenContrail VRouter - DKMS version
 Package: contrail-vrouter-dpdk
 Architecture: all
 Depends: contrail-vrouter-utils (= ${binary:Version}), dpdk-kernel-modules-dkms,
-         ${misc:Depends}
+         liburcu1, ${misc:Depends}
+Provides: contrail-vrouter
 Description: OpenContrail VRouter - DPDK version
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
