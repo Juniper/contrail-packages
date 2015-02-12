@@ -456,6 +456,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %config(noreplace) %{_contrailetc}/contrail-query-engine.conf
 %config(noreplace) %{_contrailetc}/contrail-snmp-collector.conf
 %config(noreplace) %{_contrailetc}/contrail-topology.conf
+%config(noreplace) %{_contrailetc}/contrail-alarm-gen.conf
 %defattr(-, root, root)
 %{_bindir}/contrail-collector
 %{_bindir}/contrail-query-engine
@@ -472,12 +473,14 @@ Analytics nodes collect, store, correlate, and analyze information from
 /usr/share/doc/contrail-analytics-api
 /etc/contrail/supervisord_analytics.conf
 /etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
+/etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
 /etc/contrail/supervisord_analytics_files/contrail-analytics.rules
 /etc/contrail/supervisord_analytics_files/contrail-collector.ini
 /etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
 %{_contrailetc}/supervisord_analytics_files/contrail-snmp-collector.ini
 %{_contrailetc}/supervisord_analytics_files/contrail-topology.ini
 /etc/init.d/contrail-analytics-api
+/etc/init.d/contrail-alarm-gen
 /etc/init.d/contrail-collector
 /etc/init.d/contrail-query-engine
 /etc/init.d/supervisor-analytics
@@ -502,6 +505,7 @@ chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
 chmod +x /etc/init.d/supervisor-analytics
 chmod +x /etc/init.d/contrail-analytics-api
+chmod +x /etc/init.d/contrail-alarm-gen
 chmod +x /etc/init.d/contrail-collector
 chmod +x /etc/init.d/contrail-query-engine
 chmod +x /etc/init.d/contrail-snmp-collector
