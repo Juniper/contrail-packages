@@ -456,10 +456,12 @@ Analytics nodes collect, store, correlate, and analyze information from
 %config(noreplace) %{_contrailetc}/contrail-query-engine.conf
 %config(noreplace) %{_contrailetc}/contrail-snmp-collector.conf
 %config(noreplace) %{_contrailetc}/contrail-topology.conf
+%config(noreplace) %{_contrailetc}/contrail-alarm-gen.conf
 %defattr(-, root, root)
 %{_bindir}/contrail-collector
 %{_bindir}/contrail-query-engine
 %{_bindir}/contrail-analytics-api
+%{_bindir}/contrail-alarm-gen
 %{python_sitelib}/opserver*
 %{python_sitelib}/contrail_snmp_collector*
 %{python_sitelib}/contrail_topology*
