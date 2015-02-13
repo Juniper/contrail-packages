@@ -285,6 +285,8 @@ Package: contrail-vrouter-dkms
 Architecture: all
 Depends: contrail-vrouter-utils (= ${binary:Version}),
          dkms,
+         coreutils,
+         hostname,
          python-opencontrail-vrouter-netns (= ${binary:Version}),
          ${misc:Depends}
 Provides: contrail-vrouter
