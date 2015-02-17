@@ -5,7 +5,7 @@ usr/bin/contrail-logs
 usr/bin/contrail-stats
 usr/bin/contrail-flows
 usr/bin/contrail-logs-api-audit
-usr/bin/contrail-snmp-collector
+usr/bin/contrail-snmp-*
 usr/bin/contrail-topology
 usr/bin/contrail-alarm-gen
 etc/contrail/contrail-collector.conf
