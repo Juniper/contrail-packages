@@ -1,5 +1,6 @@
 PACKAGE_NAME=vrouter
 PACKAGE_VERSION="__VERSION__"
+PRE_BUILD="utils/dkms/gen_build_info.sh __VERSION__ $dkms_tree/vrouter/__VERSION__/build"
 MAKE[0]="'make' -C . KERNELDIR=/lib/modules/${kernelver}/build"
 CLEAN[0]="'make' -C . KERNELDIR=/lib/modules/${kernelver}/build"
 BUILT_MODULE_NAME[0]="vrouter"
