@@ -469,7 +469,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-stats
 %{_bindir}/contrail-logs-api-audit
-%{_bindir}/contrail-snmp-collector
+%{_bindir}/contrail-snmp-*
 %{_bindir}/contrail-topology
 /usr/share/doc/contrail-analytics-api
 /etc/contrail/supervisord_analytics.conf
