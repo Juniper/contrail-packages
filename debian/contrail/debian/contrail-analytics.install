@@ -13,6 +13,7 @@ etc/contrail/contrail-query-engine.conf
 etc/contrail/contrail-analytics-api.conf
 etc/contrail/contrail-alarm-gen.conf
 usr/lib/python*/dist-packages/opserver*
+usr/lib/python*/dist-packages/alarm_*
 usr/lib/python*/dist-packages/contrail_snmp_collector*
 usr/lib/python*/dist-packages/contrail_topology*
 usr/share/doc/contrail-analytics-api
