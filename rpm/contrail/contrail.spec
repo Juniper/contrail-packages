@@ -319,6 +319,7 @@ Group:              Applications/System
 Requires:           python-docker-py
 Requires:           python-unittest2
 Requires:           iproute >= 3.1.0
+Requires:           python-requests >= 2.5.1
 
 %description -n python-opencontrail-vrouter-netns
 Contrail Virtual Router NetNS package
