@@ -30,5 +30,5 @@ etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
 etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
 etc/contrail/supervisord_analytics_files/contrail-snmp-collector.ini
 etc/contrail/supervisord_analytics_files/contrail-topology.ini
-etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
+etc/contrail/supervisord_analytics_files/contrail-alarm-gen.*
 usr/share/mibs/netsnmp/*

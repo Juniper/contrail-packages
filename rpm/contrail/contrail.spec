@@ -479,7 +479,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 /usr/share/doc/contrail-analytics-api
 /etc/contrail/supervisord_analytics.conf
 /etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
-/etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
+/etc/contrail/supervisord_analytics_files/contrail-alarm-gen.*
 /etc/contrail/supervisord_analytics_files/contrail-analytics.rules
 /etc/contrail/supervisord_analytics_files/contrail-collector.ini
 /etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
