@@ -310,7 +310,3 @@ Description: OpenStack Nova compute-node driver for OpenContrail
  virtual-network to virtual-machines, containers or network namespaces.
  .
  This package contains the OpenStack Nova compute-node driver for OpenContrail.
-
-Package: contrail-f5
-Architecture: all
-Description: Big IP interface for f5 load balancer.
