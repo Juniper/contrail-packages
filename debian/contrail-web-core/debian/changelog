@@ -1,4 +1,4 @@
-contrail-web-core (VERSION) precise; urgency=low
+contrail-web-core (VERSION) SERIES; urgency=low
 
   * Initial release.
 

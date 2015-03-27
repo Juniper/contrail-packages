@@ -29,6 +29,10 @@ ifeq ($(SERIES),precise)
     CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
 endif
 
+source-all: source-package-contrail \
+        source-package-contrail-web-core \
+        source-package-contrail-web-controller
+
 all: package-contrail \
      package-ifmap-server \
      package-ifmap-python-client \
@@ -63,6 +67,7 @@ source-package-contrail-web-core: clean-contrail-web-core debian-contrail-web-co
 	$(eval PACKAGE := $(patsubst source-package-%,%,$@))
 	@echo "Building source package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' debian/changelog)
+	(cd build/packages/$(PACKAGE); sed -i 's/SERIES/$(SERIES)/g' debian/changelog)
 	(cd build/packages/$(PACKAGE); make -f debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
@@ -77,6 +82,7 @@ source-package-contrail-web-controller: clean-contrail-web-controller debian-con
 	$(eval PACKAGE := $(patsubst source-package-%,%,$@))
 	@echo "Building source package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' debian/changelog)
+	(cd build/packages/$(PACKAGE); sed -i 's/SERIES/$(SERIES)/g' debian/changelog)
 	(cd build/packages/$(PACKAGE); make -f debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
 
