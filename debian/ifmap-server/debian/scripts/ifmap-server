@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd /usr/share/ifmap-server
-java -cp ./lib/ -jar ./irond.jar > /var/log/contrail/ifmap-server-console.log 2>&1
+java -cp ./lib/ -jar ./irond.jar >> /var/log/contrail/ifmap-server-console.log 2>&1
