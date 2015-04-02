@@ -247,6 +247,9 @@ This package provides the contrail-vrouter user space agent.
 /etc/init.d/contrail-vrouter-agent
 /etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
 /etc/init.d/supervisor-vrouter
+/etc/contrail/ssl/certs
+/etc/contrail/ssl/private
+/etc/contrail/ssl
 
 %pre vrouter-agent
 set -e
@@ -256,11 +259,12 @@ getent passwd contrail >/dev/null || \
   -c "OpenContail daemon" contrail
 
 %post vrouter-agent
-mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/ /etc/contrail/ssl/certs/ /etc/contrail/ssl/private/
 chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
-chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
-chmod 0750 /etc/contrail/
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/ /etc/contrail/ssl /etc/contrail/ssl/certs/ /etc/contrail/ssl/private/
+chmod 0750 /etc/contrail/ /etc/contrail/ssl/ /etc/contrail/ssl/certs/
+chmod 0700 /etc/contrail/ssl/private/
 chmod +x /etc/init.d/contrail-vrouter-agent
 chmod +x /etc/init.d/supervisor-vrouter
 
