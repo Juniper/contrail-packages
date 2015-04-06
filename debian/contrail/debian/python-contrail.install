@@ -2,7 +2,7 @@ usr/lib/python*/dist-packages/cfgm_common*
 usr/lib/python*/dist-packages/discoveryclient*
 usr/lib/python*/dist-packages/libpartition*
 usr/lib/python*/dist-packages/pysandesh*
-usr/lib/python*/dist-packages/sandesh-0.1dev*
+usr/lib/python*/dist-packages/sandesh-0.1*
 usr/lib/python*/dist-packages/sandesh_common*
 usr/lib/python*/dist-packages/vnc_api*
 etc/contrail/vnc_api_lib.ini
