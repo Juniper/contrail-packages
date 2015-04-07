@@ -446,6 +446,7 @@ Requires:           protobuf
 Requires:           net-snmp-python
 Requires:           librdkafka1
 Requires:           python-kafka-python
+Requires:           python-stevedore
 
 %description analytics
 Contrail Analytics package
