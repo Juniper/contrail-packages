@@ -8,3 +8,4 @@ usr/bin/vrfstats
 usr/bin/vif
 usr/bin/vifdump
 usr/bin/vxlan
+usr/bin/vrouter

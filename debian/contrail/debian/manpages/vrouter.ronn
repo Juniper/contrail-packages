@@ -1,9 +1,9 @@
-rt(1) -- OpenContrail vRouter utils
-===================================
+vrouter(1) -- OpenContrail vRouter utils
+====================================
 
 ## SYNOPSIS
 
-`rt` [<options>]
+`vrouter` [<options>]
 
 ## DESCRIPTION
 
@@ -13,17 +13,11 @@ The package opencontrail-vrouter-utils provides command line utilities to config
 
 ## OPTIONS
 
-* `-h`, `--help`:
+* `--help`:
   Show this help message and exit
 
-* `--dump`:
-  Dumps the routing table corresponding to vrf_id
-
-* `--family` <familiy>:
-  Optional family specification to --dump command, Specification should be one of "inet" or "bridge"
-
-* `--table` <table>:
-  Specify the type of the table to dump. Valid only for inet, Type can be one of "ucst" or "mcst"
+* `--info`:
+  Show the various vRouter table limits and the module version information
 
 ## BUGS
 
@@ -35,8 +29,8 @@ OpenContrail developers <dev@lists.opencontrail.org>
 
 ## COPYRIGHT
 
-Copyright (c) 2014 OpenContrail
+Copyright (c) 2015 OpenContrail
 
 ## SEE ALSO
 
-mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1)
+vifdump(1), mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1)
