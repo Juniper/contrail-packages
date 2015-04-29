@@ -3,3 +3,4 @@
 003_ifmap_split_results.patch
 004_ifmap_split_config.patch
 005_ifmap_fix_utf_8_encoded_xml.patch
+006_poll_results_buffer.patch

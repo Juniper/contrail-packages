@@ -1,0 +1,319 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java
+index faf8b04..f1c9561 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java
+@@ -45,6 +45,12 @@ class Session {
+ 	}
+ 	
+ 	/**
++	 * Private enum to represent the state of polling.
++	 */
++	private enum PollResultsPendingState {
++		POLL_PENDING_RESULTS_AVAILABLE, POLL_PENDING_RESULTS_NONE;
++	}
++	/**
+ 	 * Identifies the client.
+ 	 */
+ 	private final ClientIdentifier mClientIdentifier;
+@@ -80,6 +86,8 @@ class Session {
+ 	private SessionTimer mSessionTimer;
+ 	
+ 	private PollState mPollState;
++
++        private PollResultsPendingState mPollResultsPendingState;
+ 	
+ 	/**
+ 	 * Constructs a session with a given clientIdentifier and publisherId.
+@@ -130,6 +138,19 @@ class Session {
+ 		return mPollState == PollState.POLL_AVAILABLE;
+ 	}
+ 
++	public boolean isPollPendingResultsAvailable() {
++		return mPollResultsPendingState == PollResultsPendingState.POLL_PENDING_RESULTS_AVAILABLE;
++	}
++
++	public void setPollPendingResultsAvailable() {
++		mPollResultsPendingState = PollResultsPendingState.POLL_PENDING_RESULTS_AVAILABLE;
++	}
++
++	public void unsetPollPendingResultsAvailable() {
++		mPollResultsPendingState = PollResultsPendingState.POLL_PENDING_RESULTS_NONE;
++	}
++
++
+ 	public void setPollResultAvailable() {
+ 		if (mPollState == PollState.POLL_PENDING)
+ 			throw new SystemErrorException("Can't have PollResultAvailable "
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
+index c3dda2f..e723da1 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
+@@ -186,6 +186,8 @@ public class EventProcessor extends Processor<Event> {
+ 	 */
+ 	private ThreadLocal<List<Result>> mResultList = new ThreadLocalResults();
+ 
++        private PollResultsPending mPollResultsPending = new PollResultsPending();
++
+ 	/**
+ 	 * Constructor
+ 	 * 
+@@ -691,7 +693,10 @@ public class EventProcessor extends Processor<Event> {
+ 			
+ 			checkAndSetArc(request, session);
+ 			
+-			if (session.isPollResultAvailable()) {
++			if (session.isPollPendingResultsAvailable()) {
++                                sLogger.trace(sName + ": Session - " + session.getSessionId() + " sent a poll request and has pending results");
++				handleSendPendingPollRes(arc, session);
++			} else if (session.isPollResultAvailable()) {
+ 				handleSendPollRes(arc, session);
+ 			} else {
+ 				handlePollPending(arc, session);
+@@ -739,6 +744,28 @@ public class EventProcessor extends Processor<Event> {
+ 	}
+ 	
+ 
++	private void handleSendPendingPollRes(ChannelIdentifier arc, Session session) {
++		try {
++			sLogger.trace(sName + ": Session - " + session.getSessionId() + " - sending out poll result from buferred  poll results");
++			String sessionId = session.getSessionId();
++
++			// sanity check
++			if (session.hasArc() && !session.getArc().equals(arc))
++				throw new SystemErrorException("Missed a double ARC failure...");
++
++			// get next poll response message and put it into the local list.
++			PollResult pollResult = mPollResultsPending.getNext(session);
++			sLogger.trace(sName + ": PollResults results= " 
++					+ pollResult.getResults().size());
++			deferPollResult(arc, session.getClientIdentifier(), pollResult);
++		} catch (Exception e) {
++			// Most likely this is a programming error, try to do some workaround:
++			// Don't send anything back and set poll pending state for this
++			// session.
++			sLogger.error("UNEXEPECTED: No poll pending results found");
++			handlePollPending(arc, session);
++		}
++	}
+ 
+ 	/**
+ 	 * Sends a {@link PollResult} to a client and clears the state of the
+@@ -766,6 +793,8 @@ public class EventProcessor extends Processor<Event> {
+ 			PollResult pollResult = mDataModel.getPollResultFor(sessionId);
+ 			sLogger.trace(sName + ": PollResults results= " 
+ 					+ pollResult.getResults().size());
++                        mPollResultsPending.addPollResult(session, pollResult);  
++                        pollResult = mPollResultsPending.getNext(session);
+ 			deferPollResult(arc, session.getClientIdentifier(), pollResult);
+ 		} catch (PollResultsTooBigException e) {
+ 			// The result was too big, send a error response
+@@ -1096,6 +1125,11 @@ public class EventProcessor extends Processor<Event> {
+ 		
+ 		session.setSsrc(channelId);
+ 		session.setSessionId(sessionId);
++                Integer mpprs = request.getMaxPerPollResultSize();
++                if (mpprs == null) {
++                        mpprs = mDataModel.getServerConfiguration().getDefaultMaxPerPollResultSize();
++                }
++		mPollResultsPending.handleNewSession(session, mpprs);
+ 		
+ 		mSessionRep.store(session);
+ 		mSessionRep.map(session, channelId);
+@@ -1113,6 +1147,7 @@ public class EventProcessor extends Processor<Event> {
+ 	 */
+ 	private void endSessionLocal(Session session) {
+ 		
++                mPollResultsPending.handleEndSession(session);
+ 		if (session.hasArc()) mSessionRep.unmap(session, session.getArc());
+ 		
+ 		if (session.hasSsrc()) mSessionRep.unmap(session, session.getSsrc());
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
+new file mode 100644
+index 0000000..2ee7e44
+--- /dev/null
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
+@@ -0,0 +1,150 @@
++/*
++ * Project: irond
++ * Package: src.de.fhhannover.inform.iron.mapserver.communication.ifmap
++ * File:    PollResultsPending.java
++ *
++ * Author: Suresh Balineni, Juniper Networks, 2014-15
++ * Description: When poll results are fetched from the graph, chunk them into
++ *              smaller poll results and buffer them. 
++ */
++
++package de.fhhannover.inform.iron.mapserver.communication.ifmap;
++
++import java.util.List;
++import java.util.ArrayList;
++import java.util.Map;
++import java.util.HashMap;
++
++import org.apache.log4j.Logger;
++
++import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResult;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResultImpl;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.ModifiableSearchResult;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
++import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
++
++public class PollResultsPending {
++	
++	private static final String sName = "PollResultsPending";
++	
++	private static Logger sLogger;
++	static {
++		sLogger = LoggingProvider.getTheLogger();
++	}
++	
++        private HashMap<String , List<PollResult>> mPollResults = new HashMap<String, List<PollResult>>();
++        private HashMap<String, Integer> mPerClientMpprs = new HashMap<String, Integer>();
++
++	/**
++	 * Constructor
++	 * 
++	 * @param max per poll result size 
++	 */
++	public PollResultsPending() {
++	}
++
++        private List<PollResult> getSessionResults(String sessionId) {
++                List<PollResult> sessionResults = null;
++                if ((sessionResults = mPollResults.get(sessionId)) == null) {
++                     sLogger.error("Session: " + sessionId + " is not initialzed with PollPendingResult when session is created");
++                }
++                return sessionResults;
++        }
++
++        public void handleNewSession(Session session, Integer mpprs) {
++                String sessionId = session.getSessionId();
++                sLogger.trace(sName +  ": " + sessionId + " handling new session, mpprs: " + mpprs);
++                List<PollResult> sessionResults = null;
++                if ((sessionResults = mPollResults.get(sessionId)) == null) {
++                     sessionResults = new ArrayList<PollResult>();
++                     mPollResults.put(sessionId, sessionResults);
++                     session.unsetPollPendingResultsAvailable();
++                     mPerClientMpprs.put(sessionId, mpprs);
++                } else {
++                     sLogger.error(sName + ": Session - " + sessionId + " has already a PollPendingResult, but received a new session");
++                }       
++        }
++
++        public void handleEndSession(Session session) {
++                String sessionId = session.getSessionId();
++                sLogger.trace(sName +  ": " + sessionId + " handing end session");
++                List<PollResult> sessionResults = null;
++                if ((sessionResults = mPollResults.get(sessionId)) == null) {
++                     sLogger.error("Session : " + sessionId + " is not initialzed with PollPendingResult, but received a end session request");
++                } else {
++                     remove(sessionId);
++                     session.unsetPollPendingResultsAvailable();
++                }
++        }
++
++        public void addPollResult(Session session, PollResult res) {
++                String sessionId = session.getSessionId();
++                Integer mpprs = mPerClientMpprs.get(sessionId);
++                sLogger.trace(sName +  ": " + sessionId + " addPollResult");
++                if (canSplit(res, mpprs)) {
++                       List<PollResult> newResults = split(res, mpprs);
++                       getSessionResults(sessionId).addAll(newResults);
++                } else {
++                       getSessionResults(sessionId).add(res);
++                }
++                session.setPollPendingResultsAvailable();
++        }
++
++        private boolean canSplit(PollResult res, Integer mpprs) {
++                if (res.getByteCount() > mpprs) {
++                      sLogger.trace(sName +  ": received poll results with size: " + res.getByteCount() + ", mpprs: " + mpprs + ", split");
++                      return true;
++                }
++                return false;
++        }
++
++        private List<PollResult> split(PollResult res, Integer mpprs) {
++                List<PollResult> list = new ArrayList<PollResult>();
++                PollResult lastResult = null;
++                for (SearchResult sr : res.getResults()) {
++                        if (lastResult == null || (lastResult.getByteCount() + sr.getByteCount()) > mpprs) {
++                            lastResult = new PollResultImpl();
++                            sLogger.trace(sName +  ": created a new Poll Result");
++                            list.add(lastResult);
++                        } else {
++                            lastResult = list.get(list.size() - 1);
++                        }
++                        lastResult.addSearchResult((ModifiableSearchResult)sr, mpprs);
++                }
++                if (lastResult == null) {
++                        list.add(res);
++                } else {
++                       for (String err : res.getErrorResults()) {
++                             lastResult.addErrorResult(err);
++                       }
++                }
++                return list;
++        }
++
++        public PollResult getNext(Session session) {
++                String sessionId = session.getSessionId();
++                List<PollResult> sessionResults = mPollResults.get(sessionId);
++                NullCheck.check(sessionResults, "Session Poll Results is null");
++                if (sessionResults.size() == 0) {
++                        sLogger.warn(sName +  ": " + sessionId + " getNext must not be called because state must have been set to PollPendingResultsNone");
++                        return null;
++                }
++                PollResult nextResult  = sessionResults.get(0);
++                sessionResults.remove(0);
++                if (sessionResults.size() > 0) {
++                       sLogger.trace(sName +  ": Session - " + sessionId + " has more pending results, remaining count: " + sessionResults.size());
++                       session.setPollPendingResultsAvailable();
++                } else {
++                       sLogger.trace(sName +  ": Session - " + sessionId + " has last pending result");
++                       session.unsetPollPendingResultsAvailable();
++                }
++                return nextResult;
++        }
++
++        private void remove(String sessionId) {
++                sLogger.trace(sName +  ": Session - " + sessionId + " removed from pending results list");
++                mPollResults.remove(sessionId);
++                mPerClientMpprs.remove(sessionId);
++        }
++}
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java
+index bf33526..cd396f8 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java
+@@ -71,4 +71,7 @@ public interface PollResult extends SearchAble {
+ 	 * 			instance in this {@link PollResult} instance with the given name.
+ 	 */
+ 	public int getByteCountOf(String name);
++
++        public void addSearchResult(ModifiableSearchResult sres, Integer mpprs);
++        public void addErrorResult(String name);
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java
+index e2ce43f..6d95442 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java
+@@ -45,7 +45,7 @@ import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+  * @author aw
+  *
+  */
+-class PollResultImpl implements ModifiablePollResult {
++public class PollResultImpl implements ModifiablePollResult {
+ 	
+ 	private List<ModifiableSearchResult> mResults;
+ 	private List<String> mErrors;
+@@ -53,7 +53,7 @@ class PollResultImpl implements ModifiablePollResult {
+         private final SearchingFactory mSearchFac;
+         private static Logger sLogger = LoggingProvider.getTheLogger();
+ 
+-	PollResultImpl() {
++	public PollResultImpl() {
+ 		mResults = CollectionHelper.provideListFor(ModifiableSearchResult.class);
+ 		mErrors = CollectionHelper.provideListFor(String.class);
+ 		mCurSize = 0;
