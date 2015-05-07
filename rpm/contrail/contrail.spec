@@ -476,6 +476,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{python_sitelib}/contrail_topology*
 %{_bindir}/contrail-logs
 %{_bindir}/contrail-flows
+%{_bindir}/contrail-db
 %{_bindir}/contrail-stats
 %{_bindir}/contrail-logs-api-audit
 %{_bindir}/contrail-snmp-*
