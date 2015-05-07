@@ -100,6 +100,7 @@ popd
 # Install contrail utilities
 install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-version %{buildroot}%{_bindir}/contrail-version
 install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-status.py %{buildroot}%{_bindir}/contrail-status
+install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-db.py %{buildroot}%{_bindir}/contrail-db
 
 #Needed for vrouter-dkms
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
@@ -603,3 +604,4 @@ Contrail utility sctipts package
 %files utils
 %{_bindir}/contrail-version
 %{_bindir}/contrail-status
+%{_bindir}/contrail-db
