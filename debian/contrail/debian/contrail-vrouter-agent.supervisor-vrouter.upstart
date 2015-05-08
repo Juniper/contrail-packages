@@ -7,6 +7,8 @@ limit core unlimited unlimited
 # gracefully
 kill timeout 20
 
+respawn
+
 pre-start script
     if [ -f /opt/contrail/bin/vrouter-pre-start.sh ]; then
         /opt/contrail/bin/vrouter-pre-start.sh
