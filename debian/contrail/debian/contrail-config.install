@@ -18,6 +18,7 @@ etc/init.d/contrail-schema
 etc/init.d/contrail-svc-monitor
 etc/init.d/contrail-discovery
 etc/init.d/contrail-device-manager
+etc/init.d/contrail-config-nodemgr
 etc/contrail/supervisord_config.conf
 etc/contrail/supervisord_config_files/contrail-api.ini
 etc/contrail/supervisord_config_files/contrail-schema.ini

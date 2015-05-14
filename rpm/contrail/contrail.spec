@@ -247,6 +247,7 @@ This package provides the contrail-vrouter user space agent.
 /etc/init.d/contrail-vrouter-agent
 /etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
 /etc/init.d/supervisor-vrouter
+/etc/init.d/contrail-vrouter-nodemgr
 
 %pre vrouter-agent
 set -e
@@ -266,6 +267,7 @@ chmod 0750 /etc/contrail/ /etc/contrail/ssl/ /etc/contrail/ssl/certs/
 chmod 0700 /etc/contrail/ssl/private/
 chmod +x /etc/init.d/contrail-vrouter-agent
 chmod +x /etc/init.d/supervisor-vrouter
+chmod +x /etc/init.d/contrail-vrouter-nodemgr
 
 %package control
 Summary:          Contrail Control
@@ -291,6 +293,7 @@ plane. Not all control plane functions are logically centralized \u2013 some con
 /etc/contrail/supervisord_control_files/contrail-control.rules
 /etc/init.d/contrail-control
 /etc/init.d/supervisor-control
+/etc/init.d/contrail-control-nodemgr
 
 %pre control
 set -e
@@ -316,6 +319,7 @@ if [ ! -f /etc/authbind/byport/179 ]; then
 fi
 chmod +x /etc/init.d/supervisor-control
 chmod +x /etc/init.d/contrail-control
+chmod +x /etc/init.d/contrail-control-nodemgr
 
 %package -n python-opencontrail-vrouter-netns
 
@@ -406,6 +410,7 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 /etc/init.d/contrail-device-manager
 /etc/init.d/contrail-api
 /etc/init.d/supervisor-config
+/etc/init.d/contrail-config-nodemgr
 
 %pre config
 set -e
@@ -424,6 +429,7 @@ chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
 chmod +x /etc/init.d/ifmap
 chmod +x /etc/init.d/contrail-api
+chmod +x /etc/init.d/contrail-config-nodemgr
 chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/contrail-discovery
@@ -496,6 +502,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 /etc/init.d/supervisor-analytics
 /etc/init.d/contrail-snmp-collector
 /etc/init.d/contrail-topology
+/etc/init.d/contrail-analytics-nodemgr
 /usr/share/mibs/netsnmp
 
 %pre analytics
@@ -517,6 +524,7 @@ chmod +x /etc/init.d/supervisor-analytics
 chmod +x /etc/init.d/contrail-analytics-api
 chmod +x /etc/init.d/contrail-alarm-gen
 chmod +x /etc/init.d/contrail-collector
+chmod +x /etc/init.d/contrail-analytics-nodemgr
 chmod +x /etc/init.d/contrail-query-engine
 chmod +x /etc/init.d/contrail-snmp-collector
 chmod +x /etc/init.d/contrail-topology
