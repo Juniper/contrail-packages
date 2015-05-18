@@ -7,7 +7,7 @@ index ed57a69..280b515 100644
  irond.ifmap.default.searchresultsize=100000
 
 +# Limit the size of a search result
-+irond.ifmap.default.maxperpollresultsize=8192
++irond.ifmap.default.maxperpollresultsize=128000
 +irond.ifmap.default.splitinitialsearchresult=true
 +irond.ifmap.default.droponresultstoobig=false
 +
