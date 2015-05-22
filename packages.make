@@ -24,8 +24,11 @@ SOURCE_CONTRAIL_DIRS:=$(shell xmllint --xpath '//manifest/project/@path' .repo/m
 SOURCE_CONTRAIL_ARCHIVE:=SConstruct $(SOURCE_CONTRAIL_DIRS)
 SERIES=$(shell lsb_release -c -s)
 
-# DPDK vRouter is currently supported only on Ubuntu 12.04 Precise
+# DPDK vRouter is currently supported only on Ubuntu 12.04 Precise and 14.04 Trusty
 ifeq ($(SERIES),precise)
+    CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
+endif
+ifeq ($(SERIES),trusty)
     CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
 endif
 
