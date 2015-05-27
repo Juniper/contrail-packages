@@ -48,6 +48,7 @@ Depends: adduser,
          redis-server (>= 2.6.13-1),
          supervisor,
          python-stevedore (>= 0.14.1),
+         python-kazoo (>= 1.3.1),
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
