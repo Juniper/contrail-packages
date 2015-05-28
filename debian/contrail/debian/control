@@ -204,7 +204,7 @@ Package: python-contrail
 Architecture: all
 Section: python
 Depends: python-bottle,
-         python-gevent,
+         python-gevent (>= 1.0),
          python-importlib,
          ${misc:Depends},
          ${python:Depends}
