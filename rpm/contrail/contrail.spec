@@ -183,7 +183,12 @@ Summary:            Contrail Python Lib
 Group:              Applications/System
 Obsoletes:          contrail-api-lib
 Requires:	    python-bottle >= 0.11.6
+%if 0%{?rhel} >= 7
 Requires:	    python-gevent >= 1.0
+%endif
+%if 0%{?rhel} <= 6
+Requires:          python-gevent
+%endif
 Requires:       consistent_hash
 %if 0%{?rhel} <= 6
 Requires:          python-importlib
@@ -355,7 +360,12 @@ Group:              Applications/System
 BuildArch: noarch
 Requires: python-contrail >= %{_verstr}-%{_relstr}
 Requires: python-bitarray >= 0.8.0
-Requires: python-gevent >= 1.0
+%if 0%{?rhel} >= 7
+Requires:	    python-gevent >= 1.0
+%endif
+%if 0%{?rhel} <= 6
+Requires:          python-gevent
+%endif
 Requires: python-geventhttpclient
 Requires: python-lxml >= 2.3.2
 Requires: python-pycassa
