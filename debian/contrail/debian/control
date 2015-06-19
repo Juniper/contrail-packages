@@ -31,6 +31,8 @@ Build-Depends: autoconf,
                vim-common,
                libsnmp-python,
                libipfix,
+               librdkafka-dev,
+               librdkafka1,
                BUILDDEP_SERIES
 
 Package: contrail-analytics
