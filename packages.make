@@ -32,22 +32,25 @@ ifeq ($(SERIES),trusty)
     CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
 endif
 
-source-all: source-package-contrail \
-        source-package-contrail-web-core \
-        source-package-contrail-web-controller
+source-all: source-package-contrail-web-core \
+	source-package-contrail-web-controller \
+	source-package-contrail \
+	source-package-ifmap-server \
+	source-package-neutron-plugin-contrail \
+	source-package-ceilometer-plugin-contrail \
+	source-package-contrail-heat
 
-all: package-contrail \
-     package-ifmap-server \
-     package-ifmap-python-client \
-     $(CONTRAIL_VROUTER_DPDK)
+all: package-ifmap-server \
+	package-contrail-webui-bundle \
+	package-contrail-web-core \
+	package-contrail-web-controller \
+	package-contrail \
+	package-neutron-plugin-contrail \
+	package-ceilometer-plugin-contrail \
+	package-contrail-heat \
+	$(CONTRAIL_VROUTER_DPDK)
 
 package-ifmap-server: clean-ifmap-server debian-ifmap-server
-	$(eval PACKAGE := $(patsubst package-%,%,$@))
-	@echo "Building package $(PACKAGE)"
-	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
-	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
-
-package-ifmap-python-client: clean-ifmap-python-client debian-ifmap-python-client
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
