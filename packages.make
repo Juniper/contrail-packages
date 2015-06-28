@@ -32,14 +32,25 @@ ifeq ($(SERIES),trusty)
     CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
 endif
 
-source-all: source-package-contrail \
-        source-package-contrail-web-core \
-        source-package-contrail-web-controller
+source-all: source-package-contrail-web-core \
+	source-package-contrail-web-controller \
+	source-package-contrail \
+	source-package-ifmap-server \
+	source-package-ifmap-python-client \
+	source-package-neutron-plugin-contrail \
+	source-package-ceilometer-plugin-contrail \
+	source-package-contrail-heat
 
-all: package-contrail \
-     package-ifmap-server \
-     package-ifmap-python-client \
-     $(CONTRAIL_VROUTER_DPDK)
+all: package-ifmap-server \
+	package-ifmap-python-client \
+	package-contrail-webui-bundle \
+	package-contrail-web-core \
+	package-contrail-web-controller \
+	package-contrail \
+	package-neutron-plugin-contrail \
+	package-ceilometer-plugin-contrail \
+	package-contrail-heat \
+	$(CONTRAIL_VROUTER_DPDK)
 
 package-ifmap-server: clean-ifmap-server debian-ifmap-server
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
@@ -118,6 +129,14 @@ source-ifmap-server:
 source-package-ifmap-server: clean-ifmap-server debian-ifmap-server source-ifmap-server
 	$(eval PACKAGE := ifmap-server)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -S -rfakeroot $(KEYOPT))
+
+source-ifmap-python-client:
+	$(eval PACKAGE := ifmap-python-client)
+	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
+
+source-package-ifmap-python-client: clean-ifmap-python-client debian-ifmap-python-client source-ifmap-python-client
+	$(eval PACKAGE := ifmap-python-client)
+	(cd build/packages/$(PACKAGE); dpkg-buildpackage -j$(JOBS) -S -rfakeroot $(KEYOPT))
 
 package-neutron-plugin-contrail: debian-neutron-plugin-contrail
 	$(eval PACKAGE = neutron-plugin-contrail)
