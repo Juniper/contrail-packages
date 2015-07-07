@@ -15,6 +15,7 @@ etc/contrail/contrail-analytics-api.conf
 etc/contrail/contrail-alarm-gen.conf
 etc/contrail/contrail-snmp-collector.conf
 etc/contrail/contrail-topology.conf
+etc/contrail/contrail-analytics-nodemgr.conf
 usr/lib/python*/dist-packages/opserver*
 usr/lib/python*/dist-packages/alarm_*
 usr/lib/python*/dist-packages/contrail_snmp_collector*
@@ -34,4 +35,5 @@ etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
 etc/contrail/supervisord_analytics_files/contrail-snmp-collector.ini
 etc/contrail/supervisord_analytics_files/contrail-topology.ini
 etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
+etc/contrail/supervisord_analytics_files/contrail-analytics-nodemgr.ini
 usr/share/mibs/netsnmp/*
