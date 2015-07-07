@@ -1,0 +1,39 @@
+#!/bin/sh
+# OpenContrail developers <dev@lists.opencontrail.org>
+
+set -e
+
+if [ "$1" = "configure" ]; then
+
+  # Create the "contrail" user
+  if ! getent passwd contrail > /dev/null 2>&1
+  then
+    adduser --quiet --system --group --home /var/lib/contrail \
+      --no-create-home \
+      --shell /bin/false \
+      --gecos "OpenContrail daemon" contrail
+  fi
+
+  # Create the "contrail" group if it is missing and set the primary group
+  # of the "contrail" user to this group.
+  if ! getent group contrail > /dev/null 2>&1
+  then
+    addgroup --quiet --system contrail
+    usermod -g contrail contrail
+  fi
+
+  mkdir -p /var/log/contrail /var/lib/contrail /etc/contrail
+  chown -R contrail:adm /var/log/contrail
+  chmod 0750 /var/log/contrail
+  chown -R contrail. /var/lib/contrail/ /etc/contrail/
+  chmod 0750 /etc/contrail/
+
+  if [ -e "/usr/sbin/cassandra" ]; then
+    # Shutdown Cassandra and ensure it won't be started automatically
+    echo "Stopping and disabling cassandra"
+    service cassandra stop
+    update-rc.d cassandra disable
+  fi
+fi
+
+#DEBHELPER#
