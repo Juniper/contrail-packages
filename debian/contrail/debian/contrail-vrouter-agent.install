@@ -2,6 +2,9 @@ usr/bin/contrail-vrouter-agent
 usr/bin/contrail-tor-agent
 usr/bin/vrouter-port-control
 etc/contrail/contrail-vrouter-agent.conf
+debian/nodemgr_files/contrail-vrouter-nodemgr.ini etc/contrail
 etc/init.d/contrail-vrouter-agent
 etc/contrail/supervisord_vrouter.conf
 etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
+debian/nodemgr_files/contrail-vrouter-nodemgr.ini etc/contrail/supervisord_vrouter_files
+usr/lib/python*/dist-packages/vrouter*
