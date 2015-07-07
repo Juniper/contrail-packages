@@ -7,6 +7,7 @@ etc/contrail/contrail-api.conf
 etc/contrail/contrail-schema.conf
 etc/contrail/contrail-discovery.conf
 etc/contrail/contrail-device-manager.conf
+debian/nodemgr_files/contrail-config-nodemgr.conf etc/contrail
 usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
@@ -25,3 +26,4 @@ etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 etc/contrail/supervisord_config_files/contrail-discovery.ini
 etc/contrail/supervisord_config_files/contrail-device-manager.ini
 etc/contrail/supervisord_config_files/contrail-config.rules
+debian/nodemgr_files/contrail-config-nodemgr.ini etc/contrail/supervisord_config_files

@@ -1,6 +1,12 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	NUMJOBS ?= $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+else
+	NUMJOBS ?= 1
+endif
+
 export INSTALL_ROOT=$(shell pwd)
 SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages(.*)/\1/")
 
@@ -18,7 +24,7 @@ binary-modules: kdist_config
 	dh_testroot
 	dh_prep
 # build and install the module
-	(cd ${SB_TOP}; scons --opt=production --kernel-dir=/lib/modules/$(KVERS)/build build-kmodule --root=${INSTALL_ROOT})
+	(cd ${SB_TOP}; scons -j${NUMJOBS} --opt=production --kernel-dir=/lib/modules/$(KVERS)/build build-kmodule --root=${INSTALL_ROOT})
 	dh_install
 	dh_installdocs 
 	dh_installchangelogs
