@@ -1,0 +1,8 @@
+usr/lib/python*/dist-packages/database*
+debian/nodemgr_files/contrail-database-nodemgr.conf etc/contrail
+debian/nodemgr_files/contrail-database-nodemgr.ini etc/contrail/supervisord_database_files
+debian/database_files/contrail-database etc/init.d
+debian/database_files/kafka etc/init.d
+debian/database_files/supervisord_database.conf etc/contrail
+debian/database_files/contrail-database.rules etc/contrail/supervisord_database_files
+debian/database_files/kafka.ini etc/contrail/supervisord_database_files

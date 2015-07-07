@@ -1,6 +1,10 @@
 usr/bin/contrail-control
 etc/contrail/contrail-control.conf
+debian/nodemgr_files/contrail-control-nodemgr.conf etc/contrail
 etc/init.d/contrail-control
 etc/contrail/supervisord_control.conf
 etc/contrail/supervisord_control_files/contrail-control.rules
 etc/contrail/supervisord_control_files/contrail-control.ini
+debian/nodemgr_files/contrail-control-nodemgr.ini etc/contrail/supervisord_control_files
+usr/lib/python*/dist-packages/control_node*
+usr/lib/python*/dist-packages/Control_Node-*.egg-info
