@@ -10,6 +10,12 @@ DEB_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:
 
 package-dkms=contrail-vrouter-dkms
 
+TARGETS=control-node:node_mgr \
+        opserver:node_mgr     \
+        vrouter:node_mgr      \
+        database:node_mgr     \
+        src:nodemgr
+
 %:
 	dh $@ --with python2
 
@@ -19,6 +25,21 @@ override_dh_auto_build:
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
 	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
 	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
+	# Node manager
+	(cd ${SB_TOP}; scons -j1 --opt=production --root=${INSTALL_ROOT} ${TARGETS})
+	(cd ${SB_TOP}/build/production/nodemgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/control-node; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/opserver/node_mgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/analytics/database; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	# Configuration for nodemgr
+	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.conf; do \
+		install -p -m 644 -t ${INSTALL_ROOT}/etc/contrail $$conf; \
+	done
+	# Configuration for supervisord
+	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.ini; do \
+		install -p -m 644 -t ${INSTALL_ROOT}/etc/contrail/supervisord_`basename $$conf | cut -d '-' -f 2`_files $$conf; \
+	done
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -34,3 +55,4 @@ override_dh_installinit:
 	dh_installinit --name=supervisor-control
 	dh_installinit --name=supervisor-config
 	dh_installinit --name=supervisor-vrouter --no-restart-on-upgrade
+	dh_installinit --name=supervisor-database
