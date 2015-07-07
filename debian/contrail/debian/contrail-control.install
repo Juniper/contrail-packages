@@ -1,6 +1,8 @@
 usr/bin/contrail-control
 etc/contrail/contrail-control.conf
+etc/contrail/contrail-control-nodemgr.conf
 etc/init.d/contrail-control
 etc/contrail/supervisord_control.conf
 etc/contrail/supervisord_control_files/contrail-control.rules
 etc/contrail/supervisord_control_files/contrail-control.ini
+etc/contrail/supervisord_control_files/contrail-control-nodemgr.ini
