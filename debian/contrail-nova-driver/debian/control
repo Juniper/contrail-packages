@@ -12,7 +12,7 @@ Vcs-Git: git://github.com/Juniper/contrail-nova-driver.git
 Homepage: https://github.com/Juniper/contrail-nova-driver/
 
 Package: contrail-nova-driver
-Architecture: any
+Architecture: amd64
 Pre-Depends: dpkg (>= 1.15.6~)
 Depends: ${misc:Depends}, ${python:Depends}
 Recommends: ${python:Recommends}
