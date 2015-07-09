@@ -36,7 +36,7 @@ Build-Depends: autoconf,
                BUILDDEP_SERIES
 
 Package: contrail-analytics
-Architecture: any
+Architecture: amd64
 Depends: adduser,
          contrail-lib (= ${binary:Version}),
          librdkafka1 (>= 0.8.5),
@@ -72,7 +72,7 @@ Description: OpenContrail analytics
  logs, events, and errors.
 
 Package: contrail-config
-Architecture: all
+Architecture: amd64
 Depends: adduser,
          python-bitarray (>= 0.8.0),
          python-bottle (>= 0.11.6),
@@ -113,7 +113,7 @@ Description: OpenContrail configuration management
  interacting with network elements. Both these are kept in a NoSQL database.
 
 Package: contrail-config-openstack
-Architecture: all
+Architecture: amd64
 Depends: contrail-config (= ${source:Version}),
          contrail-f5,
          python-keystoneclient (>= 0.2.2),
@@ -151,7 +151,7 @@ Depends: adduser,
          supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
-Architecture: any
+Architecture: amd64
 Description: OpenContrail control-node
  Control nodes implement the logically centralized portion of the control
  plane. Not all control plane functions are logically centralized – some control
@@ -181,7 +181,7 @@ Depends: adduser,
          ${misc:Depends},
          ${shlibs:Depends}
 Replaces: contrail-openstack-control
-Architecture: any
+Architecture: amd64
 Description: OpenContrail control-dns
  DNS provides contrail-dns, contrail-named, contrail-rndc
  and contrail-rndc-confgen daemons
@@ -195,7 +195,7 @@ Depends: adduser,
          supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
-Architecture: any
+Architecture: amd64
 Description: OpenContrail vrouter agent
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
@@ -203,7 +203,7 @@ Description: OpenContrail vrouter agent
  This package provides the contrail-vrouter user space agent.
 
 Package: python-contrail
-Architecture: all
+Architecture: amd64
 Section: python
 Depends: python-bottle,
          python-gevent (>= 1.0),
@@ -219,7 +219,7 @@ Description: OpenContrail python-libs
  The package python-opencontrail provides the OpenContrail API library.
 
 Package: contrail-lib
-Architecture: any
+Architecture: amd64
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail libraries
  OpenContrail is a network virtualization solution that provides an overlay
@@ -229,7 +229,7 @@ Description: OpenContrail libraries
  OpenContrail control and compute nodes.
 
 Package: contrail-utils
-Architecture: any
+Architecture: amd64
 Depends: dpkg-dev,
          python-contrail (>= ${source:Version}),
          python-lxml,
@@ -245,7 +245,7 @@ Description: OpenContrail tools and utilities
  scripts to configure and diagnose OpenContrail.
 
 Package: python-contrail-vrouter-api
-Architecture: all
+Architecture: amd64
 Section: python
 Depends: contrail-vrouter-agent, ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter agent api
@@ -254,14 +254,14 @@ Description: OpenContrail vrouter agent api
  in the OpenContrail API server.
 
 Package: python-opencontrail-vrouter-netns
-Architecture: any
+Architecture: amd64
 Section: python
 Depends: ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter network namespace package
  Script to start or destroy a Linux network namespace.
 
 Package: contrail-vrouter-utils
-Architecture: any
+Architecture: amd64
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail VRouter - Utilities
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
@@ -271,7 +271,7 @@ Description: OpenContrail VRouter - Utilities
  configure and diagnose the OpenContrail Linux kernel module.
 
 Package: contrail-vrouter-source
-Architecture: all
+Architecture: amd64
 Depends: bzip2, debhelper, module-assistant, ${misc:Depends}
 Description: OpenContrail VRouter - Source
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
@@ -286,7 +286,7 @@ Description: OpenContrail VRouter - Source
  module in source code format.
 
 Package: contrail-vrouter-dkms
-Architecture: all
+Architecture: amd64
 Depends: contrail-vrouter-utils (= ${binary:Version}),
          dkms,
          coreutils,
@@ -307,7 +307,7 @@ Description: OpenContrail VRouter - DKMS version
  module.
 
 Package: contrail-nova-driver
-Architecture: any
+Architecture: amd64
 Depends: python-thrift, ${misc:Depends}, ${python:Depends}
 Description: OpenStack Nova compute-node driver for OpenContrail
  OpenContrail is a network virtualization solution that provides an overlay
