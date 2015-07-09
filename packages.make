@@ -41,7 +41,6 @@ source-all: source-package-contrail-web-core \
 	source-package-contrail-heat
 
 all: package-ifmap-server \
-	package-contrail-webui-bundle \
 	package-contrail-web-core \
 	package-contrail-web-controller \
 	package-contrail \
@@ -56,7 +55,6 @@ package-ifmap-server: clean-ifmap-server debian-ifmap-server
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
-package-contrail-webui-bundle: clean-contrail-webui-bundle debian-contrail-webui-bundle
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules get-orig-source)
