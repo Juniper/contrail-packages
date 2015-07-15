@@ -5,3 +5,10 @@ etc/contrail/contrail-vrouter-agent.conf
 etc/init.d/contrail-vrouter-agent
 etc/contrail/supervisord_vrouter.conf
 etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
+debian/vrouter_files/contrail-vrouter.rules etc/contrail/supervisord_vrouter_files
+debian/vrouter_files/if-vhost0 usr/lib/contrail
+debian/vrouter_files/vrouter-functions.sh usr/lib/contrail
+debian/vrouter_files/vrouter-post-start.sh usr/lib/contrail
+debian/vrouter_files/vrouter-pre-start.sh usr/lib/contrail
+debian/vrouter_files/vrouter-pre-stop.sh usr/lib/contrail
+debian/vrouter_files/20-vrouter-core-pattern.conf etc/sysctl.d

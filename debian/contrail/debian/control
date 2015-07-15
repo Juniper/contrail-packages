@@ -189,6 +189,7 @@ Description: OpenContrail control-dns
  Provides vrouter services
 
 Package: contrail-vrouter-agent
+Pre-Depends: ${misc:Pre-Depends}, debconf
 Depends: adduser,
          contrail-lib (= ${binary:Version}),
          contrail-vrouter,
@@ -196,6 +197,7 @@ Depends: adduser,
          ${misc:Depends},
          ${shlibs:Depends}
 Architecture: amd64
+Conflicts: apport
 Description: OpenContrail vrouter agent
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
