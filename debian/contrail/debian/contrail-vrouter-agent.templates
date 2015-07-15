@@ -1,0 +1,14 @@
+Template: contrail-vrouter-agent/device
+Type: string
+Description: Device for vhost0 interface
+Default: eth0
+
+Template: contrail-vrouter-agent/vgw_subnet_ip
+Type: string
+Description: Virtual gateway subnet ip
+Default: __VGW_SUBNET_IP__
+
+Template: contrail-vrouter-agent/vgw_intf
+Type: string
+Description: Virtual gateway interface
+Default: __VGW_INTF_LIST__

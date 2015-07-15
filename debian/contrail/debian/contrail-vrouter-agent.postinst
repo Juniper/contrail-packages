@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 # OpenContrail developers <dev@lists.opencontrail.org>
 
 set -e
+
+# source debconf functions
+. /usr/share/debconf/confmodule
+
+NAME="contrail-vrouter-agent"
 
 if [ "$1" = "configure" ]; then
 
@@ -32,6 +37,40 @@ if [ "$1" = "configure" ]; then
   chmod 0750 /etc/contrail/ /etc/contrail/ssl/ /etc/contrail/ssl/certs/
   chmod 0750 /var/lib/contrail/dhcp
   chmod 0700 /etc/contrail/ssl/private/
+
+  [ -f /etc/sysctl.d/20-vrouter-core-pattern.conf ] && \
+    sysctl -p /etc/sysctl.d/20-vrouter-core-pattern.conf
+
+  if [ -f /etc/contrail/agent_param ]; then
+    echo "/etc/contrail/agent_param already exists, leaving untouched"
+    echo "Remove the file and run dpkg-reconfigure ${NAME} if you want to re-generate it"
+  else
+    db_input high ${NAME}/device || true
+    db_input low ${NAME}/vgw_subnet_ip || true
+    db_input low ${NAME}/vgw_intf || true
+    db_go
+
+    db_get ${NAME}/device
+    db_device=$RET
+    db_get ${NAME}/vgw_subnet_ip
+    db_vgw_subnet_ip=$RET
+    db_get ${NAME}/vgw_intf
+    db_vgw_intf=$RET
+
+    cat << EOF >> /etc/contrail/agent_param
+LOG=/var/log/contrail/vrouter.log
+CONFIG=/etc/contrail/${NAME}.conf
+prog=/usr/bin/${NAME}
+kmod=vrouter
+pname=${NAME}
+LIBDIR=/usr/lib
+DEVICE=vhost0
+dev=${db_device}
+vgw_subnet_ip=${db_vgw_subnet_ip}
+vgw_intf=${db_vgw_intf}
+LOGFILE=--log-file=/var/log/contrail/vrouter.log
+EOF
+  fi
 
 fi
 
