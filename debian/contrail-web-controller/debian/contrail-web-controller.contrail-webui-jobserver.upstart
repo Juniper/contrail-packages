@@ -26,6 +26,6 @@ script
   exec start-stop-daemon --start --chuid $USER:$USER \
         -d /var/lib/contrail-webui/contrail-web-core \
         --pidfile /var/run/contrail-web-jobserver.pid \
-        --exec $COMMAND -- $OPTS
+        --startas /bin/bash -- -c "exec $COMMAND $OPTS"
 
 end script
