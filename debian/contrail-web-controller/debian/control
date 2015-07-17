@@ -3,7 +3,7 @@ Section: web
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
 Uploaders: Raj Reddy <rajreddy@juniper.net>
-Build-Depends: debhelper (>= 9)
+Build-Depends: debhelper (>= 9), nodejs-legacy, python-all
 Standards-Version: 3.9.5
 Vcs-Browser: https://github.com/Juniper/contrail-web-controller
 Homepage: https://github.com/Juniper/contrail-web-controller/
