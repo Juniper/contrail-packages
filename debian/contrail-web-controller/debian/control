@@ -9,7 +9,7 @@ Vcs-Browser: https://github.com/Juniper/contrail-web-controller
 Homepage: https://github.com/Juniper/contrail-web-controller/
 
 Package: contrail-web-controller
-Architecture: amd64
+Architecture: all
 Depends: contrail-web-core
 Recommends: redis-server
 Description: OpenContrail WebUI Controller
