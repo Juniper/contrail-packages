@@ -9,3 +9,4 @@ usr/bin/vif
 usr/bin/vifdump
 usr/bin/vxlan
 usr/bin/vrouter
+usr/bin/vrmemstats

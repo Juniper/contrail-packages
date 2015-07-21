@@ -1,9 +1,9 @@
-mpls(1) -- OpenContrail vRouter utils
-=====================================
+vrmemstats(1) -- OpenContrail vRouter utils
+====================================
 
 ## SYNOPSIS
 
-`mpls` [<options>]
+`vrmemstats` [<options>]
 
 ## DESCRIPTION
 
@@ -13,14 +13,8 @@ The package opencontrail-vrouter-utils provides command line utilities to config
 
 ## OPTIONS
 
-* `-h`, `--help`:
+* `--help`:
   Show this help message and exit
-
-* `--dump`:
-  Dumps the mpls incoming label map
-
-* `--get`:
-  Dumps the entry corresponding to label <label> in the label map
 
 ## BUGS
 
@@ -32,8 +26,8 @@ OpenContrail developers <dev@lists.opencontrail.org>
 
 ## COPYRIGHT
 
-Copyright (c) 2014 OpenContrail
+Copyright (c) 2015 OpenContrail
 
 ## SEE ALSO
 
-mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1), vrmemstats(1)
+vifdump(1), mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1) vrouter(1)

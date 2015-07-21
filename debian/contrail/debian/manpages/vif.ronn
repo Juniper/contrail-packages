@@ -45,4 +45,4 @@ Copyright (c) 2014 OpenContrail
 
 ## SEE ALSO
 
-vifdump(1), mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1)
+vifdump(1), mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1), vrmemstats(1)
