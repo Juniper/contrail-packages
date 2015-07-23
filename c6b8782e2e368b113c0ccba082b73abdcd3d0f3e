@@ -1,0 +1,8 @@
+Verified+2: Zuul <zuul@lists.opencontrail.org>
+Code-Review+2: Sebastien Badia <sbadia@redhat.com>
+Approved+1: Vinay Vithal Mahuli <vmahuli@juniper.net>
+Submitted-by: Zuul <zuul@lists.opencontrail.org>
+Submitted-at: Wed, 22 Jul 2015 23:11:52 -0700
+Reviewed-on: https://review.opencontrail.org/12506
+Project: Juniper/contrail-packages
+Branch: refs/heads/master
