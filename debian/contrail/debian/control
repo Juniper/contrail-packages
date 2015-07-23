@@ -329,3 +329,15 @@ Depends: dpkg-dev,
          ${python:Depends},
          ${shlibs:Depends}
 Description: OpenContrail nodemgr implementation
+
+Package: contrail-database
+Architecture: amd64
+Depends: dpkg-dev,
+         zookeeperd,
+         supervisor,
+         kafka (>= 2.9.2),
+         cassandra (>= 1.2.11),
+         ${misc:Depends},
+         ${python:Depends},
+         ${shlibs:Depends}
+Description: OpenContrail database integration
