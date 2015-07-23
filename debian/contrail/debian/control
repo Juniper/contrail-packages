@@ -115,7 +115,6 @@ Description: OpenContrail configuration management
 Package: contrail-config-openstack
 Architecture: amd64
 Depends: contrail-config (= ${source:Version}),
-         contrail-f5,
          python-keystoneclient (>= 0.2.2),
          python-neutron,
          python-novaclient,
