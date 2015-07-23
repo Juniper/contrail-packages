@@ -314,3 +314,15 @@ Description: OpenStack Nova compute-node driver for OpenContrail
  virtual-network to virtual-machines, containers or network namespaces.
  .
  This package contains the OpenStack Nova compute-node driver for OpenContrail.
+
+Package: contrail-database
+Architecture: amd64
+Depends: dpkg-dev,
+         zookeeperd,
+         supervisor,
+         kafka (>= 2.9.2),
+         cassandra (>= 1.2.11),
+         ${misc:Depends},
+         ${python:Depends},
+         ${shlibs:Depends}
+Description: OpenContrail database integration

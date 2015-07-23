@@ -19,6 +19,8 @@ override_dh_auto_build:
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
 	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
 	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
+	# Fix contrail-status reference on wrong package names
+	sed -i s,contrail-openstack-database,contrail-database,g ${INSTALL_ROOT}/usr/share/contrail/contrail-status.py
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -34,3 +36,4 @@ override_dh_installinit:
 	dh_installinit --name=supervisor-control
 	dh_installinit --name=supervisor-config
 	dh_installinit --name=supervisor-vrouter --no-restart-on-upgrade
+	dh_installinit --name=supervisor-database
