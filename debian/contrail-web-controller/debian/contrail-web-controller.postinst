@@ -4,9 +4,6 @@ set -e
 
 if [ "$1" = "configure" ]; then
 
-  sed -i -e 's/\/usr\/src\/contrail/\/var\/lib\/contrail-webui/' \
-      /var/lib/contrail-webui/contrail-web-controller/webroot/common/js/controller.config.global.js
-
   # Create the "contrail" user
   if ! getent passwd contrail > /dev/null 2>&1
   then
