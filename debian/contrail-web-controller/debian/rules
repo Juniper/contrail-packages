@@ -1,5 +1,9 @@
 #!/usr/bin/make -f
 
+SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages(.*)/\1/")
+INSTALL_ROOT := $(shell pwd)
+export REPO=${SB_TOP}/contrail-web-controller,webController
+
 %:
 	dh $@
 
@@ -7,39 +11,13 @@ override_dh_installinit:
 	dh_installinit
 	dh_installinit --name=contrail-webui-jobserver
 	dh_installinit --name=contrail-webui-webserver
-	
-#BRANCH=--branch R1.06
-#TAGS=tags/v1.06
-SRC_PACKAGE = contrail-web-controller
-SRC_VERSION := $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)/\3/p')
-TARBALL = $(SRC_PACKAGE)_$(SRC_VERSION).orig.tar.gz
-DEB_DIR := $(shell pwd)
 
-get-orig-source:
-	if [ "$(BRANCH)x" != "x" ] ; then \
-	    echo "Building $(BRANCH)... "; \
-	else \
-	    echo "Building mainline... "; \
-	fi
-	rm -rf get-orig-source ../$(TARBALL)
-	mkdir get-orig-source
-	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/contrail-webui-third-party
-	if [ "$(TAGS)x" != "x" ] ; then \
-	    cd get-orig-source/contrail-webui-third-party;git checkout $(TAGS); \
-	fi
-	cd get-orig-source/contrail-webui-third-party;python ./fetch_packages.py
-	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/contrail-web-core.git;
-	if [ "$(TAGS)x" != "x" ] ; then \
-	    cd get-orig-source/contrail-web-core;git checkout $(TAGS); \
-	fi
-	cd get-orig-source;git clone $(BRANCH) git@github.com:Juniper/contrail-web-controller.git;
-	if [ "$(TAGS)x" != "x" ] ; then \
-	    cd get-orig-source/contrail-web-controller;git checkout $(TAGS); \
-	fi
-	cd get-orig-source/contrail-web-core;make package REPO=$(DEB_DIR)/get-orig-source/contrail-web-controller,webController
-	GZIP=--best tar czf ../$(TARBALL) -C get-orig-source/$(SRC_PACKAGE) .
-	ls get-orig-source/$(SRC_PACKAGE) | xargs -n 1 -I'{}' mv get-orig-source/$(SRC_PACKAGE)/'{}' .
-	rm -rf get-orig-source
-	echo "../$(TARBALL) created"
+override_dh_auto_build:
+	# We can't use make package directly because it tries to fetch third party
+	# from network which is not available during build
+	(cd ${SB_TOP}/contrail-web-core; \
+	./generate-files.sh 'prod-env' $(REPO))
 
-.PHONY: get-orig-source
+override_dh_install:
+	cp -r -a contrail-web-controller/webroot ${INSTALL_ROOT}
+	dh_install
