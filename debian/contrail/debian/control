@@ -54,6 +54,7 @@ Depends: adduser,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
+Recommends: contrail-nodemgr (>= ${source:Version}),
 Description: OpenContrail analytics
  Analytics nodes are responsible for collecting, collating and presenting
  analytics information for trouble shooting problems and for understanding
@@ -92,6 +93,7 @@ Depends: adduser,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
+Recommends: contrail-nodemgr (>= ${source:Version}),
 Description: OpenContrail configuration management
  Configuration nodes are responsible for the management layer. The
  configuration nodes provide a north-bound Representational State Transfer
@@ -150,6 +152,7 @@ Depends: adduser,
          supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
+Recommends: contrail-nodemgr (>= ${source:Version}),
 Architecture: amd64
 Description: OpenContrail control-node
  Control nodes implement the logically centralized portion of the control
@@ -194,6 +197,7 @@ Depends: adduser,
          supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
+Recommends: contrail-nodemgr (>= ${source:Version}),
 Architecture: amd64
 Description: OpenContrail vrouter agent
  OpenContrail is a network virtualization solution that provides an overlay
@@ -313,3 +317,14 @@ Description: OpenStack Nova compute-node driver for OpenContrail
  virtual-network to virtual-machines, containers or network namespaces.
  .
  This package contains the OpenStack Nova compute-node driver for OpenContrail.
+
+Package: contrail-nodemgr
+Architecture: amd64
+Depends: dpkg-dev,
+         python-contrail (>= ${source:Version}),
+         python-lxml,
+         python-requests,
+         ${misc:Depends},
+         ${python:Depends},
+         ${shlibs:Depends}
+Description: OpenContrail nodemgr implementation
