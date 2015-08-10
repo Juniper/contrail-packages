@@ -1,0 +1,9 @@
+Verified+2: Zuul <zuul@lists.opencontrail.org>
+Code-Review+2: Vinay Vithal Mahuli <vmahuli@juniper.net>
+Approved+1: Nagabhushana R <bhushana@juniper.net>
+Code-Review+1: Filip Pytloun <filip.pytloun@tcpcloud.eu>
+Submitted-by: Zuul <zuul@lists.opencontrail.org>
+Submitted-at: Mon, 10 Aug 2015 07:55:48 -0700
+Reviewed-on: https://review.opencontrail.org/12612
+Project: Juniper/contrail-packages
+Branch: refs/heads/R2.20
