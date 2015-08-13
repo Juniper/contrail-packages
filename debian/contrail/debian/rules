@@ -41,8 +41,6 @@ override_dh_auto_build:
 	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.ini; do \
 		install -p -m 644 -t ${INSTALL_ROOT}/usr/share/doc/contrail-`basename $$conf | cut -d '-' -f 2`/examples $$conf; \
 	done
-	# Fix contrail-status reference on wrong package names
-	sed -i s,contrail-openstack-database,contrail-database,g ${INSTALL_ROOT}/usr/share/contrail/contrail-status.py
 
 override_dh_auto_clean:
 	dh_auto_clean
