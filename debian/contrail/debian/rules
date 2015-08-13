@@ -32,8 +32,6 @@ override_dh_auto_build:
 	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/opserver/node_mgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/analytics/database; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
-	# Fix contrail-status reference on wrong package names
-	sed -i s,contrail-openstack-database,contrail-database,g ${INSTALL_ROOT}/usr/share/contrail/contrail-status.py
 
 override_dh_auto_clean:
 	dh_auto_clean
