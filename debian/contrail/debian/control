@@ -2,7 +2,7 @@ Source: contrail
 Section: net
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://opencontrail.org/
 Vcs-Git: git://github.com/Juniper/contrail-controller.git
 Vcs-Browser: https://github.com/Juniper/contrail-controller/
@@ -217,7 +217,7 @@ Description: OpenContrail control-dns
  DNS provides contrail-dns, contrail-named, contrail-rndc
  and contrail-rndc-confgen daemons
  .
- Provides vrouter services
+ Provides contrail DNS services
 
 Package: contrail-vrouter-agent
 Depends: adduser,
@@ -363,11 +363,14 @@ Description: OpenStack Nova compute-node driver for OpenContrail
 
 Package: contrail-nodemgr
 Architecture: amd64
-Depends: dpkg-dev,
-         python-contrail (>= ${source:Version}),
+Depends: python-contrail (>= ${source:Version}),
          python-lxml,
          python-requests,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
 Description: OpenContrail nodemgr implementation
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces.
+ .
+ This package contains the OpenContrail node manager service.
