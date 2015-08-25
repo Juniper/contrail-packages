@@ -20,9 +20,10 @@ binary-modules: kdist_config
 # build and install the module
 	(cd ${SB_TOP}; scons --opt=production --kernel-dir=/lib/modules/$(KVERS)/build build-kmodule --root=${INSTALL_ROOT})
 	dh_install
-	dh_installdocs 
+	dh_installdocs
 	dh_installchangelogs
 	dh_compress
+	dh_strip --dbg-package=contrail-vrouter-dbg
 	dh_fixperms
 	dh_installmodules
 	dh_installdeb

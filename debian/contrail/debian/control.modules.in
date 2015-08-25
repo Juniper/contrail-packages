@@ -26,3 +26,21 @@ Description: OpenContrail VRouter - precompiled module version
  .
  This package contains the someproject loadable kernel modules for the
  linux-image-_KVERS_ package.
+
+Package: contrail-vrouter-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: contrail-vrouter-_KVERS_ (= ${binary:Version}),
+         ${misc:Depends}
+Description: OpenContrail contrail-vrouter (debugging symbols)
+ The OpenContrail vRouter is a forwarding plane (of a distributed router) that
+ runs in the hypervisor of a virtualized server. It extends the network from the
+ physical routers and switches in a data center into a virtual overlay network
+ hosted in the virtualized servers. The OpenContrail vRouter is
+ conceptually similar to existing commercial and open source vSwitches such as
+ for example the Open vSwitch (OVS) but it also provides routing and higher
+ layer services (hence vRouter instead of vSwitch).
+ .
+ This package contains gdb debugging symbols for the 'contrail-vrouter'
+ package.

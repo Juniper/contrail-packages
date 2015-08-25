@@ -72,6 +72,20 @@ Description: OpenContrail analytics
  network elements, virtual or physical. This information includes statistics,
  logs, events, and errors.
 
+Package: contrail-analytics-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: contrail-analytics (= ${binary:Version}),
+         ${misc:Depends}
+Description: OpenContrail analytics (debugging symbols)
+ Analytics nodes collect, store, correlate, and analyze information from
+ network elements, virtual or physical. This information includes statistics,
+ logs, events, and errors.
+ .
+ This package contains gdb debugging symbols for the 'contrail-analytics'
+ package.
+
 Package: contrail-config
 Architecture: amd64
 Depends: adduser,
@@ -176,6 +190,21 @@ Description: OpenContrail control-node
  with each other and with network elements to ensure that network state is
  eventually consistent.
 
+Package: contrail-control-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: contrail-control (= ${binary:Version}),
+         ${misc:Depends}
+Description: OpenContrail control-node (debugging symbols)
+ Control nodes implement a logically centralized control plane that is
+ responsible for maintaining ephemeral network state. Control nodes interact
+ with each other and with network elements to ensure that network state is
+ eventually consistent.
+ .
+ This package contains gdb debugging symbols for the 'contrail-control'
+ package.
+
 Package: contrail-dns
 Depends: adduser,
          authbind,
@@ -204,6 +233,20 @@ Description: OpenContrail vrouter agent
  virtual-network to virtual-machines, containers or network namespaces.
  .
  This package provides the contrail-vrouter user space agent.
+
+Package: contrail-vrouter-agent-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: contrail-vrouter-agent (= ${binary:Version}),
+         ${misc:Depends}
+Description: OpenContrail contrail-vrouter-agent (debugging symbols)
+ OpenContrail is a network virtualization solution that provides an overlay
+ virtual-network to virtual-machines, containers or network namespaces. This
+ package implement the vrouter user space agent.
+ .
+ This package contains gdb debugging symbols for the 'contrail-vrouter-agent'
+ package.
 
 Package: python-contrail
 Architecture: amd64
