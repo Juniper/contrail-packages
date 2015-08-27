@@ -189,7 +189,11 @@ Requires:	    python-gevent >= 1.0
 %if 0%{?rhel} <= 6
 Requires:          python-gevent
 %endif
-Requires:       consistent_hash
+%if 0%{?rhel}
+Requires:          consistent_hash
+%else
+Requires:          python-consistent_hash
+%endif
 %if 0%{?rhel} <= 6
 Requires:          python-importlib
 %endif
