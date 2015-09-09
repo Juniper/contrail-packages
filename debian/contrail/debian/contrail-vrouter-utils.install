@@ -10,3 +10,4 @@ usr/bin/vifdump
 usr/bin/vxlan
 usr/bin/vrouter
 usr/bin/vrmemstats
+usr/bin/llocal

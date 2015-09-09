@@ -1,9 +1,9 @@
-dropstats(1) -- OpenContrail vRouter utils
-==========================================
+llocal(1) -- OpenContrail vRouter utils
+===================================
 
 ## SYNOPSIS
 
-`dropstats` [<options>]
+`llocal` [<options>]
 
 ## DESCRIPTION
 
@@ -13,8 +13,14 @@ The package opencontrail-vrouter-utils provides command line utilities to config
 
 ## OPTIONS
 
-* `-h`, `--help`:
+* `--help`:
   Show this help message and exit
+
+* `--dump`:
+  Dumps the link local port table
+
+* `--proto` <proto>:
+  Optional protocol specification to --dump command, Specification should be one of "1" or "2". "1" to dump TCP ports and "2" to dump UDP ports
 
 ## BUGS
 
@@ -30,4 +36,4 @@ Copyright (c) 2014 OpenContrail
 
 ## SEE ALSO
 
-mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1), vrmemstats(1), llocal(1)
+mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1), vrmemstats(1)
