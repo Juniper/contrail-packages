@@ -15,7 +15,18 @@ if [ "${1}" = "purge" ] ; then
     delgroup --system --quiet contrail || true
   fi
 
-  rm -rf /var/log/contrail /var/lib/contrail
+  rm -f /var/log/contrail/contrail-dns.log*
+  rm -f /var/log/contrail/contrail-dns-stdout.log*
+  rm -f /var/log/contrail/contrail-named.log*
+  rm -f /var/log/contrail/contrail-named-stdout.log*
+
+  if [ ! "$(ls -A /var/log/contrail)" ]; then
+    rm -rf /var/log/contrail
+  fi
+
+  if [ ! "$(ls -A /var/lib/contrail)" ]; then
+    rm -rf /var/lib/contrail
+  fi
 
 fi
 

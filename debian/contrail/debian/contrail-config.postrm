@@ -15,7 +15,33 @@ if [ "${1}" = "purge" ] ; then
     delgroup --system --quiet contrail || true
   fi
 
-  rm -rf /var/log/contrail /var/lib/contrail
+  rm -f /var/log/contrail/api-*-zk.log*
+  rm -f /var/log/contrail/contrail-api.log*
+  rm -f /var/log/contrail/contrail-api-*-stdout.log*
+  rm -f /var/log/contrail/contrail-device-manager.log*
+  rm -f /var/log/contrail/contrail-device-manager-stdout.log*
+  rm -f /var/log/contrail/device-manager-zk.log*
+  rm -f /var/log/contrail/contrail-schema.log*
+  rm -f /var/log/contrail/contrail-schema-stdout.log*
+  rm -f /var/log/contrail/schema-zk.log*
+  rm -f /var/log/contrail/contrail-svc-monitor.log*
+  rm -f /var/log/contrail/contrail-svc-monitor-stdout.log*
+  rm -f /var/log/contrail/svc-monitor.err*
+  rm -f /var/log/contrail/svc-monitor-zk.log*
+  rm -f /var/log/contrail/discovery.log*
+  rm -f /var/log/contrail/contrail-discovery-*-stdout.log*
+  rm -f /var/log/contrail/contrail-config-nodemgr-stdout.log*
+  rm -f /var/log/contrail/contrail-config-nodemgr-stderr.log*
+  rm -f /var/log/contrail/process_statecontrail-config.json
+  rm -f /var/log/contrail/supervisord-config.log*
+
+  if [ ! "$(ls -A /var/log/contrail)" ]; then
+    rm -rf /var/log/contrail
+  fi
+
+  if [ ! "$(ls -A /var/lib/contrail)" ]; then
+    rm -rf /var/lib/contrail
+  fi
 
 fi
 
