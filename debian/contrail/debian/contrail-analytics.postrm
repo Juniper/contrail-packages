@@ -15,8 +15,25 @@ if [ "${1}" = "purge" ] ; then
     delgroup --system --quiet contrail || true
   fi
 
-  rm -rf /var/log/contrail /var/lib/contrail
+  rm -f /var/log/contrail/contrail-analytics-api.log*
+  rm -f /var/log/contrail/contrail-analytics-api-stdout.log*
+  rm -f /var/log/contrail/contrail-analytics-nodemgr-stderr.log*
+  rm -f /var/log/contrail/contrail-analytics-nodemgr-stdout.log*
+  rm -f /var/log/contrail/contrail-collector.log*
+  rm -f /var/log/contrail/contrail-snmp-collector.log*
+  rm -f /var/log/contrail/contrail-snmp-collector-stdout.log*
+  rm -f /var/log/contrail/contrail-topology.log*
+  rm -f /var/log/contrail/contrail-topology-stdout.log*
+  rm -f /var/log/contrail/process_statecontrail-analytics.json
+  rm -f /var/log/contrail/supervisord-analytics.log*
 
+  if [ ! "$(ls -A /var/log/contrail)" ]; then
+    rm -rf /var/log/contrail
+  fi
+
+  if [ ! "$(ls -A /var/lib/contrail)" ]; then
+    rm -rf /var/lib/contrail
+  fi
 fi
 
 #DEBHELPER#

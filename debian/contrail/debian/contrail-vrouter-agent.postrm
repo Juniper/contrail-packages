@@ -15,8 +15,22 @@ if [ "${1}" = "purge" ] ; then
     delgroup --system --quiet contrail || true
   fi
 
-  rm -rf /var/log/contrail /var/lib/contrail
+  # Remove log files
+  rm -f /var/log/contrail/contrail-vrouter-agent.log*
+  rm -f /var/log/contrail/contrail-vrouter-agent-stdout.log*
+  rm -f /var/log/contrail/contrail-vrouter-nodemgr-stderr.log*
+  rm -f /var/log/contrail/contrail-vrouter-nodemgr-stdout.log*
+  rm -f /var/log/contrail/supervisord-vrouter.log*
+  rm -f /var/log/contrail/process_statecontrail-vrouter.json
 
+  if [ ! "$(ls -A /var/log/contrail)" ]; then
+    rm -rf /var/log/contrail
+  fi
+
+  rm -rf /var/lib/contrail/ports /var/lib/contrail/dhcp
+  if [ ! "$(ls -A /var/lib/contrail)" ]; then
+    rm -rf /var/lib/contrail
+  fi
 fi
 
 #DEBHELPER#
