@@ -31,6 +31,7 @@ Build-Depends: autoconf,
                vim-common,
                libsnmp-python,
                libipfix,
+               libipfix-dev,
                librdkafka-dev,
                librdkafka1,
                BUILDDEP_SERIES
