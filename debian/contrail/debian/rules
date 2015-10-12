@@ -32,6 +32,9 @@ override_dh_auto_build:
 	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/opserver/node_mgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/analytics/database; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	# contrail-docs
+	# Index files
+	python ${SB_TOP}/tools/packages/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
 
 override_dh_auto_clean:
 	dh_auto_clean
