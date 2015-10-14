@@ -1,10 +1,12 @@
 #!/bin/bash
-
+# Check if the input is a directory
+if [ ! -d $1 ]; then
+    exit 0
+fi
 BASE_DIR=$1
 INDEX_FILE=$BASE_DIR/index.html
 BASE_DIR_LISTING=$BASE_DIR/*
 BASENAME=/usr/bin/basename
-
 # Generate the index file from the directory listing of base dir
 if [ -e $INDEX_FILE ]; then
     echo "<html>" > $INDEX_FILE
