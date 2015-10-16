@@ -1,3 +1,9 @@
+ifmap-server (0.3.2-1contrail2) precise; urgency=low
+  * Launch line updated to allow log-rotation correctly
+    (commit ab71b8d502fd6c34e439c82af931dd5a559a34d1)
+
+ -- Hampapur Ajay <hajay@juniper.net>  Mon, 5 Oct 2015 08:10:00 -0800
+
 ifmap-server (0.3.2-1contrail1) precise; urgency=low
 
   * Don't apply initial message segmentation patch; subscriptions
