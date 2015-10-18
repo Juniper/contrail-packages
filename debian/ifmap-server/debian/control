@@ -19,7 +19,7 @@ Package: ifmap-server
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
 Depends: adduser,
-         default-jre-headless | java-runtime-headless,
+         default-jre-headless,
          libcommons-codec-java,
          libhttpcore-java,
          liblog4j1.2-java,
