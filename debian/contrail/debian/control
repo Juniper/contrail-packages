@@ -45,7 +45,7 @@ Depends: adduser,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
-Recommends: cassandra, redis-server (>= 2.6.13-1)
+Recommends: redis-server (>= 2.6.13-1)
 Description: OpenContrail analytics
  Analytics nodes are responsible for collecting, collating and presenting
  analytics information for trouble shooting problems and for understanding
@@ -84,7 +84,7 @@ Depends: adduser,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
-Recommends: cassandra, zookeeper
+Recommends: zookeeper
 Description: OpenContrail configuration management
  Configuration nodes are responsible for the management layer. The
  configuration nodes provide a north-bound Representational State Transfer
