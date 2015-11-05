@@ -38,7 +38,7 @@ Build-Depends: autoconf,
 Package: contrail-analytics
 Architecture: amd64
 Depends: adduser,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          librdkafka1 (>= 0.8.5),
          python-bottle (>= 0.11.6),
          python-contrail (>= ${source:Version}),
@@ -76,7 +76,7 @@ Package: contrail-analytics-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: contrail-analytics (= ${binary:Version}),
+Depends: contrail-analytics (>= ${binary:Version}),
          ${misc:Depends}
 Description: OpenContrail analytics (debugging symbols)
  Analytics nodes collect, store, correlate, and analyze information from
@@ -130,7 +130,7 @@ Description: OpenContrail configuration management
 
 Package: contrail-config-openstack
 Architecture: amd64
-Depends: contrail-config (= ${source:Version}),
+Depends: contrail-config (>= ${source:Version}),
          python-keystoneclient (>= 0.2.2),
          python-neutron,
          python-novaclient,
@@ -162,7 +162,7 @@ Description: OpenContrail configuration OpenStack module
 Package: contrail-control
 Depends: adduser,
          authbind,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
@@ -194,7 +194,7 @@ Package: contrail-control-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: contrail-control (= ${binary:Version}),
+Depends: contrail-control (>= ${binary:Version}),
          ${misc:Depends}
 Description: OpenContrail control-node (debugging symbols)
  Control nodes implement a logically centralized control plane that is
@@ -208,7 +208,7 @@ Description: OpenContrail control-node (debugging symbols)
 Package: contrail-dns
 Depends: adduser,
          authbind,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Replaces: contrail-openstack-control
@@ -221,7 +221,7 @@ Description: OpenContrail control-dns
 
 Package: contrail-vrouter-agent
 Depends: adduser,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          contrail-vrouter,
          supervisor,
          ${misc:Depends},
@@ -238,7 +238,7 @@ Package: contrail-vrouter-agent-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: contrail-vrouter-agent (= ${binary:Version}),
+Depends: contrail-vrouter-agent (>= ${binary:Version}),
          ${misc:Depends}
 Description: OpenContrail contrail-vrouter-agent (debugging symbols)
  OpenContrail is a network virtualization solution that provides an overlay
@@ -333,11 +333,11 @@ Description: OpenContrail VRouter - Source
 
 Package: contrail-vrouter-dkms
 Architecture: amd64
-Depends: contrail-vrouter-utils (= ${binary:Version}),
+Depends: contrail-vrouter-utils (>= ${binary:Version}),
          dkms,
          coreutils,
          hostname,
-         python-opencontrail-vrouter-netns (= ${binary:Version}),
+         python-opencontrail-vrouter-netns (>= ${binary:Version}),
          ${misc:Depends}
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - DKMS version
