@@ -14,3 +14,4 @@ usr/share/contrail-utils/del_virtual_dns_record.py usr/sbin/contrail-del-virtual
 usr/share/contrail-utils/disassociate_virtual_dns.py usr/sbin/contrail-disassociate-virtual-dns
 usr/share/contrail-utils//contrail-status.py usr/bin/contrail-status
 usr/share/contrail-utils//contrail-version-deb usr/bin/contrail-version
+usr/share/contrail-utils//contrail-cassandra-repair.py usr/bin/contrail-cassandra-repair
