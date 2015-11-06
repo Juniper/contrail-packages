@@ -1,9 +1,0 @@
-/var/log/contrail/contrail-control.log
-{
-    daily
-    missingok
-    compress
-    delaycompress
-    notifempty
-    copytruncate
-}
