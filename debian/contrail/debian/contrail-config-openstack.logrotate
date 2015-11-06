@@ -1,9 +1,0 @@
-/var/log/contrail/contrail-svc-monitor.log
-{
-    daily
-    missingok
-    compress
-    delaycompress
-    notifempty
-    copytruncate
-}
