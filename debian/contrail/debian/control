@@ -104,6 +104,7 @@ Depends: adduser,
          python-stevedore (>= 0.14.1),
          python-xmltodict,
          supervisor,
+         ifmap-server,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
