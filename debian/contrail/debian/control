@@ -38,7 +38,7 @@ Build-Depends: autoconf,
 Package: contrail-analytics
 Architecture: amd64
 Depends: adduser,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          librdkafka1 (>= 0.8.5),
          python-bottle (>= 0.11.6),
          python-contrail (>= ${source:Version}),
@@ -148,7 +148,7 @@ Description: OpenContrail configuration OpenStack module
 Package: contrail-control
 Depends: adduser,
          authbind,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
@@ -179,7 +179,7 @@ Description: OpenContrail control-node
 Package: contrail-dns
 Depends: adduser,
          authbind,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Replaces: contrail-openstack-control
@@ -192,7 +192,7 @@ Description: OpenContrail control-dns
 
 Package: contrail-vrouter-agent
 Depends: adduser,
-         contrail-lib (= ${binary:Version}),
+         contrail-lib (>= ${binary:Version}),
          contrail-vrouter,
          supervisor,
          ${misc:Depends},
