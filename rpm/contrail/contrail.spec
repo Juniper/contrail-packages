@@ -474,7 +474,7 @@ Requires:           python-geventhttpclient
 Requires:           protobuf
 Requires:           net-snmp-python
 Requires:           librdkafka1
-Requires:           python-kafka-python
+Requires:           python-kafka-python >= 0.9.4
 Requires:           python-stevedore
 Requires:           python-kazoo >= 1.3.1
 
