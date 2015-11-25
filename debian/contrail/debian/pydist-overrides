@@ -16,4 +16,4 @@ keystoneclient python-keystoneclient
 requests python-requests
 uuid 2.5-
 netsnmp-python libsnmp-python
-kafka python-kafka-python
+kafka python-kafka
