@@ -1,0 +1,9 @@
+Verified+2: Zuul <zuul@lists.opencontrail.org>
+Approved+1: Raj Reddy <rajreddy@juniper.net>
+Code-Review+2: Raj Reddy <rajreddy@juniper.net>
+Code-Review-1: Karl Klashinsky <klash@juniper.net>
+Submitted-by: Zuul <zuul@lists.opencontrail.org>
+Submitted-at: Tue, 08 Dec 2015 23:19:27 -0800
+Reviewed-on: https://review.opencontrail.org/15612
+Project: Juniper/contrail-packages
+Branch: refs/heads/master
