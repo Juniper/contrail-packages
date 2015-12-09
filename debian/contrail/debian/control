@@ -254,6 +254,7 @@ Architecture: amd64
 Section: python
 Depends: python-bottle,
          python-gevent (>= 1.0),
+         python-netaddr (>= 0.7.5),
          python-importlib,
          ${misc:Depends},
          ${python:Depends}
