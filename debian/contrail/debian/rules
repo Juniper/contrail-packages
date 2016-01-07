@@ -10,6 +10,11 @@ DEB_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:
 
 package-dkms=contrail-vrouter-dkms
 
+VER := $(shell lsb_release -c)
+ifeq (,$(findstring precise,$(VER)))
+        SUBSTVARS = -Vdist:Depends="python-cassandra-driver  (>= 3.0.0)"
+endif
+
 TARGETS=control-node:node_mgr \
         opserver:node_mgr     \
         vrouter:node_mgr      \
@@ -67,3 +72,6 @@ override_dh_strip:
 	dh_strip -pcontrail-analytics --dbg-package=contrail-analytics-dbg
 	dh_strip -pcontrail-control --dbg-package=contrail-control-dbg
 	dh_strip -pcontrail-vrouter-agent --dbg-package=contrail-vrouter-agent-dbg
+
+override_dh_gencontrol:
+	dh_gencontrol -- $(SUBSTVARS)
