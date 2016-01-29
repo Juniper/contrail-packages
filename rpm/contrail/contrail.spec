@@ -348,7 +348,7 @@ Summary:            OpenContrail vRouter netns
 Group:              Applications/System
 
 %if 0%{?rhel} > 6
-Requires:           websocket-client >= 0.32.0
+Requires:           python-websocket-client >= 0.32.0
 Requires:           python-docker-py >= 1.4.0
 %else
 Requires:           python-docker-py
