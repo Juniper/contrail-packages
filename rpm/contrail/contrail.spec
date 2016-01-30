@@ -122,6 +122,11 @@ rm -rf %{buildroot}/usr/src/vrouter
 pushd %{buildroot}/usr/share/contrail
 find . -print | sed 's;^;'"%{buildroot}%{_contrailutils}"';'| xargs install -d -m 755
 
+#Needed for Lbaas
+echo "Defaults:root !requiretty" >> %{buildroot}/contrail-lbaas
+install -D -m 755 %{buildroot}/contrail-lbaas %{buildroot}/etc/sudoers.d/contrail-lbaas
+rm -rf %{buildroot}/contrail-lbaas
+
 %package vrouter
 Summary:            Contrail vRouter
 Group:              Applications/System
