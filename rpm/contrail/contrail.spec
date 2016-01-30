@@ -122,6 +122,12 @@ rm -rf %{buildroot}/usr/src/vrouter
 pushd %{buildroot}/usr/share/contrail
 find . -print | sed 's;^;'"%{buildroot}%{_contrailutils}"';'| xargs install -d -m 755
 
+#Needed for Lbaas
+install -d -m 755 %{buildroot}/etc/sudoers.d/
+echo 'Defaults:root !requiretty' >> %{buildroot}/contrail-lbaas
+install -m 755 %{buildroot}/contrail-lbaas  %{buildroot}/etc/sudoers.d/contrail-lbaas
+rm -rf %{buildroot}/contrail-lbaas
+
 %package vrouter
 Summary:            Contrail vRouter
 Group:              Applications/System
@@ -365,6 +371,7 @@ Contrail Virtual Router NetNS package
 %defattr(-,root,root)
 %{python_sitelib}/opencontrail_vrouter_*
 %{_bindir}/opencontrail-vrouter-*
+/etc/sudoers.d/contrail-lbaas
 
 
 %package lib
