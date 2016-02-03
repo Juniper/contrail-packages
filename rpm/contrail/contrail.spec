@@ -404,7 +404,7 @@ Requires: python-lxml >= 2.3.2
 Requires: python-pycassa
 Requires: python-thrift >= 0.9.1
 Requires: python-keystone
-Requires: python-psutil
+Requires: python-psutil >= 0.6.0
 Requires: python-requests
 Requires: python-zope-interface
 Requires: xmltodict >= 0.7.0
@@ -484,7 +484,7 @@ Requires:           python-pycassa
 Requires:           redis-py > 0.1-2contrail
 Requires:           redis >= 2.6.13-1
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
-Requires:           python-psutil
+Requires:           python-psutil >= 0.6.0
 Requires:           python-prettytable
 Requires:           python-geventhttpclient
 Requires:           protobuf
