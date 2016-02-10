@@ -6,7 +6,7 @@ Priority: optional
 Package: contrail-vrouter-dpdk
 Architecture: all
 Depends: contrail-vrouter-utils (= ${binary:Version}),
-         contrail-dpdk-kernel-modules-dkms, liburcu1, ${misc:Depends}
+         contrail-dpdk-kernel-modules-dkms, liburcu2, ${misc:Depends}
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - DPDK version
  OpenContrail is a network virtualization solution that provides an overlay
