@@ -307,7 +307,7 @@ Description: OpenContrail vrouter agent api
 Package: python-opencontrail-vrouter-netns
 Architecture: amd64
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}
+Depends: python-pkg-resources, ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter network namespace package
  Script to start or destroy a Linux network namespace.
 
