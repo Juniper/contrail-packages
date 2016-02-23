@@ -35,6 +35,7 @@ Build-Depends: autoconf,
                librdkafka1,
                cassandra-cpp-driver,
                cassandra-cpp-driver-dev,
+               libzookeeper-mt-dev,
                BUILDDEP_SERIES
 
 Package: contrail-analytics
@@ -43,6 +44,7 @@ Depends: adduser,
          contrail-lib (>= ${binary:Version}),
          librdkafka1 (>= 0.8.5),
          cassandra-cpp-driver,
+         libzookeeper-mt2,
          python-bottle (>= 0.11.6),
          python-contrail (>= ${source:Version}),
          python-kafka (>= 0.9.3),
