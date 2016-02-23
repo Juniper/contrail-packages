@@ -63,6 +63,7 @@ BuildRequires:  protobuf-devel
 BuildRequires:  net-snmp-python
 BuildRequires:  cassandra-cpp-driver
 BuildRequires:  cassandra-cpp-driver-devel
+BuildRequires:  libzookeeper-devel
 
 %prep
 
@@ -489,6 +490,7 @@ Requires:           python-prettytable
 Requires:           python-geventhttpclient
 Requires:           protobuf
 Requires:           cassandra-cpp-driver
+Requires:           libzookeeper
 Requires:           net-snmp-python
 Requires:           librdkafka1
 Requires:           python-kafka-python >= 0.9.4
