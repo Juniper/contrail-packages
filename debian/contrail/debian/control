@@ -13,6 +13,7 @@ Build-Depends: autoconf,
                debhelper (>= 8.0.0),
                flex,
                libcurl4-openssl-dev,
+               libssl-dev,
                libexpat-dev,
                libgettextpo0,
                libprotobuf-dev,
@@ -36,6 +37,7 @@ Build-Depends: autoconf,
                cassandra-cpp-driver,
                cassandra-cpp-driver-dev,
                libzookeeper-mt-dev,
+               linux-headers,
                BUILDDEP_SERIES
 
 Package: contrail-analytics
@@ -234,7 +236,7 @@ Depends: adduser,
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: contrail-nodemgr (>= ${source:Version}),
-Architecture: amd64
+Architecture: amd64 armhf
 Description: OpenContrail vrouter agent
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
@@ -298,7 +300,7 @@ Description: OpenContrail tools and utilities
  scripts to configure and diagnose OpenContrail.
 
 Package: python-contrail-vrouter-api
-Architecture: amd64
+Architecture: amd64 armhf
 Section: python
 Depends: contrail-vrouter-agent, ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter agent api
@@ -307,14 +309,14 @@ Description: OpenContrail vrouter agent api
  in the OpenContrail API server.
 
 Package: python-opencontrail-vrouter-netns
-Architecture: amd64
+Architecture: amd64 armhf
 Section: python
 Depends: ${misc:Depends}, ${python:Depends}
 Description: OpenContrail vrouter network namespace package
  Script to start or destroy a Linux network namespace.
 
 Package: contrail-vrouter-utils
-Architecture: amd64
+Architecture: amd64 armhf
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail VRouter - Utilities
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
@@ -324,7 +326,7 @@ Description: OpenContrail VRouter - Utilities
  configure and diagnose the OpenContrail Linux kernel module.
 
 Package: contrail-vrouter-source
-Architecture: amd64
+Architecture: amd64 armhf
 Depends: bzip2, debhelper, module-assistant, ${misc:Depends}
 Description: OpenContrail VRouter - Source
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that

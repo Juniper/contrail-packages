@@ -21,17 +21,20 @@ TARGETS=control-node:node_mgr \
         database:node_mgr     \
         src:nodemgr
 
+KERNELDIR?=/lib/modules/$(shell ls /lib/modules/ | head -1)/build
+SCONS_OPTS=--opt=production --optimization=production --root=${INSTALL_ROOT} --kernel-dir=${KERNELDIR}
+
 %:
 	dh $@ --with python2
 
 override_dh_auto_build:
 	cd debian/manpages; ronn -r *.ronn
-	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+	(cd ${SB_TOP}; scons ${SCONS_OPTS} install)
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
 	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
 	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
 	# Node manager
-	(cd ${SB_TOP}; scons -j1 --opt=production --root=${INSTALL_ROOT} ${TARGETS})
+	(cd ${SB_TOP}; scons ${SCONS_OPTS} ${TARGETS})
 	(cd ${SB_TOP}/build/production/nodemgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/control-node; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
