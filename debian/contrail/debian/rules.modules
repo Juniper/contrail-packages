@@ -9,6 +9,22 @@ MA_DIR ?= /usr/share/modass
 -include $(MA_DIR)/include/generic.make
 -include $(MA_DIR)/include/common-rules.make
 
+KERNELDIR?=/lib/modules/$(shell ls /lib/modules/ | head -1)/build
+SCONS_OPTS=--root=${INSTALL_ROOT} --kernel-dir=${KERNELDIR}
+
+ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+	OPTIMIZATION = debug
+else
+	OPTIMIZATION = production
+endif
+
+SCONS_OPTS += --opt=$(OPTIMIZATION) --optimization=$(OPTIMIZATION)
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    SCONS_OPTS += -j $(NUMJOBS)
+endif
+
 # Make 'fakeroot blah clean' not be an error
 clean:;
 
@@ -18,7 +34,7 @@ binary-modules: kdist_config
 	dh_testroot
 	dh_prep
 # build and install the module
-	(cd ${SB_TOP}; scons --opt=production --kernel-dir=/lib/modules/$(KVERS)/build build-kmodule --root=${INSTALL_ROOT})
+	(cd ${SB_TOP}; scons ${SCONS_OPTS} build-kmodule)
 	dh_install
 	dh_installdocs
 	dh_installchangelogs

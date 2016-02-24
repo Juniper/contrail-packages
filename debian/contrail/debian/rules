@@ -21,22 +21,38 @@ TARGETS=control-node:node_mgr \
         database:node_mgr     \
         src:nodemgr
 
+KERNELDIR?=/lib/modules/$(shell ls /lib/modules/ | head -1)/build
+SCONS_OPTS=--root=${INSTALL_ROOT} --kernel-dir=${KERNELDIR}
+
+ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+	OPTIMIZATION = debug
+else
+	OPTIMIZATION = production
+endif
+
+SCONS_OPTS += --opt=$(OPTIMIZATION) --optimization=$(OPTIMIZATION)
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    SCONS_OPTS += -j $(NUMJOBS)
+endif
+
 %:
 	dh $@ --with python2
 
 override_dh_auto_build:
 	cd debian/manpages; ronn -r *.ronn
-	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+	(cd ${SB_TOP}; scons ${SCONS_OPTS} install)
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
 	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
 	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
 	# Node manager
-	(cd ${SB_TOP}; scons -j1 --opt=production --root=${INSTALL_ROOT} ${TARGETS})
-	(cd ${SB_TOP}/build/production/nodemgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
-	(cd ${SB_TOP}/build/production/control-node; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
-	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
-	(cd ${SB_TOP}/build/production/opserver/node_mgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
-	(cd ${SB_TOP}/build/production/analytics/database; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}; scons ${SCONS_OPTS} ${TARGETS})
+	(cd ${SB_TOP}/build/$(OPTIMIZATION)/nodemgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/$(OPTIMIZATION)/control-node; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/$(OPTIMIZATION)/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/$(OPTIMIZATION)/opserver/node_mgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/$(OPTIMIZATION)/analytics/database; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	# Configuration for nodemgr
 	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.conf; do \
 		mkdir -m 0755 -p ${INSTALL_ROOT}/usr/share/doc/contrail-`basename $$conf | cut -d '-' -f 2`/examples; \
