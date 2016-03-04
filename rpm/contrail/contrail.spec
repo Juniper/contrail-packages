@@ -530,6 +530,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-db
 %{_bindir}/contrail-stats
+%{_bindir}/contrail-alarm-notify
 %{_bindir}/contrail-logs-api-audit
 %{_bindir}/contrail-snmp-*
 %{_bindir}/contrail-topology
