@@ -9,6 +9,7 @@ usr/bin/contrail-logs-api-audit
 usr/bin/contrail-snmp-*
 usr/bin/contrail-topology
 usr/bin/contrail-alarm-gen
+usr/bin/contrail-alarm-notify
 etc/contrail/contrail-collector.conf
 etc/contrail/contrail-query-engine.conf
 etc/contrail/contrail-analytics-api.conf
