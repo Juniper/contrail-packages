@@ -20,6 +20,11 @@
 %else
 %define         _verstr      1
 %endif
+%if 0%{?_kVers:1}
+%define         _kvers      %{_kVers}
+%else
+%define         _kvers      3.10.0-229.el7.x86_64 3.10.0-327.10.1.el7.x86_64
+%endif
 
 %{echo: "Building release %{_relstr}\n"}
 
@@ -70,7 +75,18 @@ BuildRequires:  libzookeeper-devel
 %install
 pushd %{_sbtop}
 scons --root=%{buildroot} install
-scons --kernel-dir=/lib/modules/%{_osVer}/build build-kmodule --root=%{buildroot}
+for kver in %{_kvers}; do
+    echo "Kver = ${kver}"
+    set +e
+    rpm -qa | grep kernel-devel-$kver
+    exit_code=$?
+    set -e
+    if [ $exit_code == 0 ]; then
+        scons --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
+    else
+        echo "WARNING: kernel-devel-$kver is not installed, Skipping building vrouter for $kver"
+    fi
+done
 mkdir -p %{buildroot}/_centos/tmp
 popd
 pushd %{buildroot}
@@ -142,6 +158,37 @@ vrouter kernel module
 The OpenContrail vRouter is a forwarding plane (of a distributed router) that runs in the hypervisor of a virtualized server. It extends the network from the physical routers and switches in a data center into a virtual overlay network hosted in the virtualized servers.
 The OpenContrail vRouter is conceptually similar to existing commercial and open source vSwitches such as for example the Open vSwitch (OVS) but it also provides routing and higher layer services (hence vRouter instead of vSwitch).
 The package opencontrail-vrouter-dkms provides the OpenContrail Linux kernel module.
+
+%preun vrouter
+if [ -L /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko ]; then
+    rm -f /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko
+fi
+exit 0
+
+%post vrouter
+act_kver=$(uname -r)
+kver=$(uname -r | cut -d "-" -f1)
+kver_rls=$(uname -r | cut -d "-" -f2 | cut -d "." -f1)
+target_kver=$kver-$kver_rls
+vrouter_actual_path=$(ls /lib/modules/${target_kver}*/extra/net/vrouter/vrouter.ko)
+
+if [ -f "/lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko" ]; then
+    depmod -a
+    echo "Installed vrouter at /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko"
+elif [ -f "$vrouter_actual_path" ]; then
+    echo "Create symbolic link to $vrouter_actual_path at /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko"
+    mkdir -p /lib/modules/$(uname -r)/extra/net/vrouter/
+    ln -s "$vrouter_actual_path" /lib/modules/$(uname -r)/extra/net/vrouter/
+    if [ $? != 0 ]; then
+        echo "ERROR: Unable to create symlink to $vrouter_actual_path"
+        exit 126
+    fi
+    depmod -a
+else
+    echo "ERROR: vrouter module is not supported in current kernel version $(uname -r)"
+    exit 1
+fi
+exit 0
 
 %files vrouter
 %defattr(-, root, root)
