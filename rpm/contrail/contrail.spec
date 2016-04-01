@@ -648,6 +648,7 @@ Contrail Nova Vif driver package
 Summary: Contrail utility sctipts.
 Group: Applications/System
 
+Requires: lsof
 Requires: python-lxml >= 2.3.2
 Requires: python-requests
 Requires: python-contrail >= %{_verstr}-%{_relstr}

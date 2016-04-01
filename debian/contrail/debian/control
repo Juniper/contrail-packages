@@ -285,6 +285,7 @@ Description: OpenContrail libraries
 Package: contrail-utils
 Architecture: amd64
 Depends: dpkg-dev,
+         lsof,
          python-contrail (>= ${source:Version}),
          python-lxml,
          python-requests,
