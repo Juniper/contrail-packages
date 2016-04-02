@@ -238,6 +238,7 @@ The package opencontrail-vrouter-utils provides command line utilities to config
 %{_bindir}/rt
 %{_bindir}/vrfstats
 %{_bindir}/vif
+%{_bindir}/vrouter
 %{_bindir}/vxlan
 
 %package vrouter-agent
