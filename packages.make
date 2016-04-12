@@ -26,10 +26,10 @@ SERIES=$(shell lsb_release -c -s)
 
 # DPDK vRouter is currently supported only on Ubuntu 12.04 Precise and 14.04 Trusty
 ifeq ($(SERIES),precise)
-    CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
+    CONTRAIL_VROUTER_DPDK := package-contrail-vrouter-dpdk
 endif
 ifeq ($(SERIES),trusty)
-    CONTRAIL_VROUTER_DPDK := contrail-vrouter-dpdk
+    CONTRAIL_VROUTER_DPDK := package-contrail-vrouter-dpdk
 endif
 
 source-all: source-package-contrail-web-core \
