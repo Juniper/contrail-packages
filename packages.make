@@ -47,7 +47,7 @@ all: package-ifmap-server \
 	package-neutron-plugin-contrail \
 	package-ceilometer-plugin-contrail \
 	package-contrail-heat \
-	$(CONTRAIL_VROUTER_DPDK)
+	package-$(CONTRAIL_VROUTER_DPDK)
 
 package-ifmap-server: clean-ifmap-server debian-ifmap-server
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
