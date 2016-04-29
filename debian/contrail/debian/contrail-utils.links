@@ -1,3 +1,6 @@
+usr/share/contrail-utils/provision_config_node.py usr/sbin/contrail-provision-config
+usr/share/contrail-utils/provision_database_node.py usr/sbin/contrail-provision-database
+usr/share/contrail-utils/provision_analytics_node.py usr/sbin/contrail-provision-analytics
 usr/share/contrail-utils/provision_control.py usr/sbin/contrail-provision-control
 usr/share/contrail-utils/provision_linklocal.py usr/sbin/contrail-provision-linklocal
 usr/share/contrail-utils/provision_vrouter.py usr/sbin/contrail-provision-vrouter
