@@ -42,8 +42,13 @@ post-start script
 end script
 
 pre-stop script
-    supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
-    supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
+    if [ -e /tmp/supervisord_vrouter.sock ]; then
+	supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
+	supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
+    else
+	supervisorctl -s unix:///var/run/supervisord_vrouter.sock stop all
+	supervisorctl -s unix:///var/run/supervisord_vrouter.sock shutdown
+    fi
     if [ -f /opt/contrail/bin/vrouter-pre-stop.sh ]; then
         /opt/contrail/bin/vrouter-pre-stop.sh
     fi
