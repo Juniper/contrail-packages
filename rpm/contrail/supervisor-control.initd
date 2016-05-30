@@ -40,8 +40,13 @@ function daemon_start() {
 }
 
 function daemon_stop() {
-    /usr/bin/supervisorctl -s unix:///tmp/supervisord_control.sock stop all
-    /usr/bin/supervisorctl -s unix:///tmp/supervisord_control.sock shutdown
+    if [ -e /tmp/supervisord_control.sock ]; then
+        supervisorctl -s unix:///tmp/supervisord_control.sock stop all
+        supervisorctl -s unix:///tmp/supervisord_control.sock shutdown
+    else
+        supervisorctl -s unix:///var/run/supervisord_control.sock stop all
+        supervisorctl -s unix:///var/run/supervisord_control.sock shutdown
+    fi
     if [ -f $PID_FILE ]; then
         kill `cat $PID_FILE`
         rm -f $PID_FILE
