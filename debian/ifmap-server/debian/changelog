@@ -1,3 +1,9 @@
+ifmap-server (0.3.2-1contrail3) precise; urgency=low
+  * Launch line updated to allow supervisor restart
+    on ifmap abnormal termination.
+
+ -- Sanju Abraham <sanjua@juniper.net>  Tue, 31 May 2016 19:28:30 -0700
+
 ifmap-server (0.3.2-1contrail2) precise; urgency=low
   * Launch line updated to allow log-rotation correctly
     (commit ab71b8d502fd6c34e439c82af931dd5a559a34d1)
