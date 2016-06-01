@@ -16,24 +16,51 @@ function log_failure_msg() {
 PID_FILE=/var/run/supervisord-config.pid
 
 function daemon_start() {
-     echo  -n "Starting Supervisor Daemon for Contrail Config Package"
      ulimit -s unlimited
      ulimit -c unlimited
      ulimit -d unlimited
      ulimit -v unlimited
      ulimit -n 4096
-     /usr/bin/supervisord -c /etc/contrail/supervisord_config.conf 
+     retval=false
+     socketon=false
+     if [[ ! -z `ps -ef | grep contrail-discovery | grep -v grep | awk '{print $2}'` ]]; then
+        pkill -9 -f contrail-discovery
+     fi
+     if [[ ! -z `ps -ef | grep irond.jar | grep -v grep | awk '{print $2}'` ]]; then
+        pkill -9 -f irond.jar
+     fi
+     if [[ ! -z `ps -ef | grep contrail-api | grep -v grep | awk '{print $2}'` ]]; then
+        pkill -9 -f contrail-api
+     fi
+     if [[ ! -z `ps -ef | grep contrail-schema | grep -v grep | awk '{print $2}'` ]]; then
+        pkill -9 -f contrail-schema
+     fi
+     if [[ ! -z `ps -ef | grep contrail-svc-monitor | grep -v grep | awk '{print $2}'` ]]; then
+        pkill -9 -f contrail-svc-monitor
+     fi
+     if [[ ! -z `ps -ef | grep contrail-device-manager | grep -v grep | awk '{print $2}'` ]]; then
+        pkill -9 -f contrail-device-manager
+     fi
+     /usr/bin/supervisord -c /etc/contrail/supervisord_config.conf
      RETVAL=$?
      if [ $RETVAL -ne 0 ]; then
-        echo "supervisor-config start failed. checking lsof.."
+        retval=true
         lsof | grep -i supervisord_config.sock
         if [ $? -eq 0 ]; then
-            echo "Another program listening on same socket"
+            socketon=true
             pid=`lsof | grep -i supervisord_config.sock | cut -d' ' -f3`
             if [ "x$pid" != "x" ] ; then
                 ps uw -p $pid
             fi
         fi
+     fi
+     if [[ "retval" == true ]]; then
+        echo "supervisor-config start failed. checking lsof.."
+        if [[ "socketon" == true ]]; then
+           echo "Another program listening on same socket"
+        fi
+     else
+        echo  -n "Started Supervisor Daemon for Contrail Config Package"
      fi
 }
 
