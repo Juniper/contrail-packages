@@ -17,6 +17,26 @@ pre-start script
     ulimit -d unlimited
     ulimit -v unlimited
     ulimit -n 4096
+    # cleanup subprocesses that are not reaped by supervisord, so that lifecycle management
+    # of the programs is with supervisord (config)
+    if [[ `ps -ef | grep contrail-discovery | grep -v grep | awk '{print $3}'` -eq "1" ]] ; then
+       pkill -9 -f contrail-discovery
+    fi
+    if [[ `ps -ef | grep irond.jar | grep -v grep | awk '{print $3}'` -eq "1" ]]; then
+       pkill -9 -f irond.jar
+    fi
+    if [[ `ps -ef | grep contrail-api | grep -v grep | awk '{print $3}'` -eq "1" ]]; then
+       pkill -9 -f contrail-api
+    fi
+    if [[ `ps -ef | grep contrail-schema | grep -v grep | awk '{print $3}'` -eq "1" ]]; then
+       pkill -9 -f contrail-schema
+    fi
+    if [[ `ps -ef | grep contrail-svc-monitor | grep -v grep | awk '{print $3}'` -eq "1" ]]; then
+       pkill -9 -f contrail-svc-monitor
+    fi
+    if [[ `ps -ef | grep contrail-device-manager | grep -v grep | awk '{print $3}'` -eq "1" ]]; then
+       pkill -9 -f contrail-device-manager
+    fi
 end script
 
 #exec /usr/bin/supervisord --nodaemon -c /etc/contrail/supervisord_config.conf
