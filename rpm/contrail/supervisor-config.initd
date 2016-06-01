@@ -16,7 +16,6 @@ function log_failure_msg() {
 PID_FILE=/var/run/supervisord-config.pid
 
 function daemon_start() {
-     echo  -n "Starting Supervisor Daemon for Contrail Config Package"
      ulimit -s unlimited
      ulimit -c unlimited
      ulimit -d unlimited
@@ -35,6 +34,7 @@ function daemon_start() {
             fi
         fi
      fi
+     echo  -n "Started Supervisor Daemon for Contrail Config Package"
 }
 
 function daemon_stop() {
