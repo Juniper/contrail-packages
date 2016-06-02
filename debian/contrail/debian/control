@@ -167,6 +167,11 @@ Description: OpenContrail configuration OpenStack module
  This package contains the configuration management modules that interface
  with OpenStack.
 
+Package: contrail-config-vmware
+Architecture: amd64
+Depends: contrail-config (>= ${source:Version})
+Description: OpenContrail VMWare configuration module.
+
 Package: contrail-control
 Depends: adduser,
          authbind,
