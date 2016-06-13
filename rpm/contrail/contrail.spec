@@ -64,6 +64,7 @@ BuildRequires:  net-snmp-python
 BuildRequires:  cassandra-cpp-driver
 BuildRequires:  cassandra-cpp-driver-devel
 BuildRequires:  libzookeeper-devel
+BuildRequires:  librdkafka-devel >= 0.9.0
 
 %prep
 
