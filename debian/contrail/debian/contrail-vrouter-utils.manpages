@@ -10,3 +10,4 @@ debian/manpages/vrfstats.1
 debian/manpages/vxlan.1
 debian/manpages/vrouter.1
 debian/manpages/vrmemstats.1
+debian/manpages/contrail-tcpdump.1

@@ -1,0 +1,36 @@
+contrail-tcpdump(1) -- OpenContrail vRouter utils
+=================================================
+
+## SYNOPSIS
+
+`contrail-tcpdump` [<options>]
+
+## DESCRIPTION
+
+The OpenContrail vRouter is a forwarding plane (of a distributed router) that runs in the hypervisor of a virtualized server.
+
+The package opencontrail-vrouter-utils provides command line utilities to configure and diagnose the OpenContrail linux kernel module.
+
+## OPTIONS
+
+* `-h`, `--help`:
+  Show this help message and exit
+
+* `-g`:
+  Interprets the agent_header received to Vrouter Agent. All regular options of tcpdump can be used.
+
+## BUGS
+
+Contrail is hosted in Launchpad so you can view current bugs at https://bugs.launchpad.net/opencontrail/.
+
+## AUTHOR
+
+OpenContrail developers <dev@lists.opencontrail.org>
+
+## COPYRIGHT
+
+Copyright (c) 2016 OpenContrail
+
+## SEE ALSO
+
+mpls(1), dropstats(1), flow(1), vrfstats(1), nh(1), vif(1), vxlan(1), mirror(1), rt(1), vrouter(1), vrmemstats(1)
