@@ -37,4 +37,4 @@ Copyright (c) 2014 OpenContrail
 
 ## SEE ALSO
 
-tcpdump(8), vif(1), mirror(1), vrmemstats(1)
+tcpdump(8), vif(1), mirror(1), vrmemstats(1), qosmap(1)
