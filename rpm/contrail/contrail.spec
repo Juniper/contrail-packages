@@ -3,7 +3,7 @@
 %define         _contrailutils /opt/contrail/utils
 %define         _distropkgdir tools/packaging/common/control_files
 %define         _contraildns /etc/contrail/dns
-%define         _distrorpmpkgdir tools/packages/rpm/contrail
+%define         _distrorpmpkgdir %{_sbtop}/tools/packages/rpm/contrail
 
 %if 0%{?_kernel_dir:1}
 %define         _osVer  %(cat %{_kernel_dir}/include/linux/utsrelease.h | cut -d'"' -f2)
