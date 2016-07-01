@@ -1,0 +1,1825 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
+index 276983a..1a7087a 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
+@@ -24,6 +24,11 @@ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.util.List;
++import java.util.HashMap;
++import java.util.Map;
++import java.util.Iterator;
++import java.io.PrintWriter;
++import java.io.StringWriter;
+ 
+ import org.apache.log4j.Logger;
+ 
+@@ -44,8 +49,11 @@ import de.fhhannover.inform.iron.mapserver.communication.bus.messages.SendRespon
+ import de.fhhannover.inform.iron.mapserver.communication.bus.messages.TimerExpiredEvent;
+ import de.fhhannover.inform.iron.mapserver.communication.http.ActionProcessor;
+ import de.fhhannover.inform.iron.mapserver.datamodel.DataModelService;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.ResultItem;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult;
++import de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElement;
++import de.fhhannover.inform.iron.mapserver.exceptions.SessionNotFoundException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AbortRequestException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AccessDeniedException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.InvalidFilterException;
+@@ -629,6 +637,7 @@ public class EventProcessor extends Processor<Event> {
+ 	public void processPollResultAvailableEvent(PollResultAvailableEvent e) {
+ 		synchronized (mBigProcessLock) {
+ 			String sessionId = e.getSessionId();
++                        sLogger.debug(sName + ": PollResultAvailableEvent for session-id " + sessionId);
+ 			Session session = mSessionRep.getBy(sessionId);
+ 			
+ 			if (session == null) {
+@@ -645,6 +654,7 @@ public class EventProcessor extends Processor<Event> {
+ 				if (session.isPollPending()) {
+ 					// is waiting for a response of a previous poll request
+ 					ChannelIdentifier arc = session.getArc();
++                                        sLogger.debug(sName + ": PollResultAvailableEvent session is PollPending - sessionId: " + sessionId + ", arc: " + arc);
+ 					if (arc == null) {
+ 						// this should be never the case if isPollPending() is true.
+ 						sLogger.error("UNEXPECTED: We have a pending poll but no" +
+@@ -687,7 +697,6 @@ public class EventProcessor extends Processor<Event> {
+ 	public void processPollRequest(PollRequest request) {
+ 
+ 		ChannelIdentifier arc = request.getChannelIdentifier();
+-		
+ 		try {
+ 			Session session = getSessionValidated(request);
+ 			
+@@ -780,8 +789,8 @@ public class EventProcessor extends Processor<Event> {
+ 	 */
+ 	private void handleSendPollRes(ChannelIdentifier arc, Session session) {
+ 		try {
+-			sLogger.trace(sName + ": sending out poll result");
+ 			String sessionId = session.getSessionId();
++                        sLogger.trace(sName + ": sending out poll result: " + sessionId);
+ 			
+ 			// sanity check
+ 			if (session.hasArc() && !session.getArc().equals(arc))
+@@ -791,8 +800,8 @@ public class EventProcessor extends Processor<Event> {
+ 			
+ 			// get reply and put it into the local list.
+ 			PollResult pollResult = mDataModel.getPollResultFor(sessionId);
+-			sLogger.trace(sName + ": PollResults results= " 
+-					+ pollResult.getResults().size());
++                        sLogger.trace(sName + ": PollResults results= "
++                                       + pollResult.getResults().size());
+                         mPollResultsPending.addPollResult(session, pollResult);  
+                         pollResult = mPollResultsPending.getNext(session);
+ 			deferPollResult(arc, session.getClientIdentifier(), pollResult);
+@@ -826,7 +835,7 @@ public class EventProcessor extends Processor<Event> {
+ 		NullCheck.check(session, "session is null");
+ 		NullCheck.check(arc, "arc is null");
+ 		sLogger.trace(sName + ": Setting poll pending for "
+-				+ session.getClientIdentifier() + " on " + arc);
++				+ session.getClientIdentifier() + " on " + arc + " Session: " + session.getSessionId());
+ 		session.setPollPending();
+ 		session.setArc(arc);
+ 	}	
+@@ -1370,7 +1379,7 @@ public class EventProcessor extends Processor<Event> {
+ 	 * Append a {@link Result} object to the current threads local
+ 	 * {@link #mResultList}
+ 	 */
+-	private void deferResultSending(Result res) {
++	private synchronized void deferResultSending(Result res) {
+ 		NullCheck.check(res, "res is null");
+ 		mResultList.get().add(res);
+ 	}
+@@ -1432,20 +1441,38 @@ public class EventProcessor extends Processor<Event> {
+ 	 * Ugly dispatching again :-(
+ 	 * Try to make this double-dispatch as well
+ 	 */
+-	private void processDeferredResults() {
++	private synchronized void processDeferredResults() {
+ 		List<Result> list = mResultList.get();
+-		
+ 
+ 		// early jump out
+-		if (list.size() == 0)
++		if (list.size() == 0) {
+ 			return;
++                }
+ 		
++             try {
++
+ 		ActionSeries as = new ActionSeries();
+ 		InputStream is = null;
+ 		for (Result r : list) {
+ 			SendResponseAction sra;
+ 			ChannelIdentifier chId = r.getChannelIdentifier();
+ 			ClientIdentifier clientId= r.getClientIdentifier();
++                        try {
++                             Session ses = mSessionRep.getBy(chId);
++/*
++                             if (ses.getArc() != chId) {
++                                  sLogger.info(sName + " Session arc is not same as channel : " + ses.getArc() + ",   " + chId);
++                                  continue;
++                             }
++*/
++                             Long time = findOldestVisitedElementTimeStamp(r);
++                             if (time != -1 && ses != null) {
++                                  mSessionRep.setMostRecentlyVisitedGraphElementTime(chId, time);
++                             }
++                        } catch (SessionNotFoundException e) {
++                             sLogger.warn(sName + "Session not found channel : " + chId + " :" + e.getMessage());
++                             continue;
++                        }
+ 			is = mResultMarshaller.marshal(r);
+ 			sra = new SendResponseAction(chId, clientId, is);
+ 			
+@@ -1459,8 +1486,65 @@ public class EventProcessor extends Processor<Event> {
+ 			putActionSeriesIntoActionQueue(as);
+ 		
+ 		list.clear();
++            } catch (Exception e) {
++                 StringWriter stack = new StringWriter();
++                 e.printStackTrace(new PrintWriter(stack));
++                 sLogger.error(sName + "Exception while processing processDeferredResults: " + stack.toString());
++            }
+ 	}
+ 
++public void printMap(Map mp) {
++    sLogger.warn(sName + "Pending poll requests");
++    Iterator it = mp.entrySet().iterator();
++    while (it.hasNext()) {
++        Map.Entry pair = (Map.Entry)it.next();
++        sLogger.info(sName + " poll response still pedning for Session : " + pair.getKey());
++    }
++}
++
++/*
++        private Long sentElementTimeStamp(PollResult pr) {
++                Long most_recent_visited_element_time_stamp = new Long(0);
++                for (SearchResult sr : pr.getResults()) {
++                        Long t = sentElementTimeStamp(sr);
++                        if (t > most_recent_visited_element_time_stamp) {
++                             most_recent_visited_element_time_stamp = t;
++                        }
++                }
++                return most_recent_visited_element_time_stamp;
++        }
++
++        private Long sentElementTimeStamp(SearchResult result) {
++                Long most_recent_visited_element_time_stamp = new Long(0);
++                for (ResultItem ri : result.getResultItems()) {
++                        GraphElement ge = ri.getGraphElement();
++                        sLogger.debug("sentElementTimeStamp: ge: " + ge + ", lastModifiedTime: " + ge.getLastModifiedTime() + ";  GE: " + ge);
++                        if (ge.getLastModifiedTime() > most_recent_visited_element_time_stamp) {
++                             most_recent_visited_element_time_stamp = ge.getLastModifiedTime();
++                        }
++                }
++                return most_recent_visited_element_time_stamp;
++        }
++*/
++
++        public long findOldestVisitedElementTimeStamp(Result result) {
++                if (result == null) {
++                     return 0;
++                }
++                long most_oldest_visited_element_time_stamp  = new Long(System.currentTimeMillis());
++                if (result instanceof AddressedPollResult) {
++                        AddressedPollResult pr = (AddressedPollResult)result;
++                        most_oldest_visited_element_time_stamp = pr.getPollResult().getOldtestItemTimeStamp();
++                        String pubSesId = pr.getPollResult().getPublisherSessionId();
++                        mSessionRep.setPublisherGraphElementTime(pubSesId, most_oldest_visited_element_time_stamp); 
++                } /*else if (result instanceof AddressedSearchResult) {
++                        sLogger.debug("findOldestVisitedElementTimeStamp - addressed search result");
++                        AddressedSearchResult sr = (AddressedSearchResult)result;
++                        most_oldest_visited_element_time_stamp = sr.getSearchResult().getOldtestItemTimeStamp();
++                }*/
++                return most_oldest_visited_element_time_stamp;
++        }
++
+ 	/**
+ 	 * Helper to put a {@link ActionSeries} into the action queue.
+ 	 * 
+@@ -1521,6 +1605,7 @@ public class EventProcessor extends Processor<Event> {
+ 	public void setDataModel(DataModelService dataModel) {
+ 		NullCheck.check(dataModel, "param dataModel null");
+ 		mDataModel = dataModel;
++                mDataModel.setSessionRepo(mSessionRep);
+ 	}
+ 
+ 	public void setSessionTimerFactory(SessionTimerFactory timerfactory) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
+index 43e638d..49aede4 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
+@@ -12,12 +12,19 @@ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
+ 
+ import java.util.List;
+ import java.util.ArrayList;
++import java.util.TreeSet;
++import java.util.Comparator;
+ import java.util.Map;
+ import java.util.HashMap;
+ 
+ import org.apache.log4j.Logger;
+ 
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResult;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.ResultItem;
++import de.fhhannover.inform.iron.mapserver.messages.Result;
++import de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElement;
++import de.fhhannover.inform.iron.mapserver.messages.AddressedPollResult;
++import de.fhhannover.inform.iron.mapserver.messages.AddressedSearchResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResultImpl;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.ModifiableSearchResult;
+@@ -33,9 +40,19 @@ public class PollResultsPending {
+ 		sLogger = LoggingProvider.getTheLogger();
+ 	}
+ 	
+-        private HashMap<String , List<PollResult>> mPollResults = new HashMap<String, List<PollResult>>();
++        private HashMap<String , TreeSet<PollResult>> mPollResults = new HashMap<String, TreeSet<PollResult>>();
+         private HashMap<String, Integer> mPerClientMpprs = new HashMap<String, Integer>();
+ 
++        class PollResultsComp implements Comparator<PollResult>{
++             @Override
++             public int compare(PollResult pr1, PollResult pr2) {
++                  if(pr1.getOldtestItemTimeStamp() < pr2.getOldtestItemTimeStamp()){
++                        return -1;
++                  } 
++                  return 1;
++             }
++         }
++
+ 	/**
+ 	 * Constructor
+ 	 * 
+@@ -44,20 +61,20 @@ public class PollResultsPending {
+ 	public PollResultsPending() {
+ 	}
+ 
+-        private List<PollResult> getSessionResults(String sessionId) {
+-                List<PollResult> sessionResults = null;
++        private synchronized TreeSet<PollResult> getSessionResults(String sessionId) {
++                TreeSet<PollResult> sessionResults = null;
+                 if ((sessionResults = mPollResults.get(sessionId)) == null) {
+                      sLogger.error("Session: " + sessionId + " is not initialzed with PollPendingResult when session is created");
+                 }
+                 return sessionResults;
+         }
+ 
+-        public void handleNewSession(Session session, Integer mpprs) {
++        public synchronized void handleNewSession(Session session, Integer mpprs) {
+                 String sessionId = session.getSessionId();
+                 sLogger.trace(sName +  ": " + sessionId + " handling new session, mpprs: " + mpprs);
+-                List<PollResult> sessionResults = null;
++                TreeSet<PollResult> sessionResults = null;
+                 if ((sessionResults = mPollResults.get(sessionId)) == null) {
+-                     sessionResults = new ArrayList<PollResult>();
++                     sessionResults = new TreeSet<PollResult>(new PollResultsComp());
+                      mPollResults.put(sessionId, sessionResults);
+                      session.unsetPollPendingResultsAvailable();
+                      mPerClientMpprs.put(sessionId, mpprs);
+@@ -66,10 +83,10 @@ public class PollResultsPending {
+                 }       
+         }
+ 
+-        public void handleEndSession(Session session) {
++        public synchronized void handleEndSession(Session session) {
+                 String sessionId = session.getSessionId();
+                 sLogger.trace(sName +  ": " + sessionId + " handing end session");
+-                List<PollResult> sessionResults = null;
++                TreeSet<PollResult> sessionResults = null;
+                 if ((sessionResults = mPollResults.get(sessionId)) == null) {
+                      sLogger.error("Session : " + sessionId + " is not initialzed with PollPendingResult, but received a end session request");
+                 } else {
+@@ -78,14 +95,18 @@ public class PollResultsPending {
+                 }
+         }
+ 
+-        public void addPollResult(Session session, PollResult res) {
++        public synchronized void addPollResult(Session session, PollResult res) {
+                 String sessionId = session.getSessionId();
+                 Integer mpprs = mPerClientMpprs.get(sessionId);
+                 sLogger.trace(sName +  ": " + sessionId + " addPollResult");
+                 if (canSplit(res, mpprs)) {
+                        List<PollResult> newResults = split(res, mpprs);
+-                       getSessionResults(sessionId).addAll(newResults);
++                       for (PollResult pr:newResults)   {
++                            pr.setOldtestItemTimeStamp(findOldestVisitedElementTimeStamp(pr)); 
++                            getSessionResults(sessionId).add(pr);
++                       }
+                 } else {
++                       res.setOldtestItemTimeStamp(findOldestVisitedElementTimeStamp(res));
+                        getSessionResults(sessionId).add(res);
+                 }
+                 session.setPollPendingResultsAvailable();
+@@ -105,6 +126,7 @@ public class PollResultsPending {
+                 for (SearchResult sr : res.getResults()) {
+                         if (lastResult == null || (lastResult.getByteCount() + sr.getByteCount()) > mpprs) {
+                             lastResult = new PollResultImpl();
++                            lastResult.setPublisherSessionId(res.getPublisherSessionId());
+                             sLogger.trace(sName +  ": created a new Poll Result");
+                             list.add(lastResult);
+                         } else {
+@@ -122,16 +144,15 @@ public class PollResultsPending {
+                 return list;
+         }
+ 
+-        public PollResult getNext(Session session) {
++        public synchronized PollResult getNext(Session session) {
+                 String sessionId = session.getSessionId();
+-                List<PollResult> sessionResults = mPollResults.get(sessionId);
++                TreeSet<PollResult> sessionResults = mPollResults.get(sessionId);
+                 NullCheck.check(sessionResults, "Session Poll Results is null");
+                 if (sessionResults.size() == 0) {
+                         sLogger.warn(sName +  ": " + sessionId + " getNext must not be called because state must have been set to PollPendingResultsNone");
+                         return null;
+                 }
+-                PollResult nextResult  = sessionResults.get(0);
+-                sessionResults.remove(0);
++                PollResult nextResult  = sessionResults.pollFirst();
+                 if (sessionResults.size() > 0) {
+                        sLogger.trace(sName +  ": Session - " + sessionId + " has more pending results, remaining count: " + sessionResults.size());
+                        session.setPollPendingResultsAvailable();
+@@ -142,7 +163,48 @@ public class PollResultsPending {
+                 return nextResult;
+         }
+ 
+-        private void remove(String sessionId) {
++        private Long sentElementTimeStamp(PollResult pr) {
++                Long most_oldest_visited_element_time_stamp = new Long(System.currentTimeMillis());
++                for (SearchResult sr : pr.getResults()) {
++                        Long t = sentElementTimeStamp(sr);
++                        if (t < most_oldest_visited_element_time_stamp) {
++                             most_oldest_visited_element_time_stamp = t;
++                        }
++                }
++                return most_oldest_visited_element_time_stamp;
++        }
++
++        private Long sentElementTimeStamp(SearchResult result) {
++                Long most_oldest_visited_element_time_stamp = new Long(System.currentTimeMillis());
++                for (ResultItem ri : result.getResultItems()) {
++                        GraphElement ge = ri.getGraphElement();
++                        if (ge.getLastModifiedTime() < most_oldest_visited_element_time_stamp) {
++                             sLogger.debug("most oldest item visited: ge: " + ge + ", lastModifiedTime: " + ge.getLastModifiedTime() + ";  GE: " + ge);
++                             most_oldest_visited_element_time_stamp = ge.getLastModifiedTime();
++                        }
++                }
++                return most_oldest_visited_element_time_stamp;
++        }
++
++        public long findOldestVisitedElementTimeStamp(PollResult result) {
++                if (result == null) {
++                     return 0;
++                }
++                long most_oldest_visited_element_time_stamp  = 0;
++                most_oldest_visited_element_time_stamp = sentElementTimeStamp(result);
++                return most_oldest_visited_element_time_stamp;
++        }
++
++        public long findOldestVisitedElementTimeStamp(SearchResult result) {
++                if (result == null) {
++                     return 0;
++                }
++                long most_oldest_visited_element_time_stamp  = 0;
++                most_oldest_visited_element_time_stamp = sentElementTimeStamp(result);
++                return most_oldest_visited_element_time_stamp;
++        }
++
++        private synchronized void remove(String sessionId) {
+                 sLogger.trace(sName +  ": Session - " + sessionId + " removed from pending results list");
+                 mPollResults.remove(sessionId);
+                 mPerClientMpprs.remove(sessionId);
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java
+index 12652dc..d8c3978 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/Session.java
+@@ -134,24 +134,24 @@ class Session {
+ 		mSessionTimer = sessionTimer;
+ 	}
+ 
+-	public boolean isPollResultAvailable() {
++	public synchronized boolean isPollResultAvailable() {
+ 		return mPollState == PollState.POLL_AVAILABLE;
+ 	}
+ 
+-	public boolean isPollPendingResultsAvailable() {
++	public synchronized boolean isPollPendingResultsAvailable() {
+ 		return mPollResultsPendingState == PollResultsPendingState.POLL_PENDING_RESULTS_AVAILABLE;
+ 	}
+ 
+-	public void setPollPendingResultsAvailable() {
++	public synchronized void setPollPendingResultsAvailable() {
+ 		mPollResultsPendingState = PollResultsPendingState.POLL_PENDING_RESULTS_AVAILABLE;
+ 	}
+ 
+-	public void unsetPollPendingResultsAvailable() {
++	public synchronized void unsetPollPendingResultsAvailable() {
+ 		mPollResultsPendingState = PollResultsPendingState.POLL_PENDING_RESULTS_NONE;
+ 	}
+ 
+ 
+-	public void setPollResultAvailable() {
++	public synchronized void setPollResultAvailable() {
+ 		if (mPollState == PollState.POLL_PENDING)
+ 			throw new SystemErrorException("Can't have PollResultAvailable "
+ 					+ "and PollPending");
+@@ -159,11 +159,11 @@ class Session {
+ 			mPollState = PollState.POLL_AVAILABLE;
+ 	}
+ 
+-	public boolean isPollPending() {
++	public synchronized boolean isPollPending() {
+ 		return mPollState == PollState.POLL_PENDING;
+ 	}
+ 
+-	public void setPollPending() {
++	public synchronized void setPollPending() {
+ 		if (mPollState == PollState.POLL_AVAILABLE)
+ 			throw new SystemErrorException("Can't have PollResultAvailable "
+ 					+ "and PollPending");
+@@ -171,7 +171,7 @@ class Session {
+ 		mPollState = PollState.POLL_PENDING;
+ 	}
+ 
+-	public void unsetPollState() {
++	public synchronized void unsetPollState() {
+ 		mPollState = PollState.NONE;
+ 	}
+ 
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java
+index fd8b39d..6ff956c 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java
+@@ -21,6 +21,8 @@
+ 
+ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
+ 
++import java.util.Map;
++
+ import de.fhhannover.inform.iron.mapserver.communication.ChannelIdentifier;
+ import de.fhhannover.inform.iron.mapserver.communication.ClientIdentifier;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AlreadyMappedException;
+@@ -90,6 +92,11 @@ public interface SessionRepository {
+ 	 * @throws StillMappedException if mappings have not been removed
+ 	 */
+ 	public void drop(Session session) throws SessionNotFoundException, StillMappedException;
++
++        public void setMostRecentlyVisitedGraphElementTime(ChannelIdentifier channelId, Long time) throws SessionNotFoundException;
++        public void setPublisherGraphElementTime(String sessionId, Long time) throws SessionNotFoundException;
++        public Long oldestGraphElementVisitedTime();
++        public Map<String, Long> getSessionElementVisitTimeMap();
+ 	
+ 	/**
+ 	 * Maps a Session to a sessionId.
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
+index c6cb1f7..286ffc5 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
+@@ -23,6 +23,9 @@ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
+ 
+ import java.util.HashMap;
+ import java.util.Map;
++import java.util.Iterator;
++
++import org.apache.log4j.Logger;
+ 
+ import de.fhhannover.inform.iron.mapserver.communication.ChannelIdentifier;
+ import de.fhhannover.inform.iron.mapserver.communication.ClientIdentifier;
+@@ -32,6 +35,7 @@ import de.fhhannover.inform.iron.mapserver.exceptions.NoMappingException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.SessionNotFoundException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.StillMappedException;
+ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+ 
+ /**
+  * Implementation of {@link SessionRepository} using three different
+@@ -40,6 +44,7 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  * @author aw
+  */
+ public class SessionRepositoryImpl implements SessionRepository {
++        private static final String sName = "SessionRepository";
+ 	
+ 	/**
+ 	 * Holds mappings from {@link ClientIdentifier} to {@link Session}
+@@ -56,6 +61,15 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 	 * Holds mappings from session-id to {@link Session}
+ 	 */
+ 	private Map<String, Session> mSessionIdSessionMap;
++	/**
++	 * Holds mappings from arc channels to most recently sent graph element timestamp
++	 */
++	private Map<String, Long> mSessionElementVisitTime;
++
++        private static Logger sLogger;
++        static {
++                sLogger = LoggingProvider.getTheLogger();
++        }
+ 	
+ 	/**
+ 	 * Construct a {@link SessionRepository}
+@@ -64,6 +78,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		mClientIdSessionMap = new HashMap<ClientIdentifier, Session>();
+ 		mChannelIdSessionMap = new HashMap<ChannelIdentifier, Session>();
+ 		mSessionIdSessionMap = new HashMap<String, Session>();
++		mSessionElementVisitTime = new HashMap<String, Long>();
+ 	}
+ 	
+ 
+@@ -86,25 +101,79 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 	}
+ 
+ 	@Override
+-	public void store(Session session) throws AlreadyStoredException {
++	public synchronized void store(Session session) throws AlreadyStoredException {
+ 		Session stored = getSessionWithChecks(session);
+ 		if (stored != null) {
+ 			throw new AlreadyStoredException(session.toString() + " already stored");
+ 		}
+ 		
+ 		mClientIdSessionMap.put(session.getClientIdentifier(), session);
++		mSessionElementVisitTime.put(session.getSessionId(), new Long(-1));
+ 	}
+ 
+ 	@Override
+-	public void drop(Session session) throws SessionNotFoundException, StillMappedException {
++	public synchronized void drop(Session session) throws SessionNotFoundException, StillMappedException {
+ 		sanityCheckBeforeDropOf(session);
+ 		Session stored = getSessionWithChecksExpectExists(session);
+ 		mClientIdSessionMap.remove(stored.getClientIdentifier());
++		mSessionElementVisitTime.remove(session.getSessionId());
+ 	}
+ 
++        @Override
++        public synchronized void setMostRecentlyVisitedGraphElementTime(ChannelIdentifier channelId, Long time) throws SessionNotFoundException {
++               Session session = mChannelIdSessionMap.get(channelId);
++               /*if (session.getArc() != channelId) {
++                     sLogger.info(sName + " setMostRecentlyVisitedGraphElementTime session arc and channel does not match : " +  session.getArc() + ", " + channelId);
++                     return;
++               }*/
++               sLogger.info(sName + " setMostRecentlyVisitedGraphElementTime set channel visit time for session: " +  session.getSessionId() + ", time: " + time);
++               mSessionElementVisitTime.put(session.getSessionId(), time);
++        }
++
++        @Override
++        public synchronized void setPublisherGraphElementTime(String sessionId, Long time) throws SessionNotFoundException {
++               Session session = mSessionIdSessionMap.get(sessionId);
++               /*if (session.getArc() == null) {
++                     sLogger.info(sName + " setPublisherGraphElementTime session arc is null: " +  sessionId);
++                     return;
++               }*/
++	       Long oldTime = mSessionElementVisitTime.get(sessionId);
++               if (oldTime == null || time > oldTime) {
++                    mSessionElementVisitTime.put(sessionId, time);
++               }
++        }
++
++        @Override
++        public synchronized Long oldestGraphElementVisitedTime() {
++               Long time = new Long(System.currentTimeMillis());
++               Iterator it = mSessionElementVisitTime.entrySet().iterator();
++               while (it.hasNext()) {
++                     Map.Entry pair = (Map.Entry)it.next();
++                     String sesId = (String)pair.getKey();
++                     Session ses = mSessionIdSessionMap.get(sesId);
++                     /*if (ses.getArc() == null) {
++                          //don't care ssrc channels
++                          continue;
++                     }*/
++                     Long t = (Long)pair.getValue();
++                     if (t == -1) {
++                          continue;
++                     }
++                     if (t < time) {
++                           time = t;
++                     }
++               }
++               return time;
++        }
++
++        @Override
++        public synchronized Map<String, Long> getSessionElementVisitTimeMap() {
++               return mSessionElementVisitTime;
++        }
++
+ 
+ 	@Override
+-	public void map(Session session, String sessionId)
++	public synchronized void map(Session session, String sessionId)
+ 			throws SessionNotFoundException, AlreadyMappedException {
+ 		Session stored = getSessionWithChecksExpectExists(session);
+ 		Session mapped = getBy(sessionId);
+@@ -113,10 +182,11 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mSessionIdSessionMap.put(sessionId, session);
++		mSessionElementVisitTime.put(sessionId, new Long(-1));
+ 	}
+ 
+ 	@Override
+-	public void unmap(Session session, String sessionId)
++	public synchronized void unmap(Session session, String sessionId)
+ 			throws SessionNotFoundException, NoMappingException {
+ 		
+ 		Session stored = getSessionWithChecksExpectExists(session);
+@@ -126,10 +196,11 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mSessionIdSessionMap.remove(sessionId);
++		mSessionElementVisitTime.remove(sessionId);
+ 	}
+ 
+ 	@Override
+-	public void map(Session session, ChannelIdentifier channelId)
++	public synchronized void map(Session session, ChannelIdentifier channelId)
+ 			throws SessionNotFoundException, AlreadyMappedException {
+ 		Session stored = getSessionWithChecksExpectExists(session);
+ 		Session mapped = getBy(channelId);
+@@ -138,10 +209,11 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mChannelIdSessionMap.put(channelId, session);
++		mSessionElementVisitTime.put(session.getSessionId(), new Long(-1));
+ 	}
+ 
+ 	@Override
+-	public void unmap(Session session, ChannelIdentifier channelId)
++	public synchronized void unmap(Session session, ChannelIdentifier channelId)
+ 			throws SessionNotFoundException, NoMappingException {
+ 		
+ 		Session stored = getSessionWithChecksExpectExists(session);
+@@ -151,6 +223,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mChannelIdSessionMap.remove(channelId);
++		mSessionElementVisitTime.remove(session.getSessionId());
+ 	}
+ 	
+ 	private Session getSessionWithChecks(Session session) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+index b7a1a6e..81ad4bb 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+@@ -33,6 +33,7 @@ import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchingFactory;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchingFactoryImpl;
++import de.fhhannover.inform.iron.mapserver.communication.ifmap.SessionRepository;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AlreadyObservedException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.InvalidMetadataException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.NoPollResultAvailableException;
+@@ -86,7 +87,7 @@ public class DataModelService implements SubscriptionNotifier {
+ 	
+ 		publisherRep = new PublisherRep();
+ 		
+-		mGraph = GraphElementRepositoryImpl.newInstance();
++		mGraph = GraphElementRepositoryImpl.newInstance(publisherRep);
+ 		mMetaHolderFac = MetadataHolderFactoryImpl.newInstance();
+ 		mSearchingFac = SearchingFactoryImpl.newInstance();
+ 
+@@ -101,7 +102,10 @@ public class DataModelService implements SubscriptionNotifier {
+ 		
+ 		clientService = new ClientService(publisherRep, subscriptionService);
+ 	}
+- 
++
++        public void setSessionRepo(SessionRepository sessionRep) {
++                mGraph.setSessionRepo(sessionRep);
++        }
+ 	
+ 	/**
+ 	 * Returns a <b>new </b> {@link DataModelService} instance.
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/Publisher.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/Publisher.java
+index 6178c84..dfdfdd6 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/Publisher.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/Publisher.java
+@@ -75,6 +75,7 @@ public class Publisher {
+ 		mForeverMetadata = CollectionHelper.provideListFor(MetadataHolder.class);
+ 		mPublisherId = publisherId;
+ 		mSessionId = sessionId;
++                mSubscriptionState.setPublisherSessionId(mSessionId);
+ 		
+ 		mSubscriptionState.setMaxPollResultSize(mprs);
+                 mSubscriptionState.setMaxPerPollResultSize(mpprs);
+@@ -88,7 +89,8 @@ public class Publisher {
+ 	 * @param sid
+ 	 */
+ 	public void setSessionId(String sid) {
+-			mSessionId = sid;
++		mSessionId = sid;
++                mSubscriptionState.setPublisherSessionId(mSessionId);
+ 	}
+ 	
+ 	/**
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+index d181650..ba9fd65 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+@@ -21,6 +21,7 @@
+ 
+ package de.fhhannover.inform.iron.mapserver.datamodel;
+ 
++import java.util.Collection;
+ import java.util.HashMap;
+ 
+ import org.apache.log4j.Logger;
+@@ -35,7 +36,7 @@ import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+  * @since 0.1.0
+  * @author aw, vp
+  */
+-class PublisherRep {
++public class PublisherRep {
+ 	
+ 	private static Logger logger;
+ 	
+@@ -159,5 +160,9 @@ class PublisherRep {
+ 	void removePublisherSession(String sessionId) {
+ 		sessions.remove(sessionId);
+ 	}
++
++	public Collection<Publisher> getPublishers() {
++		return publishers.values();
++	}
+ }
+  
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+index 1ad0449..edb6312 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+@@ -91,6 +91,7 @@ public class SubscriptionService {
+ 	private final Map<Subscription, SubscriptionChangeState> mChangedSubscriptions;
+ 	private final Set<Publisher> mChangedPublishers;
+ 	private final List<MetadataHolder> mChangedMetadata;
++	private final List<MetadataHolder> mRemovedMetadata;
+ 	
+ 	private long mLogicalTimeStamp;
+ 
+@@ -103,6 +104,7 @@ public class SubscriptionService {
+ 			CollectionHelper.provideMapFor(Subscription.class, SubscriptionChangeState.class);
+ 		mChangedPublishers = CollectionHelper.provideSetFor(Publisher.class);
+ 		mChangedMetadata = CollectionHelper.provideListFor(MetadataHolder.class);
++		mRemovedMetadata = CollectionHelper.provideListFor(MetadataHolder.class);
+ 		
+ 		mLogicalTimeStamp = 0;
+ 	}
+@@ -561,8 +563,10 @@ public class SubscriptionService {
+ 		
+ 		// remove reference from publisher
+ 		mh.getPublisher().removeMetadataHolder(mh);
++
++                mRemovedMetadata.add(mh);
+ 	}
+-	
++
+ 	private void checkForAddedSubGraph(GraphElement ge, MetadataHolder mh) {
+ 		
+ 		// Not possible for nodes
+@@ -706,6 +710,13 @@ public class SubscriptionService {
+ 		mChangedSubscriptions.clear();
+ 		mChangedPublishers.clear();
+ 		mChangedMetadata.clear();
++                for (MetadataHolder mh : mRemovedMetadata) {
++                     GraphElement ge = mh.getGraphElement();
++                     if (ge.getMetadataHolder().size() <= 0) {
++                          mGraph.metadataHoldeRemoved(ge);
++                     }
++                }
++                mRemovedMetadata.clear();
+ 	}
+ 
+ 	private boolean isLink(GraphElement ge) {
+@@ -749,12 +760,14 @@ public class SubscriptionService {
+ 	 * @throws PollResultsTooBigException 
+ 	 */
+ 	public PollResult getPollResultFor(String sessionId) throws PollResultsTooBigException {
++                sLogger.debug("SubService: getPollResultFor " + sessionId);
+ 		Publisher pub = publisherRep.getPublisherBySessionId(sessionId);
+ 		SubscriptionState subState = pub.getSubscriptionState();
+ 		PollResult ret = null;
+ 		
+-		if (!subState.isNotified())
++		if (!subState.isNotified()) {
+ 			throw new SystemErrorException("getPollResultFor() but never notified");
++                }
+ 		
+ 		try {
+ 			if (subState.isPollResultsTooBig()) {
+@@ -773,6 +786,7 @@ public class SubscriptionService {
+ 				if (sub.exceededSize())
+ 					subState.removeSubscription(sub);
+ 			
++			subState.unsetNotified();
+ 			return ret;
+ 		} finally {
+ 			subState.unsetNotified();
+@@ -814,7 +828,10 @@ public class SubscriptionService {
+ 					" has new poll results");
+ 			subState.setNotified();
+ 			mObserver.pollResultAvailable(pub.getSessionId());
+-		}
++		} else {
++			sLogger.trace(sName + ": " + pub.getPublisherId() + 
++					" new poll results available but already notified");
++                }
+ 	}
+ 	
+ 	
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
+index fa48aa1..7d7251f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
+@@ -28,6 +28,7 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 	
+ 	private final Node mNode1;
+ 	private final Node mNode2;
++        private Long mLastModifiedTime;
+ 	
+ 	DummyLinkImpl(Node n1, Node n2) {
+ 		NullCheck.check(n1, "node1 is null");
+@@ -37,6 +38,7 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 		
+ 		mNode1 = n1;
+ 		mNode2 = n2;
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -113,4 +115,18 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 	public String toString() {
+ 		return "dlink{" + getNode1() + ", " + getNode2() + "}";
+ 	}
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+index bf9d1c5..7c4a668 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+@@ -30,10 +30,13 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 	
+ 	private final Identifier mIdentifier;
++        private Long mLastModifiedTime;
++
+ 	
+ 	DummyNodeImpl(Identifier ident) {
+ 		NullCheck.check(ident, "ident is null");
+ 		mIdentifier = ident;
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -60,6 +63,11 @@ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 		throw new SystemErrorException(sErrorString);
+ 	}
+ 
++        @Override
++        public boolean hasLink(Link l) {
++		throw new SystemErrorException(sErrorString);
++        }
++
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.Node#removeLink(de.fhhannover.inform.iron.mapserver.datamodel.graph.Link)
+ 	 */
+@@ -113,4 +121,19 @@ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 	public String toString() {
+ 		return "dnode{" + getIdentifier() + "}";
+ 	}
++
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
+index c9ce00e..9bf3a3e 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
+@@ -198,4 +198,8 @@ public interface GraphElement extends SearchAble {
+ 	 * 			{@link GraphElement} object.
+ 	 */
+ 	public void removeAllRemovedSubscriptionEntries();
++
++        abstract public void setRemovedTime();
++        abstract public Long getRemovedTime();
++        abstract Long getLastModifiedTime();
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+index 670735d..8c0570c 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+@@ -23,6 +23,7 @@ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
+ 
++import de.fhhannover.inform.iron.mapserver.communication.ifmap.SessionRepository;
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
+ 
+ /**
+@@ -95,4 +96,11 @@ public interface GraphElementRepository {
+ 	 * Make some debugging output about the content of the graph.
+ 	 */
+ 	public void dumpContents();
++
++	/**
++	 * Notify the repository that metadataholder has been removed
++	 */
++	public void metadataHoldeRemoved(GraphElement ge);
++
++        public void setSessionRepo(SessionRepository sessionRepo);
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+index aafa438..c775863 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+@@ -22,8 +22,22 @@
+ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
++import java.util.List;
++import java.util.Iterator;
++import java.util.Map;
++import java.util.ArrayList;
++import java.util.Timer;
++import java.util.TimerTask;
+ 
++import org.apache.log4j.Logger;
++
++import de.fhhannover.inform.iron.mapserver.datamodel.Publisher;
++import de.fhhannover.inform.iron.mapserver.datamodel.PublisherRep;
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.Subscription;
++import de.fhhannover.inform.iron.mapserver.communication.ifmap.SessionRepository;
++import de.fhhannover.inform.iron.mapserver.exceptions.SystemErrorException;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+ import de.fhhannover.inform.iron.mapserver.utils.CollectionHelper;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiArrayListMap;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiMap;
+@@ -37,30 +51,134 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  * @author aw
+  */
+ public class GraphElementRepositoryImpl implements GraphElementRepository {
+-	
++	private final static Logger sLogger = LoggingProvider.getTheLogger();
+ 	private MultiMap<Integer, Node> mNodes;
+ 	private MultiMap<Integer, Link> mLinks;
+-	
++	private PublisherRep mPublisherRep;
++        private Timer mCleanupTimer;
++        private int mCleanupInterval = 60;
++        private List<GraphElement> mRemovedElements;
++        private SessionRepository mSessionRep;
++
+ 	/**
++	 * @param publisherRep
+ 	 * @return a new Instance of a {@link GraphElementRepository} instance.
+ 	 */
+-	public static GraphElementRepository newInstance() {
+-		return new GraphElementRepositoryImpl();
++	public static GraphElementRepository newInstance(PublisherRep publisherRep) {
++	    return new GraphElementRepositoryImpl(publisherRep);
+ 	}
+ 	
+ 	/**
+ 	 * Private constructor
++	 * @param publisherRep
+ 	 */
+-	private GraphElementRepositoryImpl() {
++	private GraphElementRepositoryImpl(PublisherRep publisherRep) {
+ 		mNodes = new MultiArrayListMap<Integer, Node>();
+ 		mLinks = new MultiArrayListMap<Integer, Link>();
++		mPublisherRep = publisherRep;
++                mRemovedElements = new ArrayList<GraphElement>();
++                startCleanupTimer();
+ 	}
+ 
++        @Override
++        public void setSessionRepo(SessionRepository sessionRepo) {
++                mSessionRep = sessionRepo;
++        }
++
++        public class CleanupTask extends TimerTask {
++
++                @Override
++                public void run() {
++                    try {
++                         sLogger.debug("Cleanup task started");
++                         /* replace with the actual task */
++                         try {
++                              Thread.sleep(mCleanupInterval * 1000);
++                         } catch(InterruptedException e) {
++                              e.printStackTrace();
++                         }
++                         int count = removeElements();
++                         sLogger.debug("Cleanup task done, number of elements removed: " + count);
++                         mCleanupTimer.schedule(new CleanupTask(), 0, 10);
++                    } catch (Exception ex) {
++                         sLogger.debug(ex);
++                         sLogger.info("Unable to run clean up task");
++                    }
++                }
++        }
++
++        public void startCleanupTimer() {
++                /* Start background task */
++                mCleanupTimer = new Timer("CleanupTimer");
++                try {
++                        mCleanupTimer.schedule(new CleanupTask(), 0);
++                } catch (Exception ex) {
++                    sLogger.debug("Unable to start Cleanup timer " + ex.getMessage());
++                    sLogger.debug("timer start", ex);
++                }
++        }
++
++        /* use this utility for debug purpose to dump all the conents in session->visited element time stamp map */
++        public void dumpGraphElementVisitedTime() {
++               for (GraphElement ge:mRemovedElements) {
++                    sLogger.debug("Remove time: " + ge.getRemovedTime() + ", GE: " + ge);
++               }
++               Long time = new Long(-1);
++               Map<String, Long> mSessionElementVisitTime = mSessionRep.getSessionElementVisitTimeMap();
++               Iterator it = mSessionElementVisitTime.entrySet().iterator();
++               sLogger.debug("Session Channel Visit Data:");
++               while (it.hasNext()) {
++                     Map.Entry pair = (Map.Entry)it.next();
++                     String sesId = (String)pair.getKey();
++                     Long t = (Long)pair.getValue();
++                     sLogger.debug("Old item visited time stamp for Session: " + sesId + ", time: " + t);
++               }
++               return;
++        }
++
++        public synchronized int removeElements() {
++               int count = 0;
++               Iterator<GraphElement> it = mRemovedElements.iterator();
++               dumpGraphElementVisitedTime();
++               while (it.hasNext()) {
++                    GraphElement ge = it.next();
++                    sLogger.debug("Remove time: " + ge.getRemovedTime() + "; " + " OldestVisit: " + mSessionRep.oldestGraphElementVisitedTime() + ";ge: " + ge);
++                    Long curTime = new Long(System.currentTimeMillis());
++                    if ((curTime >= (ge.getRemovedTime() + 10)) && (ge.getRemovedTime() <= mSessionRep.oldestGraphElementVisitedTime())) {
++                         if (ge instanceof Node) {
++                              if (mNodes.getAll(nodeKey((Node)ge)) == null) {
++                                  continue;
++                              }
++                              if (!cleanupChecks((Node)ge)) {
++                                  continue;
++                              }
++                              cleanupNonMeaningfulNode((Node) ge);
++                              count++;
++                              it.remove();
++                         } else if (ge instanceof Link) {
++                              if (mLinks.getAll(linkKey((Link)ge)) == null) {
++                                  continue;
++                              }
++                              if (!cleanupChecks((Link)ge)) {
++                                  continue;
++                              }
++                              cleanupNonMeaningfulLink((Link) ge);
++                              count++;
++                              it.remove();
++                         } else {
++                              throw new SystemErrorException("GraphElement not Link nor Identifier");
++                         }
++                    }
++               }
++               sLogger.info("Collector - Number of elements removed from graph: " + count);
++               return count;
++        }
++
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#getNodeFor(de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier)
+ 	 */
+ 	@Override
+-	public Node getNodeFor(Identifier i) {
++	public synchronized Node getNodeFor(Identifier i) {
+ 		/* Find a node in the existing nodes which has the same identifier
+ 		 * attached. We shouldn't get back too many nodes, so search should
+ 		 * be OK.
+@@ -81,7 +199,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#getLinkFor(de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier, de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier)
+ 	 */
+ 	@Override
+-	public Link getLinkFor(Identifier i1, Identifier i2) {
++	public synchronized Link getLinkFor(Identifier i1, Identifier i2) {
+ 		Link l = findExistingLinkFor(i1, i2);
+ 	
+ 		// if there is no such Link, create a new one based on Nodes from the
+@@ -102,7 +220,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	}
+ 
+ 	@Override
+-	public GraphElement getGraphElement(Identifier i1, Identifier i2) {
++	public synchronized GraphElement getGraphElement(Identifier i1, Identifier i2) {
+ 		if (i1 == null && i2 == null)
+ 			throw new NullPointerException("Both Identifiers null"); /* bail out */
+ 		else if (i1 != null && i2 == null)
+@@ -114,7 +232,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	}
+ 
+ 	@Override
+-	public Node getGraphElement(Identifier i1) {
++	public synchronized Node getGraphElement(Identifier i1) {
+ 		return (Node)getGraphElement(i1, null);
+ 	}
+ 
+@@ -122,7 +240,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#getAllNodes()
+ 	 */
+ 	@Override
+-	public Collection<Node> getAllNodes() {
++	public synchronized Collection<Node> getAllNodes() {
+ 		Collection<Node> ret = CollectionHelper.provideCollectionFor(Node.class);
+ 		
+ 		for (Node n : mNodes.values())
+@@ -136,7 +254,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 */
+ 	
+ 	@Override
+-	public Collection<Link> getAllLinks() {
++	public synchronized Collection<Link> getAllLinks() {
+ 		Collection<Link> ret = CollectionHelper.provideCollectionFor(Link.class);
+ 		
+ 		for (Link l : mLinks.values())
+@@ -149,7 +267,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#getAllElements()
+ 	 */
+ 	@Override
+-	public Collection<GraphElement> getAllElements() {
++	public synchronized Collection<GraphElement> getAllElements() {
+ 		Collection<GraphElement> ret = CollectionHelper.provideCollectionFor(GraphElement.class);
+ 		ret.addAll(getAllNodes());
+ 		ret.addAll(getAllLinks());
+@@ -179,7 +297,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 * @param i
+ 	 * @return
+ 	 */
+-	private Node findExistingNodeFor(Identifier i) {
++	private synchronized Node findExistingNodeFor(Identifier i) {
+ 		for (Node node : mNodes.getAll(nodeKey(i)))
+ 			if (node.getIdentifier().equals(i))
+ 				return node;
+@@ -194,7 +312,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 * @param i2
+ 	 * @return
+ 	 */
+-	private Link findExistingLinkFor(Identifier i1, Identifier i2) {
++	private synchronized Link findExistingLinkFor(Identifier i1, Identifier i2) {
+ 		for (Link link : mLinks.getAll(linkKey(i1, i2)))
+ 			if (linkHasIdentifiers(link, i1, i2))
+ 					return link;
+@@ -211,29 +329,169 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	 * @param i2
+ 	 * @return
+ 	 */
+-	private boolean linkHasIdentifiers(Link link, Identifier i1, Identifier i2) {
++	private synchronized boolean linkHasIdentifiers(Link link, Identifier i1, Identifier i2) {
+ 		Identifier li1 = link.getNode1().getIdentifier();
+ 		Identifier li2 = link.getNode2().getIdentifier();
+ 		return i1.equals(li1) && i2.equals(li2) || i1.equals(li2) && i2.equals(li1);
+ 	}
+ 	
+-	private int linkKey(Link l) {
++	private synchronized int linkKey(Link l) {
+ 		return linkKey(l.getNode1(), l.getNode2());
+ 	}
+ 
+-	private int linkKey(Node n1, Node n2) {
++	private synchronized int linkKey(Node n1, Node n2) {
+ 		return linkKey(n1.getIdentifier(), n2.getIdentifier());
+ 	}
+ 	
+-	private int linkKey(Identifier i1, Identifier i2) {
++	private synchronized int linkKey(Identifier i1, Identifier i2) {
+ 		return nodeKey(i1) + nodeKey(i2);
+ 	}
+ 	
+-	private int nodeKey(Node n) {
++	private synchronized int nodeKey(Node n) {
+ 		return nodeKey(n.getIdentifier());
+ 	}
+ 	
+-	private int nodeKey(Identifier i) {
++	private synchronized int nodeKey(Identifier i) {
+ 		return i.hashCode();
+ 	}
++
++	/**
++	 * A confirmed non meaninful element  is an element
++	 * without any metadata after a delay
++	 */
++	private synchronized boolean isMeaningful(GraphElement element) {
++		if (element.getMetadataHolder().size() > 0)
++			return true;
++
++		return false;
++	}
++
++	private synchronized boolean hasMeaningfulLink(Node node) {
++		for (Link link : node.getLinks()) {
++			if (isMeaningful(link)) {
++				return true;
++			}
++		}
++
++		return false;
++	}
++
++        private synchronized boolean cleanupChecks(Node node) {
++                Long curTime = new Long(System.currentTimeMillis());
++                Long oldtestVisitedTime = mSessionRep.oldestGraphElementVisitedTime();
++                if ((curTime < (node.getRemovedTime() + 10)) || (node.getRemovedTime() > oldtestVisitedTime)) {
++                        return false;
++                }
++                for (Link link : node.getLinks()) {
++                        if (mLinks.getAll(linkKey(link)) == null) {
++                             continue;
++                        }
++                        if ((curTime < (link.getRemovedTime() + 10)) || (link.getLastModifiedTime() > node.getRemovedTime()) || (link.getRemovedTime() > oldtestVisitedTime)) {
++                             return false;
++                        }
++                }
++                return true; 
++        }
++
++        private synchronized boolean cleanupChecks(Link link) {
++                Long curTime = new Long(System.currentTimeMillis());
++                Long oldtestVisitedTime = mSessionRep.oldestGraphElementVisitedTime();
++                if ((curTime < (link.getRemovedTime() + 10)) || (link.getRemovedTime() > oldtestVisitedTime)) {
++                        return false;
++                }
++                Node node1 = link.getNode1();
++                if (node1 != null && mNodes.getAll(nodeKey(node1)) != null) {
++                    if ((curTime < (node1.getRemovedTime() + 10)) || (node1.getRemovedTime() > oldtestVisitedTime) || (node1.getLastModifiedTime() > link.getRemovedTime())) {
++                           return false;
++                    }
++                }
++                Node node2 = link.getNode2();
++                if (node2 != null && mNodes.getAll(nodeKey(node2)) != null) {
++                    if ((curTime < (node2.getRemovedTime() + 10)) || (node2.getRemovedTime() > oldtestVisitedTime) || (node2.getLastModifiedTime() > link.getRemovedTime())) {
++                           return false;
++                    }
++                }
++                return true;
++        }
++
++	private synchronized void cleanupNonMeaningfulNode(Node node) {
++		if (isMeaningful(node) || hasMeaningfulLink(node)) {
++			return;
++		}
++
++		sLogger.trace("Removing a non meaningful node: " + node);
++		cleanupSubscribtions(node);
++		mNodes.remove(nodeKey(node.getIdentifier()), node);
++
++		for (Link link : node.getLinks()) {
++                        if (mLinks.getAll(linkKey(link)) == null) {
++                             continue;
++                        }
++			cleanupSubscribtions(link);
++                        if (link.getNode1().hasLink(link)) {
++			     link.getNode1().removeLink(link);
++                        }
++                        if (link.getNode2().hasLink(link)) {
++		             link.getNode2().removeLink(link);
++                        }
++			sLogger.trace("Removing a non meaningful link: " + link);
++			mLinks.remove(linkKey(link), link);
++		}
++	}
++
++	private synchronized void cleanupNonMeaningfulLink(Link link) {
++		// should never happen since this is called from a method that just
++		// removed the metadatas
++		if (isMeaningful(link)) {
++			return;
++		}
++
++		sLogger.trace("Removing a non meaningful link: " + link);
++		cleanupSubscribtions(link);
++		mLinks.remove(linkKey(link), link);
++
++                if (link.getNode1().hasLink(link)) {
++		    link.getNode1().removeLink(link);
++                }
++                if (mNodes.getAll(nodeKey(link.getNode1())) != null) {
++		    cleanupNonMeaningfulNode(link.getNode1());
++                }
++
++                if (link.getNode1().hasLink(link)) {
++		    link.getNode2().removeLink(link);
++                }
++                if (mNodes.getAll(nodeKey(link.getNode2())) != null) {
++		    cleanupNonMeaningfulNode(link.getNode2());
++                }
++	}
++
++	private synchronized void cleanupSubscribtions(GraphElement removed) {
++		for (Publisher pub : mPublisherRep.getPublishers()) {
++			List<Subscription> subs = pub.getSubscriptionState().getSubscriptions();
++			for (Subscription sub : subs) {
++				sLogger.trace("Removing a non meaningful element " + removed +
++					" from subscriber : " + sub);
++                                try {
++				    sub.removeGraphElementRemoved(removed);
++                                } catch (SystemErrorException e) {
++				    sLogger.trace("Already removed: " + removed + " from sub: " + sub);
++                                    continue;
++                                }
++			}
++		}
++	}
++
++        private synchronized void markElementForRemoval(GraphElement ge) {
++                mRemovedElements.add(ge);
++        }
++
++	public synchronized void metadataHoldeRemoved(GraphElement ge) {
++                sLogger.debug("Removal Request for Element: " + ge);
++		if (ge instanceof Node)
++			markElementForRemoval(ge);
++		else if (ge instanceof Link)
++			markElementForRemoval(ge);
++		else
++			throw new SystemErrorException("GraphElement not Link nor Identifier");
++	}
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java
+index 38b0ccb..161ffa5 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java
+@@ -28,6 +28,7 @@ class LinkImpl extends GraphElementImpl implements Link {
+ 	
+ 	private final Node mNode1, mNode2;
+ 	private final Link mDummy;
++        private Long mLastModifiedTime;
+ 	
+ 	LinkImpl(Node n1, Node n2) {
+ 		NullCheck.check(n1, "n1 is null");
+@@ -36,7 +37,24 @@ class LinkImpl extends GraphElementImpl implements Link {
+ 		mNode1 = n1;
+ 		mNode2 = n2;
+ 		mDummy = new DummyLinkImpl((Node)mNode1.dummy(), (Node)mNode2.dummy());
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
++
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++               mDummy.setRemovedTime();
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
+ 	
+ 	@Override
+ 	public Node getNode1() {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+index 9290904..4496098 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+@@ -54,6 +54,8 @@ public interface Node extends GraphElement {
+ 	 * @param l
+ 	 */
+ 	public void addLink(Link l);
++
++        public boolean hasLink(Link l);
+ 	
+ 	/**
+ 	 * Remove a {@link Link} object from this {@link Node} object.
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+index cd00fdb..cf74fc8 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+@@ -34,15 +34,33 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 	private final Identifier mIdentifier;
+ 	private final Map<Integer, Link> mLinks;
+ 	private final Node mDummy;
++        private Long mLastModifiedTime;
+ 	
+ 	NodeImpl(Identifier i) {
+ 		super();
+ 		NullCheck.check(i, "Identifier is null");
+ 		mIdentifier = i;
+-		mLinks = CollectionHelper.provideMapFor(Integer.class, Link.class);
++		mLinks = CollectionHelper.provideConcurrentMapFor(Integer.class, Link.class);
+ 		mDummy = new DummyNodeImpl(i);
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
+ 
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++               mDummy.setRemovedTime();
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
++
+ 	@Override
+ 	public Identifier getIdentifier() {
+ 		return mIdentifier;
+@@ -63,6 +81,14 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 	}
+ 
+ 	@Override
++	public boolean hasLink(Link l) {
++		NullCheck.check(l, "link is null");
++		if (mLinks.containsKey(l.hashCode()))
++	                return true;
++                return false;
++        }
++
++	@Override
+ 	public void removeLink(Link l) {
+ 		NullCheck.check(l, "link is null");
+ 		if (!mLinks.containsKey(l.hashCode()))
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+index dbdfe80..1bcd11f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+@@ -76,6 +76,7 @@ class W3cXmlMetadata extends Metadata {
+ 			xpathFactory = XPathFactory.newInstance();
+ 			documentBuilderFactory = DocumentBuilderFactory.newInstance();
+ 			documentBuilderFactory.setNamespaceAware(true);
++			documentBuilderFactory.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
+ 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 			transformerFactory = TransformerFactory.newInstance();
+ 		} catch (ParserConfigurationException e) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/CopySearchResultImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/CopySearchResultImpl.java
+index ac9c637..b463fd8 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/CopySearchResultImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/CopySearchResultImpl.java
+@@ -77,4 +77,5 @@ class CopySearchResultImpl extends SearchResultImpl {
+ 		if (m != null)
+ 			mLastResultItem.addMetadata(m);
+ 	}
++
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiablePollResult.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiablePollResult.java
+index cd5bd17..ba25918 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiablePollResult.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiablePollResult.java
+@@ -43,4 +43,6 @@ public interface ModifiablePollResult extends PollResult {
+ 	public void addSearchResult(ModifiableSearchResult res, Integer mpprs);
+ 	
+ 	public void removeResultsOf(String name);
++        public void setOldtestItemTimeStamp(Long ts);
++        public Long getOldtestItemTimeStamp();
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiableSearchResult.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiableSearchResult.java
+index d75b478..93e9ec9 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiableSearchResult.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/ModifiableSearchResult.java
+@@ -71,4 +71,7 @@ public interface ModifiableSearchResult extends SearchResult {
+ 
+         public boolean isSearchTypeInitialRun();
+ 
++        public void setOldtestItemTimeStamp(Long ts);
++        public Long getOldtestItemTimeStamp();
++
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java
+index cd396f8..ca4b5c5 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResult.java
+@@ -74,4 +74,8 @@ public interface PollResult extends SearchAble {
+ 
+         public void addSearchResult(ModifiableSearchResult sres, Integer mpprs);
+         public void addErrorResult(String name);
++        public void setOldtestItemTimeStamp(Long ts);
++        public Long getOldtestItemTimeStamp();
++        public void setPublisherSessionId(String pubSessionId);
++        public String getPublisherSessionId();
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java
+index 6d95442..d45b805 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/PollResultImpl.java
+@@ -52,12 +52,16 @@ public class PollResultImpl implements ModifiablePollResult {
+ 	private int mCurSize;
+         private final SearchingFactory mSearchFac;
+         private static Logger sLogger = LoggingProvider.getTheLogger();
++        private Long mOldtestItemTimeStamp;
++        private String mPubSessionId;
+ 
+ 	public PollResultImpl() {
+ 		mResults = CollectionHelper.provideListFor(ModifiableSearchResult.class);
+ 		mErrors = CollectionHelper.provideListFor(String.class);
+ 		mCurSize = 0;
++                mPubSessionId = null;
+                 mSearchFac = SearchingFactoryImpl.newInstance();
++                mOldtestItemTimeStamp = new Long(System.currentTimeMillis());
+ 	}
+ 	
+ 	/* (non-Javadoc)
+@@ -79,6 +83,16 @@ public class PollResultImpl implements ModifiablePollResult {
+ 		return Collections.unmodifiableList(mErrors);
+ 	}
+ 
++	@Override
++	public void setOldtestItemTimeStamp(Long ts) {
++                mOldtestItemTimeStamp = ts;
++	}
++
++	@Override
++	public Long getOldtestItemTimeStamp() {
++                return mOldtestItemTimeStamp;
++	}
++
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.search.ModifiablePollResult#addErrorResult(java.lang.String)
+ 	 */
+@@ -230,4 +244,12 @@ public class PollResultImpl implements ModifiablePollResult {
+ 				&& lastRes.getName().equals(newRes.getName()));
+ 	}
+ 
++        public synchronized void setPublisherSessionId(String pubSessionId) {
++                mPubSessionId = pubSessionId;
++        }
++
++        public synchronized String getPublisherSessionId() {
++                return mPubSessionId;
++        }
++
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SearchResultImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SearchResultImpl.java
+index c09108e..689d027 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SearchResultImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SearchResultImpl.java
+@@ -72,6 +72,8 @@ abstract class SearchResultImpl implements ModifiableSearchResult {
+ 	 */
+ 	protected GraphElement mLastGraphElement;
+ 
++        protected Long mOldtestItemTimeStamp;
++
+ 	/**
+ 	 * Constructor to create {@link SearchResult} instances.
+ 	 * 
+@@ -90,6 +92,7 @@ abstract class SearchResultImpl implements ModifiableSearchResult {
+ 		mResultItems = CollectionHelper.provideListFor(ResultItem.class);
+ 		mLastResultItem = null;
+                 mIsSearchTypeInitial = false;
++                mOldtestItemTimeStamp = new Long(System.currentTimeMillis());
+ 	}
+ 	
+ 	/**
+@@ -109,7 +112,7 @@ abstract class SearchResultImpl implements ModifiableSearchResult {
+ 	protected SearchResultImpl() {
+ 		this(null, SearchResultType.SEARCH);
+ 	}
+-	
++
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult#getResultItems()
+ 	 */
+@@ -270,4 +273,14 @@ abstract class SearchResultImpl implements ModifiableSearchResult {
+ 		
+ 		return o.getType() == getType() && o.getName().equals(getName());
+ 	}
++
++	@Override
++        public Long getOldtestItemTimeStamp() {
++                return mOldtestItemTimeStamp;
++        }
++
++	@Override
++        public void setOldtestItemTimeStamp(Long ts) {
++                mOldtestItemTimeStamp = ts;
++        }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+index e850dfa..6a51733 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+@@ -65,4 +65,6 @@ public interface Subscription {
+ 
+ 	public void setExceededSize();
+ 
++	public void removeGraphElementRemoved(GraphElement mc);
++
+ }
+\ No newline at end of file
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+index 6df3b61..82e37db 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+@@ -144,9 +144,11 @@ class SubscriptionImpl implements Subscription {
+ 	public void removeGraphElement(GraphElement ge) {
+ 		NullCheck.check(ge, "mc is null");
+ 		
+-		if (mGraphElements.remove(ge) == null)
+-			throw new SystemErrorException("Tried to remove non-existend " + ge
+-					+ " from " + this);
++		if (mGraphElements.remove(ge) == null) {
++                        return;
++			//throw new SystemErrorException("Tried to remove non-existend " + ge
++			//		+ " from " + this);
++                }
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -237,4 +239,10 @@ class SubscriptionImpl implements Subscription {
+ 		// TODO: Cache
+ 		return "sub{" + getName() + ", " + getPublisherReference() + "}";
+ 	}
++
++	@Override
++	public void removeGraphElementRemoved(GraphElement ge) {
++		NullCheck.check(ge, "ge is null");
++		mGraphElements.remove(ge);
++	}
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionState.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionState.java
+index 079d6bc..5866869 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionState.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionState.java
+@@ -49,6 +49,7 @@ public class SubscriptionState {
+ 	private Integer  maxPollResultSize;
+         private Integer  maxPerPollResultSize;
+ 	private boolean mPollResGrewTooBig;
++        private String mPubSessionId;
+ 	
+ 	private final Map<String, Subscription> mSubscriptions;
+ 	private ModifiablePollResult mPollResult;
+@@ -58,6 +59,7 @@ public class SubscriptionState {
+ 		mSubscriptions = new HashMap<String, Subscription>();
+ 		mPollResult = new PollResultImpl();
+ 		mPollResGrewTooBig = false;
++                mPubSessionId = null;
+ 	}
+ 	
+ 	/**
+@@ -89,7 +91,7 @@ public class SubscriptionState {
+ 	 * 
+ 	 * @param sub
+ 	 */
+-	public void removeSubscription(Subscription sub) {
++	public synchronized void removeSubscription(Subscription sub) {
+ 		NullCheck.check(sub, "sub is null");
+ 		NullCheck.check(sub.getName(), "sub.getName() returns null");
+ 		
+@@ -113,7 +115,7 @@ public class SubscriptionState {
+ 	/**
+ 	 * Remove all {@link Subscription} instances and clean the {@link PollResult}.
+ 	 */
+-	public void clearSubscriptions() {
++	public synchronized void clearSubscriptions() {
+ 		for (Subscription sub : getSubscriptions())
+ 			removeSubscription(sub);
+ 	
+@@ -144,15 +146,15 @@ public class SubscriptionState {
+                 maxPerPollResultSize = mpprs;
+         }
+ 	
+-	public void setNotified() {
++	public synchronized void setNotified() {
+ 		mNotified = true;
+ 	}
+ 	
+-	public void unsetNotified() {
++	public synchronized void unsetNotified() {
+ 		mNotified = false;
+ 	}
+ 	
+-	public boolean isNotified() {
++	public synchronized boolean isNotified() {
+ 		return mNotified;
+ 	}
+ 
+@@ -164,7 +166,7 @@ public class SubscriptionState {
+ 		mPollResGrewTooBig = false;
+ 	}
+ 	
+-	public boolean isPollResultsTooBig() {
++	public synchronized boolean isPollResultsTooBig() {
+                 if (DataModelService.getServerConfiguration().getDefaultDropOnResultsTooBig()) {
+                         sLogger.debug("isPollResultsTooBig: drop results set true");
+                         if (mPollResult.getByteCount() > getMaxPollSize())
+@@ -176,13 +178,22 @@ public class SubscriptionState {
+                 return false;
+ 	}
+ 	
+-	public void resetPollResult() {
++	public synchronized void resetPollResult() {
+ 		unsetPollResultsTooBig();
+ 		mPollResult = new PollResultImpl();
+ 	}
+ 	
+-	public ModifiablePollResult getPollResult() {
++	public synchronized ModifiablePollResult getPollResult() {
+ 		return mPollResult;
+ 	}
+ 
++        public synchronized void setPublisherSessionId(String sesId) {
++               mPubSessionId = sesId;
++               mPollResult.setPublisherSessionId(mPubSessionId);
++        }
++
++        public synchronized String getPublisherSessionId() {
++               return mPubSessionId;
++        }
++
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java b/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+index 45a1e84..7233264 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
++++ b/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+@@ -28,6 +28,7 @@ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+  * Lets make use of this to allocate the same type of list, collection and
+@@ -58,6 +59,10 @@ public class CollectionHelper {
+ 		return new HashMap<T, V>();
+ 	}
+ 
++	public static <T, V> Map<T, V> provideConcurrentMapFor(Class<T> c1, Class<V> c2) {
++		return new ConcurrentHashMap<T, V>();
++	}
++
+ 	public static <T> Set<T> provideSetFor(Class<T> c) {
+ 		return new HashSet<T>();
+ 	}
+diff --git a/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java b/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+index da9b357..0bd6eda 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
++++ b/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+@@ -23,11 +23,11 @@ package de.fhhannover.inform.iron.mapserver.utils;
+ 
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	
+@@ -36,7 +36,7 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	private int mSize;
+ 	
+ 	public MultiArrayListMap() {
+-		mMapOfLists = new HashMap<K, List<V>>();
++		mMapOfLists = new ConcurrentHashMap<K, List<V>>();
+ 		mSize = 0;
+ 	}
+ 
+@@ -72,12 +72,17 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 		if (list == null) {
+ 			list = new ArrayList<V>();
+ 			mMapOfLists.put(key, list);
+-		} else if (idx >= 0) {
++			idx = -1;
++		}
++		synchronized (list) {
++		if (idx >= 0) {
+ 			ret = list.remove(idx);
+ 			mSize--;
+ 		}
+ 		
+ 		list.add(value);
++	}
++
+ 		mSize++;
+ 		return ret;
+ 	}
