@@ -1,0 +1,912 @@
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
+index 276983a..95bbb1b 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
+@@ -44,8 +44,11 @@ import de.fhhannover.inform.iron.mapserver.communication.bus.messages.SendRespon
+ import de.fhhannover.inform.iron.mapserver.communication.bus.messages.TimerExpiredEvent;
+ import de.fhhannover.inform.iron.mapserver.communication.http.ActionProcessor;
+ import de.fhhannover.inform.iron.mapserver.datamodel.DataModelService;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.ResultItem;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult;
++import de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElement;
++import de.fhhannover.inform.iron.mapserver.exceptions.SessionNotFoundException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AbortRequestException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AccessDeniedException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.InvalidFilterException;
+@@ -1453,6 +1456,21 @@ public class EventProcessor extends Processor<Event> {
+ 				logRawResponse(sra);
+ 			
+ 			as.add(sra);
++                        try {
++                             Session ses = mSessionRep.getBy(chId);
++                             if (ses.getArc() != chId) {
++                                  //don't care about ssrc channel events
++                                  continue;
++                             }
++                             Long time = findRecentVisitedElementTimeStamp(r);
++                             if (time == -1) {
++                                   continue;
++                             }
++                             mSessionRep.setMostRecentlyVisitedGraphElementTime(chId, time);
++                        } catch (SessionNotFoundException e) {
++                             sLogger.warn(sName + "Session not found channel : " + chId + " :" + e.getMessage());
++                             continue;
++                        }
+ 		}
+ 
+ 		if (as.getActions().size() > 0)
+@@ -1461,6 +1479,46 @@ public class EventProcessor extends Processor<Event> {
+ 		list.clear();
+ 	}
+ 
++        private Long sentElementTimeStamp(PollResult pr) {
++                Long most_recent_visited_element_time_stamp = new Long(0);
++                for (SearchResult sr : pr.getResults()) {
++                        Long t = sentElementTimeStamp(sr);
++                        if (t > most_recent_visited_element_time_stamp) {
++                             most_recent_visited_element_time_stamp = t;
++                        }
++                }
++                return most_recent_visited_element_time_stamp;
++        }
++
++        private Long sentElementTimeStamp(SearchResult result) {
++                Long most_recent_visited_element_time_stamp = new Long(0);
++                for (ResultItem ri : result.getResultItems()) {
++                        GraphElement ge = ri.getGraphElement();
++                        sLogger.debug("sentElementTimeStamp: ge: " + ge + ", lastModifiedTime: " + ge.getLastModifiedTime() + ";  GE: " + ge);
++                        if (ge.getLastModifiedTime() > most_recent_visited_element_time_stamp) {
++                             most_recent_visited_element_time_stamp = ge.getLastModifiedTime();
++                        }
++                }
++                return most_recent_visited_element_time_stamp;
++        }
++
++        public long findRecentVisitedElementTimeStamp(Result result) {
++                if (result == null) {
++                     return 0;
++                }
++                long most_recent_visited_element_time_stamp  = 0;
++                if (result instanceof AddressedPollResult) {
++                        AddressedPollResult pr = (AddressedPollResult)result;
++                        most_recent_visited_element_time_stamp = sentElementTimeStamp(pr.getPollResult());
++                } else if (result instanceof AddressedSearchResult) {
++                        AddressedSearchResult sr = (AddressedSearchResult)result;
++                        most_recent_visited_element_time_stamp  = sentElementTimeStamp(sr.getSearchResult());
++                } else {
++                        return -1;
++                }
++                return most_recent_visited_element_time_stamp;
++        }
++
+ 	/**
+ 	 * Helper to put a {@link ActionSeries} into the action queue.
+ 	 * 
+@@ -1521,6 +1579,7 @@ public class EventProcessor extends Processor<Event> {
+ 	public void setDataModel(DataModelService dataModel) {
+ 		NullCheck.check(dataModel, "param dataModel null");
+ 		mDataModel = dataModel;
++                mDataModel.setSessionRepo(mSessionRep);
+ 	}
+ 
+ 	public void setSessionTimerFactory(SessionTimerFactory timerfactory) {
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java
+index fd8b39d..4446dfa 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepository.java
+@@ -21,6 +21,8 @@
+ 
+ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
+ 
++import java.util.Map;
++
+ import de.fhhannover.inform.iron.mapserver.communication.ChannelIdentifier;
+ import de.fhhannover.inform.iron.mapserver.communication.ClientIdentifier;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AlreadyMappedException;
+@@ -90,6 +92,10 @@ public interface SessionRepository {
+ 	 * @throws StillMappedException if mappings have not been removed
+ 	 */
+ 	public void drop(Session session) throws SessionNotFoundException, StillMappedException;
++
++        public void setMostRecentlyVisitedGraphElementTime(ChannelIdentifier channelId, Long time) throws SessionNotFoundException;
++        public Long oldestGraphElementVisitedTime();
++        public Map<String, Long> getSessionElementVisitTimeMap();
+ 	
+ 	/**
+ 	 * Maps a Session to a sessionId.
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
+index c6cb1f7..333e589 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
+@@ -23,6 +23,7 @@ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
+ 
+ import java.util.HashMap;
+ import java.util.Map;
++import java.util.Iterator;
+ 
+ import de.fhhannover.inform.iron.mapserver.communication.ChannelIdentifier;
+ import de.fhhannover.inform.iron.mapserver.communication.ClientIdentifier;
+@@ -56,6 +57,10 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 	 * Holds mappings from session-id to {@link Session}
+ 	 */
+ 	private Map<String, Session> mSessionIdSessionMap;
++	/**
++	 * Holds mappings from arc channels to most recently sent graph element timestamp
++	 */
++	private Map<String, Long> mSessionElementVisitTime;
+ 	
+ 	/**
+ 	 * Construct a {@link SessionRepository}
+@@ -64,6 +69,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		mClientIdSessionMap = new HashMap<ClientIdentifier, Session>();
+ 		mChannelIdSessionMap = new HashMap<ChannelIdentifier, Session>();
+ 		mSessionIdSessionMap = new HashMap<String, Session>();
++		mSessionElementVisitTime = new HashMap<String, Long>();
+ 	}
+ 	
+ 
+@@ -93,6 +99,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mClientIdSessionMap.put(session.getClientIdentifier(), session);
++		mSessionElementVisitTime.put(session.getSessionId(), new Long(-1));
+ 	}
+ 
+ 	@Override
+@@ -100,8 +107,48 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		sanityCheckBeforeDropOf(session);
+ 		Session stored = getSessionWithChecksExpectExists(session);
+ 		mClientIdSessionMap.remove(stored.getClientIdentifier());
++		mSessionElementVisitTime.remove(session.getSessionId());
+ 	}
+ 
++        @Override
++        public void setMostRecentlyVisitedGraphElementTime(ChannelIdentifier channelId, Long time) throws SessionNotFoundException {
++               Session session = mChannelIdSessionMap.get(channelId);
++               if (session.getArc() != channelId) {
++                     return;
++               }
++               mSessionElementVisitTime.put(session.getSessionId(), time);
++        }
++
++        @Override
++        public Long oldestGraphElementVisitedTime() {
++               Long time = new Long(-1);
++               Iterator it = mSessionElementVisitTime.entrySet().iterator();
++               while (it.hasNext()) {
++                     Map.Entry pair = (Map.Entry)it.next();
++                     String sesId = (String)pair.getKey();
++                     Session ses = mSessionIdSessionMap.get(sesId);
++                     if (ses.getArc() == null) {
++                          //don't care ssrc channels
++                          continue;
++                     }
++                     Long t = (Long)pair.getValue();
++                     if (t == -1) {
++                          continue;
++                     }
++                     if (time == -1) {
++                           time = t;
++                     } else if (t < time) {
++                           time = t;
++                     }
++               }
++               return time;
++        }
++
++        @Override
++        public Map<String, Long> getSessionElementVisitTimeMap() {
++               return mSessionElementVisitTime;
++        }
++
+ 
+ 	@Override
+ 	public void map(Session session, String sessionId)
+@@ -113,6 +160,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mSessionIdSessionMap.put(sessionId, session);
++		mSessionElementVisitTime.put(session.getSessionId(), new Long(-1));
+ 	}
+ 
+ 	@Override
+@@ -126,6 +174,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mSessionIdSessionMap.remove(sessionId);
++		mSessionElementVisitTime.remove(sessionId);
+ 	}
+ 
+ 	@Override
+@@ -138,6 +187,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mChannelIdSessionMap.put(channelId, session);
++		mSessionElementVisitTime.put(session.getSessionId(), new Long(-1));
+ 	}
+ 
+ 	@Override
+@@ -151,6 +201,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+ 		}
+ 		
+ 		mChannelIdSessionMap.remove(channelId);
++		mSessionElementVisitTime.remove(session.getSessionId());
+ 	}
+ 	
+ 	private Session getSessionWithChecks(Session session) {
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+index b7a1a6e..81ad4bb 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/DataModelService.java
+@@ -33,6 +33,7 @@ import de.fhhannover.inform.iron.mapserver.datamodel.search.PollResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchResult;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchingFactory;
+ import de.fhhannover.inform.iron.mapserver.datamodel.search.SearchingFactoryImpl;
++import de.fhhannover.inform.iron.mapserver.communication.ifmap.SessionRepository;
+ import de.fhhannover.inform.iron.mapserver.exceptions.AlreadyObservedException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.InvalidMetadataException;
+ import de.fhhannover.inform.iron.mapserver.exceptions.NoPollResultAvailableException;
+@@ -86,7 +87,7 @@ public class DataModelService implements SubscriptionNotifier {
+ 	
+ 		publisherRep = new PublisherRep();
+ 		
+-		mGraph = GraphElementRepositoryImpl.newInstance();
++		mGraph = GraphElementRepositoryImpl.newInstance(publisherRep);
+ 		mMetaHolderFac = MetadataHolderFactoryImpl.newInstance();
+ 		mSearchingFac = SearchingFactoryImpl.newInstance();
+ 
+@@ -101,7 +102,10 @@ public class DataModelService implements SubscriptionNotifier {
+ 		
+ 		clientService = new ClientService(publisherRep, subscriptionService);
+ 	}
+- 
++
++        public void setSessionRepo(SessionRepository sessionRep) {
++                mGraph.setSessionRepo(sessionRep);
++        }
+ 	
+ 	/**
+ 	 * Returns a <b>new </b> {@link DataModelService} instance.
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+index d181650..ba9fd65 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/PublisherRep.java
+@@ -21,6 +21,7 @@
+ 
+ package de.fhhannover.inform.iron.mapserver.datamodel;
+ 
++import java.util.Collection;
+ import java.util.HashMap;
+ 
+ import org.apache.log4j.Logger;
+@@ -35,7 +36,7 @@ import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+  * @since 0.1.0
+  * @author aw, vp
+  */
+-class PublisherRep {
++public class PublisherRep {
+ 	
+ 	private static Logger logger;
+ 	
+@@ -159,5 +160,9 @@ class PublisherRep {
+ 	void removePublisherSession(String sessionId) {
+ 		sessions.remove(sessionId);
+ 	}
++
++	public Collection<Publisher> getPublishers() {
++		return publishers.values();
++	}
+ }
+  
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+index 1ad0449..a5d890c 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+@@ -561,6 +561,8 @@ public class SubscriptionService {
+ 		
+ 		// remove reference from publisher
+ 		mh.getPublisher().removeMetadataHolder(mh);
++
++		mGraph.metadataHoldeRemoved(ge);
+ 	}
+ 	
+ 	private void checkForAddedSubGraph(GraphElement ge, MetadataHolder mh) {
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
+index fa48aa1..7d7251f 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyLinkImpl.java
+@@ -28,6 +28,7 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 	
+ 	private final Node mNode1;
+ 	private final Node mNode2;
++        private Long mLastModifiedTime;
+ 	
+ 	DummyLinkImpl(Node n1, Node n2) {
+ 		NullCheck.check(n1, "node1 is null");
+@@ -37,6 +38,7 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 		
+ 		mNode1 = n1;
+ 		mNode2 = n2;
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -113,4 +115,18 @@ class DummyLinkImpl extends DummyGraphElement implements Link {
+ 	public String toString() {
+ 		return "dlink{" + getNode1() + ", " + getNode2() + "}";
+ 	}
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
+ }
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+index bf9d1c5..7c4a668 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+@@ -30,10 +30,13 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 	
+ 	private final Identifier mIdentifier;
++        private Long mLastModifiedTime;
++
+ 	
+ 	DummyNodeImpl(Identifier ident) {
+ 		NullCheck.check(ident, "ident is null");
+ 		mIdentifier = ident;
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
+ 
+ 	/* (non-Javadoc)
+@@ -60,6 +63,11 @@ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 		throw new SystemErrorException(sErrorString);
+ 	}
+ 
++        @Override
++        public boolean hasLink(Link l) {
++		throw new SystemErrorException(sErrorString);
++        }
++
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.Node#removeLink(de.fhhannover.inform.iron.mapserver.datamodel.graph.Link)
+ 	 */
+@@ -113,4 +121,19 @@ class DummyNodeImpl extends DummyGraphElement implements Node {
+ 	public String toString() {
+ 		return "dnode{" + getIdentifier() + "}";
+ 	}
++
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
+ }
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
+index c9ce00e..9bf3a3e 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElement.java
+@@ -198,4 +198,8 @@ public interface GraphElement extends SearchAble {
+ 	 * 			{@link GraphElement} object.
+ 	 */
+ 	public void removeAllRemovedSubscriptionEntries();
++
++        abstract public void setRemovedTime();
++        abstract public Long getRemovedTime();
++        abstract Long getLastModifiedTime();
+ }
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+index 670735d..8c0570c 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepository.java
+@@ -23,6 +23,7 @@ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
+ 
++import de.fhhannover.inform.iron.mapserver.communication.ifmap.SessionRepository;
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
+ 
+ /**
+@@ -95,4 +96,11 @@ public interface GraphElementRepository {
+ 	 * Make some debugging output about the content of the graph.
+ 	 */
+ 	public void dumpContents();
++
++	/**
++	 * Notify the repository that metadataholder has been removed
++	 */
++	public void metadataHoldeRemoved(GraphElement ge);
++
++        public void setSessionRepo(SessionRepository sessionRepo);
+ }
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+index aafa438..1ce397f 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+@@ -22,8 +22,22 @@
+ package de.fhhannover.inform.iron.mapserver.datamodel.graph;
+ 
+ import java.util.Collection;
++import java.util.List;
++import java.util.Iterator;
++import java.util.Map;
++import java.util.ArrayList;
++import java.util.Timer;
++import java.util.TimerTask;
+ 
++import org.apache.log4j.Logger;
++
++import de.fhhannover.inform.iron.mapserver.datamodel.Publisher;
++import de.fhhannover.inform.iron.mapserver.datamodel.PublisherRep;
+ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
++import de.fhhannover.inform.iron.mapserver.datamodel.search.Subscription;
++import de.fhhannover.inform.iron.mapserver.communication.ifmap.SessionRepository;
++import de.fhhannover.inform.iron.mapserver.exceptions.SystemErrorException;
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
+ import de.fhhannover.inform.iron.mapserver.utils.CollectionHelper;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiArrayListMap;
+ import de.fhhannover.inform.iron.mapserver.utils.MultiMap;
+@@ -37,25 +51,121 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  * @author aw
+  */
+ public class GraphElementRepositoryImpl implements GraphElementRepository {
+-	
++	private final static Logger sLogger = LoggingProvider.getTheLogger();
+ 	private MultiMap<Integer, Node> mNodes;
+ 	private MultiMap<Integer, Link> mLinks;
+-	
++	private PublisherRep mPublisherRep;
++        private Timer mCleanupTimer;
++        private int mCleanupInterval = 60;
++        private List<GraphElement> mRemovedElements;
++        private SessionRepository mSessionRep;
++
+ 	/**
++	 * @param publisherRep
+ 	 * @return a new Instance of a {@link GraphElementRepository} instance.
+ 	 */
+-	public static GraphElementRepository newInstance() {
+-		return new GraphElementRepositoryImpl();
++	public static GraphElementRepository newInstance(PublisherRep publisherRep) {
++	    return new GraphElementRepositoryImpl(publisherRep);
+ 	}
+ 	
+ 	/**
+ 	 * Private constructor
++	 * @param publisherRep
+ 	 */
+-	private GraphElementRepositoryImpl() {
++	private GraphElementRepositoryImpl(PublisherRep publisherRep) {
+ 		mNodes = new MultiArrayListMap<Integer, Node>();
+ 		mLinks = new MultiArrayListMap<Integer, Link>();
++		mPublisherRep = publisherRep;
++                mRemovedElements = new ArrayList<GraphElement>();
++                startCleanupTimer();
+ 	}
+ 
++        @Override
++        public void setSessionRepo(SessionRepository sessionRepo) {
++                mSessionRep = sessionRepo;
++        }
++
++        public class CleanupTask extends TimerTask {
++
++                @Override
++                public void run() {
++                    try {
++                         sLogger.debug("Cleanup task started");
++                         /* replace with the actual task */
++                         try {
++                              Thread.sleep(mCleanupInterval * 1000);
++                         } catch(InterruptedException e) {
++                              e.printStackTrace();
++                         }
++                         int count = removeElements();
++                         sLogger.debug("Cleanup task done, number of elements removed: " + count);
++                         mCleanupTimer.schedule(new CleanupTask(), 0, 10);
++                    } catch (Exception ex) {
++                         sLogger.debug(ex);
++                         sLogger.info("Unable to run clean up task");
++                    }
++                }
++        }
++
++        public void startCleanupTimer() {
++                /* Start background task */
++                mCleanupTimer = new Timer("CleanupTimer");
++                try {
++                        mCleanupTimer.schedule(new CleanupTask(), 0);
++                } catch (Exception ex) {
++                    sLogger.debug("Unable to start Cleanup timer " + ex.getMessage());
++                    sLogger.debug("timer start", ex);
++                }
++        }
++
++        /* use this utility for debug purpose to dump all the conents in session->visited element time stamp map */
++        public void dumpGraphElementVisitedTime() {
++               for (GraphElement ge:mRemovedElements) {
++                    sLogger.debug("Remove time: " + ge.getRemovedTime() + ", GE: " + ge);
++               }
++               Long time = new Long(-1);
++               Map<String, Long> mSessionElementVisitTime = mSessionRep.getSessionElementVisitTimeMap();
++               Iterator it = mSessionElementVisitTime.entrySet().iterator();
++               sLogger.debug("Session Channel Visit Data:");
++               while (it.hasNext()) {
++                     Map.Entry pair = (Map.Entry)it.next();
++                     String sesId = (String)pair.getKey();
++                     Long t = (Long)pair.getValue();
++                     sLogger.debug("Old item visited time stamp for Session: " + sesId + ", time: " + t);
++               }
++               return;
++        }
++
++        public int removeElements() {
++               int count = 0;
++               Iterator<GraphElement> it = mRemovedElements.iterator();
++               while (it.hasNext()) {
++                    GraphElement ge = it.next();
++                    sLogger.debug("Remove time: " + ge.getRemovedTime() + "; " + " OldestVisit: " + mSessionRep.oldestGraphElementVisitedTime() + ";ge: " + ge);
++                    if (ge.getRemovedTime() < mSessionRep.oldestGraphElementVisitedTime()) {
++                         if (ge instanceof Node) {
++                              if (mNodes.getAll(nodeKey((Node)ge)) == null) {
++                                  continue;
++                              }
++                              cleanupNonMeaningfulNode((Node) ge);
++                              count++;
++                              it.remove();
++                         } else if (ge instanceof Link) {
++                              if (mLinks.getAll(linkKey((Link)ge)) == null) {
++                                  continue;
++                              }
++                              cleanupNonMeaningfulLink((Link) ge);
++                              count++;
++                              it.remove();
++                         } else {
++                              throw new SystemErrorException("GraphElement not Link nor Identifier");
++                         }
++                    }
++               }
++               sLogger.info("Collector - Number of elements removed from graph: " + count);
++               return count;
++        }
++
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#getNodeFor(de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier)
+ 	 */
+@@ -236,4 +346,106 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	private int nodeKey(Identifier i) {
+ 		return i.hashCode();
+ 	}
++
++	/**
++	 * A confirmed non meaninful element  is an element
++	 * without any metadata after a delay
++	 */
++	private boolean isMeaningful(GraphElement element) {
++		if (element.getMetadataHolder().size() > 0)
++			return true;
++
++		return false;
++	}
++
++	private boolean hasMeaningfulLink(Node node) {
++		for (Link link : node.getLinks()) {
++			if (isMeaningful(link)) {
++				return true;
++			}
++		}
++
++		return false;
++	}
++
++	private void cleanupNonMeaningfulNode(Node node) {
++		if (isMeaningful(node) || hasMeaningfulLink(node)) {
++			return;
++		}
++
++		sLogger.trace("Removing a non meaningful node: " + node);
++		cleanupSubscribtions(node);
++		mNodes.remove(nodeKey(node.getIdentifier()), node);
++
++		for (Link link : node.getLinks()) {
++                        if (mLinks.getAll(linkKey(link)) == null) {
++                             continue;
++                        }
++			cleanupSubscribtions(link);
++                        if (link.getNode1().hasLink(link)) {
++			     link.getNode1().removeLink(link);
++                        }
++                        if (link.getNode2().hasLink(link)) {
++		             link.getNode2().removeLink(link);
++                        }
++			sLogger.trace("Removing a non meaningful link: " + link);
++			mLinks.remove(linkKey(link), link);
++		}
++	}
++
++	private void cleanupNonMeaningfulLink(Link link) {
++		// should never happen since this is called from a method that just
++		// removed the metadatas
++		if (isMeaningful(link)) {
++			return;
++		}
++
++		sLogger.trace("Removing a non meaningful link: " + link);
++		cleanupSubscribtions(link);
++		mLinks.remove(linkKey(link), link);
++
++                if (link.getNode1().hasLink(link)) {
++		    link.getNode1().removeLink(link);
++                }
++                if (mNodes.getAll(nodeKey(link.getNode1())) != null) {
++		    cleanupNonMeaningfulNode(link.getNode1());
++                }
++
++                if (link.getNode1().hasLink(link)) {
++		    link.getNode2().removeLink(link);
++                }
++                if (mNodes.getAll(nodeKey(link.getNode2())) != null) {
++		    cleanupNonMeaningfulNode(link.getNode2());
++                }
++	}
++
++	private void cleanupSubscribtions(GraphElement removed) {
++		for (Publisher pub : mPublisherRep.getPublishers()) {
++			List<Subscription> subs = pub.getSubscriptionState().getSubscriptions();
++			for (Subscription sub : subs) {
++				sLogger.trace("Removing a non meaningful element " + removed +
++					" from subscriber : " + sub);
++                                try {
++				    sub.removeGraphElementRemoved(removed);
++                                } catch (SystemErrorException e) {
++				    sLogger.trace("Already removed: " + removed + " from sub: " + sub);
++                                    continue;
++                                }
++			}
++		}
++	}
++
++        private void markElementForRemoval(GraphElement ge) {
++                mRemovedElements.add(ge);
++        }
++
++	public void metadataHoldeRemoved(GraphElement ge) {
++                sLogger.debug("Removal Request for Element: " + ge);
++		if (ge instanceof Node)
++			markElementForRemoval(ge);
++		else if (ge instanceof Link)
++			markElementForRemoval(ge);
++		else
++			throw new SystemErrorException("GraphElement not Link nor Identifier");
++	}
+ }
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java
+index 38b0ccb..161ffa5 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/LinkImpl.java
+@@ -28,6 +28,7 @@ class LinkImpl extends GraphElementImpl implements Link {
+ 	
+ 	private final Node mNode1, mNode2;
+ 	private final Link mDummy;
++        private Long mLastModifiedTime;
+ 	
+ 	LinkImpl(Node n1, Node n2) {
+ 		NullCheck.check(n1, "n1 is null");
+@@ -36,7 +37,24 @@ class LinkImpl extends GraphElementImpl implements Link {
+ 		mNode1 = n1;
+ 		mNode2 = n2;
+ 		mDummy = new DummyLinkImpl((Node)mNode1.dummy(), (Node)mNode2.dummy());
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
++
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++               mDummy.setRemovedTime();
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
+ 	
+ 	@Override
+ 	public Node getNode1() {
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+index 9290904..4496098 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+@@ -54,6 +54,8 @@ public interface Node extends GraphElement {
+ 	 * @param l
+ 	 */
+ 	public void addLink(Link l);
++
++        public boolean hasLink(Link l);
+ 	
+ 	/**
+ 	 * Remove a {@link Link} object from this {@link Node} object.
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+index cd00fdb..cf74fc8 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+@@ -34,15 +34,33 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 	private final Identifier mIdentifier;
+ 	private final Map<Integer, Link> mLinks;
+ 	private final Node mDummy;
++        private Long mLastModifiedTime;
+ 	
+ 	NodeImpl(Identifier i) {
+ 		super();
+ 		NullCheck.check(i, "Identifier is null");
+ 		mIdentifier = i;
+-		mLinks = CollectionHelper.provideMapFor(Integer.class, Link.class);
++		mLinks = CollectionHelper.provideConcurrentMapFor(Integer.class, Link.class);
+ 		mDummy = new DummyNodeImpl(i);
++                mLastModifiedTime = new Long(System.currentTimeMillis());
+ 	}
+ 
++        @Override
++        public void setRemovedTime() {
++               mLastModifiedTime = new Long(System.currentTimeMillis());
++               mDummy.setRemovedTime();
++        }
++
++        @Override
++        public Long getRemovedTime() {
++               return mLastModifiedTime;
++        }
++
++        @Override
++        public Long getLastModifiedTime() {
++               return mLastModifiedTime;
++        }
++
+ 	@Override
+ 	public Identifier getIdentifier() {
+ 		return mIdentifier;
+@@ -63,6 +81,14 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 	}
+ 
+ 	@Override
++	public boolean hasLink(Link l) {
++		NullCheck.check(l, "link is null");
++		if (mLinks.containsKey(l.hashCode()))
++	                return true;
++                return false;
++        }
++
++	@Override
+ 	public void removeLink(Link l) {
+ 		NullCheck.check(l, "link is null");
+ 		if (!mLinks.containsKey(l.hashCode()))
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+index dbdfe80..1bcd11f 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/meta/W3cXmlMetadata.java
+@@ -76,6 +76,7 @@ class W3cXmlMetadata extends Metadata {
+ 			xpathFactory = XPathFactory.newInstance();
+ 			documentBuilderFactory = DocumentBuilderFactory.newInstance();
+ 			documentBuilderFactory.setNamespaceAware(true);
++			documentBuilderFactory.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
+ 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+ 			transformerFactory = TransformerFactory.newInstance();
+ 		} catch (ParserConfigurationException e) {
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+index e850dfa..6a51733 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/Subscription.java
+@@ -65,4 +65,6 @@ public interface Subscription {
+ 
+ 	public void setExceededSize();
+ 
++	public void removeGraphElementRemoved(GraphElement mc);
++
+ }
+\ No newline at end of file
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+index 6df3b61..2ec0398 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+@@ -237,4 +237,10 @@ class SubscriptionImpl implements Subscription {
+ 		// TODO: Cache
+ 		return "sub{" + getName() + ", " + getPublisherReference() + "}";
+ 	}
++
++	@Override
++	public void removeGraphElementRemoved(GraphElement ge) {
++		NullCheck.check(ge, "ge is null");
++		mGraphElements.remove(ge);
++	}
+ }
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+index 45a1e84..7233264 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/CollectionHelper.java
+@@ -28,6 +28,7 @@ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+  * Lets make use of this to allocate the same type of list, collection and
+@@ -58,6 +59,10 @@ public class CollectionHelper {
+ 		return new HashMap<T, V>();
+ 	}
+ 
++	public static <T, V> Map<T, V> provideConcurrentMapFor(Class<T> c1, Class<V> c2) {
++		return new ConcurrentHashMap<T, V>();
++	}
++
+ 	public static <T> Set<T> provideSetFor(Class<T> c) {
+ 		return new HashSet<T>();
+ 	}
+diff --git a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+index da9b357..0bd6eda 100644
+--- a/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
++++ b/irond-0.3.2-src/src/de/fhhannover/inform/iron/mapserver/utils/MultiArrayListMap.java
+@@ -23,11 +23,11 @@ package de.fhhannover.inform.iron.mapserver.utils;
+ 
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	
+@@ -36,7 +36,7 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 	private int mSize;
+ 	
+ 	public MultiArrayListMap() {
+-		mMapOfLists = new HashMap<K, List<V>>();
++		mMapOfLists = new ConcurrentHashMap<K, List<V>>();
+ 		mSize = 0;
+ 	}
+ 
+@@ -72,12 +72,17 @@ public class MultiArrayListMap<K, V> implements MultiMap<K, V>{
+ 		if (list == null) {
+ 			list = new ArrayList<V>();
+ 			mMapOfLists.put(key, list);
+-		} else if (idx >= 0) {
++			idx = -1;
++		}
++		synchronized (list) {
++		if (idx >= 0) {
+ 			ret = list.remove(idx);
+ 			mSize--;
+ 		}
+ 		
+ 		list.add(value);
++	}
++
+ 		mSize++;
+ 		return ret;
+ 	}
