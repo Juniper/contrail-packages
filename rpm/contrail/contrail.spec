@@ -248,6 +248,7 @@ Summary:            Contrail Python Lib
 
 Group:              Applications/System
 Obsoletes:          contrail-api-lib
+Requires:       python-kombu
 Requires:	    python-bottle >= 0.11.6
 %if 0%{?rhel} >= 7
 Requires:	    python-gevent >= 1.0
