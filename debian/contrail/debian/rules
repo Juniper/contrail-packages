@@ -11,6 +11,8 @@ DEB_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:
 package-dkms=contrail-vrouter-dkms
 
 VER := $(shell lsb_release -c)
+KVERS := $(shell basename `ls -d /lib/modules/*|tail -1`)
+KERNELDIR := /lib/modules/$(KVERS)/build
 ifeq (,$(findstring precise,$(VER)))
         SUBSTVARS = -Vdist:Depends="python-cassandra-driver  (>= 3.0.0)"
 endif
@@ -26,12 +28,12 @@ TARGETS=control-node:node_mgr \
 
 override_dh_auto_build:
 	cd debian/manpages; ronn -r *.ronn
-	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+	(cd ${SB_TOP}; scons --opt=production --optimization=production --root=${INSTALL_ROOT} --kernel-dir=/lib/modules/$(KVERS)/build install)
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
 	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
 	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
 	# Node manager
-	(cd ${SB_TOP}; scons -j1 --opt=production --root=${INSTALL_ROOT} ${TARGETS})
+	(cd ${SB_TOP}; scons -j1 --opt=production --optimization=production --root=${INSTALL_ROOT} ${TARGETS})
 	(cd ${SB_TOP}/build/production/nodemgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/control-node; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
