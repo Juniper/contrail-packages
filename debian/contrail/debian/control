@@ -258,6 +258,7 @@ Package: python-contrail
 Architecture: amd64
 Section: python
 Depends: python-bottle,
+         python-kombu,
          python-gevent (>= 1.0),
          python-importlib,
          ${misc:Depends},
