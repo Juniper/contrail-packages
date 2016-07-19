@@ -380,6 +380,7 @@ Architecture: amd64
 Depends: python-contrail (>= ${source:Version}),
          python-lxml,
          python-requests,
+         ntp,
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
