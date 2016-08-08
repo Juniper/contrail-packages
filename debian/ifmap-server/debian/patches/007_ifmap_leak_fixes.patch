@@ -1,5 +1,5 @@
 diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
-index 276983a..1a7087a 100644
+index 276983a..3bc3d34 100644
 --- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
 +++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/EventProcessor.java
 @@ -24,6 +24,11 @@ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
@@ -89,7 +89,7 @@ index 276983a..1a7087a 100644
  		NullCheck.check(res, "res is null");
  		mResultList.get().add(res);
  	}
-@@ -1432,20 +1441,38 @@ public class EventProcessor extends Processor<Event> {
+@@ -1432,20 +1441,32 @@ public class EventProcessor extends Processor<Event> {
  	 * Ugly dispatching again :-(
  	 * Try to make this double-dispatch as well
  	 */
@@ -114,12 +114,6 @@ index 276983a..1a7087a 100644
  			ClientIdentifier clientId= r.getClientIdentifier();
 +                        try {
 +                             Session ses = mSessionRep.getBy(chId);
-+/*
-+                             if (ses.getArc() != chId) {
-+                                  sLogger.info(sName + " Session arc is not same as channel : " + ses.getArc() + ",   " + chId);
-+                                  continue;
-+                             }
-+*/
 +                             Long time = findOldestVisitedElementTimeStamp(r);
 +                             if (time != -1 && ses != null) {
 +                                  mSessionRep.setMostRecentlyVisitedGraphElementTime(chId, time);
@@ -131,7 +125,7 @@ index 276983a..1a7087a 100644
  			is = mResultMarshaller.marshal(r);
  			sra = new SendResponseAction(chId, clientId, is);
  			
-@@ -1459,8 +1486,65 @@ public class EventProcessor extends Processor<Event> {
+@@ -1459,8 +1480,36 @@ public class EventProcessor extends Processor<Event> {
  			putActionSeriesIntoActionQueue(as);
  		
  		list.clear();
@@ -142,39 +136,14 @@ index 276983a..1a7087a 100644
 +            }
  	}
  
-+public void printMap(Map mp) {
-+    sLogger.warn(sName + "Pending poll requests");
-+    Iterator it = mp.entrySet().iterator();
-+    while (it.hasNext()) {
-+        Map.Entry pair = (Map.Entry)it.next();
-+        sLogger.info(sName + " poll response still pedning for Session : " + pair.getKey());
-+    }
-+}
-+
-+/*
-+        private Long sentElementTimeStamp(PollResult pr) {
-+                Long most_recent_visited_element_time_stamp = new Long(0);
-+                for (SearchResult sr : pr.getResults()) {
-+                        Long t = sentElementTimeStamp(sr);
-+                        if (t > most_recent_visited_element_time_stamp) {
-+                             most_recent_visited_element_time_stamp = t;
-+                        }
-+                }
-+                return most_recent_visited_element_time_stamp;
++        public void printMap(Map mp) {
++            sLogger.warn(sName + "Pending poll requests");
++            Iterator it = mp.entrySet().iterator();
++            while (it.hasNext()) {
++                 Map.Entry pair = (Map.Entry)it.next();
++                 sLogger.info(sName + " poll response still pedning for Session : " + pair.getKey());
++            }
 +        }
-+
-+        private Long sentElementTimeStamp(SearchResult result) {
-+                Long most_recent_visited_element_time_stamp = new Long(0);
-+                for (ResultItem ri : result.getResultItems()) {
-+                        GraphElement ge = ri.getGraphElement();
-+                        sLogger.debug("sentElementTimeStamp: ge: " + ge + ", lastModifiedTime: " + ge.getLastModifiedTime() + ";  GE: " + ge);
-+                        if (ge.getLastModifiedTime() > most_recent_visited_element_time_stamp) {
-+                             most_recent_visited_element_time_stamp = ge.getLastModifiedTime();
-+                        }
-+                }
-+                return most_recent_visited_element_time_stamp;
-+        }
-+*/
 +
 +        public long findOldestVisitedElementTimeStamp(Result result) {
 +                if (result == null) {
@@ -186,18 +155,14 @@ index 276983a..1a7087a 100644
 +                        most_oldest_visited_element_time_stamp = pr.getPollResult().getOldtestItemTimeStamp();
 +                        String pubSesId = pr.getPollResult().getPublisherSessionId();
 +                        mSessionRep.setPublisherGraphElementTime(pubSesId, most_oldest_visited_element_time_stamp); 
-+                } /*else if (result instanceof AddressedSearchResult) {
-+                        sLogger.debug("findOldestVisitedElementTimeStamp - addressed search result");
-+                        AddressedSearchResult sr = (AddressedSearchResult)result;
-+                        most_oldest_visited_element_time_stamp = sr.getSearchResult().getOldtestItemTimeStamp();
-+                }*/
++                }
 +                return most_oldest_visited_element_time_stamp;
 +        }
 +
  	/**
  	 * Helper to put a {@link ActionSeries} into the action queue.
  	 * 
-@@ -1521,6 +1605,7 @@ public class EventProcessor extends Processor<Event> {
+@@ -1521,6 +1570,7 @@ public class EventProcessor extends Processor<Event> {
  	public void setDataModel(DataModelService dataModel) {
  		NullCheck.check(dataModel, "param dataModel null");
  		mDataModel = dataModel;
@@ -471,7 +436,7 @@ index fd8b39d..6ff956c 100644
  	/**
  	 * Maps a Session to a sessionId.
 diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
-index c6cb1f7..286ffc5 100644
+index c6cb1f7..6c710b6 100644
 --- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
 +++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/SessionRepositoryImpl.java
 @@ -23,6 +23,9 @@ package de.fhhannover.inform.iron.mapserver.communication.ifmap;
@@ -524,7 +489,7 @@ index c6cb1f7..286ffc5 100644
  	}
  	
  
-@@ -86,25 +101,79 @@ public class SessionRepositoryImpl implements SessionRepository {
+@@ -86,25 +101,67 @@ public class SessionRepositoryImpl implements SessionRepository {
  	}
  
  	@Override
@@ -551,10 +516,6 @@ index c6cb1f7..286ffc5 100644
 +        @Override
 +        public synchronized void setMostRecentlyVisitedGraphElementTime(ChannelIdentifier channelId, Long time) throws SessionNotFoundException {
 +               Session session = mChannelIdSessionMap.get(channelId);
-+               /*if (session.getArc() != channelId) {
-+                     sLogger.info(sName + " setMostRecentlyVisitedGraphElementTime session arc and channel does not match : " +  session.getArc() + ", " + channelId);
-+                     return;
-+               }*/
 +               sLogger.info(sName + " setMostRecentlyVisitedGraphElementTime set channel visit time for session: " +  session.getSessionId() + ", time: " + time);
 +               mSessionElementVisitTime.put(session.getSessionId(), time);
 +        }
@@ -562,10 +523,6 @@ index c6cb1f7..286ffc5 100644
 +        @Override
 +        public synchronized void setPublisherGraphElementTime(String sessionId, Long time) throws SessionNotFoundException {
 +               Session session = mSessionIdSessionMap.get(sessionId);
-+               /*if (session.getArc() == null) {
-+                     sLogger.info(sName + " setPublisherGraphElementTime session arc is null: " +  sessionId);
-+                     return;
-+               }*/
 +	       Long oldTime = mSessionElementVisitTime.get(sessionId);
 +               if (oldTime == null || time > oldTime) {
 +                    mSessionElementVisitTime.put(sessionId, time);
@@ -580,10 +537,6 @@ index c6cb1f7..286ffc5 100644
 +                     Map.Entry pair = (Map.Entry)it.next();
 +                     String sesId = (String)pair.getKey();
 +                     Session ses = mSessionIdSessionMap.get(sesId);
-+                     /*if (ses.getArc() == null) {
-+                          //don't care ssrc channels
-+                          continue;
-+                     }*/
 +                     Long t = (Long)pair.getValue();
 +                     if (t == -1) {
 +                          continue;
@@ -607,7 +560,7 @@ index c6cb1f7..286ffc5 100644
  			throws SessionNotFoundException, AlreadyMappedException {
  		Session stored = getSessionWithChecksExpectExists(session);
  		Session mapped = getBy(sessionId);
-@@ -113,10 +182,11 @@ public class SessionRepositoryImpl implements SessionRepository {
+@@ -113,10 +170,11 @@ public class SessionRepositoryImpl implements SessionRepository {
  		}
  		
  		mSessionIdSessionMap.put(sessionId, session);
@@ -620,7 +573,7 @@ index c6cb1f7..286ffc5 100644
  			throws SessionNotFoundException, NoMappingException {
  		
  		Session stored = getSessionWithChecksExpectExists(session);
-@@ -126,10 +196,11 @@ public class SessionRepositoryImpl implements SessionRepository {
+@@ -126,10 +184,11 @@ public class SessionRepositoryImpl implements SessionRepository {
  		}
  		
  		mSessionIdSessionMap.remove(sessionId);
@@ -633,7 +586,7 @@ index c6cb1f7..286ffc5 100644
  			throws SessionNotFoundException, AlreadyMappedException {
  		Session stored = getSessionWithChecksExpectExists(session);
  		Session mapped = getBy(channelId);
-@@ -138,10 +209,11 @@ public class SessionRepositoryImpl implements SessionRepository {
+@@ -138,10 +197,11 @@ public class SessionRepositoryImpl implements SessionRepository {
  		}
  		
  		mChannelIdSessionMap.put(channelId, session);
@@ -646,7 +599,7 @@ index c6cb1f7..286ffc5 100644
  			throws SessionNotFoundException, NoMappingException {
  		
  		Session stored = getSessionWithChecksExpectExists(session);
-@@ -151,6 +223,7 @@ public class SessionRepositoryImpl implements SessionRepository {
+@@ -151,6 +211,7 @@ public class SessionRepositoryImpl implements SessionRepository {
  		}
  		
  		mChannelIdSessionMap.remove(channelId);
@@ -1635,10 +1588,10 @@ index e850dfa..6a51733 100644
  }
 \ No newline at end of file
 diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
-index 6df3b61..82e37db 100644
+index 6df3b61..98d5a04 100644
 --- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
 +++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
-@@ -144,9 +144,11 @@ class SubscriptionImpl implements Subscription {
+@@ -144,9 +144,9 @@ class SubscriptionImpl implements Subscription {
  	public void removeGraphElement(GraphElement ge) {
  		NullCheck.check(ge, "mc is null");
  		
@@ -1647,13 +1600,11 @@ index 6df3b61..82e37db 100644
 -					+ " from " + this);
 +		if (mGraphElements.remove(ge) == null) {
 +                        return;
-+			//throw new SystemErrorException("Tried to remove non-existend " + ge
-+			//		+ " from " + this);
 +                }
  	}
  
  	/* (non-Javadoc)
-@@ -237,4 +239,10 @@ class SubscriptionImpl implements Subscription {
+@@ -237,4 +237,10 @@ class SubscriptionImpl implements Subscription {
  		// TODO: Cache
  		return "sub{" + getName() + ", " + getPublisherReference() + "}";
  	}
