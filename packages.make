@@ -202,6 +202,7 @@ debian-%:
 	$(eval PACKAGE := $(patsubst debian-%,%,$@))
 	mkdir -p build/packages/$(PACKAGE)
 	cp -R tools/packages/debian/$(PACKAGE)/debian build/packages/$(PACKAGE)
+	cp -R tools/packages/utils build/packages/$(PACKAGE)/debian/
 	chmod u+x build/packages/$(PACKAGE)/debian/rules
 
 clean-%:
