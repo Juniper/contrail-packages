@@ -3,6 +3,10 @@ usr/bin/contrail-schema
 usr/bin/ifmap-view
 usr/bin/contrail-discovery
 usr/bin/contrail-device-manager
+usr/bin/contrail-issu-run-sync
+usr/bin/contrail-issu-pre-sync
+usr/bin/contrail-issu-post-sync
+usr/bin/contrail-issu-zk-sync
 etc/contrail/contrail-api.conf
 etc/contrail/contrail-schema.conf
 etc/contrail/contrail-discovery.conf
@@ -18,6 +22,7 @@ etc/init.d/contrail-schema
 etc/init.d/contrail-svc-monitor
 etc/init.d/contrail-discovery
 etc/init.d/contrail-device-manager
+usr/lib/python*/dist-packages/contrail_issu*
 etc/init.d/ifmap
 etc/contrail/supervisord_config.conf
 etc/contrail/supervisord_config_files/contrail-api.ini
