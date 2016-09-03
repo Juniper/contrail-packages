@@ -3,6 +3,10 @@ usr/bin/contrail-schema
 usr/bin/ifmap-view
 usr/bin/contrail-discovery
 usr/bin/contrail-device-manager
+usr/bin/contrail-issu-pre-sync
+usr/bin/contrail-issu-run-sync
+usr/bin/contrail-issu-post-sync
+usr/bin/contrail-issu-zk-sync
 etc/contrail/contrail-api.conf
 etc/contrail/contrail-schema.conf
 etc/contrail/contrail-discovery.conf

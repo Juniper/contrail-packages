@@ -483,6 +483,10 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %{_bindir}/contrail-discovery
 %{_bindir}/contrail-device-manager
 %{_bindir}/ifmap-view
+%{_bindir}/contrail-issu-pre-sync
+%{_bindir}/contrail-issu-post-sync
+%{_bindir}/contrail-issu-run-sync
+%{_bindir}/contrail-issu-zk-sync
 %{python_sitelib}/discovery
 %{python_sitelib}/discovery-*
 %{python_sitelib}/schema_transformer*
