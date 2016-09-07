@@ -6,6 +6,15 @@ fi
 BASE_DIR=$1
 INDEX_FILE=$BASE_DIR/index.html
 LOGS_INDEX_FILE=$BASE_DIR/logs_index.html
+LOGS_LEVEL_EMERG_INDEX_FILE=$BASE_DIR/logs_level_emerg_index.html
+LOGS_LEVEL_ALERT_INDEX_FILE=$BASE_DIR/logs_level_alert_index.html
+LOGS_LEVEL_CRIT_INDEX_FILE=$BASE_DIR/logs_level_crit_index.html
+LOGS_LEVEL_ERROR_INDEX_FILE=$BASE_DIR/logs_level_error_index.html
+LOGS_LEVEL_WARN_INDEX_FILE=$BASE_DIR/logs_level_warn_index.html
+LOGS_LEVEL_NOTICE_INDEX_FILE=$BASE_DIR/logs_level_notice_index.html
+LOGS_LEVEL_INFO_INDEX_FILE=$BASE_DIR/logs_level_info_index.html
+LOGS_LEVEL_DEBUG_INDEX_FILE=$BASE_DIR/logs_level_debug_index.html
+LOGS_LEVEL_INVALID_INDEX_FILE=$BASE_DIR/logs_level_invalid_index.html
 TRACES_INDEX_FILE=$BASE_DIR/traces_index.html
 UVES_INDEX_FILE=$BASE_DIR/uves_index.html
 INTROSPECT_INDEX_FILE=$BASE_DIR/introspect_index.html
@@ -17,6 +26,7 @@ BASE_DIR_LISTING=$BASE_DIR/*
 BASENAME=/usr/bin/basename
 DIRNAME=/usr/bin/dirname
 CAT=/bin/cat
+RM=/bin/rm
 
 create_message_index_file() {
     local index_file=$1
@@ -32,6 +42,7 @@ create_message_index_file() {
     echo "<head>$file_description Message Documentation</head>" >> $index_file
     echo "<link href=\"/doc-style.css\" rel=\"stylesheet\" type=\"text/css\"/>" >> $index_file
     echo "<table><tr><th>Messages</th></tr>" >> $index_file
+    local init_done=0
     for file in $BASE_DIR_LISTING; do
         if ! [ -d $file ]; then
             local filename=$($BASENAME $file)
@@ -49,16 +60,23 @@ create_message_index_file() {
             if ! [[ $filename = *_$file_type.list ]]; then
                 continue
             fi
-            $CAT $file >> $index_file
+            if [ -s $file ]; then
+                init_done=1
+                $CAT $file >> $index_file
+            fi
         fi
     done
     echo "</table>" >> $index_file
     echo "</html>" >> $index_file
+    if (($init_done == 0)); then
+        $RM $index_file
+    fi
 }
 
 create_module_index_file() {
     local index_file=$1
     local module_name=$2
+    local index_file_dir=$($DIRNAME $index_file)
     # Generate the index file from the directory listing of base dir
     if [ -e $index_file ]; then
         echo "<html>" > $index_file
@@ -67,11 +85,46 @@ create_module_index_file() {
     fi
     echo "<head>Message Documentation for $module_name</head>" >> $index_file
     echo "<link href=\"/doc-style.css\" rel=\"stylesheet\" type=\"text/css\"/>" >> $index_file
-    echo "<table><tr><th>Message Types</th></tr>" >> $index_file
-    echo "<tr><td><a href=logs_index.html>Logs</a></td></tr>" >> $index_file
-    echo "<tr><td><a href=uves_index.html>UVES</a></td></tr>" >> $index_file
-    echo "<tr><td><a href=traces_index.html>Traces</a></td></tr>" >> $index_file
-    echo "<tr><td><a href=introspect_index.html>Request-Response</a></td></tr>" >> $index_file
+    echo "<table><tr><th>Message Types</th><th>Description</th></tr>" >> $index_file
+    if [ -e $index_file_dir/logs_index.html ]; then
+        echo "<tr><td><a href=logs_index.html>All Logs</a></td><td>All types of system log messages</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_emerg_index.html ]; then
+        echo "<tr><td><a href=logs_level_emerg_index.html>Emergency Logs</a></td><td>System panic or other condition that causes the system to stop functioning</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_alert_index.html ]; then
+        echo "<tr><td><a href=logs_level_alert_index.html>Alert Logs</a></td><td>Conditions that require immediate correction, such as a corrupted system database</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_crit_index.html ]; then
+        echo "<tr><td><a href=logs_level_crit_index.html>Critical Logs</a></td><td>Critical conditions, such as hard errors</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_error_index.html ]; then
+        echo "<tr><td><a href=logs_level_error_index.html>Error Logs</a></td><td>Non-urgent failures - these should be relayed to developers or admins</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_warn_index.html ]; then
+        echo "<tr><td><a href=logs_level_warn_index.html>Warning Logs</a></td><td>Warning messages - not an error, but indication that an error will occur if action is not taken</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_notice_index.html ]; then
+        echo "<tr><td><a href=logs_level_notice_index.html>Notice Logs</a></td><td>Events that are unusual but not error conditions</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_info_index.html ]; then
+        echo "<tr><td><a href=logs_level_info_index.html>Informational Logs</a></td><td>Normal operational messages</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_debug_index.html ]; then
+        echo "<tr><td><a href=logs_level_debug_index.html>Debug Logs</a></td><td>Information useful to developers for debugging the system</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/logs_level_invalid_index.html ]; then
+        echo "<tr><td><a href=logs_level_invalid_index.html>Unknown severity logs</a></td><td>Messages with unknown severity</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/uves_index.html ]; then
+        echo "<tr><td><a href=uves_index.html>UVES</a></td><td>Messages related to User Visible Entities (UVEs)</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/traces_index.html ]; then
+        echo "<tr><td><a href=traces_index.html>Traces</a></td><td>Trace messages useful to developers for debugging</td></tr>" >> $index_file
+    fi
+    if [ -e $index_file_dir/introspect_index.html ]; then
+        echo "<tr><td><a href=introspect_index.html>Request-Response</a></td><td>Request and response messages used in HTTP Introspect</td></tr>" >> $index_file
+    fi
     echo "</table>" >> $index_file
     echo "</html>" >> $index_file
 }
@@ -129,11 +182,20 @@ create_module_message_file() {
     done
 }
 
-create_index_files $INDEX_FILE
 create_message_index_file $LOGS_INDEX_FILE "logs" "Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_EMERG_INDEX_FILE "logs.emerg" "Emergency Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_ALERT_INDEX_FILE "logs.alert" "Alert Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_CRIT_INDEX_FILE "logs.crit" "Critical Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_ERROR_INDEX_FILE "logs.error" "Error Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_WARN_INDEX_FILE "logs.warn" "Warning Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_NOTICE_INDEX_FILE "logs.notice" "Notice Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_INFO_INDEX_FILE "logs.info" "Informational Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_DEBUG_INDEX_FILE "logs.debug" "Debugging Systemlog and Objectlog"
+create_message_index_file $LOGS_LEVEL_INVALID_INDEX_FILE "logs.invalid" "Unknown Severity Systemlog and Objectlog"
 create_message_index_file $TRACES_INDEX_FILE "traces" "Trace"
 create_message_index_file $UVES_INDEX_FILE "uves" "UVE"
 create_message_index_file $INTROSPECT_INDEX_FILE "introspect" "Request and Response"
+create_index_files $INDEX_FILE
 create_module_message_file $MODULE_LOGS_FILE "logs"
 create_module_message_file $MODULE_TRACES_FILE "traces"
 create_module_message_file $MODULE_UVES_FILE "uves"
