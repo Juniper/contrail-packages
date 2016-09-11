@@ -9,6 +9,7 @@ Vcs-Browser: https://github.com/Juniper/contrail-controller/
 XS-Python-Version: >= 2.7
 Build-Depends: autoconf,
                automake,
+               lsb-release,
                bison,
                debhelper (>= 8.0.0),
                flex,
