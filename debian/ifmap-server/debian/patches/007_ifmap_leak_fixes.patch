@@ -1208,7 +1208,7 @@ index aafa438..c775863 100644
 +                        if (mLinks.getAll(linkKey(link)) == null) {
 +                             continue;
 +                        }
-+                        if ((curTime < (link.getRemovedTime() + 10)) || (link.getLastModifiedTime() > node.getRemovedTime()) || (link.getRemovedTime() > oldtestVisitedTime)) {
++                        if ((curTime < (link.getRemovedTime() + 10)) || (link.getRemovedTime() > oldtestVisitedTime)) {
 +                             return false;
 +                        }
 +                }
@@ -1223,13 +1223,13 @@ index aafa438..c775863 100644
 +                }
 +                Node node1 = link.getNode1();
 +                if (node1 != null && mNodes.getAll(nodeKey(node1)) != null) {
-+                    if ((curTime < (node1.getRemovedTime() + 10)) || (node1.getRemovedTime() > oldtestVisitedTime) || (node1.getLastModifiedTime() > link.getRemovedTime())) {
++                    if ((curTime < (node1.getRemovedTime() + 10)) || (node1.getRemovedTime() > oldtestVisitedTime)) {
 +                           return false;
 +                    }
 +                }
 +                Node node2 = link.getNode2();
 +                if (node2 != null && mNodes.getAll(nodeKey(node2)) != null) {
-+                    if ((curTime < (node2.getRemovedTime() + 10)) || (node2.getRemovedTime() > oldtestVisitedTime) || (node2.getLastModifiedTime() > link.getRemovedTime())) {
++                    if ((curTime < (node2.getRemovedTime() + 10)) || (node2.getRemovedTime() > oldtestVisitedTime)) {
 +                           return false;
 +                    }
 +                }
