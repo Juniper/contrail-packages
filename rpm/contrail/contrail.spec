@@ -576,7 +576,6 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-analytics-api
 %{_bindir}/contrail-alarm-gen
 %{python_sitelib}/opserver*
-%{python_sitelib}/alarm_*
 %{python_sitelib}/contrail_snmp_collector*
 %{python_sitelib}/contrail_topology*
 %{_bindir}/contrail-logs
