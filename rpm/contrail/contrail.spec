@@ -24,7 +24,7 @@
 %if 0%{?_kVers:1}
 %define         _kvers      %{_kVers}
 %else
-%define         _kvers      %(uname -r)
+%define         _kvers      3.10.0-229.el7.x86_64 3.10.0-327.10.1.el7.x86_64
 %endif
 %if 0%{?_is_centos65} == 1
 %define         _kvers      2.6.32-431.el6.x86_64 2.6.32-573.26.1.el6.x86_64
@@ -147,8 +147,14 @@ The OpenContrail vRouter is conceptually similar to existing commercial and open
 The package opencontrail-vrouter-dkms provides the OpenContrail Linux kernel module.
 
 %preun vrouter
-if [ -L /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko ]; then
-    rm -f /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko
+# Execute only during uninstall, skip during upgrade
+if [ $1 == 0 ]; then
+    if [ -L /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko ]; then
+        echo "Removing symbolic link /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko"
+        rm -f /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko
+    fi
+else
+    echo "Skip removing /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko for upgrade"
 fi
 exit 0
 
