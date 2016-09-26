@@ -160,8 +160,14 @@ The OpenContrail vRouter is conceptually similar to existing commercial and open
 The package opencontrail-vrouter-dkms provides the OpenContrail Linux kernel module.
 
 %preun vrouter
-if [ -L /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko ]; then
-    rm -f /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko
+# Execute only during uninstall, skip during upgrade
+if [ $1 == 0 ]; then
+    if [ -L /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko ]; then
+        echo "Removing symbolic link /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko"
+        rm -f /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko
+    fi
+else
+    echo "Skip removing /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko for upgrade"
 fi
 exit 0
 
