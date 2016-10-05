@@ -111,10 +111,7 @@ popd
 
 # contrail-docs
 # Index files
-for file in %{buildroot}/usr/share/doc/contrail-docs/html/messages/*; do \
-    %{_sbtop}/tools/packages/utils/generate_doc_index.sh $file; \
-done
-%{_sbtop}/tools/packages/utils/generate_doc_index.sh %{buildroot}/usr/share/doc/contrail-docs/html/messages
+python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/share/doc/contrail-docs/html/messages
 
 # Install supervisor files
 pushd %{_builddir}/..

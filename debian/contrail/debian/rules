@@ -48,10 +48,7 @@ override_dh_auto_build:
 	done
 	# contrail-docs
 	# Index files
-	for file in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/*; do \
-		debian/utils/generate_doc_index.sh $$file; \
-	done
-	debian/utils/generate_doc_index.sh ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
+	python debian/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
 
 override_dh_auto_clean:
 	dh_auto_clean
