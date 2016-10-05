@@ -126,6 +126,7 @@ install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-version %{build
 install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-status.py %{buildroot}%{_bindir}/contrail-status
 install -D -m 755 %{_sbtop}/controller/src/analytics/database/utils/contrail-cassandra-status.py %{buildroot}%{_bindir}/contrail-cassandra-status
 install -D -m 755 %{_sbtop}/controller/src/analytics/database/utils/contrail-cassandra-repair.py %{buildroot}%{_bindir}/contrail-cassandra-repair
+install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-diff-docs.py %{buildroot}%{_bindir}/contrail-diff-docs
 
 #Needed for vrouter-dkms
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
