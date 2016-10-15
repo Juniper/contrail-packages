@@ -11,13 +11,14 @@ etc/contrail/contrail-api.conf
 etc/contrail/contrail-schema.conf
 etc/contrail/contrail-discovery.conf
 etc/contrail/contrail-device-manager.conf
+usr/lib/python*/dist-packages/contrail_issu*
+usr/lib/python*/dist-packages/device_api*
+usr/lib/python*/dist-packages/device_manager*
 usr/lib/python*/dist-packages/discovery
 usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
 usr/lib/python*/dist-packages/vnc_cfg_api_server*
 usr/share/doc/contrail-config
-usr/lib/python*/dist-packages/device_manager*
-usr/lib/python*/dist-packages/contrail_issu*
 etc/init.d/contrail-api
 etc/init.d/contrail-schema
 etc/init.d/contrail-svc-monitor
