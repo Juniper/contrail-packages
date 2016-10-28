@@ -24,6 +24,9 @@ TARGETS=control-node:node_mgr \
 %:
 	dh $@ --with python2
 
+override_dh_compress:
+	dh_compress -X.json
+
 override_dh_auto_build:
 	cd debian/manpages; ronn -r *.ronn
 	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
