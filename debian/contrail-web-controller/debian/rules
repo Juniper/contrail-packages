@@ -16,7 +16,8 @@ override_dh_auto_build:
 	# We can't use make package directly because it tries to fetch third party
 	# from network which is not available during build
 	(cd ${SB_TOP}/contrail-web-core; \
-	./generate-files.sh 'prod-env' $(REPO))
+	./generate-files.sh 'prod-env' $(REPO)); \
+	./build-files.sh 'prod-env' $(REPO)
 
 override_dh_install:
 	cp -r -a contrail-web-controller/webroot ${INSTALL_ROOT}
