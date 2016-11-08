@@ -1,0 +1,3 @@
+usr/bin/contrail-kube-manager
+etc/contrail/contrail-kubernetes.ini
+usr/lib/python*/dist-packages/kube_manager*
