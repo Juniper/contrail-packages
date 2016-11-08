@@ -21,6 +21,7 @@ usr/lib/python*/dist-packages/alarm_*
 usr/lib/python*/dist-packages/contrail_snmp_collector*
 usr/lib/python*/dist-packages/contrail_topology*
 usr/share/doc/contrail-analytics-api
+usr/share/doc/contrail-docs/html/messages/*/*_stats_tables.json
 etc/init.d/contrail-collector
 etc/init.d/contrail-query-engine
 etc/init.d/contrail-analytics-api
