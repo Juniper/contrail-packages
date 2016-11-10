@@ -736,3 +736,20 @@ modules/daemons.
 
 %files docs
 %doc /usr/share/doc/contrail-docs/html/*
+
+%package kube-manager
+Summary:            Kubernetes network manager
+
+Group:              Applications/System
+
+Requires:	    python-contrail >= %{_verstr}-%{_relstr}
+Requires:	    python-gevent
+Requires:	    python-requests
+
+%description kube-manager
+Contrail kubernetes network manager package
+This package contains the kubernetes network management modules.
+%files kube-manager
+%{python_sitelib}/kube_manager*
+%{_bindir}/contrail-kube-manager
+%{_contrailetc}/contrail-kubernetes.ini
