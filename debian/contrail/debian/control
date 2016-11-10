@@ -413,3 +413,14 @@ Description: OpenContrail kubernetes network manager
  .
  This package contains the kubernetes nmanagement module that interface
  with OpenContrail.
+
+Package: contrail-kube-cni
+Architecture: amd64
+Depends: python-gevent,
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenContrail kubernetes cni plugin
+ Kubernetes opencontrail cni plugin for adding network support for pods.
+ .
+ This package contains the kubernetes cni plugin that interfaces
+ with OpenContrail.
