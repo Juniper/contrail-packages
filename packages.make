@@ -31,6 +31,9 @@ endif
 ifeq ($(SERIES),trusty)
     CONTRAIL_VROUTER_DPDK := package-contrail-vrouter-dpdk
 endif
+ifeq ($(SERIES),xenial)
+    CONTRAIL_VROUTER_DPDK := package-contrail-vrouter-dpdk
+endif
 
 source-all: source-package-contrail-web-core \
 	source-package-contrail-web-controller \
