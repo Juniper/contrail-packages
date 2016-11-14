@@ -752,7 +752,6 @@ This package contains the kubernetes network management modules.
 %files kube-manager
 %{python_sitelib}/kube_manager*
 %{_bindir}/contrail-kube-manager
-%{_contrailetc}/contrail-kubernetes.ini
 
 %package kube-cni
 Summary:            Kubernetes cni plugin
