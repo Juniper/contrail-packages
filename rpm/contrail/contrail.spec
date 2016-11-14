@@ -113,6 +113,10 @@ popd
 # Index files
 python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/share/doc/contrail-docs/html/messages
 
+# contrail-cli
+# generate list of commands
+python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/production/utils/contrail-cli ${buildroot} %{buildroot}/usr/lib/python2.7/dist-packages/
+
 # Install supervisor files
 pushd %{_builddir}/..
 install -p -m 755 %{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
@@ -767,3 +771,54 @@ This package contains the kubernetes cni plugin modules.
 %files kube-cni
 %{python_sitelib}/kube_cni*
 %{_bindir}/contrail-kube-cni
+
+%description cli
+OpenContrail is a network virtualization solution that provides an overlay
+virtual-network to virtual-machines, containers or network namespaces.
+
+This package contains the basic commands which are needed by other 
+OpenContrail modules/daemons specific packages.
+
+%files cli
+%{python_sitelib}/contrailCli*
+
+%description analytics-cli
+OpenContrail is a network virtualization solution that provides an overlay
+virtual-network to virtual-machines, containers or network namespaces.
+
+This package contains the CLIs for viewing introspect pages of
+OpenContrail Analytics modules/daemons.
+
+%files analytics-cli
+%{python_sitelib}/contrailAnalyticsCli*
+
+%description config-cli
+OpenContrail is a network virtualization solution that provides an overlay
+virtual-network to virtual-machines, containers or network namespaces.
+
+This package contains the CLIs for viewing introspect pages of
+OpenContrail Config modules/daemons.
+
+%files config-cli
+%{python_sitelib}/contrailConfigCli*
+
+%description control-cli
+OpenContrail is a network virtualization solution that provides an overlay
+virtual-network to virtual-machines, containers or network namespaces.
+
+This package contains the CLIs for viewing introspect pages of
+OpenContrail Control modules/daemons.
+
+%files control-cli
+%{python_sitelib}/contrailControlCli*
+
+%description vrouter-cli
+OpenContrail is a network virtualization solution that provides an overlay
+virtual-network to virtual-machines, containers or network namespaces.
+
+This package contains the CLIs for viewing introspect pages of
+OpenContrail Vrouter modules/daemons.
+
+%files vrouter-cli
+%{python_sitelib}/contrailVrouterCli*
+
