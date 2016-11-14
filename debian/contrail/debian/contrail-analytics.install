@@ -20,6 +20,7 @@ usr/lib/python*/dist-packages/opserver*
 usr/lib/python*/dist-packages/alarm_*
 usr/lib/python*/dist-packages/contrail_snmp_collector*
 usr/lib/python*/dist-packages/contrail_topology*
+usr/lib/python*/dist-packages/ContrailAnalyticsCli*
 usr/share/doc/contrail-analytics-api
 etc/init.d/contrail-collector
 etc/init.d/contrail-query-engine

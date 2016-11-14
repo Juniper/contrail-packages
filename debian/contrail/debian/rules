@@ -52,6 +52,15 @@ override_dh_auto_build:
 	# contrail-docs
 	# Index files
 	python debian/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
+	# contrail-cli
+	mkdir -p ${INSTALL_ROOT}/etc/bash_completion.d
+	mkdir -p ${INSTALL_ROOT}/usr/local/bin
+	python debian/utils/generate_cli_commands.py ${SB_TOP}/build/production/utils/contrail-cli ${INSTALL_ROOT} ${INSTALL_ROOT}/usr/lib/python2.7/dist-packages/
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_config_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_control_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 
 override_dh_auto_clean:
 	dh_auto_clean
