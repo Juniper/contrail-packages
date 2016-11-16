@@ -1,3 +1,2 @@
 usr/bin/contrail-kube-cni
-etc/contrail/contrail-cni.conf
 usr/lib/python*/dist-packages/kube_cni*
