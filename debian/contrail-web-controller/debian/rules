@@ -17,6 +17,7 @@ override_dh_auto_build:
 	# from network which is not available during build
 	(cd ${SB_TOP}/contrail-web-core; \
 	./generate-files.sh 'prod-env' $(REPO); \
+	./dev-install.sh; \
 	./build-files.sh 'prod-env' $(REPO))
 
 override_dh_install:
