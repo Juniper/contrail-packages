@@ -1,0 +1,229 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
+index 49aede4..b534bae 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
++++ b/src/de/fhhannover/inform/iron/mapserver/communication/ifmap/PollResultsPending.java
+@@ -179,7 +179,7 @@ public class PollResultsPending {
+                 for (ResultItem ri : result.getResultItems()) {
+                         GraphElement ge = ri.getGraphElement();
+                         if (ge.getLastModifiedTime() < most_oldest_visited_element_time_stamp) {
+-                             sLogger.debug("most oldest item visited: ge: " + ge + ", lastModifiedTime: " + ge.getLastModifiedTime() + ";  GE: " + ge);
++                             //sLogger.debug("most oldest item visited: ge: " + ge + ", lastModifiedTime: " + ge.getLastModifiedTime() + ";  GE: " + ge);
+                              most_oldest_visited_element_time_stamp = ge.getLastModifiedTime();
+                         }
+                 }
+@@ -205,7 +205,7 @@ public class PollResultsPending {
+         }
+ 
+         private synchronized void remove(String sessionId) {
+-                sLogger.trace(sName +  ": Session - " + sessionId + " removed from pending results list");
++                //sLogger.trace(sName +  ": Session - " + sessionId + " removed from pending results list");
+                 mPollResults.remove(sessionId);
+                 mPerClientMpprs.remove(sessionId);
+         }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+index 7c4a668..13be59f 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/DummyNodeImpl.java
+@@ -136,4 +136,8 @@ class DummyNodeImpl extends DummyGraphElement implements Node {
+         public Long getLastModifiedTime() {
+                return mLastModifiedTime;
+         }
++
++        public void dumpContents() {
++                return;
++        }
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+index 2946b27..d7f4b5a 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementRepositoryImpl.java
+@@ -52,6 +52,7 @@ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+  */
+ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	private final static Logger sLogger = LoggingProvider.getTheLogger();
++        private static String sName = "GraphElementRepositoryImpl";
+ 	private MultiMap<Integer, Node> mNodes;
+ 	private MultiMap<Integer, Link> mLinks;
+ 	private PublisherRep mPublisherRep;
+@@ -90,7 +91,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+                 @Override
+                 public void run() {
+                     try {
+-                         sLogger.debug("Cleanup task started");
++                         //sLogger.debug("Cleanup task started");
+                          /* replace with the actual task */
+                          try {
+                               Thread.sleep(mCleanupInterval * 1000);
+@@ -98,7 +99,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+                               e.printStackTrace();
+                          }
+                          int count = removeElements();
+-                         sLogger.debug("Cleanup task done, number of elements removed: " + count);
++                         //sLogger.debug("Cleanup task done, number of elements removed: " + count);
+                          mCleanupTimer.schedule(new CleanupTask(), 0, 10);
+                     } catch (Exception ex) {
+                          sLogger.debug(ex);
+@@ -139,10 +140,10 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+         public synchronized int removeElements() {
+                int count = 0;
+                Iterator<GraphElement> it = mRemovedElements.iterator();
+-               dumpGraphElementVisitedTime();
++               //dumpGraphElementVisitedTime();
+                while (it.hasNext()) {
+                     GraphElement ge = it.next();
+-                    sLogger.debug("Remove time: " + ge.getRemovedTime() + "; " + " OldestVisit: " + mSessionRep.oldestGraphElementVisitedTime() + ";ge: " + ge);
++                    //sLogger.debug("Remove time: " + ge.getRemovedTime() + "; " + " OldestVisit: " + mSessionRep.oldestGraphElementVisitedTime() + ";ge: " + ge);
+                     Long curTime = new Long(System.currentTimeMillis());
+                     if ((curTime >= (ge.getRemovedTime() + 10)) && (ge.getRemovedTime() <= mSessionRep.oldestGraphElementVisitedTime())) {
+                          if (ge instanceof Node) {
+@@ -170,7 +171,7 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+                          }
+                     }
+                }
+-               sLogger.info("Collector - Number of elements removed from graph: " + count);
++               //sLogger.info("Collector - Number of elements removed from graph: " + count);
+                return count;
+         }
+ 
+@@ -205,8 +206,11 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		// if there is no such Link, create a new one based on Nodes from the
+ 		// repository. These might be created in turn as well.
+ 		if (l == null) {
+-			Node linkNode1 = getNodeFor(i1);
+-			Node linkNode2 = getNodeFor(i2);
++                    Node linkNode1 = null;
++                    Node linkNode2 = null;
++                    try {
++			linkNode1 = getNodeFor(i1);
++			linkNode2 = getNodeFor(i2);
+ 			l = new LinkImpl(linkNode1, linkNode2);
+ 			linkNode1.addLink(l);
+ 			
+@@ -214,6 +218,33 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 				linkNode2.addLink(l);
+ 			
+ 			mLinks.put(linkKey(l), l);
++
++                    }catch(SystemErrorException e) {
++                        sLogger.error(sName + ": " + e.getMessage());
++                        if (linkNode1 != null) {
++                            sLogger.error("linkNode1: ");
++                            sLogger.error(linkNode1);
++                        }
++                        if (linkNode1 != null) {
++                            sLogger.error("linkNode2: ");
++                            sLogger.error(linkNode2);
++                        }
++                        sLogger.error("link(linkNode1, linkNode2): ");
++                        sLogger.error(l);
++                        if (linkNode1 != null) {
++                            sLogger.error("linkNode1 Complete set of links");
++                            linkNode1.dumpContents();
++                        }
++                        if (linkNode2 != null) {
++                            sLogger.error("linkNode2 Complete set of links");
++                            linkNode2.dumpContents();
++                        }
++       
++                        sLogger.error("GraphRepo Complete Nodes/Links: ");
++                        dumpContents();
++                        throw e;
++                    }
++
+ 		}
+ 		
+ 		return l;
+@@ -277,19 +308,19 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 	/* (non-Javadoc)
+ 	 * @see de.fhhannover.inform.iron.mapserver.datamodel.graph.GraphElementRepository#dumpContents()
+ 	 */
+-	@Override
+-	public void dumpContents() {
+-		System.out.println("DUMP NODES");
+-		for (Node n : mNodes.values()) {
+-			System.out.println(n);
+-		}
+-		System.out.println("END NODES");
+-		System.out.println("DUMP LINKS");
+-		for (Link l : mLinks.values()) {
+-			System.out.println(l);
+-		}
+-		System.out.println("END LINKS");
+-	}
++ 	@Override
++ 	public void dumpContents() {
++                sLogger.error(sName + ": Dump Nodes and Links#");
++ 		for (Node n : mNodes.values()) {
++			sLogger.error(n);
++ 		}
++		sLogger.error("END NODES");
++		sLogger.error("DUMP LINKS");
++ 		for (Link l : mLinks.values()) {
++			sLogger.error(l);
++ 		}
++		sLogger.error("END LINKS");
++ 	}
+ 	
+ 	/**
+ 	 * Helper to find a {@link Node} instance which has the given
+@@ -469,8 +500,8 @@ public class GraphElementRepositoryImpl implements GraphElementRepository {
+ 		for (Publisher pub : mPublisherRep.getPublishers()) {
+ 			List<Subscription> subs = pub.getSubscriptionState().getSubscriptions();
+ 			for (Subscription sub : subs) {
+-				sLogger.trace("Removing a non meaningful element " + removed +
+-					" from subscriber : " + sub);
++				//sLogger.trace("Removing a non meaningful element " + removed +
++			        //		" from subscriber : " + sub);
+                                 try {
+ 				    sub.removeGraphElementRemoved(removed);
+                                 } catch (SystemErrorException e) {
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+index 4496098..73f2d63 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/Node.java
+@@ -75,4 +75,7 @@ public interface Node extends GraphElement {
+ 	@Override
+ 	public Node dummy();
+ 
++        public void dumpContents();
++
++
+ }
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+index cf74fc8..35d920e 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+@@ -28,13 +28,17 @@ import de.fhhannover.inform.iron.mapserver.datamodel.identifiers.Identifier;
+ import de.fhhannover.inform.iron.mapserver.exceptions.SystemErrorException;
+ import de.fhhannover.inform.iron.mapserver.utils.CollectionHelper;
+ import de.fhhannover.inform.iron.mapserver.utils.NullCheck;
+-
++import de.fhhannover.inform.iron.mapserver.provider.LoggingProvider;
++import org.apache.log4j.Logger;
++ 
+ class NodeImpl extends GraphElementImpl implements Node {
+ 	
+ 	private final Identifier mIdentifier;
+ 	private final Map<Integer, Link> mLinks;
+ 	private final Node mDummy;
+         private Long mLastModifiedTime;
++        private static Logger sLogger = LoggingProvider.getTheLogger();
++        private static String sName = "GraphElementImpl";
+ 	
+ 	NodeImpl(Identifier i) {
+ 		super();
+@@ -127,4 +131,14 @@ class NodeImpl extends GraphElementImpl implements Node {
+ 	public int getByteCount() {
+ 		return getIdentifier().getByteCount();
+ 	}
++
++        public void dumpContents() {
++                sLogger.error(sName + ": Dump Links of ");
++                sLogger.error(mIdentifier);
++                sLogger.error(sName + "DUMP LINKS");
++                for (Link l : mLinks.values()) {
++                        sLogger.error(l);
++                }
++                sLogger.error(sName + "END LINKS");
++        }
+ }
