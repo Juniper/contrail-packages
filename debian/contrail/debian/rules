@@ -51,7 +51,7 @@ override_dh_auto_build:
 	done
 	# Move schema specific files to opserver
 	for mod_dir in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/*; do \
-		if [[ -d $$mod_dir ]]; then \
+		if [ -d $$mod_dir ]; then \
 			mkdir -m 0644 -p ~/sandbox/build/production/opserver/stats_schema/`basename $$mod_dir`}; \
 			for statsfile in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/`basename $$mod_dir`/*_stats_tables.json; do \
 				cp $$statsfile ${SB_TOP}/build/production/opserver/stats_schema/`basename $$mod_dir`/; \
@@ -61,6 +61,14 @@ override_dh_auto_build:
 	# contrail-docs
 	# Index files
 	python debian/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
+	# contrail-cli
+	mkdir -p ${INSTALL_ROOT}/etc/bash_completion.d
+	python debian/utils/generate_cli_commands.py ${SB_TOP}/build/production/utils/contrail-cli ${INSTALL_ROOT}
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_config_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_control_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
+	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 
 override_dh_auto_clean:
 	dh_auto_clean
