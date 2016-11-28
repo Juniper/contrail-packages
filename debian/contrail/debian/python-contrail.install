@@ -5,4 +5,6 @@ usr/lib/python*/dist-packages/pysandesh*
 usr/lib/python*/dist-packages/sandesh-0.1*
 usr/lib/python*/dist-packages/sandesh_common*
 usr/lib/python*/dist-packages/vnc_api*
+usr/lib/python*/dist-packages/ContrailCli*
 etc/contrail/vnc_api_lib.ini
+etc/bash_completion.d/bashrc_contrail_cli
