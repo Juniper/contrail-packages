@@ -1,14 +1,14 @@
-usr/bin/contrail-collector
-usr/bin/contrail-query-engine
-usr/bin/contrail-analytics-api
+usr/bin/contrail-collector*
+usr/bin/contrail-query-engine*
+usr/bin/contrail-analytics-api*
 usr/bin/contrail-logs
 usr/bin/contrail-db
 usr/bin/contrail-stats
 usr/bin/contrail-flows
 usr/bin/contrail-logs-api-audit
 usr/bin/contrail-snmp-*
-usr/bin/contrail-topology
-usr/bin/contrail-alarm-gen
+usr/bin/contrail-topology*
+usr/bin/contrail-alarm-gen*
 usr/bin/contrail-alarm-notify
 etc/contrail/contrail-collector.conf
 etc/contrail/contrail-query-engine.conf
@@ -20,6 +20,7 @@ usr/lib/python*/dist-packages/opserver*
 usr/lib/python*/dist-packages/alarm_*
 usr/lib/python*/dist-packages/contrail_snmp_collector*
 usr/lib/python*/dist-packages/contrail_topology*
+usr/lib/python*/dist-packages/ContrailAnalyticsCli*
 usr/share/doc/contrail-analytics-api
 etc/init.d/contrail-collector
 etc/init.d/contrail-query-engine
