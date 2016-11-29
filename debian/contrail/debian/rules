@@ -49,6 +49,15 @@ override_dh_auto_build:
 	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.ini; do \
 		install -p -m 644 -t ${INSTALL_ROOT}/usr/share/doc/contrail-`basename $$conf | cut -d '-' -f 2`/examples $$conf; \
 	done
+	# Move schema specific files to opserver
+	for mod_dir in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/*; do \
+		if [[ -d $$mod_dir ]]; then \
+			mkdir -m 0644 -p ~/sandbox/build/production/opserver/stats_schema/`basename $$mod_dir`}; \
+			for statsfile in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/`basename $$mod_dir`/*_stats_tables.json; do \
+				cp $$statsfile ${SB_TOP}/build/production/opserver/stats_schema/`basename $$mod_dir`/; \
+			done \
+		fi \
+	done
 	# contrail-docs
 	# Index files
 	python debian/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
