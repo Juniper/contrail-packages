@@ -753,6 +753,22 @@ This package contains the kubernetes network management modules.
 %{python_sitelib}/kube_manager*
 %{_bindir}/contrail-kube-manager
 
+%package mesos-manager
+Summary:            Mesos network manager
+
+Group:              Applications/System
+
+Requires:	    python-contrail >= %{_verstr}-%{_relstr}
+Requires:	    python-gevent
+Requires:	    python-requests
+
+%description mesos-manager
+Contrail Mesos network manager package
+This package contains the mesos network management modules.
+%files mesos-manager
+%{python_sitelib}/mesos_manager*
+%{_bindir}/contrail-mesos-manager
+
 %package kube-cni
 Summary:            Kubernetes cni plugin
 

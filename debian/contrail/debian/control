@@ -411,7 +411,22 @@ Description: OpenContrail kubernetes network manager
  receive information about resources and create corresponding OpenContrail
  resources.
  .
- This package contains the kubernetes nmanagement module that interface
+ This package contains the kubernetes management module that interfaces
+ with OpenContrail.
+
+Package: contrail-mesos-manager
+Architecture: amd64
+Depends: python-requests,
+         python-gevent,
+         python-contrail (>= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenContrail mesos network manager
+ Mesos network manager interacts with the mesos CNI plugin to
+ receive information about resources and create corresponding OpenContrail
+ resources.
+ .
+ This package contains the mesos management module that interfaces
  with OpenContrail.
 
 Package: contrail-kube-cni
