@@ -30,11 +30,6 @@ script
 end script
 
 pre-stop script
-    if [ -e /tmp/supervisord_analytics.sock ]; then
-        supervisorctl -s unix:///tmp/supervisord_analytics.sock stop all
-        supervisorctl -s unix:///tmp/supervisord_analytics.sock shutdown
-    else
-        supervisorctl -s unix:///var/run/supervisord_analytics.sock stop all
-        supervisorctl -s unix:///var/run/supervisord_analytics.sock shutdown
-    fi
+    supervisorctl -s unix:///tmp/supervisord_analytics.sock stop all
+    supervisorctl -s unix:///tmp/supervisord_analytics.sock shutdown
 end script

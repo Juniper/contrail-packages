@@ -51,11 +51,6 @@ script
 end script
 
 pre-stop script
-    if [ -e /tmp/supervisord_config.sock ]; then
-        supervisorctl -s unix:///tmp/supervisord_config.sock stop all
-        supervisorctl -s unix:///tmp/supervisord_config.sock shutdown
-    else
-        supervisorctl -s unix:///var/run/supervisord_config.sock stop all
-        supervisorctl -s unix:///var/run/supervisord_config.sock shutdown
-    fi
+    supervisorctl -s unix:///tmp/supervisord_config.sock stop all
+    supervisorctl -s unix:///tmp/supervisord_config.sock shutdown
 end script

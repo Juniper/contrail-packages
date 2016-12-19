@@ -42,13 +42,8 @@ function daemon_start() {
 }
 
 function daemon_stop() {
-    if [ -e /tmp/supervisord_vrouter.sock ]; then
-        supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
-        supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
-    else
-        supervisorctl -s unix:///var/run/supervisord_vrouter.sock stop all
-        supervisorctl -s unix:///var/run/supervisord_vrouter.sock shutdown
-    fi
+    /usr/bin/supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
+    /usr/bin/supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
     if [ -f $PID_FILE ]; then
         kill `cat $PID_FILE`
         rm -f $PID_FILE
