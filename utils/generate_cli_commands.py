@@ -217,8 +217,9 @@ class ContrailCliGenerator(object):
                     continue
                 with open(mapping_file) as data_file:
                     data = json.load(data_file)
-                for cmd in data.keys():
-                    list_commands.append((cmd, data[cmd]))
+                if "sandesh_cli" in data.keys():
+                    for cmd, tables in data["sandesh_cli"].iteritems():
+                        list_commands.append((cmd, tables))
 
             if len(list_commands) == 0:
                 continue
@@ -243,7 +244,7 @@ class ContrailCliGenerator(object):
 
     def _parse_cli_mapping_files(self):
         topdir = self._doc_dir
-        extn = '_introspect_cli.json'
+        extn = '_introspect.doc.schema.json'
         for directory in os.listdir(topdir):
             self.mapping_files[directory] = []
             for dirpath, dirnames, files in os.walk(topdir+directory):
