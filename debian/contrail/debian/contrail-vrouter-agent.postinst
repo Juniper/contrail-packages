@@ -3,6 +3,10 @@
 
 set -e
 
+if [ -f /etc/lsb-release ] && (egrep -q 'DISTRIB_RELEASE.*16.04' /etc/lsb-release); then
+    rm etc/init.d/contrail-vrouter-agent
+fi
+
 if [ "$1" = "configure" ]; then
 
   # Create the "contrail" user

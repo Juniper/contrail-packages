@@ -30,4 +30,22 @@ if [ "$1" = "configure" ]; then
 
 fi
 
+if [ -f /etc/lsb-release ] && (egrep -q 'DISTRIB_RELEASE.*16.04' /etc/lsb-release); then
+    rm etc/init.d/contrail-collector
+    rm etc/init.d/contrail-query-engine
+    rm etc/init.d/contrail-analytics-api
+    rm etc/init.d/contrail-snmp-collector
+    rm etc/init.d/contrail-topology
+    rm etc/init.d/contrail-alarm-gen
+    rm etc/contrail/supervisord_analytics.conf
+    rm etc/contrail/supervisord_analytics_files/contrail-analytics.rules
+    rm etc/contrail/supervisord_analytics_files/contrail-collector.ini
+    rm etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
+    rm etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
+    rm etc/contrail/supervisord_analytics_files/contrail-snmp-collector.ini
+    rm etc/contrail/supervisord_analytics_files/contrail-topology.ini
+    rm etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
+fi
+
+
 #DEBHELPER#

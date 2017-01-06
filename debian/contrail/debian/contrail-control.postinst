@@ -3,6 +3,13 @@
 
 set -e
 
+if [ -f /etc/lsb-release ] && (egrep -q 'DISTRIB_RELEASE.*16.04' /etc/lsb-release); then
+    rm etc/init.d/contrail-control
+    rm etc/contrail/supervisord_control.conf
+    rm etc/contrail/supervisord_control_files/contrail-control.rules
+    rm etc/contrail/supervisord_control_files/contrail-control.ini
+fi
+
 if [ "$1" = "configure" ]; then
 
   # Create the "contrail" user
