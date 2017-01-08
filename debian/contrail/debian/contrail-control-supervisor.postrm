@@ -1,0 +1,12 @@
+#!/bin/sh
+# OpenContrail developers <dev@lists.opencontrail.org>
+
+set -e
+
+if [ "${1}" = "purge" ] ; then
+
+  rm -f /var/log/contrail/supervisord-control.log*
+
+fi
+
+#DEBHELPER#

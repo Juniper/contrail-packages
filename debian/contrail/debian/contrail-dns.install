@@ -6,8 +6,4 @@ etc/contrail/dns/contrail-rndc.conf
 etc/contrail/dns/contrail-named.conf
 etc/contrail/contrail-dns.conf
 etc/contrail/dns/COPYRIGHT
-etc/init.d/contrail-dns
-etc/init.d/contrail-named
-etc/contrail/supervisord_control_files/contrail-dns.ini
-etc/contrail/supervisord_control_files/contrail-named.ini
 etc/contrail/dns/applynamedconfig.py

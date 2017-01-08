@@ -51,7 +51,6 @@ Depends: adduser,
          python-requests (>= 1.1.0),
          python-xmltodict,
          redis-server (>= 2.6.13-1),
-         supervisor,
          python-stevedore (>= 0.14.1),
          python-kazoo (>= 1.3.1),
          python-sseclient,
@@ -77,6 +76,13 @@ Description: OpenContrail analytics
  Analytics nodes collect, store, correlate, and analyze information from
  network elements, virtual or physical. This information includes statistics,
  logs, events, and errors.
+
+Package: contrail-analytics-supervisor
+Architecture: amd64
+Depends: contrail-analytics (>= ${source:Version}),
+         supervisor
+Description: OpenContrail analytics supervisor.
+ Configures the supervisor related modules of contrail-analytics.
 
 Package: contrail-analytics-dbg
 Architecture: any
@@ -109,7 +115,6 @@ Depends: adduser,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
          python-xmltodict,
-         supervisor,
          ifmap-server,
          ${misc:Depends},
          ${python:Depends},
@@ -134,6 +139,13 @@ Description: OpenContrail configuration management
  Configuration nodes keep a persistent copy of the intended configuration state
  and translate the high-level data model into the lower level model suitable for
  interacting with network elements. Both these are kept in a NoSQL database.
+
+Package: contrail-config-supervisor
+Architecture: amd64
+Depends: contrail-config (>= ${source:Version}),
+         supervisor
+Description: OpenContrail configuration supervisor
+ Configures the supervisor related modules of contrail-config.
 
 Package: contrail-config-openstack
 Architecture: amd64
@@ -175,7 +187,6 @@ Package: contrail-control
 Depends: adduser,
          authbind,
          contrail-lib (>= ${binary:Version}),
-         supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: contrail-nodemgr (>= ${source:Version}),
@@ -201,6 +212,13 @@ Description: OpenContrail control-node
  responsible for maintaining ephemeral network state. Control nodes interact
  with each other and with network elements to ensure that network state is
  eventually consistent.
+
+Package: contrail-control-supervisor
+Architecture: amd64
+Depends: contrail-control (>= ${source:Version}),
+         supervisor
+Description: OpenContrail control supervisor
+ Configures the supervisor related modules of contrail-control.
 
 Package: contrail-control-dbg
 Architecture: any
@@ -231,11 +249,15 @@ Description: OpenContrail control-dns
  .
  Provides contrail DNS services
 
+Package: contrail-dns-supervisor
+Architecture: amd64
+Depends: contrail-dns (>= ${source:Version}),
+Description: OpenContrail control-dns supervisor
+
 Package: contrail-vrouter-agent
 Depends: adduser,
          contrail-lib (>= ${binary:Version}),
          contrail-vrouter,
-         supervisor,
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: contrail-nodemgr (>= ${source:Version}),
@@ -245,6 +267,12 @@ Description: OpenContrail vrouter agent
  virtual-network to virtual-machines, containers or network namespaces.
  .
  This package provides the contrail-vrouter user space agent.
+
+Package: contrail-vrouter-agent-supervisor
+Architecture: amd64
+Depends: supervisor,
+         contrail-vrouter-agent (>= ${source:Version}),
+Description: OpenContrail vrouter-agent supervisor
 
 Package: contrail-vrouter-agent-dbg
 Architecture: any

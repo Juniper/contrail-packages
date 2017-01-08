@@ -1,7 +1,3 @@
 usr/bin/contrail-control*
 etc/contrail/contrail-control.conf
-etc/init.d/contrail-control
-etc/contrail/supervisord_control.conf
-etc/contrail/supervisord_control_files/contrail-control.rules
-etc/contrail/supervisord_control_files/contrail-control.ini
 usr/lib/python*/dist-packages/ContrailControlCli*

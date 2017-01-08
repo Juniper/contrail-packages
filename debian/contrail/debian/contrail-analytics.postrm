@@ -30,7 +30,6 @@ if [ "${1}" = "purge" ] ; then
   rm -f /var/log/contrail/contrail-topology.log*
   rm -f /var/log/contrail/contrail-topology-stdout.log*
   rm -f /var/log/contrail/process_statecontrail-analytics.json
-  rm -f /var/log/contrail/supervisord-analytics.log*
 
   if [ ! "$(ls -A /var/log/contrail)" ]; then
     rm -rf /var/log/contrail
