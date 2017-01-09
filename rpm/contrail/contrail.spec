@@ -411,11 +411,9 @@ Group:              Applications/System
 
 %if 0%{?rhel} > 6
 Requires:           python-websocket-client >= 0.32.0
-Requires:           python-docker-py >= 1.4.0
-%else
-Requires:           python-docker-py
 %endif
 
+Requires:           python-docker >= 1.8.0
 Requires:           python-unittest2
 Requires:           iproute >= 3.1.0
 Requires:           python-requests >= 2.5.1
