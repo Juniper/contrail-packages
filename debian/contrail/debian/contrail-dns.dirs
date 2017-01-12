@@ -2,3 +2,4 @@ etc/contrail/dns
 etc/contrail
 var/lib/contrail
 var/log/contrail
+etc/contrail/supervisord_control_files
