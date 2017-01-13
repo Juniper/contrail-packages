@@ -104,8 +104,24 @@ package-contrail: debian-contrail
 	@echo "Building package $(PACKAGE)"
 	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
 	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+    # Append series specific build depends
 	(cd build/packages/$(PACKAGE)/debian; sed -i '/BUILDDEP_SERIES/r builddep.$(SERIES)' control)
 	sed -i '/BUILDDEP_SERIES/d' build/packages/$(PACKAGE)/debian/control
+    # Append series specific depends
+	(cd build/packages/$(PACKAGE)/debian; sed -i '/SUPERVISORDEP_SERIES/r builddep.$(SERIES)' control)
+	sed -i '/SUPERVISORDEP_SERIES/d' build/packages/$(PACKAGE)/debian/control
+    # Append series specific install files
+    $(eval CONTRAIL_INSTALL_SERIES := $(cd build/packages/$(PACKAGE)/debian/; ls *.install.$(SERIES)))
+    $(foreach series_fname, $(CONTRAIL_INSTALL_SERIES), \
+            (cd build/packages/$(PACKAGE)/debian;\
+            sed -i '/INSTALL_SERIES/r $(series_fname)' $(patsubst %.$(SERIES),%,$(series_fname));\
+            sed -i '/INSTALL_SERIES/d' $(patsubst %.$(SERIES),%,$(series_fname))); )
+    # Append series specific dirs
+    $(eval CONTRAIL_DIRS_SERIES := $(cd build/packages/$(PACKAGE)/debian/; ls *.install.$(SERIES)))
+    $(foreach series_dirname, $(CONTRAIL_DIRS_SERIES), \
+            (cd build/packages/$(PACKAGE)/debian;\
+            sed -i '/DIRS_SERIES/r $(series_dirname)' $(patsubst %.$(SERIES),%,$(series_dirname));\
+            sed -i '/DIRS_SERIES/d' $(patsubst %.$(SERIES),%,$(series_dirname))); )
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 	chmod u+x build/packages/contrail/debian/rules.modules
 	(cd build/packages/$(PACKAGE); fakeroot debian/rules.modules KVERS=$(KVERS) binary-modules)
@@ -114,8 +130,22 @@ source-package-contrail: clean-contrail debian-contrail
 	$(eval PACKAGE := contrail)
 	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
 	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+    # Append series specific build depends
 	(cd build/packages/$(PACKAGE)/debian; sed -i '/BUILDDEP_SERIES/r builddep.$(SERIES)' control)
 	sed -i '/BUILDDEP_SERIES/d' build/packages/$(PACKAGE)/debian/control
+    # Append series specific depends
+    (cd build/packages/$(PACKAGE)/debian; sed -i '/SUPERVISORDEP_SERIES/r builddep.$(SERIES)' control)
+    sed -i '/SUPERVISORDEP_SERIES/d' build/packages/$(PACKAGE)/debian/control
+    # Append series specific install files
+    $(eval CONTRAIL_INSTALL_SERIES := $(cd build/packages/$(PACKAGE)/debian/; ls *.install.$(SERIES)))
+    $(foreach series_fname, $(CONTRAIL_INSTALL_SERIES), \
+            (cd build/packages/$(PACKAGE)/debian;\
+            sed -i '/INSTALL_SERIES/r $(series_fname)' $(patsubst %.$(SERIES),%,$(series_fname))); )
+    # Append series specific dirs
+    $(eval CONTRAIL_DIRS_SERIES := $(cd build/packages/$(PACKAGE)/debian/; ls *.install.$(SERIES)))
+    $(foreach series_dirname, $(CONTRAIL_DIRS_SERIES), \
+            (cd build/packages/$(PACKAGE)/debian;\
+            sed -i '/DIRS_SERIES/r $(series_dirname)' $(patsubst %.$(SERIES),%,$(series_dirname))); )
 	(cd vrouter; git clean -f -d)
 	tar zcf build/packages/contrail_$(CONTRAIL_VERSION).orig.tar.gz $(SOURCE_CONTRAIL_ARCHIVE)
 	@echo "Building source package $(PACKAGE)"
