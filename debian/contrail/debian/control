@@ -51,7 +51,7 @@ Depends: adduser,
          python-requests (>= 1.1.0),
          python-xmltodict,
          redis-server (>= 2.6.13-1),
-         supervisor,
+         SUPERVISORDEP_SERIES
          python-stevedore (>= 0.14.1),
          python-kazoo (>= 1.3.1),
          python-sseclient,
@@ -109,7 +109,7 @@ Depends: adduser,
          python-requests (>= 1.1.0),
          python-stevedore (>= 0.14.1),
          python-xmltodict,
-         supervisor,
+         SUPERVISORDEP_SERIES
          ifmap-server,
          ${misc:Depends},
          ${python:Depends},
@@ -175,7 +175,7 @@ Package: contrail-control
 Depends: adduser,
          authbind,
          contrail-lib (>= ${binary:Version}),
-         supervisor,
+         SUPERVISORDEP_SERIES
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: contrail-nodemgr (>= ${source:Version}),
@@ -235,7 +235,7 @@ Package: contrail-vrouter-agent
 Depends: adduser,
          contrail-lib (>= ${binary:Version}),
          contrail-vrouter,
-         supervisor,
+         SUPERVISORDEP_SERIES
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: contrail-nodemgr (>= ${source:Version}),

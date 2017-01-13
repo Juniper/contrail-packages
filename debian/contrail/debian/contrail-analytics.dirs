@@ -1,4 +1,4 @@
 var/lib/contrail
 etc/contrail
-etc/contrail/supervisord_analytics_files
 var/log/contrail
+DIRS_SERIES
