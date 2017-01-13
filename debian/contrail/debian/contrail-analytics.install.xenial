@@ -1,0 +1,8 @@
+etc/contrail/contrail-analytics-nodemgr.conf
+etc/systemd/system/contrail-analytics-nodemgr.service
+etc/systemd/system/contrail-collector.service
+etc/systemd/system/contrail-query-engine.service
+etc/systemd/system/contrail-analytics-api.service
+etc/systemd/system/contrail-snmp-collector.service
+etc/systemd/system/contrail-topology.service
+etc/systemd/system/contrail-alarm-gen.service

@@ -20,7 +20,9 @@ if [ "${1}" = "purge" ] ; then
   rm -f /var/log/contrail/contrail-control-nodemgr-stderr.log*
   rm -f /var/log/contrail/contrail-control-nodemgr-stdout.log*
   rm -f /var/log/contrail/process_statecontrail-control.json
-  rm -f /var/log/contrail/supervisord-control.log*
+  if (ls /var/log/contrail/supervisord-control.log* 1> /dev/null 2>&1); then
+      rm -f /var/log/contrail/supervisord-control.log*
+  fi
 
   if [ ! "$(ls -A /var/log/contrail)" ]; then
     rm -rf /var/log/contrail

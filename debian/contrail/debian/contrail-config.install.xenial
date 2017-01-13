@@ -1,0 +1,8 @@
+etc/contrail/contrail-config-nodemgr.conf
+etc/systemd/system/contrail-config-nodemgr.service
+etc/systemd/system/contrail-api.service
+etc/systemd/system/contrail-schema.service
+etc/systemd/system/contrail-svc-monitor.service
+etc/systemd/system/contrail-discovery.service
+etc/systemd/system/contrail-device-manager.service
+etc/systemd/system/ifmap.service
