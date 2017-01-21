@@ -13,6 +13,15 @@ package-dkms=contrail-vrouter-dkms
 VER := $(shell lsb_release -c)
 ifeq (,$(findstring precise,$(VER)))
         SUBSTVARS = -Vdist:Depends="python-cassandra-driver  (>= 3.0.0)"
+        DH_WITH=python2,systemd
+else
+        DH_WITH=python2
+endif
+
+ifeq (,$(findstring trusty,$(VER)))
+        DH_WITH=python2,systemd
+else
+        DH_WITH=python2
 endif
 
 TARGETS=control-node:node_mgr \
@@ -22,7 +31,7 @@ TARGETS=control-node:node_mgr \
         src:nodemgr
 
 %:
-	dh $@ --with python2
+	dh $@ --with $(DH_WITH)
 
 override_dh_compress:
 	dh_compress -X.json

@@ -1,0 +1,3 @@
+etc/contrail/contrail-control-nodemgr.conf
+lib/systemd/system/contrail-control-nodemgr.service
+lib/systemd/system/contrail-control.service
