@@ -168,7 +168,6 @@ class ContrailCliGenerator(object):
                         'contrail-broadview' :        'contrail_analytics_cli',
                         'contrail-api' :              'contrail_config_cli',
                         'contrail-device-manager' :   'contrail_config_cli',
-                        'contrail-discovery' :        'contrail_config_cli',
                         'contrail-schema' :           'contrail_config_cli',
                         'contrail-svc-monitor' :      'contrail_config_cli',
                         'contrail-mesos-manager' :    'contrail_config_cli',

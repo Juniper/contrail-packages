@@ -23,9 +23,6 @@ function daemon_start() {
      ulimit -n 4096
      retval=false
      socketon=false
-     if [[ ! -z `ps -ef | grep contrail-discovery | grep -v grep | awk '{print $2}'` ]]; then
-        pkill -9 -f contrail-discovery
-     fi
      if [[ ! -z `ps -ef | grep irond.jar | grep -v grep | awk '{print $2}'` ]]; then
         pkill -9 -f irond.jar
      fi
@@ -83,7 +80,6 @@ function daemon_stop() {
         pkill -9 -f 'svc-monitor.py'
         pkill -9 -f 'to_bgp.py'
         pkill -9 -f 'vnc_cfg_api_server.py'
-        pkill -9 -f 'disc_server_zk.py'
     fi
 }
 

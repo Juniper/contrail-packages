@@ -1,5 +1,4 @@
 usr/lib/python*/dist-packages/cfgm_common*
-usr/lib/python*/dist-packages/discoveryclient*
 usr/lib/python*/dist-packages/libpartition*
 usr/lib/python*/dist-packages/pysandesh*
 usr/lib/python*/dist-packages/sandesh-0.1*
