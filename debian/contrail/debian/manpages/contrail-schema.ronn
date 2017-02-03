@@ -31,4 +31,4 @@ Copyright (c) 2014 OpenContrail
 
 ## SEE ALSO
 
-contrail-api(1), contrail-discovery(1), contrail-svc-monitor(1)
+contrail-api(1), contrail-svc-monitor(1)

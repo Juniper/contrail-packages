@@ -19,12 +19,6 @@ pre-start script
     ulimit -n 4096
     # cleanup subprocesses that are not reaped by supervisord, so that lifecycle management
     # of the programs is with supervisord (config)
-    if [[ ! -z `ps -ef | grep contrail-discovery | grep -v grep | awk '{print $2}'` ]]; then
-       pkill -9 -f contrail-discovery
-    fi
-    if [[ ! -z `ps -ef | grep irond.jar | grep -v grep | awk '{print $2}'` ]]; then
-       pkill -9 -f irond.jar
-    fi
     if [[ ! -z `ps -ef | grep contrail-api | grep -v grep | awk '{print $2}'` ]]; then
        pkill -9 -f contrail-api
     fi
