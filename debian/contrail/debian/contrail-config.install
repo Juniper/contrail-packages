@@ -1,7 +1,6 @@
 usr/bin/contrail-api*
 usr/bin/contrail-schema*
 usr/bin/ifmap-view*
-usr/bin/contrail-discovery*
 usr/bin/contrail-device-manager*
 usr/bin/contrail-issu-pre-sync
 usr/bin/contrail-issu-run-sync
@@ -9,13 +8,10 @@ usr/bin/contrail-issu-post-sync
 usr/bin/contrail-issu-zk-sync
 etc/contrail/contrail-api.conf
 etc/contrail/contrail-schema.conf
-etc/contrail/contrail-discovery.conf
 etc/contrail/contrail-device-manager.conf
 usr/lib/python*/dist-packages/contrail_issu*
 usr/lib/python*/dist-packages/device_api*
 usr/lib/python*/dist-packages/device_manager*
-usr/lib/python*/dist-packages/discovery
-usr/lib/python*/dist-packages/discovery-*
 usr/lib/python*/dist-packages/schema_transformer*
 usr/lib/python*/dist-packages/vnc_cfg_api_server*
 usr/lib/python*/dist-packages/ContrailConfigCli*
