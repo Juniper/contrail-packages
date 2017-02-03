@@ -273,7 +273,6 @@ The VRouter Agent API is used to inform the VRouter agent of the association bet
 
 %files -n python-contrail
 %{python_sitelib}/cfgm_common*
-%{python_sitelib}/discoveryclient*
 %{python_sitelib}/libpartition*
 %{python_sitelib}/pysandesh*
 %{python_sitelib}/sandesh-0.1dev*
@@ -478,20 +477,16 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %defattr(-,contrail,contrail,-)
 %config(noreplace) %{_sysconfdir}/contrail/contrail-api.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-schema.conf
-%config(noreplace) %{_sysconfdir}/contrail/contrail-discovery.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
 %defattr(-,root,root,-)
 %{_bindir}/contrail-api
 %{_bindir}/contrail-schema
-%{_bindir}/contrail-discovery
 %{_bindir}/contrail-device-manager
 %{_bindir}/ifmap-view
 %{_bindir}/contrail-issu-pre-sync
 %{_bindir}/contrail-issu-post-sync
 %{_bindir}/contrail-issu-run-sync
 %{_bindir}/contrail-issu-zk-sync
-%{python_sitelib}/discovery
-%{python_sitelib}/discovery-*
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
 %{python_sitelib}/device_manager*
@@ -503,10 +498,8 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 /etc/contrail/supervisord_config.conf
 /etc/contrail/supervisord_config_files/contrail-api.ini
 /etc/contrail/supervisord_config_files/contrail-config.rules
-/etc/contrail/supervisord_config_files/contrail-discovery.ini
 /etc/contrail/supervisord_config_files/contrail-schema.ini
 /etc/contrail/supervisord_config_files/contrail-device-manager.ini
-/etc/init.d/contrail-discovery
 /etc/init.d/contrail-schema
 /etc/init.d/contrail-device-manager
 /etc/init.d/contrail-api
@@ -531,7 +524,6 @@ chmod +x /etc/init.d/ifmap
 chmod +x /etc/init.d/contrail-api
 chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
-chmod +x /etc/init.d/contrail-discovery
 chmod +x /etc/init.d/supervisor-config
 
 %package analytics
