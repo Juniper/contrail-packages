@@ -173,9 +173,7 @@ exit 0
 %post vrouter
 act_kver=$(uname -r)
 kver=$(uname -r | cut -d "-" -f1)
-kver_rls=$(uname -r | cut -d "-" -f2 | cut -d "." -f1)
-target_kver=$kver-$kver_rls
-vrouter_actual_path=$(ls -1rt /lib/modules/${target_kver}*/extra/net/vrouter/vrouter.ko | tail -1)
+vrouter_actual_path=$(ls -1rt /lib/modules/${kver}*/extra/net/vrouter/vrouter.ko | tail -1)
 
 if [ -f "/lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko" ]; then
     depmod -a
