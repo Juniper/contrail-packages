@@ -384,6 +384,7 @@ Depends: python-contrail (>= ${source:Version}),
          python-lxml,
          python-requests,
          ntp,
+         NODEMGRDEP_SERIES
          ${misc:Depends},
          ${python:Depends},
          ${shlibs:Depends}
