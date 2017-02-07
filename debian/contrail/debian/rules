@@ -65,6 +65,7 @@ override_dh_auto_build:
 				mkdir -m 0755 -p $$python_dir/dist-packages/opserver/stats_schema/`basename $$mod_dir`; \
 				for statsfile in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/`basename $$mod_dir`/*_stats_tables.json; do \
 					install -p -m 644 -t $$python_dir/dist-packages/opserver/stats_schema/`basename $$mod_dir`/ $$statsfile; \
+					rm -f $$statsfile; \
 				done \
 			done \
 		fi \
