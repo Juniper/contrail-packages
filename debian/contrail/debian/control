@@ -44,6 +44,7 @@ Package: contrail-analytics
 Architecture: amd64
 Depends: adduser,
          contrail-lib (>= ${binary:Version}),
+         contrail-docs (>= ${source:Version}),
          cassandra-cpp-driver,
          libzookeeper-mt2,
          python-bottle (>= 0.11.6),
