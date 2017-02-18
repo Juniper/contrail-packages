@@ -121,13 +121,6 @@ install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/e
 install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
 popd
 
-# Install contrail utilities
-install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-version %{buildroot}%{_bindir}/contrail-version
-install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-status.py %{buildroot}%{_bindir}/contrail-status
-install -D -m 755 %{_sbtop}/controller/src/analytics/database/utils/contrail-cassandra-status.py %{buildroot}%{_bindir}/contrail-cassandra-status
-install -D -m 755 %{_sbtop}/controller/src/analytics/database/utils/contrail-cassandra-repair.py %{buildroot}%{_bindir}/contrail-cassandra-repair
-install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-diff-docs.py %{buildroot}%{_bindir}/contrail-diff-docs
-
 #Needed for vrouter-dkms
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
 pushd %{buildroot}/usr/src/vrouter
@@ -143,6 +136,22 @@ install -d -m 755 %{buildroot}/etc/sudoers.d/
 echo 'Defaults:root !requiretty' >> %{buildroot}/contrail-lbaas
 install -m 755 %{buildroot}/contrail-lbaas  %{buildroot}/etc/sudoers.d/contrail-lbaas
 rm -rf %{buildroot}/contrail-lbaas
+
+# for contrail-utils package
+install -d -m 755 %{buildroot}/usr/share/contrail-utils
+# copy files without extenstion
+find %{_sbtop}/controller/src/config/utils/ -maxdepth 1 -type f -exec /bin/bash -c 'cp "$0" %{buildroot}/usr/share/contrail-utils/${0%.*}' {} \;
+find %{_sbtop}/controller/src/analytics/database/utils/ -maxdepth 1 -type f -exec /bin/bash -c 'cp "$0" %{buildroot}/usr/share/contrail-utils/${0%.*}' {} \;
+rm -f %{buildroot}/usr/share/contrail-utils/SConscript
+pushd %{buildroot}/usr/bin
+for scriptpath in %{buildroot}/usr/share/contrail-utils/*; do
+  scriptname=$(basename $scriptpath)
+  if [ ! -f $scriptname ]; then
+    ln -s ../share/contrail-utils/$scriptname $scriptname
+    echo /usr/bin/$scriptname >> %{buildroot}/contrail-utils-bin-includes.txt
+  fi
+done
+popd
 
 %package vrouter
 Summary:            Contrail vRouter
@@ -716,11 +725,9 @@ Requires: python-contrail >= %{_verstr}-%{_relstr}
 %description utils
 Contrail utility sctipts package
 
-%files utils
-%{_bindir}/contrail-version
-%{_bindir}/contrail-status
-%{_bindir}/contrail-cassandra-status
-%{_bindir}/contrail-cassandra-repair
+%files -f %{buildroot}/contrail-utils-bin-includes.txt utils
+%defattr(-, root, root)
+/usr/share/contrail-utils/*
 
 %package docs
 Summary: Documentation for OpenContrail
