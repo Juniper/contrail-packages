@@ -121,13 +121,6 @@ install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/e
 install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
 popd
 
-# Install contrail utilities
-install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-version %{buildroot}%{_bindir}/contrail-version
-install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-status.py %{buildroot}%{_bindir}/contrail-status
-install -D -m 755 %{_sbtop}/controller/src/analytics/database/utils/contrail-cassandra-status.py %{buildroot}%{_bindir}/contrail-cassandra-status
-install -D -m 755 %{_sbtop}/controller/src/analytics/database/utils/contrail-cassandra-repair.py %{buildroot}%{_bindir}/contrail-cassandra-repair
-install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-diff-docs.py %{buildroot}%{_bindir}/contrail-diff-docs
-
 #Needed for vrouter-dkms
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
 pushd %{buildroot}/usr/src/vrouter
@@ -143,6 +136,33 @@ install -d -m 755 %{buildroot}/etc/sudoers.d/
 echo 'Defaults:root !requiretty' >> %{buildroot}/contrail-lbaas
 install -m 755 %{buildroot}/contrail-lbaas  %{buildroot}/etc/sudoers.d/contrail-lbaas
 rm -rf %{buildroot}/contrail-lbaas
+
+# Install section of contrail-utils package - START
+install -d -m 755 %{buildroot}/usr/share/contrail-utils
+# copy files present in /usr/share/contrail to /usr/share/contrail-utils
+# LP 1668338
+pushd %{buildroot}/usr/share/contrail/
+find . -maxdepth 1 -type f -exec cp {} %{buildroot}/usr/share/contrail-utils/ \;
+popd
+# Create symlink to utils script at /usr/bin
+pushd %{buildroot}/usr/bin
+for scriptpath in %{buildroot}/usr/share/contrail-utils/*; do
+  scriptname=$(basename $scriptpath)
+  scriptname_no_ext=${scriptname%.*}
+  # avoid conflicting with coreutils package for file /usr/bin/chmod
+  # LP #1668332
+  if [[ $scriptname_no_ext == "chmod" ]]; then
+    continue
+  fi
+  if [ ! -f $scriptname_no_ext ]; then
+    ln -s ../share/contrail-utils/$scriptname $scriptname_no_ext
+    echo /usr/bin/$scriptname_no_ext >> %{buildroot}/contrail-utils-bin-includes.txt
+  else
+    echo "WARNING: Skipping ( $scriptname_no_ext ) as a regular file of same name exists in /usr/bin/"
+  fi
+done
+popd
+# Install section of contrail-utils package - END
 
 %package vrouter
 Summary:            Contrail vRouter
@@ -716,11 +736,9 @@ Requires: python-contrail >= %{_verstr}-%{_relstr}
 %description utils
 Contrail utility sctipts package
 
-%files utils
-%{_bindir}/contrail-version
-%{_bindir}/contrail-status
-%{_bindir}/contrail-cassandra-status
-%{_bindir}/contrail-cassandra-repair
+%files -f %{buildroot}/contrail-utils-bin-includes.txt utils
+%defattr(-, root, root)
+/usr/share/contrail-utils/*
 
 %package docs
 Summary: Documentation for OpenContrail
