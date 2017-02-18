@@ -144,6 +144,19 @@ echo 'Defaults:root !requiretty' >> %{buildroot}/contrail-lbaas
 install -m 755 %{buildroot}/contrail-lbaas  %{buildroot}/etc/sudoers.d/contrail-lbaas
 rm -rf %{buildroot}/contrail-lbaas
 
+# for contrail-utils package
+install -d -m 755 %{buildroot}/usr/share/contrail-utils
+install -d -m 755 %{buildroot}/usr/bin/
+find %{_sbtop}/controller/src/config/utils/ -maxdepth 1 -type f -exec cp {} %{buildroot}/usr/share/contrail-utils/ \;
+rm -f %{buildroot}/usr/share/contrail-utils/SConscript
+pushd %{buildroot}/usr/bin
+for script in *; do
+  if [ ! -f ../share/$script ]; then
+    ln -s ../share/$script $script
+  fi
+done
+popd
+
 %package vrouter
 Summary:            Contrail vRouter
 Group:              Applications/System
@@ -719,6 +732,8 @@ Requires: python-contrail >= %{_verstr}-%{_relstr}
 Contrail utility sctipts package
 
 %files utils
+%{buildroot}/usr/share/contrail-utils/*
+%{buildroot}/usr/bin/*
 %{_bindir}/contrail-version
 %{_bindir}/contrail-status
 %{_bindir}/contrail-cassandra-status
