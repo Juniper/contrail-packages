@@ -715,10 +715,20 @@ Requires: python-lxml >= 2.3.2
 Requires: python-requests
 Requires: python-contrail >= %{_verstr}-%{_relstr}
 
+%install utils
+install -d -m 755 %{buildroot}/usr/share/contrail-utils
+install -d -m 755 %{buildroot}/usr/bin/
+cp -f %{_sbtop}/controller/src/config/utils/* %{buildroot}/usr/share/contrail-utils/
+for script in %{buildroot}/usr/share/contrail-utils/*; do
+  ln -s %{buildroot}/usr/share/contrail-utils/$script %{buildroot}/usr/bin/
+done
+
 %description utils
 Contrail utility sctipts package
 
 %files utils
+%{buildroot}/usr/share/contrail-utils/*
+%{buildroot}/usr/bin/*
 %{_bindir}/contrail-version
 %{_bindir}/contrail-status
 %{_bindir}/contrail-cassandra-status
