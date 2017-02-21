@@ -44,6 +44,7 @@ run open contrail.
 
 BuildRequires:  make
 BuildRequires:  gcc
+BuildRequires:  systemd
 BuildRequires:  systemd-units
 BuildRequires:  gcc-c++
 BuildRequires:  devtoolset-1.1-gcc
@@ -112,14 +113,6 @@ popd
 # contrail-docs
 # Index files
 python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/share/doc/contrail-docs/html/messages
-
-# Install supervisor files
-pushd %{_builddir}/..
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
-popd
 
 # Install contrail utilities
 install -D -m 755 %{_sbtop}/controller/src/config/utils/contrail-version %{buildroot}%{_bindir}/contrail-version
@@ -229,12 +222,11 @@ This package contains the configuration management modules that interface with O
 %{python_sitelib}/vnc_openstack*
 %{_bindir}/contrail-svc-monitor
 %{_contrailetc}/contrail-svc-monitor.conf
-/etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 /usr/share/contrail
-/etc/init.d/contrail-svc-monitor
+/lib/systemd/system/contrail-svc-monitor.service
 
 %post config-openstack
-chmod +x /etc/init.d/contrail-svc-monitor
+chmod +x /lib/systemd/system/contrail-svc-monitor.service
 
 %package -n python-contrail-vrouter-api
 Summary:            Contrail vrouter api
@@ -327,10 +319,7 @@ This package provides the contrail-vrouter user space agent.
 %{_bindir}/vrouter-port-control
 %{_bindir}/contrail-vrouter-agent-health-check.py
 %{_contrailetc}/contrail-vrouter-agent.conf
-%{_contrailetc}/supervisord_vrouter.conf
-/etc/init.d/contrail-vrouter-agent
-/etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
-/etc/init.d/supervisor-vrouter
+/lib/systemd/system/contrail-vrouter-agent.service
 
 %pre vrouter-agent
 set -e
@@ -350,8 +339,7 @@ chown -R contrail:contrail /etc/contrail/ssl/certs/ /etc/contrail/ssl/private/
 chmod 0750 /etc/contrail/ /etc/contrail/ssl/ /etc/contrail/ssl/certs/
 chmod 0700 /etc/contrail/ssl/private/
 chmod 0750 /var/lib/contrail/dhcp/
-chmod +x /etc/init.d/contrail-vrouter-agent
-chmod +x /etc/init.d/supervisor-vrouter
+chmod +x /lib/systemd/system/contrail-vrouter-agent.service
 
 %package control
 Summary:          Contrail Control
@@ -372,11 +360,7 @@ plane. Not all control plane functions are logically centralized \u2013 some con
 %defattr(-,root,root,-)
 %{_bindir}/contrail-control
 %config(noreplace) %{_contrailetc}/contrail-control.conf
-/etc/contrail/supervisord_control.conf
-/etc/contrail/supervisord_control_files/contrail-control.ini
-/etc/contrail/supervisord_control_files/contrail-control.rules
-/etc/init.d/contrail-control
-/etc/init.d/supervisor-control
+/lib/systemd/system/contrail-control.service
 
 %pre control
 set -e
@@ -400,8 +384,7 @@ if [ ! -f /etc/authbind/byport/179 ]; then
   chown contrail. /etc/authbind/byport/179
   chmod 0755 /etc/authbind/byport/179
 fi
-chmod +x /etc/init.d/supervisor-control
-chmod +x /etc/init.d/contrail-control
+chmod +x /lib/systemd/system/contrail-control.service
 
 %package -n python-opencontrail-vrouter-netns
 
@@ -502,17 +485,10 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %if 0%{?rhel} > 6
 /usr/share/doc/contrail-config/*
 %endif
-/etc/contrail/supervisord_config.conf
-/etc/contrail/supervisord_config_files/contrail-api.ini
-/etc/contrail/supervisord_config_files/contrail-config.rules
-/etc/contrail/supervisord_config_files/contrail-discovery.ini
-/etc/contrail/supervisord_config_files/contrail-schema.ini
-/etc/contrail/supervisord_config_files/contrail-device-manager.ini
-/etc/init.d/contrail-discovery
-/etc/init.d/contrail-schema
-/etc/init.d/contrail-device-manager
-/etc/init.d/contrail-api
-/etc/init.d/supervisor-config
+/lib/systemd/system/contrail-discovery.service
+/lib/systemd/system/contrail-schema.service
+/lib/systemd/system/contrail-device-manager.service
+/lib/systemd/system/contrail-api.service
 
 %pre config
 set -e
@@ -529,12 +505,11 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/ifmap
-chmod +x /etc/init.d/contrail-api
-chmod +x /etc/init.d/contrail-schema
-chmod +x /etc/init.d/contrail-device-manager
-chmod +x /etc/init.d/contrail-discovery
-chmod +x /etc/init.d/supervisor-config
+chmod +x /lib/systemd/system/ifmap.service
+chmod +x /lib/systemd/system/contrail-api.service
+chmod +x /lib/systemd/system/contrail-schema.service
+chmod +x /lib/systemd/system/contrail-device-manager.service
+chmod +x /lib/systemd/system/contrail-discovery.service
 
 %package analytics
 Summary:            Contrail Analytics
@@ -597,21 +572,12 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-snmp-*
 %{_bindir}/contrail-topology
 /usr/share/doc/contrail-analytics-api
-/etc/contrail/supervisord_analytics.conf
-/etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
-/etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
-/etc/contrail/supervisord_analytics_files/contrail-analytics.rules
-/etc/contrail/supervisord_analytics_files/contrail-collector.ini
-/etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
-%{_contrailetc}/supervisord_analytics_files/contrail-snmp-collector.ini
-%{_contrailetc}/supervisord_analytics_files/contrail-topology.ini
-/etc/init.d/contrail-analytics-api
-/etc/init.d/contrail-alarm-gen
-/etc/init.d/contrail-collector
-/etc/init.d/contrail-query-engine
-/etc/init.d/supervisor-analytics
-/etc/init.d/contrail-snmp-collector
-/etc/init.d/contrail-topology
+/lib/systemd/system/contrail-analytics-api.service
+/lib/systemd/system/contrail-alarm-gen.service
+/lib/systemd/system/contrail-collector.service
+/lib/systemd/system/contrail-query-engine.service
+/lib/systemd/system/contrail-snmp-collector.service
+/lib/systemd/system/contrail-topology.service
 /usr/share/mibs/netsnmp
 
 %pre analytics
@@ -629,13 +595,11 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/supervisor-analytics
-chmod +x /etc/init.d/contrail-analytics-api
-chmod +x /etc/init.d/contrail-alarm-gen
-chmod +x /etc/init.d/contrail-collector
-chmod +x /etc/init.d/contrail-query-engine
-chmod +x /etc/init.d/contrail-snmp-collector
-chmod +x /etc/init.d/contrail-topology
+chmod +x /lib/systemd/system/contrail-alarm-gen.service
+chmod +x /lib/systemd/system/contrail-collector.service
+chmod +x /lib/systemd/system/contrail-query-engine.service
+chmod +x /lib/systemd/system/contrail-snmp-collector.service
+chmod +x /lib/systemd/system/contrail-topology.service
 
 %package dns
 Summary:            Contrail Dns
@@ -664,8 +628,8 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail. /etc/contrail/dns
 chmod 0750 /etc/contrail/dns
-chmod +x /etc/init.d/contrail-dns
-chmod +x /etc/init.d/contrail-named
+chmod +x /lib/systemd/system/contrail-dns.service
+chmod +x /lib/systemd/system/contrail-named.service
 
 # Use authbind to bind amed on a reserved port,
 # with contrail user privileges
@@ -690,10 +654,8 @@ fi
 %if 0%{?rhel} > 6
 /usr/lib/python2.7/site-packages/doc/*
 %endif
-/etc/contrail/supervisord_control_files/contrail-dns.ini
-/etc/contrail/supervisord_control_files/contrail-named.ini
-/etc/init.d/contrail-dns
-/etc/init.d/contrail-named
+/lib/systemd/system/contrail-dns.service
+/lib/systemd/system/contrail-named.service
 
 %package nova-vif
 Summary:            Contrail nova vif driver
