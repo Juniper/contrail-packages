@@ -18,9 +18,16 @@ class CompleteDictionary:
 
     def add_command(self, command):
         dicto = self._dictionary
+        last_cmd = command[-1]
         for subcmd in command[:-1]:
-            dicto = dicto.setdefault(subcmd, {})
-        dicto[command[-1]] = ''
+            subdata = dicto.get(subcmd)
+            if isinstance(subdata, six.string_types):
+                subdata += ' ' + last_cmd
+                dicto[subcmd] = subdata
+                last_cmd = subcmd + '_' + last_cmd
+            else:
+                dicto = dicto.setdefault(subcmd, {})
+        dicto[last_cmd] = ''
 
     def get_commands(self):
         return ' '.join(k for k in sorted(self._dictionary.keys()))
@@ -54,8 +61,14 @@ class CompleteShellBase(object):
         self.output.write(self.get_header())
         self.output.write("  cmds='{0}'\n".format(cmdo))
         for datum in data:
+            datum = (datum[0].replace('-', '_'), datum[1])
             self.output.write('  cmds_{0}=\'{1}\'\n'.format(*datum))
         self.output.write(self.get_trailer())
+
+    @property
+    def escaped_name(self):
+        return self.name.replace('-', '_')
+
 
 class CompleteBash(CompleteShellBase):
     """completion for bash
@@ -64,17 +77,18 @@ class CompleteBash(CompleteShellBase):
         super(CompleteBash, self).__init__(name, output)
 
     def get_header(self):
-        return ('_' + self.name + """()
+        return ('_' + self.escaped_name + """()
 {
   local cur prev words
   COMPREPLY=()
   _get_comp_words_by_ref -n : cur prev words
-
   # Command data:
 """)
 
     def get_trailer(self):
         return ("""
+  dash=-
+  underscore=_
   cmd=""
   words[0]=""
   completed="${cmds}"
@@ -89,6 +103,7 @@ class CompleteBash(CompleteShellBase):
       proposed="${cmd}_${var}"
     fi
     local i="cmds_${proposed}"
+    i=${i//$dash/$underscore}
     local comp="${!i}"
     if [ -z "${comp}" ] ; then
       break
@@ -102,7 +117,6 @@ class CompleteBash(CompleteShellBase):
     cmd="${proposed}"
     completed="${comp}"
   done
-
   if [ -z "${completed}" ] ; then
     COMPREPLY=( $( compgen -f -- "$cur" ) $( compgen -d -- "$cur" ) )
   else
@@ -110,7 +124,7 @@ class CompleteBash(CompleteShellBase):
   fi
   return 0
 }
-complete -F _""" + self.name + ' ' + self.name + '\n')
+complete -F _""" + self.escaped_name + ' ' + self.name + '\n')
 
 
 class CompleteCommand():
