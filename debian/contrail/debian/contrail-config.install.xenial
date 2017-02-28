@@ -5,4 +5,3 @@ lib/systemd/system/contrail-schema.service
 lib/systemd/system/contrail-svc-monitor.service
 lib/systemd/system/contrail-discovery.service
 lib/systemd/system/contrail-device-manager.service
-lib/systemd/system/ifmap.service
