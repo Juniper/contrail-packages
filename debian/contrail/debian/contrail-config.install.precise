@@ -3,12 +3,10 @@ etc/init.d/contrail-schema
 etc/init.d/contrail-svc-monitor
 etc/init.d/contrail-discovery
 etc/init.d/contrail-device-manager
-etc/init.d/ifmap
 etc/contrail/supervisord_config.conf
 etc/contrail/supervisord_config_files/contrail-api.ini
 etc/contrail/supervisord_config_files/contrail-schema.ini
 etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 etc/contrail/supervisord_config_files/contrail-discovery.ini
 etc/contrail/supervisord_config_files/contrail-device-manager.ini
-etc/contrail/supervisord_config_files/ifmap.ini
 etc/contrail/supervisord_config_files/contrail-config.rules

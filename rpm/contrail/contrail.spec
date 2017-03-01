@@ -485,7 +485,6 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %{_bindir}/contrail-schema
 %{_bindir}/contrail-discovery
 %{_bindir}/contrail-device-manager
-%{_bindir}/ifmap-view
 %{_bindir}/contrail-issu-pre-sync
 %{_bindir}/contrail-issu-post-sync
 %{_bindir}/contrail-issu-run-sync
@@ -527,7 +526,6 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/ifmap
 chmod +x /etc/init.d/contrail-api
 chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager

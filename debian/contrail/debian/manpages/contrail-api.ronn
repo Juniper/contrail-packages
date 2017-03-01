@@ -19,18 +19,6 @@ This is the main module in vnc_cfg_api_server package. It manages interaction be
 * `-c` <FILE>, `--conf_file` <FILE>:
   Specify config file
 
-* `--ifmap_server_ip`: <IFMAP_SERVER_IP>
-  IP address of ifmap server
-
-* `--ifmap_server_port`: <IFMAP_SERVER_PORT>
-  Port of ifmap server
-
-* `--ifmap_username`: <IFMAP_USERNAME>
-  Username known to ifmap server
-
-* `--ifmap_password`: <IFMAP_PASSWORD>
-  Password known to ifmap server
-
 * `--cassandra_server_list`: <CASSANDRA_SERVER_LIST> [<CASSANDRA_SERVER_LIST>]
   List of cassandra servers in IP *Address:Port* format
 
@@ -60,9 +48,6 @@ This is the main module in vnc_cfg_api_server package. It manages interaction be
 
 * `--http_server_port`: <HTTP_SERVER_PORT>
   Port of local HTTP server
-
-* `--ifmap_server_loc`: <IFMAP_SERVER_LOC>
-  Location of IFMAP server
 
 * `--log_local`:
   Enable local logging of sandesh messages
