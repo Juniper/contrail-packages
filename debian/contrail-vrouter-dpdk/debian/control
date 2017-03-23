@@ -1,5 +1,5 @@
 Source: contrail-vrouter-dpdk
-Maintainer: OpenContrail Developers
+Maintainer: OpenContrail Developers <dev@lists.opencontrail.org>
 Section: net
 Priority: optional
 
