@@ -342,12 +342,14 @@ This package provides the contrail-vrouter user space agent.
 %{_bindir}/contrail-vrouter-agent
 %{_bindir}/contrail-tor-agent
 %{_bindir}/vrouter-port-control
+%{_bindir}/contrail-compute-setup
 %{_bindir}/contrail-vrouter-agent-health-check.py
 %{_contrailetc}/contrail-vrouter-agent.conf
 %{_contrailetc}/supervisord_vrouter.conf
 /etc/init.d/contrail-vrouter-agent
 /etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
 /etc/init.d/supervisor-vrouter
+%{python_sitelib}/contrail_vrouter_provisioning*
 
 %pre vrouter-agent
 set -e

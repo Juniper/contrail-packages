@@ -1,7 +1,9 @@
 usr/bin/contrail-vrouter-agent*
 usr/bin/contrail-tor-agent*
 usr/bin/vrouter-port-control
+usr/bin/contrail-compute-setup
 usr/bin/contrail-vrouter-agent-health-check.py
 etc/contrail/contrail-vrouter-agent.conf
 usr/lib/python*/dist-packages/ContrailVrouterCli*
+usr/lib/python*/dist-packages/contrail_vrouter_provisioning*
 INSTALL_SERIES
