@@ -246,8 +246,8 @@ This package contains the configuration management modules that interface with O
 %{python_sitelib}/svc_monitor*
 %{python_sitelib}/vnc_openstack*
 %{_bindir}/contrail-svc-monitor
-%{_contrailetc}/contrail-svc-monitor.conf
-/etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
+%config(noreplace) %{_contrailetc}/contrail-svc-monitor.conf
+%config(noreplace) /etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 /usr/share/contrail
 /etc/init.d/contrail-svc-monitor
 
@@ -298,7 +298,7 @@ The VRouter Agent API is used to inform the VRouter agent of the association bet
 %{python_sitelib}/sandesh-0.1dev*
 %{python_sitelib}/sandesh_common*
 %{python_sitelib}/vnc_api*
-%{_contrailetc}/vnc_api_lib.ini
+%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 
 %package vrouter-utils
 Summary:            Contrail vRouter
@@ -344,10 +344,10 @@ This package provides the contrail-vrouter user space agent.
 %{_bindir}/vrouter-port-control
 %{_bindir}/contrail-compute-setup
 %{_bindir}/contrail-vrouter-agent-health-check.py
-%{_contrailetc}/contrail-vrouter-agent.conf
-%{_contrailetc}/supervisord_vrouter.conf
+%config(noreplace) %{_contrailetc}/contrail-vrouter-agent.conf
+%config(noreplace) %{_contrailetc}/supervisord_vrouter.conf
 /etc/init.d/contrail-vrouter-agent
-/etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
+%config(noreplace) /etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
 /etc/init.d/supervisor-vrouter
 %{python_sitelib}/contrail_vrouter_provisioning*
 
@@ -391,8 +391,8 @@ plane. Not all control plane functions are logically centralized \u2013 some con
 %defattr(-,root,root,-)
 %{_bindir}/contrail-control
 %config(noreplace) %{_contrailetc}/contrail-control.conf
-/etc/contrail/supervisord_control.conf
-/etc/contrail/supervisord_control_files/contrail-control.ini
+%config(noreplace) /etc/contrail/supervisord_control.conf
+%config(noreplace) /etc/contrail/supervisord_control_files/contrail-control.ini
 /etc/contrail/supervisord_control_files/contrail-control.rules
 /etc/init.d/contrail-control
 /etc/init.d/supervisor-control
@@ -514,7 +514,7 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %{python_sitelib}/device_api*
 %{python_sitelib}/contrail_issu*
 %if 0%{?rhel} > 6
-/usr/share/doc/contrail-config/*
+%docdir /usr/share/doc/contrail-config/*
 %endif
 /etc/contrail/supervisord_config.conf
 /etc/contrail/supervisord_config_files/contrail-api.ini
@@ -607,14 +607,14 @@ Analytics nodes collect, store, correlate, and analyze information from
 %{_bindir}/contrail-snmp-*
 %{_bindir}/contrail-topology
 /usr/share/doc/contrail-analytics-api
-/etc/contrail/supervisord_analytics.conf
-/etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
-/etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
+%config(noreplace) /etc/contrail/supervisord_analytics.conf
+%config(noreplace) /etc/contrail/supervisord_analytics_files/contrail-analytics-api.ini
+%config(noreplace) /etc/contrail/supervisord_analytics_files/contrail-alarm-gen.ini
 /etc/contrail/supervisord_analytics_files/contrail-analytics.rules
-/etc/contrail/supervisord_analytics_files/contrail-collector.ini
-/etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
-%{_contrailetc}/supervisord_analytics_files/contrail-snmp-collector.ini
-%{_contrailetc}/supervisord_analytics_files/contrail-topology.ini
+%config(noreplace) /etc/contrail/supervisord_analytics_files/contrail-collector.ini
+%config(noreplace) /etc/contrail/supervisord_analytics_files/contrail-query-engine.ini
+%config(noreplace) %{_contrailetc}/supervisord_analytics_files/contrail-snmp-collector.ini
+%config(noreplace) %{_contrailetc}/supervisord_analytics_files/contrail-topology.ini
 /etc/init.d/contrail-analytics-api
 /etc/init.d/contrail-alarm-gen
 /etc/init.d/contrail-collector
@@ -688,9 +688,9 @@ fi
 %files dns
 %defattr(-,contrail,contrail,-)
 %{_contraildns}
-%{_contraildns}/contrail-named.conf
-%{_contraildns}/contrail-rndc.conf
-%{_contrailetc}/contrail-dns.conf
+%config(noreplace) %{_contraildns}/contrail-named.conf
+%config(noreplace) %{_contraildns}/contrail-rndc.conf
+%config(noreplace) %{_contrailetc}/contrail-dns.conf
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
 %{_bindir}/contrail-named
@@ -698,10 +698,10 @@ fi
 %{_bindir}/contrail-rndc-confgen
 %{_bindir}/contrail-dns
 %if 0%{?rhel} > 6
-/usr/lib/python2.7/site-packages/doc/*
+%docdir /usr/lib/python2.7/site-packages/doc/*
 %endif
-/etc/contrail/supervisord_control_files/contrail-dns.ini
-/etc/contrail/supervisord_control_files/contrail-named.ini
+%config(noreplace) /etc/contrail/supervisord_control_files/contrail-dns.ini
+%config(noreplace) /etc/contrail/supervisord_control_files/contrail-named.ini
 /etc/init.d/contrail-dns
 /etc/init.d/contrail-named
 
