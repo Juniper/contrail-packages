@@ -1,3 +1,4 @@
 etc/init.d/contrail-vrouter-agent
+etc/init.d/contrail-vrouter-nodemgr
 etc/contrail/supervisord_vrouter.conf
 etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
