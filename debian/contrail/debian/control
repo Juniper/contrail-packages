@@ -452,3 +452,11 @@ Description: OpenContrail mesos/kubernetes cni plugin
  .
  This package contains the mesos/kubernetes cni plugin that interfaces
  with OpenContrail.
+
+Package: contrail-k8s-cni
+Architecture: amd64
+Description: OpenContrail kubernetes cni plugin
+ Kubernetes opencontrail cni plugin for adding network support for pods.
+ .
+ This package contains the kubernetes cni plugin that interfaces
+ with OpenContrail.
