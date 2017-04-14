@@ -807,8 +807,8 @@ Summary:            Kubernetes cni plugin
 
 Group:              Applications/System
 
-%description contrail-k8s-cni
+%description k8s-cni
 Contrail kubernetes cni plugin package
 This package contains the kubernetes cni plugin modules.
-%files contrail-k8s-cni
+%files k8s-cni
 %{_bindir}/contrail-k8s-cni
