@@ -802,13 +802,24 @@ This package contains the mesos/kubernetes cni plugin modules.
 %{python_sitelib}/cni*
 %{_bindir}/contrail-cni
 
-%package contrail-k8s-cni
+%package k8s-cni
 Summary:            Kubernetes cni plugin
 
 Group:              Applications/System
 
-%description contrail-k8s-cni
+%description k8s-cni
 Contrail kubernetes cni plugin package
 This package contains the kubernetes cni plugin modules.
-%files contrail-k8s-cni
+%files k8s-cni
 %{_bindir}/contrail-k8s-cni
+
+%package mesos-cni
+Summary:            Mesos cni plugin
+
+Group:              Applications/System
+
+%description mesos-cni
+Contrail mesos cni plugin package
+This package contains the mesos cni plugin modules.
+%files mesos-cni
+%{_bindir}/contrail-mesos-cni
