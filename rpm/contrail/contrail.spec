@@ -812,3 +812,14 @@ Contrail kubernetes cni plugin package
 This package contains the kubernetes cni plugin modules.
 %files k8s-cni
 %{_bindir}/contrail-k8s-cni
+
+%package mesos-cni
+Summary:            Mesos cni plugin
+
+Group:              Applications/System
+
+%description mesos-cni
+Contrail mesos cni plugin package
+This package contains the mesos cni plugin modules.
+%files mesos-cni
+%{_bindir}/contrail-mesos-cni
