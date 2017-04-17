@@ -86,6 +86,8 @@ class DocIndexGenerator(object):
     # end __init__
 
     def _create_html_module_list_file(self, dirpath, fsuffix, messages_dict):
+        if fsuffix == "_uves":
+            return
         module_fname = _MODULE_FILE_PREFIX + fsuffix + _HTML_FILE_SUFFIX
         module_fpath = os.path.join(dirpath, module_fname)
         if not messages_dict:
@@ -159,6 +161,8 @@ class DocIndexGenerator(object):
                             "<th>Description</th></tr>\n")
                         for fsuffix, fdesc in \
                                 iter(sorted(_FILE_SUFFIX_DESCRIPTIONS.items())):
+                            if fsuffix == "_uves":
+                                continue
                             mfname = _MODULE_FILE_PREFIX + fsuffix + \
                                 _HTML_FILE_SUFFIX
                             if mfname in sfilenames:
@@ -170,7 +174,50 @@ class DocIndexGenerator(object):
                         fp.write("</html>\n")
     # end _create_html_module_index_file
 
+    def _create_html_global_list_file_uves(self, dirpath, fsuffix, messages_dict):
+        fname = _INDEX_FILE_PREFIX + fsuffix + _HTML_FILE_SUFFIX
+        fpath = os.path.join(dirpath, fname)
+        if not messages_dict:
+            if os.path.exists(fpath):
+                os.remove(fpath)
+            return
+        with open(fpath, "w+") as fp:
+            fp.write("<html>\n")
+            fp.write("<head>" + _FILE_SUFFIX_DESCRIPTIONS[fsuffix]["title"] + \
+                " Message Documentation</head>\n")
+            fp.write("<link href=\"/doc-style.css\" rel=\"stylesheet\" " + \
+                "type=\"text/css\"/>\n")
+            fp.write("<p>\n")
+            fp.write("<table><tr><th>Module</th><th>Messages</th></tr>\n")
+            object_list = dict()
+            for mname, minfo in iter(sorted(messages_dict.items())):
+                if ("object" in minfo.keys()):
+                    if minfo["object"] in object_list.keys():
+                        object_list[minfo["object"]].append((mname,
+                            minfo["href"]))
+                    else:
+                        object_list[minfo["object"]] = [(mname, minfo["href"])]
+            for obj, minfo_list in object_list.iteritems():
+                fp.write("<tr><td>" + obj + "</td>")
+                first = True
+                for minfo in minfo_list:
+                    print minfo
+                    if first:
+                        fp.write("<td>")
+                    fp.write("<a href=\"" + minfo[1] + "\">" + minfo[0] +
+                            "</a><br/>\n")
+                    if first:
+                        first = False
+                fp.write("</td></tr>")
+            fp.write("</table>\n")
+            fp.write("</p>\n")
+            fp.write("</html>\n")
+    # end _create_html_global_list_file_uves
+
     def _create_html_global_list_file(self, dirpath, fsuffix, messages_dict):
+        if fsuffix == "_uves":
+            return self._create_html_global_list_file_uves(dirpath, fsuffix,
+                    messages_dict)
         fname = _INDEX_FILE_PREFIX + fsuffix + _HTML_FILE_SUFFIX
         fpath = os.path.join(dirpath, fname)
         if not messages_dict:
