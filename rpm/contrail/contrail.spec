@@ -762,6 +762,22 @@ This package contains the kubernetes network management modules.
 %{python_sitelib}/kube_manager*
 %{_bindir}/contrail-kube-manager
 
+%pre kube-manager
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
+%post kube-manager
+set -e
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
+
 %package mesos-manager
 Summary:            Mesos network manager
 
@@ -777,6 +793,22 @@ This package contains the mesos network management modules.
 %files mesos-manager
 %{python_sitelib}/mesos_manager*
 %{_bindir}/contrail-mesos-manager
+
+%pre mesos-manager
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
+%post mesos-manager
+set -e
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
 
 %package kube-cni
 Summary:            Kubernetes cni plugin
