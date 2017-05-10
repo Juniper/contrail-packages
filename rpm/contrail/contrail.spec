@@ -362,7 +362,7 @@ getent passwd contrail >/dev/null || \
 mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
 mkdir -p /var/lib/contrail/dhcp/
 mkdir -p /etc/contrail/ssl/certs/ /etc/contrail/ssl/private/
-chown -R contrail:adm /var/log/contrail
+chown contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/ /etc/contrail/ssl/
 chown -R contrail:contrail /etc/contrail/ssl/certs/ /etc/contrail/ssl/private/
