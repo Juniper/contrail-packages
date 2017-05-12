@@ -331,6 +331,7 @@ Summary:            Contrail vRouter
 Group:              Applications/System
 
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
+Requires:           python-paramiko
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
