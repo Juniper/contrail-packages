@@ -588,6 +588,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %config(noreplace) %{_contrailetc}/contrail-analytics-api.conf
 %config(noreplace) %{_contrailetc}/contrail-query-engine.conf
 %config(noreplace) %{_contrailetc}/contrail-snmp-collector.conf
+%config(noreplace) /etc/snmp/snmp.conf
 %config(noreplace) %{_contrailetc}/contrail-topology.conf
 %config(noreplace) %{_contrailetc}/contrail-alarm-gen.conf
 %defattr(-, root, root)
@@ -637,6 +638,8 @@ set -e
 mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
 chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
+mkdir -p /etc/snmp/
+chmod 0750 /etc/snmp/
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
 chmod +x /etc/init.d/supervisor-analytics
