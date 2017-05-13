@@ -588,6 +588,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 %config(noreplace) %{_contrailetc}/contrail-analytics-api.conf
 %config(noreplace) %{_contrailetc}/contrail-query-engine.conf
 %config(noreplace) %{_contrailetc}/contrail-snmp-collector.conf
+%config(noreplace) /etc/snmp/snmp.conf
 %config(noreplace) %{_contrailetc}/contrail-topology.conf
 %config(noreplace) %{_contrailetc}/contrail-alarm-gen.conf
 %defattr(-, root, root)
