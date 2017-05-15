@@ -16,6 +16,7 @@ etc/contrail/contrail-analytics-api.conf
 etc/contrail/contrail-alarm-gen.conf
 etc/contrail/contrail-snmp-collector.conf
 etc/contrail/contrail-topology.conf
+etc/snmp/snmp.conf
 usr/lib/python*/dist-packages/opserver*
 usr/lib/python*/dist-packages/contrail_snmp_collector*
 usr/lib/python*/dist-packages/contrail_topology*

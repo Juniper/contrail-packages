@@ -1,4 +1,5 @@
 var/lib/contrail
 etc/contrail
+etc/snmp
 var/log/contrail
 DIRS_SERIES
