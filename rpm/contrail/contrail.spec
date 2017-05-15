@@ -626,6 +626,7 @@ Analytics nodes collect, store, correlate, and analyze information from
 /etc/init.d/contrail-snmp-collector
 /etc/init.d/contrail-topology
 /usr/share/mibs/netsnmp
+/etc/contrail/snmp.conf
 
 %pre analytics
 set -e
