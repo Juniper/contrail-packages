@@ -344,6 +344,7 @@ This package provides the contrail-vrouter user space agent.
 %{_bindir}/vrouter-port-control
 %{_bindir}/contrail-compute-setup
 %{_bindir}/contrail-vrouter-agent-health-check.py
+%{_bindir}/contrail-haproxy-toragent
 %config(noreplace) %{_contrailetc}/contrail-vrouter-agent.conf
 %config(noreplace) %{_contrailetc}/supervisord_vrouter.conf
 /etc/init.d/contrail-vrouter-agent

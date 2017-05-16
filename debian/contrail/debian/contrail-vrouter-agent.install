@@ -6,4 +6,5 @@ usr/bin/contrail-vrouter-agent-health-check.py
 etc/contrail/contrail-vrouter-agent.conf
 usr/lib/python*/dist-packages/ContrailVrouterCli*
 usr/lib/python*/dist-packages/contrail_vrouter_provisioning*
+usr/bin/contrail-haproxy-toragent
 INSTALL_SERIES
