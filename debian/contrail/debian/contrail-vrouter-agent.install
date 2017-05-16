@@ -8,4 +8,5 @@ usr/lib/python*/dist-packages/ContrailVrouterCli*
 usr/lib/python*/dist-packages/contrail_vrouter_provisioning*
 usr/bin/contrail-toragent-setup
 usr/bin/contrail-toragent-cleanup
+usr/bin/contrail-haproxy-toragent
 INSTALL_SERIES
