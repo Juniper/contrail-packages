@@ -556,7 +556,7 @@ Group:              Applications/System
 Requires:           xmltodict >= 0.7.0
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           python-pycassa
-Requires:           redis-py > 0.1-2contrail
+Requires:           python-redis >= 2.10.0
 Requires:           redis >= 2.6.13-1
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python-psutil >= 0.6.0
