@@ -503,7 +503,6 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 %config(noreplace) %{_sysconfdir}/contrail/contrail-api.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-schema.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
-%config(noreplace) %{_sysconfdir}/contrail/contrail-config-nodemgr.conf
 %defattr(-,root,root,-)
 %{_bindir}/contrail-api
 %{_bindir}/contrail-schema
@@ -525,12 +524,10 @@ Configuration nodes keep a persistent copy of the intended configuration state a
 /etc/contrail/supervisord_config_files/contrail-config.rules
 /etc/contrail/supervisord_config_files/contrail-schema.ini
 /etc/contrail/supervisord_config_files/contrail-device-manager.ini
-/etc/contrail/supervisord_config_files/contrail-config-nodemgr.ini
 /etc/init.d/contrail-schema
 /etc/init.d/contrail-device-manager
 /etc/init.d/contrail-api
 /etc/init.d/supervisor-config
-/etc/init.d/contrail-config-nodemgr
 
 %pre config
 set -e
@@ -551,7 +548,6 @@ chmod +x /etc/init.d/contrail-api
 chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/supervisor-config
-chmod +x /etc/init.d/contrail-config-nodemgr
 
 %package analytics
 Summary:            Contrail Analytics

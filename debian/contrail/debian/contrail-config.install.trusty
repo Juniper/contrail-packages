@@ -1,16 +1,13 @@
-etc/contrail/contrail-config-nodemgr.conf
 etc/init.d/contrail-api
 etc/init.d/contrail-schema
 etc/init.d/contrail-svc-monitor
 etc/init.d/contrail-device-manager
 etc/init.d/contrail-issu-run-sync
-etc/init.d/contrail-config-nodemgr
 etc/contrail/supervisord_config.conf
 etc/contrail/supervisord_issu.conf
 etc/contrail/supervisord_config_files/contrail-api.ini
 etc/contrail/supervisord_config_files/contrail-schema.ini
 etc/contrail/supervisord_config_files/contrail-svc-monitor.ini
 etc/contrail/supervisord_config_files/contrail-device-manager.ini
-etc/contrail/supervisord_config_files/contrail-config-nodemgr.ini
 etc/contrail/supervisord_config_files/contrail-config.rules
 etc/contrail/supervisord_issu_files/contrail-issu-run-sync.ini
