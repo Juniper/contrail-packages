@@ -242,6 +242,15 @@ package-contrail-vrouter-dpdk: debian-contrail-vrouter-dpdk
 	@echo "Building package $(PACKAGE)"
 	sed -i 's/VERSION/$(CONTRAIL_VERSION)/g' build/packages/$(PACKAGE)/debian/changelog
 	sed -i 's/SERIES/$(SERIES)/g' build/packages/$(PACKAGE)/debian/changelog
+	# Append series specific install files
+	$(eval CONTRAIL_INSTALL_SERIES := $(shell cd build/packages/$(PACKAGE)/debian; find . -name '*.install.$(SERIES)'))
+	$(foreach series_fname, $(CONTRAIL_INSTALL_SERIES), \
+			(cd build/packages/$(PACKAGE)/debian;\
+			sed -i '/INSTALL_SERIES/r $(series_fname)' $(patsubst %.$(SERIES),%,$(series_fname))); )
+	$(eval CONTRAIL_INSTALL := $(shell cd build/packages/$(PACKAGE)/debian; find . -name '*.install'))
+	$(foreach install_fname, $(CONTRAIL_INSTALL), \
+			(cd build/packages/$(PACKAGE)/debian;\
+			sed -i '/INSTALL_SERIES/d' $(install_fname)); )
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
 package-%: debian-%
