@@ -2,6 +2,7 @@ Source: contrail-vrouter-dpdk
 Maintainer: OpenContrail Developers <dev@lists.opencontrail.org>
 Section: net
 Priority: optional
+Build-Depends: dh-systemd
 
 Package: contrail-vrouter-dpdk
 Architecture: all
