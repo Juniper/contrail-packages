@@ -5,14 +5,23 @@ export INSTALL_ROOT=$(shell pwd)
 SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages(.*)/\1/")
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(INSTALL_ROOT)/usr/lib
 
+SERIES := $(shell lsb_release -c)
+ifeq (,$(findstring trusty,$(SERIES)))
+	DH_WITH="$@"
+else
+	DH_WITH="$@ --with systemd"
+endif
+
+
+
 %:
-	dh $@
+	dh $(DH_WITH)
 
 override_dh_auto_clean:
 	(cd ${SB_TOP}; scons -c --opt=production vrouter/dpdk)
 
 override_dh_auto_build:
-	(cd ${SB_TOP}; scons --opt=production vrouter/dpdk)
+	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} vrouter/dpdk)
 
 override_dh_auto_install:
 	mkdir -p ${INSTALL_ROOT}/usr/bin
