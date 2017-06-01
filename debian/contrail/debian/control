@@ -326,7 +326,7 @@ Description: OpenContrail vrouter network namespace package
 
 Package: contrail-vrouter-utils
 Architecture: amd64
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: tcpdump, ${misc:Depends}, ${shlibs:Depends}
 Description: OpenContrail VRouter - Utilities
  The OpenContrail vRouter is a forwarding plane (of a distributed router) that
  runs in the hypervisor of a virtualized server.
