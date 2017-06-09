@@ -564,7 +564,7 @@ Requires:           cassandra-cpp-driver
 Requires:           libzookeeper
 Requires:           net-snmp-python
 Requires:           librdkafka1
-Requires:           python-kafka >= 1.0.1, python-kafka <= 1.0.2
+Requires:           python-kafka >= 1.0.2
 Requires:           python-stevedore
 Requires:           python-kazoo >= 1.3.1
 Requires:           python-sseclient
