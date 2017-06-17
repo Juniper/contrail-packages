@@ -641,6 +641,7 @@ fi
 %{_contraildns}/contrail-named.conf
 %{_contraildns}/contrail-rndc.conf
 %{_contrailetc}/contrail-dns.conf
+%{_contrailetc}/applynamedconfig.py
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
 %{_bindir}/contrail-named
