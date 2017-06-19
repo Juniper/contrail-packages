@@ -677,6 +677,7 @@ fi
 %{_contraildns}
 %config(noreplace) %{_contraildns}/contrail-named.conf
 %config(noreplace) %{_contraildns}/contrail-rndc.conf
+%config(noreplace) %{_contraildns}/applynamedconfig.py
 %config(noreplace) %{_contrailetc}/contrail-dns.conf
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
