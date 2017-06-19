@@ -55,6 +55,7 @@ pre-stop script
 end script
 
 post-stop script
+    /sbin/rmmod vrouter
     if [ -f /opt/contrail/bin/vrouter-post-stop.sh ]; then
         /opt/contrail/bin/vrouter-post-stop.sh
     fi
