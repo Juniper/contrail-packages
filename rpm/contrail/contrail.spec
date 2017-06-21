@@ -567,7 +567,7 @@ Requires:           python-psutil >= 0.6.0
 Requires:           python-prettytable
 Requires:           python-geventhttpclient
 Requires:           protobuf
-Requires:           cassandra-cpp-driver
+Requires:           cassandra-cpp-driver >= 2.7.0
 Requires:           libzookeeper
 Requires:           net-snmp-python
 Requires:           librdkafka1

@@ -45,7 +45,7 @@ Architecture: amd64
 Depends: adduser,
          contrail-lib (>= ${binary:Version}),
          contrail-docs (>= ${source:Version}),
-         cassandra-cpp-driver,
+         cassandra-cpp-driver (>= 2.7.0),
          libzookeeper-mt2,
          python-bottle (>= 0.11.6),
          python-contrail (>= ${source:Version}),
