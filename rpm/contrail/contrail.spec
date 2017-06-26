@@ -703,6 +703,7 @@ Contrail Nova Vif driver package
 %files nova-vif
 %defattr(-,root,root,-)
 %{python_sitelib}/nova_contrail_vif*
+%{python_sitelib}/vif_plug_vrouter
 
 %package utils
 Summary: Contrail utility sctipts.
