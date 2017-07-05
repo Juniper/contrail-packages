@@ -1,0 +1,66 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
+index 9f13ed2..9e25015 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
+@@ -128,9 +128,9 @@ abstract class GraphElementImpl implements GraphElement {
+ 	@Override
+ 	public void addMetadataHolder(MetadataHolder m) {
+ 		NullCheck.check(m, "MetadataHolder is null");
+-		if (mMetadataHolder.contains(m))
+-			throw new SystemErrorException("MetadataHolder " + m + " already on "
+-					+ this);
++		if (mMetadataHolder.contains(m)) {
++                        return;
++                }
+ 		
+ 		mMetadataHolder.add(m);
+ 	}
+@@ -140,10 +140,9 @@ abstract class GraphElementImpl implements GraphElement {
+ 		NullCheck.check(m, "MetadataHolder is null");
+ 		int idx = mMetadataHolder.indexOf(m);
+ 		
+-		if (idx < 0)
+-			throw new SystemErrorException("MetadataHolder " + m + " not on " + this);
+-		
+-		mMetadataHolder.remove(idx);
++		if (idx >= 0) {
++		        mMetadataHolder.remove(idx);
++                }
+ 	}
+ 
+ 	@Override
+@@ -165,16 +164,11 @@ abstract class GraphElementImpl implements GraphElement {
+ 	public void addSubscriptionEntry(SubscriptionEntry entry) {
+ 		NullCheck.check(entry, "entry is null");
+ 		NullCheck.check(entry.getSubscription(), "sub is null");
+-		if (mSubscriptionEntries.put(entry.getSubscription(), entry) != null)
+-			throw new SystemErrorException("entry " + entry
+-					+ " already on " + this);
+ 	}
+ 
+ 	@Override
+ 	public void removeSubscriptionEntry(Subscription sub) {
+ 		NullCheck.check(sub, "Subscription is null");
+-		if (mSubscriptionEntries.remove(sub) == null)
+-			throw new SystemErrorException("entry for " + sub + " not on "  + this);
+ 	}
+ 
+ 	@Override
+@@ -196,17 +190,11 @@ abstract class GraphElementImpl implements GraphElement {
+ 	public void addRemovedSubscriptionEntry(SubscriptionEntry entry) {
+ 		NullCheck.check(entry, "entry is null");
+ 		NullCheck.check(entry.getSubscription(), "sub is null");
+-		if (mRemovedSubscriptionEntries.put(entry.getSubscription(), entry) != null)
+-			throw new SystemErrorException("entry " + entry
+-					+ " already removed for  " + this);
+ 	 }
+ 	
+ 	@Override
+ 	public void removeRemovedSubscriptionEntry(Subscription sub) {
+ 		NullCheck.check(sub, "Subscription is null");
+-		if (mRemovedSubscriptionEntries.remove(sub) == null)
+-			throw new SystemErrorException("entry for " + sub + " not removed for " 
+-					+ this);
+ 	}
+ 	
+ 	@Override
