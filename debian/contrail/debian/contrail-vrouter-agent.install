@@ -4,6 +4,7 @@ usr/bin/vrouter-port-control
 usr/bin/contrail-compute-setup
 usr/bin/contrail-vrouter-agent-health-check.py
 etc/contrail/contrail-vrouter-agent.conf
+etc/contrail/contrail-vrouter-nodemgr.conf
 usr/lib/python*/dist-packages/ContrailVrouterCli*
 usr/lib/python*/dist-packages/contrail_vrouter_provisioning*
 usr/bin/contrail-toragent-setup
