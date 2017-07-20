@@ -121,6 +121,14 @@ install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/e
 install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
 popd
 
+#Needed for agent container env
+# install vrouter.ko at /opt/contrail/vrouter-kernel-modules to use with containers
+for vrouter_ko in $(ls -1 /lib/modules/*/extra/net/vrouter/vrouter.ko); do
+  kernel_ver=$(echo $vrouter_ko | awk -F / '{print $4}')
+  install -d -m 755 %{_contrailutils}/../vrouter-kernel-modules/%{kernel_ver}/
+  install -p -m 755 %{vrouter_ko} %{_contrailutils}/../vrouter-kernel-modules/%{kernel_ver}/vrouter.ko
+done
+
 #Needed for vrouter-dkms
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
 pushd %{buildroot}/usr/src/vrouter
@@ -216,6 +224,7 @@ exit 0
 %files vrouter
 %defattr(-, root, root)
 /lib/modules/*/extra/net/vrouter/vrouter.ko
+/opt/contrail/vrouter-kernel-modules/*
 
 %package vrouter-source
 Summary:            Contrail vRouter
