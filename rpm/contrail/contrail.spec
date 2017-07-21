@@ -304,6 +304,7 @@ The package opencontrail-vrouter-utils provides command line utilities to config
 %{_bindir}/vrouter
 %{_bindir}/vrmemstats
 %{_bindir}/qosmap
+%{_bindir}/vifdump
 
 %package vrouter-agent
 
