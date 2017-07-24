@@ -70,6 +70,7 @@ BuildRequires:  cassandra-cpp-driver
 BuildRequires:  cassandra-cpp-driver-devel
 BuildRequires:  libzookeeper-devel
 BuildRequires:  librdkafka-devel >= 0.9.0
+BuildRequires:  grok-devel
 
 %prep
 
@@ -639,6 +640,7 @@ Requires:           python-stevedore
 Requires:           python-kazoo >= 1.3.1
 Requires:           python-sseclient
 Requires:           python-amqp
+Requires:           grok
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
 %endif
