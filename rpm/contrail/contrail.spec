@@ -349,6 +349,7 @@ configure and diagnose the OpenContrail Linux kernel module.
 %{_bindir}/vrouter
 %{_bindir}/vrmemstats
 %{_bindir}/qosmap
+%{_bindir}/vifdump
 
 %package vrouter-agent
 
