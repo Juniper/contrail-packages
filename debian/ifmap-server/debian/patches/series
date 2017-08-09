@@ -6,3 +6,4 @@
 006_poll_results_buffer.patch
 007_ifmap_leak_fixes.patch
 008_ifmap_bug_1688227.patch
+009_ifmap_xxe_vulnerability.patch
