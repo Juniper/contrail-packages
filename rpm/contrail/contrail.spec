@@ -777,6 +777,10 @@ Group:              Applications/System
 Requires:	    python-contrail >= %{_verstr}-%{_relstr}
 Requires:	    python-gevent
 Requires:	    python-requests
+Requires:           python-pycassa
+Requires:           python-kazoo
+Requires:           python-bitarray
+Requires:           python-sqlalchemy
 
 %description kube-manager
 Contrail kubernetes network manager package
