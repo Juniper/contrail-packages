@@ -111,8 +111,29 @@ python setup.py install --root=%{buildroot}
 popd
 
 # contrail-docs
+# Move schema specific files to opserver
+for mod_dir in %{buildroot}/usr/share/doc/contrail-docs/html/messages/*; do \
+    if [ -d $mod_dir ]; then \
+        for python_dir in %{buildroot}/usr/lib/python*; do \
+            mkdir -m 0755 -p $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`; \
+            for statsfile in %{buildroot}/usr/share/doc/contrail-docs/html/messages/`basename $mod_dir`/*_stats_tables.json; do \
+                install -p -m 644 -t $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`/ $statsfile; \
+                rm -f $statsfile; \
+            done \
+        done \
+    fi \
+done
+
 # Index files
 python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/share/doc/contrail-docs/html/messages
+# contrail-cli
+mkdir -p %{buildroot}/etc/bash_completion.d
+python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/debug/utils/contrail-cli %{buildroot}
+pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot}; popd
 
 # Install supervisor files
 pushd %{_builddir}/..
@@ -330,7 +351,9 @@ in the OpenContrail API server.
 %{python_sitelib}/sandesh-0.1dev*
 %{python_sitelib}/sandesh_common*
 %{python_sitelib}/vnc_api*
+%{python_sitelib}/ContrailCli*
 %config(noreplace) %{_contrailetc}/vnc_api_lib.ini
+/etc/bash_completion.d/bashrc_contrail_cli
 
 %package vrouter-utils
 Summary:            Contrail vRouter
@@ -379,8 +402,8 @@ package provides the contrail-vrouter user space agent.
 
 %files vrouter-agent
 %defattr(-, root, root)
-%{_bindir}/contrail-vrouter-agent
-%{_bindir}/contrail-tor-agent
+%{_bindir}/contrail-vrouter-agent*
+%{_bindir}/contrail-tor-agent*
 %{_bindir}/vrouter-port-control
 %{_bindir}/contrail-compute-setup
 %{_bindir}/contrail-toragent-setup
@@ -393,6 +416,7 @@ package provides the contrail-vrouter user space agent.
 %config(noreplace) /etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
 /etc/init.d/supervisor-vrouter
 %{python_sitelib}/contrail_vrouter_provisioning*
+%{python_sitelib}/ContrailVrouterCli*
 
 %pre vrouter-agent
 set -e
@@ -452,13 +476,14 @@ eventually consistent.
 
 %files control
 %defattr(-,root,root,-)
-%{_bindir}/contrail-control
+%{_bindir}/contrail-control*
 %config(noreplace) %{_contrailetc}/contrail-control.conf
 %config(noreplace) /etc/contrail/supervisord_control.conf
 %config(noreplace) /etc/contrail/supervisord_control_files/contrail-control.ini
 /etc/contrail/supervisord_control_files/contrail-control.rules
 /etc/init.d/contrail-control
 /etc/init.d/supervisor-control
+%{python_sitelib}/ContrailControlCli*
 
 %pre control
 set -e
@@ -582,15 +607,16 @@ in a NoSQL database.
 %config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-config-nodemgr.conf
 %defattr(-,root,root,-)
-%{_bindir}/contrail-api
-%{_bindir}/contrail-schema
-%{_bindir}/contrail-device-manager
+%{_bindir}/contrail-api*
+%{_bindir}/contrail-schema*
+%{_bindir}/contrail-device-manager*
 %{_bindir}/contrail-issu-pre-sync
 %{_bindir}/contrail-issu-post-sync
 %{_bindir}/contrail-issu-run-sync
 %{_bindir}/contrail-issu-zk-sync
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
+%{python_sitelib}/ContrailConfigCli*
 %{python_sitelib}/device_manager*
 %{python_sitelib}/device_api*
 %{python_sitelib}/contrail_issu*
@@ -684,13 +710,14 @@ This information includes statistics,logs, events, and errors.
 %config(noreplace) %{_contrailetc}/contrail-topology.conf
 %config(noreplace) %{_contrailetc}/contrail-alarm-gen.conf
 %defattr(-, root, root)
-%{_bindir}/contrail-collector
-%{_bindir}/contrail-query-engine
-%{_bindir}/contrail-analytics-api
-%{_bindir}/contrail-alarm-gen
+%{_bindir}/contrail-collector*
+%{_bindir}/contrail-query-engine*
+%{_bindir}/contrail-analytics-api*
+%{_bindir}/contrail-alarm-gen*
 %{python_sitelib}/opserver*
 %{python_sitelib}/contrail_snmp_collector*
 %{python_sitelib}/contrail_topology*
+%{python_sitelib}/ContrailAnalyticsCli*
 %{_bindir}/contrail-logs
 %{_bindir}/contrail-flows
 %{_bindir}/contrail-db
@@ -788,10 +815,10 @@ fi
 %config(noreplace) %{_contrailetc}/contrail-dns.conf
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
-%{_bindir}/contrail-named
+%{_bindir}/contrail-named*
 %{_bindir}/contrail-rndc
 %{_bindir}/contrail-rndc-confgen
-%{_bindir}/contrail-dns
+%{_bindir}/contrail-dns*
 %if 0%{?rhel} > 6
 %docdir %{python2_sitelib}/doc/*
 %endif
