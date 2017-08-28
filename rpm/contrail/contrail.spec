@@ -526,6 +526,7 @@ Requires:           python-docker-py
 Requires:           python-unittest2
 Requires:           iproute >= 3.1.0
 Requires:           python-requests >= 2.5.1
+Requires:           python-eventlet
 
 %description -n python-opencontrail-vrouter-netns
 Contrail Virtual Router NetNS package
