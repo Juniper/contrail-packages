@@ -7,7 +7,6 @@
 import os
 import sys
 import json
-import six
 
 class CompleteDictionary:
     """dictionary for bash completion
@@ -21,7 +20,7 @@ class CompleteDictionary:
         last_cmd = command[-1]
         for subcmd in command[:-1]:
             subdata = dicto.get(subcmd)
-            if isinstance(subdata, six.string_types):
+            if isinstance(subdata, basestring):
                 subdata += ' ' + last_cmd
                 dicto[subcmd] = subdata
                 last_cmd = subcmd + '_' + last_cmd
@@ -38,7 +37,7 @@ class CompleteDictionary:
         for cmd in keys:
             name = path + "_" + cmd if path else cmd
             value = dictionary[cmd]
-            if isinstance(value, six.string_types):
+            if isinstance(value, basestring):
                 ray.append((name, value))
             else:
                 cmdlist = ' '.join(sorted(value.keys()))
