@@ -114,7 +114,7 @@ popd
 for mod_dir in %{buildroot}/usr/share/doc/contrail-docs/html/messages/*; do \
     if [ -d $mod_dir ]; then \
         for python_dir in %{buildroot}/usr/lib/python*; do \
-            mkdir -m 0755 -p $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`; \
+            install -d -m 0755 -p $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`; \
             for statsfile in %{buildroot}/usr/share/doc/contrail-docs/html/messages/`basename $mod_dir`/*_stats_tables.json; do \
                 install -p -m 644 -t $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`/ $statsfile; \
                 rm -f $statsfile; \
@@ -126,7 +126,7 @@ done
 # Index files
 python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/share/doc/contrail-docs/html/messages
 # contrail-cli
-mkdir -p %{buildroot}/etc/bash_completion.d
+install -d -m 0755 %{buildroot}/etc/bash_completion.d
 python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/debug/utils/contrail-cli %{buildroot}
 pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot}; popd
 pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot}; popd
