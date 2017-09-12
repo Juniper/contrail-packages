@@ -1,4 +1,5 @@
+#!/usr/bin/dh-exec
 var/lib/contrail
 etc/contrail
 var/log/contrail
-DIRS_SERIES
+etc/contrail/supervisord_control_files [ubuntu-trusty]

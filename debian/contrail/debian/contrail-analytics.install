@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/bin/contrail-collector*
 usr/bin/contrail-query-engine*
 usr/bin/contrail-analytics-api*
@@ -23,4 +24,3 @@ usr/lib/python*/dist-packages/contrail_topology*
 usr/lib/python*/dist-packages/ContrailAnalyticsCli*
 usr/share/doc/contrail-analytics-api
 usr/share/mibs/netsnmp/*
-INSTALL_SERIES

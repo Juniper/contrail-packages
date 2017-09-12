@@ -1,3 +1,0 @@
-etc/contrail/contrail-vrouter-nodemgr.conf
-lib/systemd/system/contrail-vrouter-nodemgr.service
-lib/systemd/system/contrail-vrouter-agent.service

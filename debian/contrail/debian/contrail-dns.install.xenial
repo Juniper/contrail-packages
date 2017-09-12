@@ -1,2 +1,0 @@
-lib/systemd/system/contrail-dns.service
-lib/systemd/system/contrail-named.service
