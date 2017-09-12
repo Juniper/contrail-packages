@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/bin/dropstats
 usr/bin/flow
 usr/bin/mirror

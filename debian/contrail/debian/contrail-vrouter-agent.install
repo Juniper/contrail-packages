@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/bin/contrail-vrouter-agent*
 usr/bin/contrail-tor-agent*
 usr/bin/vrouter-port-control
@@ -9,4 +10,3 @@ usr/lib/python*/dist-packages/ContrailVrouterCli*
 usr/lib/python*/dist-packages/contrail_vrouter_provisioning*
 usr/bin/contrail-toragent-setup
 usr/bin/contrail-toragent-cleanup
-INSTALL_SERIES

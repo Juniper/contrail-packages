@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 debian/changelog usr/src/modules/contrail-vrouter/debian
 debian/control usr/src/modules/contrail-vrouter/debian
 debian/compat usr/src/modules/contrail-vrouter/debian

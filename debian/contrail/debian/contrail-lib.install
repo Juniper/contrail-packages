@@ -1,1 +1,2 @@
+#!/usr/bin/dh-exec
 usr/lib/lib*.so*
