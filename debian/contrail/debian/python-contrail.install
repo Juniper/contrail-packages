@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/lib/python*/dist-packages/cfgm_common*
 usr/lib/python*/dist-packages/libpartition*
 usr/lib/python*/dist-packages/pysandesh*

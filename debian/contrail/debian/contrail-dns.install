@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/bin/contrail-dns*
 usr/bin/contrail-named*
 usr/bin/contrail-rndc
@@ -7,4 +8,3 @@ etc/contrail/dns/contrail-named.conf
 etc/contrail/contrail-dns.conf
 etc/contrail/dns/COPYRIGHT
 etc/contrail/dns/applynamedconfig.py
-INSTALL_SERIES
