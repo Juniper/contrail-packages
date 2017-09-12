@@ -1,1 +1,2 @@
+#!/usr/bin/dh-exec
 usr/share/contrail/* usr/share/contrail-utils/

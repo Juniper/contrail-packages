@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/lib/python*/dist-packages/nodemgr*
 usr/lib/python*/dist-packages/analytics*
 usr/lib/python*/dist-packages/node_mgr-*.egg-info

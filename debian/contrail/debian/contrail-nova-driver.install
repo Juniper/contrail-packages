@@ -1,1 +1,2 @@
+#!/usr/bin/dh-exec
 usr/lib/python*/dist-packages/nova_contrail_vif*
