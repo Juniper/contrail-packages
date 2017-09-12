@@ -1,7 +1,9 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-export INSTALL_ROOT=$(shell pwd)
+export DH_EXEC_SCRIPTDIR=debian/dh-exec
+
+export INSTALL_ROOT="$(shell pwd)/debian/tmp"
 SB_TOP := $(shell pwd | sed -re "s/(.*)\/build\/packages(.*)/\1/")
 
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(INSTALL_ROOT)/usr/lib
@@ -10,18 +12,19 @@ DEB_UPSTREAM_VERSION=$(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:
 
 package-dkms=contrail-vrouter-dkms
 
-VER := $(shell lsb_release -c)
-ifeq (,$(findstring precise,$(VER)))
-        SUBSTVARS = -Vdist:Depends="python-cassandra-driver  (>= 3.0.0)"
+VER := $(shell awk -F"=" '$$1 == "DISTRIB_CODENAME" {print $$NF}' /etc/lsb-release)
+ifeq ($(findstring xenial,$(VER)),xenial)
+	SUBSTVARS += -Vdbus:Depends="dbus, python-pydbus (>= 0.7.0)"
         DH_WITH=python2,systemd
 else
+        SUBSTVARS = -Vdist:Depends="supervisor"
         DH_WITH=python2
 endif
 
-ifeq (,$(findstring trusty,$(VER)))
-        DH_WITH=python2,systemd
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	JOBS = -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 else
-        DH_WITH=python2
+	JOBS =
 endif
 
 TARGETS=control-node:node_mgr \
@@ -31,33 +34,34 @@ TARGETS=control-node:node_mgr \
         src:nodemgr
 
 %:
-	dh $@ --with $(DH_WITH)
+	dh $@ --with $(DH_WITH) --parallel
+
+get-orig-source:
+	(cd ${SB_TOP}/third_party/ && python fetch_packages.py)
+	tar zcf contrail_${DEB_UPSTREAM_VERSION}.orig.tar.gz \
+		controller vrouter third_party tools/build tools/generateds \
+		openstack/nova_contrail_vif openstack/nova_extensions \
+		tools/sandesh src SConstruct
 
 override_dh_compress:
 	dh_compress -X.json
 
-override_dh_auto_build:
+#override_dh_auto_build:
+#	(cd ${SB_TOP}; scons $(JOBS) --opt=production --root=${INSTALL_ROOT})
+
+override_dh_auto_install:
 	cd debian/manpages; ronn -r *.ronn
-	(cd ${SB_TOP}; scons --opt=production --root=${INSTALL_ROOT} install)
+	(cd ${SB_TOP}; scons $(JOBS) --opt=production --root=${INSTALL_ROOT} install)
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
-	(cd usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
-	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > usr/src/vrouter/dkms.conf
-	# Node manager
-	(cd ${SB_TOP}; scons -j1 --opt=production --root=${INSTALL_ROOT} ${TARGETS})
+	(cd ${INSTALL_ROOT}/usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
+	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > ${INSTALL_ROOT}/usr/src/vrouter/dkms.conf
+	# Node manager - XXX: Add node_mgr targets to the default list of targets
+	(cd ${SB_TOP}; scons $(JOBS) --opt=production --root=${INSTALL_ROOT} ${TARGETS})
 	(cd ${SB_TOP}/build/production/nodemgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/control-node; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/vnsw/agent/uve; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/opserver/node_mgr; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/analytics/database; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
-	# Configuration for nodemgr
-	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.conf; do \
-		mkdir -m 0755 -p ${INSTALL_ROOT}/usr/share/doc/contrail-`basename $$conf | cut -d '-' -f 2`/examples; \
-		install -p -m 644 -t ${INSTALL_ROOT}/usr/share/doc/contrail-`basename $$conf | cut -d '-' -f 2`/examples $$conf; \
-	done
-	# Configuration for nodemgr supervisord
-	for conf in ${SB_TOP}/controller/src/nodemgr/*_nodemgr/*.ini; do \
-		install -p -m 644 -t ${INSTALL_ROOT}/usr/share/doc/contrail-`basename $$conf | cut -d '-' -f 2`/examples $$conf; \
-	done
 	# Move schema specific files to opserver
 	for mod_dir in ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages/*; do \
 		if [ -d $$mod_dir ]; then \
@@ -72,10 +76,10 @@ override_dh_auto_build:
 	done
 	# contrail-docs
 	# Index files
-	python debian/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
+	python ${SB_TOP}/tools/packages/utils/generate_doc_index.py ${INSTALL_ROOT}/usr/share/doc/contrail-docs/html/messages
 	# contrail-cli
 	mkdir -p ${INSTALL_ROOT}/etc/bash_completion.d
-	python debian/utils/generate_cli_commands.py ${SB_TOP}/build/production/utils/contrail-cli ${INSTALL_ROOT}
+	python ${SB_TOP}/tools/packages/utils/generate_cli_commands.py ${SB_TOP}/build/production/utils/contrail-cli ${INSTALL_ROOT}
 	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
 	(cd ${SB_TOP}/build/production/utils/contrail-cli/contrail_config_cli; python setup.py install --root=${INSTALL_ROOT} --install-layout=deb)
@@ -84,7 +88,9 @@ override_dh_auto_build:
 
 override_dh_auto_clean:
 	dh_auto_clean
-	rm -f debian/manpages/*.1
+	rm -rf debian/manpages/*.1 build/ config.log .scon* vrouter/dp-core/vr_buildinfo.c || /bin/true
+	(cd vrouter/ && make clean)
+	find . -name "*.pyc" -delete
 
 override_dh_install:
 	@echo "usr/src/vrouter/* usr/src/vrouter-$(DEB_UPSTREAM_VERSION)" > debian/$(package-dkms).install

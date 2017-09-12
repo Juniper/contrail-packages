@@ -1,4 +1,3 @@
 usr/bin/contrail-control*
 etc/contrail/contrail-control.conf
 usr/lib/python*/dist-packages/ContrailControlCli*
-INSTALL_SERIES
