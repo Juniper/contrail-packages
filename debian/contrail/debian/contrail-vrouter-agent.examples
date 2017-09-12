@@ -1,2 +1,2 @@
-usr/share/doc/contrail-vrouter/examples/contrail-vrouter-nodemgr.conf
-usr/share/doc/contrail-vrouter/examples/contrail-vrouter-nodemgr.ini
+controller/src/nodemgr/vrouter_nodemgr/contrail-vrouter-nodemgr.conf
+controller/src/nodemgr/vrouter_nodemgr/contrail-vrouter-nodemgr.ini

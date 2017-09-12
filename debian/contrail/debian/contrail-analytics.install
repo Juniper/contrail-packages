@@ -24,4 +24,3 @@ usr/lib/python*/dist-packages/contrail_topology*
 usr/lib/python*/dist-packages/ContrailAnalyticsCli*
 usr/share/doc/contrail-analytics-api
 usr/share/mibs/netsnmp/*
-INSTALL_SERIES
