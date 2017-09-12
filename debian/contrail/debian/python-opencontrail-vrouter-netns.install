@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/bin/opencontrail-vrouter-*
 usr/lib/python*/dist-packages/opencontrail_vrouter_*
 etc/contrail/contrail-lbaas-auth.conf

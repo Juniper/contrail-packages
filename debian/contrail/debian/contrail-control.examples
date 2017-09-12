@@ -1,2 +1,2 @@
-usr/share/doc/contrail-control/examples/contrail-control-nodemgr.conf
-usr/share/doc/contrail-control/examples/contrail-control-nodemgr.ini
+controller/src/nodemgr/control_nodemgr/contrail-control-nodemgr.conf
+controller/src/nodemgr/control_nodemgr/contrail-control-nodemgr.ini

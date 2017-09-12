@@ -1,3 +1,4 @@
+#!/usr/bin/dh-exec
 usr/bin/contrail-api*
 usr/bin/contrail-schema*
 usr/bin/contrail-device-manager*
@@ -15,4 +16,3 @@ usr/lib/python*/dist-packages/schema_transformer*
 usr/lib/python*/dist-packages/vnc_cfg_api_server*
 usr/lib/python*/dist-packages/ContrailConfigCli*
 usr/share/doc/contrail-config
-INSTALL_SERIES
