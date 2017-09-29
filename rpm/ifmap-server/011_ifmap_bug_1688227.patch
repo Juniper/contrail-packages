@@ -1,0 +1,107 @@
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+index edb6312..e3b7ea1 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/SubscriptionService.java
+@@ -253,9 +253,13 @@ public class SubscriptionService {
+ 		
+ 		for (GraphElement ge : visitedGraphElement) {
+ 			initSres.addGraphElement(ge);
+-			
+-			for (MetadataHolder mh : ge.getSubscriptionEntry(sub).getMetadataHolder())
+-				initSres.addMetadata(ge, mh.getMetadata());
++		        SubscriptionEntry se = ge.getSubscriptionEntry(sub);
++                        if (se != null && se.getMetadataHolder() != null) {
++			        for (MetadataHolder mh : se.getMetadataHolder())
++				    initSres.addMetadata(ge, mh.getMetadata());
++                        } else {
++                               sLogger.debug(sName + "Subscription Entry/Metadata Holder is NULL for (ge, sub): " + ge + "/" + sub); 
++                        }
+ 		}
+ 		
+ 		// Sanitize check: An initial search never leads to new Starters.
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
+index 9f13ed2..f936a15 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/GraphElementImpl.java
+@@ -128,9 +128,9 @@ abstract class GraphElementImpl implements GraphElement {
+ 	@Override
+ 	public void addMetadataHolder(MetadataHolder m) {
+ 		NullCheck.check(m, "MetadataHolder is null");
+-		if (mMetadataHolder.contains(m))
+-			throw new SystemErrorException("MetadataHolder " + m + " already on "
+-					+ this);
++		if (mMetadataHolder.contains(m)) {
++                        return;
++                }
+ 		
+ 		mMetadataHolder.add(m);
+ 	}
+@@ -140,10 +140,9 @@ abstract class GraphElementImpl implements GraphElement {
+ 		NullCheck.check(m, "MetadataHolder is null");
+ 		int idx = mMetadataHolder.indexOf(m);
+ 		
+-		if (idx < 0)
+-			throw new SystemErrorException("MetadataHolder " + m + " not on " + this);
+-		
+-		mMetadataHolder.remove(idx);
++		if (idx >= 0) {
++		        mMetadataHolder.remove(idx);
++                }
+ 	}
+ 
+ 	@Override
+@@ -165,16 +164,13 @@ abstract class GraphElementImpl implements GraphElement {
+ 	public void addSubscriptionEntry(SubscriptionEntry entry) {
+ 		NullCheck.check(entry, "entry is null");
+ 		NullCheck.check(entry.getSubscription(), "sub is null");
+-		if (mSubscriptionEntries.put(entry.getSubscription(), entry) != null)
+-			throw new SystemErrorException("entry " + entry
+-					+ " already on " + this);
++                mSubscriptionEntries.put(entry.getSubscription(), entry);
+ 	}
+ 
+ 	@Override
+ 	public void removeSubscriptionEntry(Subscription sub) {
+ 		NullCheck.check(sub, "Subscription is null");
+-		if (mSubscriptionEntries.remove(sub) == null)
+-			throw new SystemErrorException("entry for " + sub + " not on "  + this);
++                mSubscriptionEntries.remove(sub);
+ 	}
+ 
+ 	@Override
+@@ -196,17 +192,13 @@ abstract class GraphElementImpl implements GraphElement {
+ 	public void addRemovedSubscriptionEntry(SubscriptionEntry entry) {
+ 		NullCheck.check(entry, "entry is null");
+ 		NullCheck.check(entry.getSubscription(), "sub is null");
+-		if (mRemovedSubscriptionEntries.put(entry.getSubscription(), entry) != null)
+-			throw new SystemErrorException("entry " + entry
+-					+ " already removed for  " + this);
++                mRemovedSubscriptionEntries.put(entry.getSubscription(), entry);
+ 	 }
+ 	
+ 	@Override
+ 	public void removeRemovedSubscriptionEntry(Subscription sub) {
+ 		NullCheck.check(sub, "Subscription is null");
+-		if (mRemovedSubscriptionEntries.remove(sub) == null)
+-			throw new SystemErrorException("entry for " + sub + " not removed for " 
+-					+ this);
++                mRemovedSubscriptionEntries.remove(sub);
+ 	}
+ 	
+ 	@Override
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+index 98d5a04..ba69ec7 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/search/SubscriptionImpl.java
+@@ -131,10 +131,7 @@ class SubscriptionImpl implements Subscription {
+ 	@Override
+ 	public void addGraphElement(GraphElement ge) {
+ 		NullCheck.check(ge, "mc is null");
+-		if (mGraphElements.put(ge, ge) != null)
+-			throw new SystemErrorException("Container " + ge + " was already on"
+-					+ " on " + this);
+-		
++                mGraphElements.put(ge, ge);
+ 	}
+ 
+ 	/* (non-Javadoc)

@@ -1,0 +1,12 @@
+diff -ur --new-file ifmap-server-0.3.2/ifmap-server ifmap-server-0.3.2-new/ifmap-server
+--- ifmap-server-0.3.2/ifmap-server	2016-06-01 18:07:35.957355794 -0700
++++ ifmap-server-0.3.2-new/ifmap-server	2016-06-01 18:08:12.934067892 -0700
+@@ -1,4 +1,7 @@
+ #!/bin/sh
+ 
+ cd /usr/share/ifmap-server
+-java -cp ./lib/ -jar ./irond.jar > /var/log/contrail/ifmap-server-console.log 2>&1
++# exec to allow supervisor reap for ifmap process, enabling proper detection and life cycle
++# management of the ifmap process. Use explicit Dlog4j option to allow ifmap process to
++# be noticed by ps command and also for user contrail to run ifmap process
++exec /usr/bin/java -jar ./irond.jar -Dlog4j.configuration=file:////usr/share/ifmap-server/log4j.properties
