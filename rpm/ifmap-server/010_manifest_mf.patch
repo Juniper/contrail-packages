@@ -1,0 +1,8 @@
+--- ifmap-server/MANIFEST.MF.orig	2016-06-09 10:09:41.399433000 -0700
++++ ifmap-server/MANIFEST.MF	2016-06-09 10:10:10.759433000 -0700
+@@ -1,4 +1,4 @@
+ Manifest-Version: 1.0
+ Main-Class: de.fhhannover.inform.iron.mapserver.Main
+-Class-Path: . /usr/share/java/log4j.jar /usr/share/java/commons-codec-1.4-redhat-1.jar /usr/share/java/jakarta-httpcore.jar
++Class-Path: . /usr/share/java/log4j.jar /usr/share/java/commons-codec-1.4-redhat-1.jar /usr/share/java/apache-commons-codec.jar /usr/share/java/jakarta-httpcore.jar
+ 

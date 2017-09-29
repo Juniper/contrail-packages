@@ -1,0 +1,8 @@
+diff -ur --new-file ifmap-server-0.3.2/ifmap-server ifmap-server-0.3.2-new/ifmap-server
+--- ifmap-server-0.3.2/ifmap-server	1969-12-31 16:00:00.000000000 -0800
++++ ifmap-server-0.3.2-new/ifmap-server	2014-09-02 11:23:24.137999920 -0700
+@@ -0,0 +1,4 @@
++#!/bin/sh
++
++cd /usr/share/ifmap-server
++java -cp ./lib/ -jar ./irond.jar > /var/log/contrail/ifmap-server-console.log 2>&1

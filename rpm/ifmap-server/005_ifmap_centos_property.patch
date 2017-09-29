@@ -1,0 +1,65 @@
+--- ifmap-server/ifmap.properties	2014-08-04 12:29:10.000000000 -0700
++++ /tmp/ifmap.properties	2014-08-05 12:39:29.151314139 -0700
+@@ -3,19 +3,19 @@
+ 
+ # Path to the file where username:password mappings for
+ # basic authentication can be found
+-irond.auth.basic.users.file=basicauthusers.properties
++irond.auth.basic.users.file=/etc/ifmap-server/basicauthusers.properties
+ 
+ # Path to the file where <client identification=publisher-id>
+ # mappings can be found
+-irond.ifmap.publishers.file=publisher.properties
++irond.ifmap.publishers.file=/etc/ifmap-server/publisher.properties
+ 
+ # Path to the file where authorization information for MAPC
+ # can be found. Mappings have the following form:
+ # <client identification>=[ro|rw]
+-irond.ifmap.authorization.file=authorization.properties
++irond.ifmap.authorization.file=/etc/ifmap-server/authorization.properties
+ 
+ # Path to the java keystore
+-irond.auth.cert.keystore.file=./keystore/irond.jks
++irond.auth.cert.keystore.file=/etc/ifmap-server/keystore/irond.jks
+ 
+ # Password for the java keystore
+ # This store contains the private key of the MAPS
+@@ -23,7 +23,7 @@
+ 
+ # Path to the java truststore
+ # This store contains the trusted MAPC certificates
+-irond.auth.cert.truststore.file=./keystore/irond.jks
++irond.auth.cert.truststore.file=/etc/ifmap-server/keystore/irond.jks
+ 
+ # Password for the java truststore
+ irond.auth.cert.truststore.pass=mapserver
+@@ -66,11 +66,6 @@
+ # The default max-size value for search requests in bytes
+ irond.ifmap.default.searchresultsize=100000
+ 
+-# Limit the size of a search result
+-irond.ifmap.default.maxperpollresultsize=8192
+-irond.ifmap.default.splitinitialsearchresult=true
+-irond.ifmap.default.droponresultstoobig=false
+-
+ # If this is true, only purging of the own metadata is possible
+ irond.ifmap.restrict.purgepublisher=true
+ 
+@@ -87,7 +82,7 @@
+ # Which schema to validate requests against.
+ # Note, the schema/soap12.xsd includes the
+ # schema/ifmap-base-2.0v17.xsd file.
+-irond.xml.schema.0=schema/soap12.xsd
++irond.xml.schema.0=/etc/ifmap-server/schema/soap12.xsd
+ 
+ # If, for some reason you need to specify another schema list
+ # it here. Note, however, all elements under a <metadata> element
+@@ -105,3 +100,8 @@
+ irond.proc.action.workers=1
+ irond.proc.event.forwarders=2
+ irond.proc.event.workers=4
++
++# Limit the size of a search result
++irond.ifmap.default.maxperpollresultsize=8192
++irond.ifmap.default.splitinitialsearchresult=true
++irond.ifmap.default.droponresultstoobig=false
