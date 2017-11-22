@@ -31,7 +31,7 @@ if [ "${1}" = "purge" ] ; then
     rm -rf /var/log/contrail
   fi
 
-  rm -rf /var/lib/contrail/ports /var/lib/contrail/dhcp
+  rm -rf /var/lib/contrail/ports /var/lib/contrail/dhcp /var/lib/contrail/backup
   if [ ! "$(ls -A /var/lib/contrail)" ]; then
     rm -rf /var/lib/contrail
   fi
