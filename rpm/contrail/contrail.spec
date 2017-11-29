@@ -336,6 +336,7 @@ Requires:          python-consistent_hash
 %if 0%{?rhel} <= 6
 Requires:          python-importlib
 %endif
+Requires:          python-sqlalchemy
 
 %description -n python-contrail
 Contrail Virtual Router utils package
