@@ -724,6 +724,7 @@ This information includes statistics,logs, events, and errors.
 %{python_sitelib}/ContrailAnalyticsCli*
 %{_bindir}/contrail-logs
 %{_bindir}/contrail-flows
+%{_bindir}/contrail-sessions
 %{_bindir}/contrail-db
 %{_bindir}/contrail-stats
 %{_bindir}/contrail-alarm-notify
