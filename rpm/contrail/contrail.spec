@@ -25,6 +25,11 @@
 %else
 %define         _kvers      3.10.0-327.10.1.el7.x86_64
 %endif
+%if 0%{?_opt:1}
+%define         _sconsOpt      %{_opt}
+%else
+%define         _sconsOpt      debug
+%endif
 
 %{echo: "Building release %{_relstr}\n"}
 
@@ -38,45 +43,55 @@ License:            ASL 2.0
 URL:                www.opencontrail.org
 Vendor:             OpenContrail Project.
 
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: bison
+BuildRequires: boost-devel
+BuildRequires: cassandra-cpp-driver
+BuildRequires: cassandra-cpp-driver-devel
+BuildRequires: cmake
+BuildRequires: cyrus-sasl-devel
+BuildRequires: flex
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: grok
+BuildRequires: grok-devel
+BuildRequires: libcurl-devel
+BuildRequires: libipfix
+BuildRequires: librdkafka-devel >= 0.9.0
+BuildRequires: libstdc++-devel
+BuildRequires: libtool
+BuildRequires: libxml2-devel
+BuildRequires: libzookeeper-devel
+BuildRequires: lz4-devel
+BuildRequires: make
+BuildRequires: openssl-devel
+BuildRequires: protobuf
+BuildRequires: protobuf-compiler
+BuildRequires: protobuf-devel
+BuildRequires: python-devel
+BuildRequires: python-fixtures
+BuildRequires: python-lxml
+BuildRequires: python-requests
+BuildRequires: python-setuptools
+BuildRequires: python-sphinx
+BuildRequires: scons
+BuildRequires: systemd-units
+BuildRequires: tbb-devel
+BuildRequires: tokyocabinet-devel
+BuildRequires: unzip
+BuildRequires: vim-common
+BuildRequires: zlib-devel
+
 %description
 Contrail package describes all sub packages that are required to
 run open contrail.
-
-BuildRequires:  make
-BuildRequires:  gcc
-BuildRequires:  systemd-units
-BuildRequires:  gcc-c++
-BuildRequires:  devtoolset-1.1-gcc
-BuildRequires:  devtoolset-1.1-gcc-c++
-BuildRequires:  openssl-devel
-BuildRequires:  libstdc++-devel
-BuildRequires:  zlib-devel
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  bison
-BuildRequires:  flex
-BuildRequires:  libcurl
-BuildRequires:  libtool
-BuildRequires:  python-devel
-BuildRequires:  python-lxml
-BuildRequires:  python-setuptools
-BuildRequires:  unzip
-BuildRequires:  vim-common
-BuildRequires:  protobuf
-BuildRequires:  protobuf-compiler
-BuildRequires:  protobuf-devel
-BuildRequires:  net-snmp-python
-BuildRequires:  cassandra-cpp-driver
-BuildRequires:  cassandra-cpp-driver-devel
-BuildRequires:  libzookeeper-devel
-BuildRequires:  librdkafka-devel >= 0.9.0
-BuildRequires:  grok-devel
 
 %prep
 
 %install
 pushd %{_sbtop}
-scons --root=%{buildroot} install
+scons --opt=%{_sconsOpt} --root=%{buildroot} install
 for kver in %{_kvers}; do
     echo "Kver = ${kver}"
     set +e
@@ -84,7 +99,7 @@ for kver in %{_kvers}; do
     exit_code=$?
     set -e
     if [ $exit_code == 0 ]; then
-        scons --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
+        scons --opt=%{_sconsOpt} --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
     else
         echo "WARNING: kernel-devel-$kver is not installed, Skipping building vrouter for $kver"
     fi
@@ -104,7 +119,7 @@ rm -rf %{buildroot}/_centos
 popd
 #Build nova-contrail-vif
 pushd %{_sbtop}
-scons -U nova-contrail-vif
+scons --opt=%{_sconsOpt} -U nova-contrail-vif
 popd
 pushd %{_sbtop}/build/noarch/nova_contrail_vif
 python setup.py install --root=%{buildroot}
@@ -128,19 +143,19 @@ done
 python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/share/doc/contrail-docs/html/messages
 # contrail-cli
 install -d -m 0755 %{buildroot}/etc/bash_completion.d
-python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/debug/utils/contrail-cli %{buildroot}
-pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot}; popd
+python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli %{buildroot}
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot}; popd
 
 # Install supervisor files
 pushd %{_builddir}/..
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
 popd
 
 #Needed for agent container env
@@ -349,7 +364,7 @@ in the OpenContrail API server.
 %{python_sitelib}/cfgm_common*
 %{python_sitelib}/libpartition*
 %{python_sitelib}/pysandesh*
-%{python_sitelib}/sandesh-0.1dev*
+%{python_sitelib}/sandesh-0.1*dev*
 %{python_sitelib}/sandesh_common*
 %{python_sitelib}/vnc_api*
 %{python_sitelib}/ContrailCli*
