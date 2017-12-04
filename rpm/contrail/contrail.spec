@@ -1,7 +1,7 @@
 %define         _unpackaged_files_terminate_build 0
 %define         _contrailetc /etc/contrail
 %define         _contrailutils /opt/contrail/utils
-%define         _distropkgdir tools/packaging/common/control_files
+%define         _distropkgdir tools/packages/rpm/contrail
 %define         _contraildns /etc/contrail/dns
 %define         _distrorpmpkgdir tools/packages/rpm/contrail
 
@@ -38,39 +38,47 @@ License:            ASL 2.0
 URL:                www.opencontrail.org
 Vendor:             OpenContrail Project.
 
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: bison
+BuildRequires: boost-devel
+BuildRequires: cassandra-cpp-driver
+BuildRequires: cassandra-cpp-driver-devel
+BuildRequires: cmake
+BuildRequires: cyrus-sasl-devel
+BuildRequires: flex
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: grok
+BuildRequires: grok-devel
+BuildRequires: libcurl-devel
+BuildRequires: libipfix
+BuildRequires: librdkafka-devel >= 0.9.0
+BuildRequires: libstdc++-devel
+BuildRequires: libtool
+BuildRequires: libxml2-devel
+BuildRequires: libzookeeper-devel
+BuildRequires: lz4-devel
+BuildRequires: make
+BuildRequires: openssl-devel
+BuildRequires: protobuf
+BuildRequires: protobuf-compiler
+BuildRequires: protobuf-devel
+BuildRequires: python-devel
+BuildRequires: python-lxml
+BuildRequires: python-setuptools
+BuildRequires: python-sphinx
+BuildRequires: scons
+BuildRequires: systemd-units
+BuildRequires: tbb-devel
+BuildRequires: tokyocabinet-devel
+BuildRequires: unzip
+BuildRequires: vim-common
+BuildRequires: zlib-devel
+
 %description
 Contrail package describes all sub packages that are required to
 run open contrail.
-
-BuildRequires:  make
-BuildRequires:  gcc
-BuildRequires:  systemd-units
-BuildRequires:  gcc-c++
-BuildRequires:  devtoolset-1.1-gcc
-BuildRequires:  devtoolset-1.1-gcc-c++
-BuildRequires:  openssl-devel
-BuildRequires:  libstdc++-devel
-BuildRequires:  zlib-devel
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  bison
-BuildRequires:  flex
-BuildRequires:  libcurl
-BuildRequires:  libtool
-BuildRequires:  python-devel
-BuildRequires:  python-lxml
-BuildRequires:  python-setuptools
-BuildRequires:  unzip
-BuildRequires:  vim-common
-BuildRequires:  protobuf
-BuildRequires:  protobuf-compiler
-BuildRequires:  protobuf-devel
-BuildRequires:  net-snmp-python
-BuildRequires:  cassandra-cpp-driver
-BuildRequires:  cassandra-cpp-driver-devel
-BuildRequires:  libzookeeper-devel
-BuildRequires:  librdkafka-devel >= 0.9.0
-BuildRequires:  grok-devel
 
 %prep
 
@@ -137,10 +145,10 @@ pushd %{_sbtop}/build/debug/utils/contrail-cli/contrail_vrouter_cli; python setu
 
 # Install supervisor files
 pushd %{_builddir}/..
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
-install -p -m 755 %{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
+install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
 popd
 
 #Needed for agent container env
