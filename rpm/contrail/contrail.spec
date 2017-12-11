@@ -658,6 +658,7 @@ in a NoSQL database.
 %{_bindir}/contrail-issu-zk-sync
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
+%{python_sitelib}/contrail_api_server*
 %{python_sitelib}/ContrailConfigCli*
 %{python_sitelib}/device_manager*
 %{python_sitelib}/device_api*
