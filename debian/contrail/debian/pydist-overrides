@@ -19,3 +19,7 @@ netsnmp-python libsnmp-python
 kafka python-kafka
 sseclient python-sseclient
 amqp python-amqp
+cfgm-common cfgm-common
+vnc-api vnc-api
+sandesh sandesh
+sandesh-common sandesh-common
