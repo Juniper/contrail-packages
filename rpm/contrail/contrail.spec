@@ -71,6 +71,8 @@ BuildRequires:  cassandra-cpp-driver-devel
 BuildRequires:  libzookeeper-devel
 BuildRequires:  librdkafka-devel >= 0.9.0
 BuildRequires:  grok-devel
+BuildRequires:  systemd-units
+
 
 %prep
 
@@ -194,6 +196,29 @@ for scriptpath in %{buildroot}/usr/share/contrail-utils/*; do
 done
 popd
 # Install section of contrail-utils package - END
+
+# Install section of contrail-test package - Start
+cp -a %{_sbtop}/third_party/contrail-test %{buildroot}/contrail-test
+cp -a %{_sbtop}/tools/contrail-test-ci %{buildroot}/contrail-test/contrail-test-ci
+rm -rf %{buildroot}/contrail-test/.git*
+rm -rf %{buildroot}/contrail-test/contrail-test-ci/.git*
+# Install section of contrail-test package - End
+
+# Install section of contrail-fabric-utils package - Start
+rm -rf %{_sbtop}/third_party/fabric-utils/contrail_fabric_utils-0.1dev
+rm -rf %{_sbtop}/third_party/fabric-utils/contrail_fabric_utils.egg-info
+pushd %{_sbtop}/third_party/fabric-utils
+%{__python} setup.py sdist
+tar zxf dist/contrail_fabric_utils-0.1dev.tar.gz
+cd contrail_fabric_utils-0.1dev
+%{__python} setup.py install --root=%{buildroot}
+mkdir -p %{buildroot}%{_contrailutils}/
+cp README %{buildroot}%{_contrailutils}/README.fabric
+cp -R %{buildroot}%{python_sitelib}/contrail_fabric_utils/fabfile %{buildroot}%{_contrailutils}/fabfile
+popd
+# Install section of contrail-fabric-utils package - End
+
+exit 0
 
 %package vrouter
 Summary:            Contrail vRouter
@@ -552,7 +577,7 @@ Libraries used by the Contrail Virtual Router.
 %files lib
 %defattr(-,root,root)
 %{_libdir}/../lib/lib*.so*
- 
+
 %package config
 Summary: Contrail Config
 Group:              Applications/System
@@ -873,6 +898,34 @@ modules/daemons.
 
 %files docs
 %doc /usr/share/doc/contrail-docs/html/*
+
+%package fabric-utils
+Summary: Contrail Fabric Utilities
+Group: Applications/System
+Requires: python-yaml
+Requires: python-Fabric
+Requires: python-netaddr
+
+%description fabric-utils
+Contrail Fabric Utilities for cluster management
+
+%files fabric-utils
+%defattr(-, root, root)
+%{python_sitelib}/contrail_fabric_utils
+%{python_sitelib}/contrail_fabric_utils-*.egg-info
+%doc %{_contrailutils}/README.fabric
+%{_contrailutils}/fabfile
+
+%package test
+Summary: Contrail Test
+Group: Applications/System
+
+%description test
+Source code of Contrail Test and Test CI
+
+%files test
+%defattr(-, root, root)
+/contrail-test
 
 %package kube-manager
 Summary:            Kubernetes network manager
