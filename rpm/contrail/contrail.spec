@@ -108,10 +108,7 @@ mkdir -p %{buildroot}/_centos/tmp
 popd
 pushd %{buildroot}
 mkdir -p %{buildroot}/centos
-cp %{_sbtop}/%{_distropkgdir}/dkms.conf.in %{buildroot}/centos/
 (cd usr/src/vrouter && tar zcf %{buildroot}/_centos/tmp/contrail-vrouter-%{_verstr}.tar.gz .)
-sed "s/__VERSION__/"%{_verstr}"/g" centos/dkms.conf.in > usr/src/vrouter/dkms.conf
-rm  centos/dkms.conf.in
 install -d -m 755 %{buildroot}/usr/src/modules/contrail-vrouter
 install -p -m 755 %{buildroot}/_centos/tmp/contrail-vrouter*.tar.gz %{buildroot}/usr/src/modules/contrail-vrouter
 rm %{buildroot}/_centos/tmp/contrail-vrouter*.tar.gz
