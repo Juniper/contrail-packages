@@ -17,6 +17,7 @@ override_dh_auto_build:
 	cp -a webroot/html/dashboard.tmpl webroot/html/dashboard.html; \
 	cp -a webroot/html/login.tmpl webroot/html/login.html; \
 	cp -a webroot/html/login-error.tmpl webroot/html/login-error.html; \
+	bash generate-keys.sh; \
 	./generate-files.sh 'prod-env' $(REPO); \
 	./dev-install.sh; \
 	./build-files.sh 'prod-env' $(REPO); \
