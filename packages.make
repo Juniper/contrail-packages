@@ -253,6 +253,14 @@ package-contrail-vrouter-dpdk: debian-contrail-vrouter-dpdk
 			sed -i '/INSTALL_SERIES/d' $(install_fname)); )
 	(cd build/packages/$(PACKAGE); dpkg-buildpackage -uc -us -b -rfakeroot)
 
+debian-contrail-vrouter-dpdk:
+	$(eval PACKAGE := contrail-vrouter-dpdk)
+	mkdir -p build/packages/$(PACKAGE)
+	cp -R tools/packages/debian/$(PACKAGE)/debian build/packages/$(PACKAGE)
+	cp -R tools/packages/utils build/packages/$(PACKAGE)/debian/
+	cp build/packages/$(PACKAGE)/debian/control.$(SERIES).in build/packages/$(PACKAGE)/debian/control
+	chmod u+x build/packages/$(PACKAGE)/debian/rules
+
 package-%: debian-%
 	$(eval PACKAGE := $(patsubst package-%,%,$@))
 	@echo "Building package $(PACKAGE)"
