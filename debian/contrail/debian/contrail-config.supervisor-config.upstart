@@ -31,6 +31,9 @@ pre-start script
     if [[ ! -z `ps -ef | grep contrail-device-manager | grep -v grep | awk '{print $2}'` ]]; then
        pkill -9 -f contrail-device-manager
     fi
+    if [[ ! -z `ps -ef | grep ironic-notification-manager | grep -v grep | awk '{print $2}'` ]]; then
+       pkill -9 -f ironic-notification-manager
+    fi
 end script
 
 #exec /usr/bin/supervisord --nodaemon -c /etc/contrail/supervisord_config.conf

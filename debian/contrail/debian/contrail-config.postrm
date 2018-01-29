@@ -20,6 +20,7 @@ if [ "${1}" = "purge" ] ; then
   rm -f /var/log/contrail/contrail-api-*-stdout.log*
   rm -f /var/log/contrail/contrail-device-manager.log*
   rm -f /var/log/contrail/contrail-device-manager-stdout.log*
+  rm -f /var/log/contrail/ironic-notification-manager.log*
   rm -f /var/log/contrail/device-manager-zk.log*
   rm -f /var/log/contrail/contrail-schema.log*
   rm -f /var/log/contrail/contrail-schema-stdout.log*
