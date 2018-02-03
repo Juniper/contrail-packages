@@ -28,6 +28,12 @@ if [ "$1" = "configure" ]; then
   chown -R contrail. /var/lib/contrail/ /etc/contrail/
   chmod 0750 /etc/contrail/
 
+  # change file permissions during upgrade
+  if [ -f /var/log/contrail/contrail-config-nodemgr-stdout.log ]; then
+    chown contrail:contrail /var/log/contrail/process_statecontrail-config.json
+    chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stderr.log
+    chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stdout.log
+  fi
 fi
 
 #DEBHELPER#
