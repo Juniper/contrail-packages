@@ -105,3 +105,25 @@ index 98d5a04..ba69ec7 100644
  	}
  
  	/* (non-Javadoc)
+diff --git a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+index cf74fc8..ff27801 100644
+--- a/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
++++ b/src/de/fhhannover/inform/iron/mapserver/datamodel/graph/NodeImpl.java
+@@ -75,7 +75,7 @@ class NodeImpl extends GraphElementImpl implements Node {
+        public void addLink(Link l) {
+                NullCheck.check(l, "link is null");
+                if (mLinks.containsKey(l.hashCode()))
+-                       throw new SystemErrorException("Link " + l + " already on " + this);
++                       return;
+
+                mLinks.put(l.hashCode(), l);
+        }
+@@ -92,7 +92,7 @@ class NodeImpl extends GraphElementImpl implements Node {
+        public void removeLink(Link l) {
+                NullCheck.check(l, "link is null");
+                if (!mLinks.containsKey(l.hashCode()))
+-                       throw new SystemErrorException("Link " + l + " not on "  + this);
++                       return;
+
+                mLinks.remove(l.hashCode());
+        }
