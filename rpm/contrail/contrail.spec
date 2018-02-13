@@ -31,6 +31,8 @@
 %define         _sconsOpt      debug
 %endif
 
+%bcond_without debuginfo
+
 %{echo: "Building release %{_relstr}\n"}
 
 Name:               contrail
@@ -86,6 +88,10 @@ BuildRequires: zlib-devel
 %description
 Contrail package describes all sub packages that are required to
 run open contrail.
+
+%if %{with debuginfo}
+%debug_package
+%endif
 
 %prep
 
@@ -230,7 +236,7 @@ cp -R %{buildroot}%{python_sitelib}/contrail_fabric_utils/fabfile %{buildroot}%{
 popd
 # Install section of contrail-fabric-utils package - End
 
-exit 0
+%files
 
 %package vrouter
 Summary:            Contrail vRouter
