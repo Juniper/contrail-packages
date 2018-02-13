@@ -5,6 +5,8 @@
 %define         _contraildns /etc/contrail/dns
 %define         _distrorpmpkgdir tools/packages/rpm/contrail
 
+%define         _python_bytecompile_errors_terminate_build 0
+
 %if 0%{?_kernel_dir:1}
 %define         _osVer  %(cat %{_kernel_dir}/include/linux/utsrelease.h | cut -d'"' -f2)
 %else
@@ -87,6 +89,7 @@ BuildRequires: zlib-devel
 Contrail package describes all sub packages that are required to
 run open contrail.
 
+%debug_package
 %prep
 
 %install
@@ -230,7 +233,7 @@ cp -R %{buildroot}%{python_sitelib}/contrail_fabric_utils/fabfile %{buildroot}%{
 popd
 # Install section of contrail-fabric-utils package - End
 
-exit 0
+%files
 
 %package vrouter
 Summary:            Contrail vRouter
