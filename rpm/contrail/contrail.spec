@@ -87,6 +87,7 @@ BuildRequires: zlib-devel
 Contrail package describes all sub packages that are required to
 run open contrail.
 
+%debug_package
 %prep
 
 %install
@@ -230,7 +231,7 @@ cp -R %{buildroot}%{python_sitelib}/contrail_fabric_utils/fabfile %{buildroot}%{
 popd
 # Install section of contrail-fabric-utils package - End
 
-exit 0
+%files
 
 %package vrouter
 Summary:            Contrail vRouter
