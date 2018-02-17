@@ -51,7 +51,7 @@ override_dh_compress:
 
 override_dh_auto_install:
 	cd debian/manpages; ronn -r *.ronn
-	(cd ${SB_TOP}; scons $(JOBS) --opt=production --root=${INSTALL_ROOT} install)
+	(cd ${SB_TOP}; scons -j $(JOBS) --opt=production --root=${INSTALL_ROOT} --without-dpdk install)
 	mkdir -p ${INSTALL_ROOT}/_debian/tmp
 	(cd ${INSTALL_ROOT}/usr/src/vrouter && tar zcf ${INSTALL_ROOT}/_debian/tmp/contrail-vrouter-$(DEB_UPSTREAM_VERSION).tar.gz .)
 	sed "s/__VERSION__/$(DEB_UPSTREAM_VERSION)/g" debian/dkms.conf.in > ${INSTALL_ROOT}/usr/src/vrouter/dkms.conf
