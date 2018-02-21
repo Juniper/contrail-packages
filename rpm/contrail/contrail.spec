@@ -31,6 +31,8 @@
 %define         _sconsOpt      debug
 %endif
 
+%global _dwz_low_mem_die_limit 0
+
 %bcond_without debuginfo
 
 %{echo: "Building release %{_relstr}\n"}
