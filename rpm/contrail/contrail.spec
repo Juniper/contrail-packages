@@ -921,8 +921,8 @@ modules/daemons.
 %package fabric-utils
 Summary: Contrail Fabric Utilities
 Group: Applications/System
+Requires: fabric
 Requires: python-yaml
-Requires: python-Fabric
 Requires: python-netaddr
 
 %description fabric-utils
