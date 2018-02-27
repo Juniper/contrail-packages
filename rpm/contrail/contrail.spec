@@ -1,6 +1,7 @@
 %define         _unpackaged_files_terminate_build 0
 %define         _contrailetc /etc/contrail
 %define         _contrailutils /opt/contrail/utils
+%define         _fabricansible /opt/contrail/fabric_ansible
 %define         _distropkgdir tools/packaging/common/control_files
 %define         _contraildns /etc/contrail/dns
 %define         _distrorpmpkgdir tools/packages/rpm/contrail
@@ -235,6 +236,11 @@ cp README %{buildroot}%{_contrailutils}/README.fabric
 cp -R %{buildroot}%{python_sitelib}/contrail_fabric_utils/fabfile %{buildroot}%{_contrailutils}/fabfile
 popd
 # Install section of contrail-fabric-utils package - End
+
+# Install section of contrail-config package - Start
+install -d -m 755 %{buildroot}%{_fabricansible}
+install -p -m 755 %{buildroot}/usr/bin/fabric_ansible_playbooks*.tar.gz %{buildroot}%{_fabricansible}/
+# Install section of contrail-config package - End
 
 %files
 
@@ -652,6 +658,7 @@ in a NoSQL database.
 %config(noreplace) %{_sysconfdir}/contrail/contrail-api.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-schema.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
+%config(noreplace) %{_sysconfdir}/contrail/contrail-fabric-ansible.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-config-nodemgr.conf
 %defattr(-,root,root,-)
 %{_bindir}/contrail-api*
@@ -666,6 +673,7 @@ in a NoSQL database.
 %{python_sitelib}/contrail_api_server*
 %{python_sitelib}/ContrailConfigCli*
 %{python_sitelib}/device_manager*
+%{python_sitelib}/job_manager*
 %{python_sitelib}/device_api*
 %{python_sitelib}/contrail_issu*
 %if 0%{?rhel} > 6
@@ -703,6 +711,7 @@ chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/supervisor-config
 chmod +x /etc/init.d/contrail-config-nodemgr
+tar -xvzf %{_fabricansible}/*.tar.gz %{_fabricansible}/
 
 %package analytics
 Summary:            Contrail Analytics
