@@ -99,7 +99,7 @@ run open contrail.
 
 %install
 pushd %{_sbtop}
-scons --opt=%{_sconsOpt} --root=%{buildroot} install
+scons --opt=%{_sconsOpt} --root=%{buildroot} --without-dpdk install
 for kver in %{_kvers}; do
     echo "Kver = ${kver}"
     set +e
