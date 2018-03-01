@@ -21,6 +21,12 @@ else
         DH_WITH=python2
 endif
 
+ifneq (,$(filter site-mirror=%,$(DEB_BUILD_OPTIONS)))
+	SITE_MIRROR="--site-mirror $(patsubst site-mirror=%,%,$(filter site-mirror=%,$(DEB_BUILD_OPTIONS)))"
+else
+	SITE_MIRROR=""
+endif
+
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 	JOBS = -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 else
@@ -37,7 +43,7 @@ TARGETS=control-node:node_mgr \
 	dh $@ --with $(DH_WITH) --parallel
 
 get-orig-source:
-	(cd ${SB_TOP}/third_party/ && python fetch_packages.py)
+	(cd ${SB_TOP}/third_party/ && python fetch_packages.py $(SITE_MIRROR))
 	tar zcf contrail_${DEB_UPSTREAM_VERSION}.orig.tar.gz \
 		controller vrouter third_party tools/build tools/generateds \
 		openstack/nova_contrail_vif openstack/nova_extensions \
