@@ -628,6 +628,9 @@ Requires:           python-jsonpickle
 Requires:           python-amqp
 Requires:           python-kazoo >= 1.3.1
 Requires:           python-ncclient >= 0.3.2
+Requires:           ansible >= 2.4.2
+Requires:           python2-pysnmp
+Requires:           python-swiftclient
 
 %description config
 Contrail Config package
@@ -668,6 +671,7 @@ in a NoSQL database.
 %{_bindir}/contrail-issu-post-sync
 %{_bindir}/contrail-issu-run-sync
 %{_bindir}/contrail-issu-zk-sync
+%{_fabricansible}/*.tar.gz
 %{python_sitelib}/schema_transformer*
 %{python_sitelib}/vnc_cfg_api_server*
 %{python_sitelib}/contrail_api_server*
