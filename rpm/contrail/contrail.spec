@@ -1,7 +1,7 @@
 %define         _unpackaged_files_terminate_build 0
 %define         _contrailetc /etc/contrail
 %define         _contrailutils /opt/contrail/utils
-%define         _fabricansible /opt/contrail/fabric_ansible
+%define         _fabricansible /opt/contrail/fabric_ansible_playbooks
 %define         _distropkgdir tools/packaging/common/control_files
 %define         _contraildns /etc/contrail/dns
 %define         _distrorpmpkgdir tools/packages/rpm/contrail
@@ -715,8 +715,10 @@ chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/supervisor-config
 chmod +x /etc/init.d/contrail-config-nodemgr
-tar -xvzf %{_fabricansible}/*.tar.gz /opt/contrail/
-mv /opt/contrail/fabric_ansible_playbooks-0.1dev %{_fabricansible}
+tar -xvzf %{_fabricansible}/*.tar.gz -C %{_fabricansible}
+mv %{_fabricansible}/fabric_ansible_playbooks-0.1dev/* %{_fabricansible}/
+rmdir  %{_fabricansible}/fabric_ansible_playbooks-0.1dev/
+cat %{_fabricansible}/ansible.cfg > /etc/contrail/ansible.cfg
 
 %package analytics
 Summary:            Contrail Analytics
