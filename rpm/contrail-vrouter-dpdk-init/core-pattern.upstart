@@ -1,0 +1,12 @@
+# core-pattern - set core-pattern
+#
+# Set the core pattern on the system. Apport modifies the pattern upon
+# start or stop. This is done to update the core pattern again upon
+# start or stop of apport.
+
+description     "set core pattern"
+
+start on (started apport or stopped apport)
+
+task
+exec echo "/var/crashes/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
