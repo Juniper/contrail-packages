@@ -1,0 +1,22 @@
+# README for contrail software installation
+
+#
+# Step 1. Run setup.sh  ./setup.sh
+#         This un-archives the contrail packages and creates local repository
+#         Also, puts install helper(s) in /opt/contrail/bin
+#
+# Step 2. Run Contrail Install Helper /opt/contrail/bin/install.sh --help
+#         This installs the contrail packages on the system from the previously
+#         un-archived local repository
+#
+#         Usage: /opt/contrail/helpers/install.sh [all|database|cfgm|collector|webui|control|vrouter]
+#
+#         Eg: /opt/contrail/bin/install.sh all       ; #To install all the contrail packages in this server.
+#         Eg: /opt/contrail/bin/install.sh database  ; #To install contrail database packages in this server.
+#         Eg: /opt/contrail/bin/install.sh cfgm      ; #To install contrail cfgm packages in this server.
+#         Eg: /opt/contrail/bin/install.sh collector ; #To install contrail collector packages in this server.
+#         Eg: /opt/contrail/bin/install.sh webui     ; #To install contrail webui packages in this server.
+#         Eg: /opt/contrail/bin/install.sh control   ; #To install contrail control packages in this server.
+#         Eg: /opt/contrail/bin/install.sh vrouter   ; #To install contrail vrouter packages in this server.
+#
+#
