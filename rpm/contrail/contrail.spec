@@ -718,7 +718,7 @@ chmod +x /etc/init.d/contrail-config-nodemgr
 tar -xvzf %{_fabricansible}/*.tar.gz -C %{_fabricansible}
 mv %{_fabricansible}/fabric_ansible_playbooks-0.1dev/* %{_fabricansible}/
 rmdir  %{_fabricansible}/fabric_ansible_playbooks-0.1dev/
-cat %{_fabricansible}/ansible.cfg > /etc/contrail/ansible.cfg
+cat %{_fabricansible}/ansible.cfg > /etc/ansible/ansible.cfg
 
 %package analytics
 Summary:            Contrail Analytics
