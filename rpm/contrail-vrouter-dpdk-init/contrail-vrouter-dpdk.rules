@@ -1,0 +1,8 @@
+{
+"Rules": [
+    {"processname": "contrail-vrouter-dpdk", "process_state": "PROCESS_STATE_STOPPED", "action": "sudo service contrail-vrouter-agent stop"},
+    {"processname": "contrail-vrouter-dpdk", "process_state": "PROCESS_STATE_EXITED", "action": "sudo service contrail-vrouter-agent stop"},
+    {"processname": "contrail-vrouter-dpdk", "process_state": "PROCESS_STATE_FATAL", "action": "sudo service contrail-vrouter-agent stop"},
+    {"processname": "contrail-vrouter-dpdk", "process_state": "PROCESS_STATE_STARTING", "action": "sudo service contrail-vrouter-agent restart"}
+     ]
+}

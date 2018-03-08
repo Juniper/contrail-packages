@@ -1,0 +1,17 @@
+[Unit]
+Description= Supervisor for Contrail Web UI
+After=redis.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/supervisord -n -c /etc/contrail/supervisord_webui.conf
+ExecStopPre=/usr/bin/supervisorctl -s unix:///var/run/supervisord_webui.sock stop all
+ExecStopPost=/usr/bin/supervisor_killall /etc/contrail/supervisord_webui_files
+LimitCORE=infinity
+LimitNOFILE=4096
+LimitSTACK=infinity
+LimitDATA=infinity
+LimitAS=infinity
+
+[Install]
+WantedBy=multi-user.target
