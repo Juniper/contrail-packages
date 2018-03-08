@@ -1,0 +1,6 @@
+#! /bin/bash
+
+mv /etc/contrail/ifcfg* /etc/sysconfig/network-scripts 2>/dev/null 1>&2
+sync
+echo "rebooting"
+reboot

@@ -2,9 +2,8 @@
 %define         _contrailetc /etc/contrail
 %define         _contrailutils /opt/contrail/utils
 %define         _fabricansible /opt/contrail/fabric_ansible_playbooks
-%define         _distropkgdir tools/packaging/common/control_files
+%define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 %define         _contraildns /etc/contrail/dns
-%define         _distrorpmpkgdir tools/packages/rpm/contrail
 
 %if 0%{?_kernel_dir:1}
 %define         _osVer  %(cat %{_kernel_dir}/include/linux/utsrelease.h | cut -d'"' -f2)
@@ -36,17 +35,15 @@
 
 %bcond_without debuginfo
 
-%{echo: "Building release %{_relstr}\n"}
+Name:           contrail
+Version:        %{_verstr}
+Release:        %{_relstr}%{?dist}
+Summary:        Contrail
 
-Name:               contrail
-Version:            %{_verstr}
-Release:            %{_relstr}%{?dist}
-Summary:            Contrail
-
-Group:              Applications/System
-License:            ASL 2.0
-URL:                www.opencontrail.org
-Vendor:             OpenContrail Project.
+Group:          Applications/System
+License:        ASL 2.0
+URL:            www.opencontrail.org
+Vendor:         OpenContrail Project.
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -108,6 +105,7 @@ for kver in %{_kvers}; do
     exit_code=$?
     set -e
     if [ $exit_code == 0 ]; then
+        sed 's/{kver}/%{_kver}/g' %{_distropkgdir}/dkms.conf.in.tmpl > %{_distropkgdir}/dkms.conf.in
         scons --opt=%{_sconsOpt} --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
     else
         echo "WARNING: kernel-devel-$kver is not installed, Skipping building vrouter for $kver"
@@ -117,7 +115,7 @@ mkdir -p %{buildroot}/_centos/tmp
 popd
 pushd %{buildroot}
 mkdir -p %{buildroot}/centos
-cp %{_sbtop}/%{_distropkgdir}/dkms.conf.in %{buildroot}/centos/
+cp %{_distropkgdir}/dkms.conf.in %{buildroot}/centos/
 (cd usr/src/vrouter && tar zcf %{buildroot}/_centos/tmp/contrail-vrouter-%{_verstr}.tar.gz .)
 sed "s/__VERSION__/"%{_verstr}"/g" centos/dkms.conf.in > usr/src/vrouter/dkms.conf
 rm  centos/dkms.conf.in
@@ -161,10 +159,10 @@ pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_vrouter_cli; pyth
 
 # Install supervisor files
 pushd %{_builddir}/..
-install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
-install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
-install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
-install -p -m 755 %{_sbtop}/%{_distrorpmpkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
+install -p -m 755 %{_distropkgdir}/supervisor-control.initd  %{buildroot}/etc/init.d/supervisor-control
+install -p -m 755 %{_distropkgdir}/supervisor-config.initd  %{buildroot}/etc/init.d/supervisor-config
+install -p -m 755 %{_distropkgdir}/supervisor-analytics.initd  %{buildroot}/etc/init.d/supervisor-analytics
+install -p -m 755 %{_distropkgdir}/supervisor-vrouter.initd  %{buildroot}/etc/init.d/supervisor-vrouter
 popd
 
 #Needed for agent container env
