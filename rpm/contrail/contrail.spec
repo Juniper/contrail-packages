@@ -244,6 +244,13 @@ install -d -m 755 %{buildroot}%{_fabricansible}
 install -p -m 755 %{buildroot}/usr/bin/fabric_ansible_playbooks*.tar.gz %{buildroot}%{_fabricansible}/
 # Install section of contrail-config package - End
 
+# Install section of contrail-manifest package - Start
+%if %{with debuginfo}
+mkdir -p %{buildroot}/opt/contrail/
+cp %{_sbtop}/.repo/manifest.xml %{buildroot}/opt/contrail/manifest.xml
+%endif
+# Install section of contrail-manifest package - End
+
 %files
 
 %package vrouter
@@ -1073,3 +1080,20 @@ Contrail mesos cni plugin package
 This package contains the mesos cni plugin modules.
 %files mesos-cni
 %{_bindir}/contrail-mesos-cni
+
+%if %{with debuginfo}
+
+%package manifest
+BuildArch:          noarch
+Summary:            Android repo manifest.xml
+
+Group:              Applications/System
+
+%description manifest
+Manifest.xml
+Used for Android repo code checkout of OpenContrail
+
+%files manifest
+/opt/contrail/manifest.xml
+
+%endif
