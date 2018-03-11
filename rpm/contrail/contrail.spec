@@ -621,7 +621,6 @@ Requires:           python-geventhttpclient
 Requires:           python-lxml >= 2.3.2
 Requires:           python-pycassa
 Requires:           python-thrift >= 0.9.1
-Requires:           python-keystone
 Requires:           python-psutil >= 0.6.0
 Requires:           python-requests
 Requires:           python-zope-interface
@@ -632,6 +631,7 @@ Requires:           python-kazoo >= 1.3.1
 Requires:           python-ncclient >= 0.3.2
 Requires:           ansible >= 2.4.2
 Requires:           python2-pysnmp
+Requires:           python-keystoneclient
 Requires:           python-swiftclient
 
 %description config
