@@ -1,0 +1,2781 @@
+# ****************************************************************
+# CAUTION: ANY CHANGES TO DEFAULT APPLIES TO ALL SECTIONS
+#          IF NOT OVERWRITTEN LOCALLY
+# ****************************************************************
+# Usage:
+# [package name]
+# file     =     # name of the package
+# location =     # location where the package file is available
+# md5      =     # md5 check sum of the package file
+#
+# *****************************************************************
+
+[DEFAULT]
+md5          =
+file         =
+location     =
+package_type = contrail-thirdparty-packages
+
+[MySQL-python_1.2.3_11.el7]
+file  = MySQL-python-1.2.3-11.el7.x86_64.rpm
+md5   = 945af998a8cafbd65ec42c69e4b028c9
+
+[NetworkManager-adsl_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-adsl-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = a6ac38580619e6f2515784850dd8dc8b
+
+[NetworkManager-bluetooth_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-bluetooth-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = 513659aa952d1b86257cd4b01ce336ee
+
+[NetworkManager-config-server_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-config-server-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = 42a20d79ce1533fe84dedf95bdd56f0e
+
+[NetworkManager-glib_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-glib-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = bd0fb24697fb34b34fff75a08164c53a
+
+[NetworkManager-libnm_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-libnm-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = 2a6fc1fccd7d5846b4519180ab09998a
+
+[NetworkManager-team_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-team-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = 6661b58d5041c2a2a5359f4678e3b305
+
+[NetworkManager-tui_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-tui-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = ca18fc9bf7b424e805970bc3ebe615c1
+
+[NetworkManager-wifi_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-wifi-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = d5304b504876f4ef29423820f31afd5b
+
+[NetworkManager-wwan_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-wwan-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = 7923df3e881e65e2f929ccb77d326970
+
+[NetworkManager_1.0.0_14.git20150121.b4ea599c.el7]
+file  = NetworkManager-1.0.0-14.git20150121.b4ea599c.el7.x86_64.rpm
+md5   = f7a616550fc8aed2b43a7ac83b0c3213
+
+[OpenIPMI-modalias_2.0.19_11.el7]
+file  = OpenIPMI-modalias-2.0.19-11.el7.x86_64.rpm
+md5   = d67df67d72872d416dbb160a5513f5aa
+
+[PyPAM_0.5.0_19.el7]
+file  = PyPAM-0.5.0-19.el7.x86_64.rpm
+md5   = e5477e2be118c75b519768148812a153
+
+[PyYAML_3.10_11.el7]
+file  = PyYAML-3.10-11.el7.x86_64.rpm
+md5   = a1ffab900bac47cdbb13dc73122777ce
+
+[Red_Hat_Enterprise_Linux-Release_Notes-7-en-US_1.0_9.el7]
+file  = Red_Hat_Enterprise_Linux-Release_Notes-7-en-US-1.0-9.el7.noarch.rpm
+md5   = 87be26d20e859a814bb3ba3e1a14dad3
+
+[abrt-libs_2.1.11_19.el7]
+file  = abrt-libs-2.1.11-19.el7.x86_64.rpm
+md5   = 3161bbd81426827318e0d91a2284fd02
+
+[abrt-python_2.1.11_19.el7]
+file  = abrt-python-2.1.11-19.el7.x86_64.rpm
+md5   = c7cfd7d26025fa3bfc5bae5fa22cb008
+
+[abrt_2.1.11_19.el7]
+file  = abrt-2.1.11-19.el7.x86_64.rpm
+md5   = e89c0958525e48ce62eab6b946ab3153
+
+[alsa-firmware_1.0.28_2.el7]
+file  = alsa-firmware-1.0.28-2.el7.noarch.rpm
+md5   = 5d2af91a791ccc927ce0c376d21b1583
+
+[alsa-lib_1.0.28_2.el7]
+file  = alsa-lib-1.0.28-2.el7.x86_64.rpm
+md5   = 4b43fe6124b7dea78a1bb535cb0deef3
+
+[apache-commons-codec_1.8_7.el7]
+file  = apache-commons-codec-1.8-7.el7.noarch.rpm
+md5   = 47992c41daca8f0902669f63c7c24ed2
+
+[apache-commons-lang_2.6_15.el7]
+file  = apache-commons-lang-2.6-15.el7.noarch.rpm
+md5   = 4646eeb13e7c97d2ca62a453fa03a524
+
+[apache-commons-logging_1.1.2_7.el7]
+file  = apache-commons-logging-1.1.2-7.el7.noarch.rpm
+md5   = cb9d93b459f37c7d35c589b2c24aa87c
+
+[atk_2.8.0_4.el7]
+file  = atk-2.8.0-4.el7.x86_64.rpm
+md5   = 8f0d75731cb9df469434db7fc92517a4
+
+[attr_2.4.46_12.el7]
+file  = attr-2.4.46-12.el7.x86_64.rpm
+md5   = 249edc768179c3bddbf82bc22962b4b5
+
+[audit-libs_2.4.1_5.el7]
+file  = audit-libs-2.4.1-5.el7.x86_64.rpm
+md5   = d2528f2bc8a5c0ea064cbfa8469fa3d1
+
+[audit_2.4.1_5.el7]
+file  = audit-2.4.1-5.el7.x86_64.rpm
+md5   = 00a4986dc3fddfc302fe9e3f89ff79c9
+
+[augeas-libs_1.1.0_17.el7]
+file  = augeas-libs-1.1.0-17.el7.x86_64.rpm
+md5   = dee049dc1e9d6c1623e0a16cede40e6e
+
+[authbind_2.1.1_0]
+file  = authbind-2.1.1-0.x86_64.rpm
+md5   = f573f94b5333c87b3154b024de259e97
+package_type = contrail-install-packages
+
+[authconfig_6.2.8_9.el7]
+file  = authconfig-6.2.8-9.el7.x86_64.rpm
+md5   = 8227491b2bbc002dbd9cb930a9bb3df8
+
+[avahi-autoipd_0.6.31_14.el7]
+file  = avahi-autoipd-0.6.31-14.el7.x86_64.rpm
+md5   = 6a646abe3cddd4bed88c399184e2232d
+
+[avahi-libs_0.6.31_14.el7]
+file  = avahi-libs-0.6.31-14.el7.x86_64.rpm
+md5   = bbb166c544a9e8210da81e570b05bae4
+
+[avahi_0.6.31_14.el7]
+file  = avahi-0.6.31-14.el7.x86_64.rpm
+md5   = 44fbeea9e9af17c372d9c5864dc9424f
+
+[avalon-framework_4.3_10.el7]
+file  = avalon-framework-4.3-10.el7.noarch.rpm
+md5   = c34c87ccd5016e293095df9186e2328a
+
+[avalon-logkit_2.1_14.el7]
+file  = avalon-logkit-2.1-14.el7.noarch.rpm
+md5   = a3a9806738405fc7fce9d736b5c71dbd
+
+[bash_4.2.46_12.el7]
+file  = bash-4.2.46-12.el7.x86_64.rpm
+md5   = d6dd046e83ccd1a97eae57115ce3fe3c
+
+[bigtop-utils_0.6.0+243_1.cdh4.7.0.p0.17.el6]
+file  = bigtop-utils-0.6.0+243-1.cdh4.7.0.p0.17.el6.noarch.rpm
+md5   = 4a02c32568bde3d6c74257f925de491a
+package_type = contrail-install-packages
+
+[bind-libs-lite_9.9.4_18.el7_1.1]
+file  = bind-libs-lite-9.9.4-18.el7_1.1.x86_64.rpm
+md5   = 5012a99f19aec2d002c52eede83edf78
+
+[bind-license_9.9.4_18.el7_1.1]
+file  = bind-license-9.9.4-18.el7_1.1.noarch.rpm
+md5   = 43cd8ff0bb87e119ae163e56b441bff5
+
+[binutils_2.23.52.0.1_30.el7]
+file  = binutils-2.23.52.0.1-30.el7.x86_64.rpm
+md5   = 720d2c6be2b86eaeda588c6f76f70efc
+
+[biosdevname_0.6.1_2.el7]
+file  = biosdevname-0.6.1-2.el7.x86_64.rpm
+md5   = 9fb9b536eafc4ff3676e19f7232f4877
+
+[boost-program-options_1.53.0_23.el7]
+file  = boost-program-options-1.53.0-23.el7.x86_64.rpm
+md5   = 7214210d29481ebc1a3112d13ba86062
+
+[boost-system_1.53.0_23.el7]
+file  = boost-system-1.53.0-23.el7.x86_64.rpm
+md5   = 04a196a223557694ea6756fe931e4571
+
+[boost-thread_1.53.0_23.el7]
+file  = boost-thread-1.53.0-23.el7.x86_64.rpm
+md5   = cbe49055ab778f7ab6771268bb261406
+
+[bridge-utils_1.5_9.el7]
+file  = bridge-utils-1.5-9.el7.x86_64.rpm
+md5   = 6351e638a71fa949eb45e0d5843f8a7e
+
+[btrfs-progs_3.16.2_1.el7]
+file  = btrfs-progs-3.16.2-1.el7.x86_64.rpm
+md5   = ea8d745b346bae917fdb90116be13889
+
+[bzip2_1.0.6_12.el7]
+file  = bzip2-1.0.6-12.el7.x86_64.rpm
+md5   = f6d3aac585fbf238131e86e0f64ffee7
+
+[c-ares_1.10.0_3.el7]
+file  = c-ares-1.10.0-3.el7.x86_64.rpm
+md5   = 00e91d1ed8be9f13424e3554e1ec6451
+
+[ca-certificates_2014.1.98_72.el7]
+file  = ca-certificates-2014.1.98-72.el7.noarch.rpm
+md5   = 2eb69c7bdee3f0999f1b86cd4be5a3b9
+
+[cairo_1.12.14_6.el7]
+file  = cairo-1.12.14-6.el7.x86_64.rpm
+md5   = f0f5293b908d2a7d7a3f531ad46c5d95
+
+[cal10n_0.7.7_4.el7]
+file  = cal10n-0.7.7-4.el7.noarch.rpm
+md5   = 7b944d781323106ac0d3abae86340087
+
+[cassandra20-2.0.17-1.noarch.rpm]
+file           = cassandra20-2.0.17-1.noarch.rpm
+md5            = 0adf976fefbcfbaaf0b724a80f68cccc
+package_type = contrail-install-packages
+
+[cassandra21-2.1.9-1.noarch.rpm]
+file           = cassandra21-2.1.9-1.noarch.rpm
+md5            = cae6ad6089fd15df384303b66cab594f
+package_type = contrail-install-packages
+
+[cassandra-cpp-driver-2.2.0-1.el7]
+file  = cassandra-cpp-driver-2.2.0-1.el7.centos.x86_64.rpm
+md5   = 7b1f66c4fcfdd2e85f981b2c3a12089f
+package_type = contrail-install-packages
+
+[celt051_0.5.1.3_8.el7]
+file  = celt051-0.5.1.3-8.el7.x86_64.rpm
+md5   = 295139c300d6bd0c1315bc4a9eee7f59
+
+[conntrack-tools_1.4.2_3.el7ost]
+file  = conntrack-tools-1.4.2-3.el7ost.x86_64.rpm
+md5   = da123f45bbcc102c8dd750c70a553680
+
+[consistent_hash_1.0_0contrail0.el7]
+file  = consistent_hash-1.0-0contrail0.el7.noarch.rpm
+md5   = d90efcd375a4b89639f80786d73114e2
+package_type = contrail-install-packages
+
+[cpp_4.8.3_9.el7]
+file  = cpp-4.8.3-9.el7.x86_64.rpm
+md5   = 04007ba597c64a7ae72290ffb3e40217
+
+[cronie-anacron_1.4.11_13.el7]
+file  = cronie-anacron-1.4.11-13.el7.x86_64.rpm
+md5   = e9435dec4e4e6775d21caddf9911b298
+
+[cronie_1.4.11_13.el7]
+file  = cronie-1.4.11-13.el7.x86_64.rpm
+md5   = 8934eb8379fbe199bf6d165f6fd42668
+
+[crudini_0.5_1.el7]
+file  = crudini-0.5-1.el7.noarch.rpm
+md5   = 77400e9a2809636e62225db8eeea4962
+
+[cryptsetup-libs_1.6.6_3.el7]
+file  = cryptsetup-libs-1.6.6-3.el7.x86_64.rpm
+md5   = 9b91306412fa1c0e46c99d91e8f8e0da
+
+[cryptsetup_1.6.6_3.el7]
+file  = cryptsetup-1.6.6-3.el7.x86_64.rpm
+md5   = b76cdb0c1a54b7884680dfe0bd278ff3
+
+[cups-libs_1.6.3_17.el7]
+file  = cups-libs-1.6.3-17.el7.x86_64.rpm
+md5   = 4fafcea0b820bd74e56d7d682939e6b1
+
+[cyrus-sasl-md5_2.1.26_17.el7]
+file  = cyrus-sasl-md5-2.1.26-17.el7.x86_64.rpm
+md5   = 1d8e7e4910cf02e2c420dc3fecc09eb2
+
+[cyrus-sasl_2.1.26_17.el7]
+file  = cyrus-sasl-2.1.26-17.el7.x86_64.rpm
+md5   = c210d50670aa18c59d0a2feed86ea4b6
+
+[dbus-libs_1.6.12_11.el7]
+file  = dbus-libs-1.6.12-11.el7.x86_64.rpm
+md5   = a3abb3c7344072810272e876bc642eea
+
+[dbus_1.6.12_11.el7]
+file  = dbus-1.6.12-11.el7.x86_64.rpm
+md5   = 54610050aee07aa3a39b1b3b9bcd32b9
+
+[device-mapper-event-libs_1.02.93_3.el7]
+file  = device-mapper-event-libs-1.02.93-3.el7.x86_64.rpm
+md5   = bdb63c00249a150614c98783e425e9ae
+
+[device-mapper-event_1.02.93_3.el7]
+file  = device-mapper-event-1.02.93-3.el7.x86_64.rpm
+md5   = eca3863d10982d4e4177ea9c235967ce
+
+[device-mapper-libs_1.02.93_3.el7]
+file  = device-mapper-libs-1.02.93-3.el7.x86_64.rpm
+md5   = 12deadbe8225c567b49e47f3ac17a49b
+
+[device-mapper-persistent-data_0.4.1_2.el7]
+file  = device-mapper-persistent-data-0.4.1-2.el7.x86_64.rpm
+md5   = ddb0507128d2ca6c540126961651e6f3
+
+[device-mapper_1.02.93_3.el7]
+file  = device-mapper-1.02.93-3.el7.x86_64.rpm
+md5   = 3f8471ad9dc8e1dff415af02f06021e3
+
+[dhclient_4.2.5_36.el7]
+file  = dhclient-4.2.5-36.el7.x86_64.rpm
+md5   = 98ec5603064cc0848e2bf1b3cab33b59
+
+[dhcp-common_4.2.5_36.el7]
+file  = dhcp-common-4.2.5-36.el7.x86_64.rpm
+md5   = 3332c56d512862a2e681b0cddf7ab9cf
+
+[dhcp-libs_4.2.5_36.el7]
+file  = dhcp-libs-4.2.5-36.el7.x86_64.rpm
+md5   = cf7be26bbed5747e6046c63daf15c538
+
+[dnsmasq-utils_2.66_12.el7]
+file  = dnsmasq-utils-2.66-12.el7.x86_64.rpm
+md5   = daad7b19f198bdf298810af01c69fb92
+
+[dosfstools_3.0.20_9.el7]
+file  = dosfstools-3.0.20-9.el7.x86_64.rpm
+md5   = 64e05e05cb2c8ec4975a0c834deea072
+
+[dracut-config-rescue_033_240.el7]
+file  = dracut-config-rescue-033-240.el7.x86_64.rpm
+md5   = 3ec598bb20755def33206bf87669e073
+
+[dracut-network_033_240.el7]
+file  = dracut-network-033-240.el7.x86_64.rpm
+md5   = 1783ddd55640f9fb65b10ea44a58e8ee
+
+[dracut_033_240.el7]
+file  = dracut-033-240.el7.x86_64.rpm
+md5   = aa434998fa48b502f66d8f849b6f492e
+
+[e2fsprogs-libs_1.42.9_7.el7]
+file  = e2fsprogs-libs-1.42.9-7.el7.x86_64.rpm
+md5   = 237dbce07476bc0472729909b1a8f78f
+
+[e2fsprogs_1.42.9_7.el7]
+file  = e2fsprogs-1.42.9-7.el7.x86_64.rpm
+md5   = 53b5e6c6f0e9394260880bfcdd1f735d
+
+[elfutils-libelf_0.160_1.el7]
+file  = elfutils-libelf-0.160-1.el7.x86_64.rpm
+md5   = acabcb999564c3403eb00377b55c1af2
+
+[elfutils-libs_0.160_1.el7]
+file  = elfutils-libs-0.160-1.el7.x86_64.rpm
+md5   = 644ae8c57294a2b376b855d52c3f5b38
+
+[erlang-asn1_R16B_03.10.el7]
+file  = erlang-asn1-R16B-03.10.el7.x86_64.rpm
+md5   = 8f77a4dad7eafeebf194120bf8f9c8fe
+
+[erlang-compiler_R16B_03.10.el7]
+file  = erlang-compiler-R16B-03.10.el7.x86_64.rpm
+md5   = 1c473f456aca16fc69a9793a1cf78d81
+
+[erlang-crypto_R16B_03.10.el7]
+file  = erlang-crypto-R16B-03.10.el7.x86_64.rpm
+md5   = 0d301df0a2cedddcbd88cfbda71a435b
+
+[erlang-erts_R16B_03.10.el7]
+file  = erlang-erts-R16B-03.10.el7.x86_64.rpm
+md5   = a73a0ae08ea31fc708dd5da7e169d526
+
+[erlang-hipe_R16B_03.10.el7]
+file  = erlang-hipe-R16B-03.10.el7.x86_64.rpm
+md5   = 76e167654d6926a7811e3ba0e0feadc4
+
+[erlang-inets_R16B_03.10.el7]
+file  = erlang-inets-R16B-03.10.el7.x86_64.rpm
+md5   = 7d0d119eceef1e8a0f97181f468761c5
+
+[erlang-kernel_R16B_03.10.el7]
+file  = erlang-kernel-R16B-03.10.el7.x86_64.rpm
+md5   = 250d3a594ff868cdbc7a441d76c989c0
+
+[erlang-mnesia_R16B_03.10.el7]
+file  = erlang-mnesia-R16B-03.10.el7.x86_64.rpm
+md5   = cf68c509b5b07652246e98b9b7b29d43
+
+[erlang-os_mon_R16B_03.10.el7]
+file  = erlang-os_mon-R16B-03.10.el7.x86_64.rpm
+md5   = 983fe6ff1a35c4b495ab01b5ffab7885
+
+[erlang-otp_mibs_R16B_03.10.el7]
+file  = erlang-otp_mibs-R16B-03.10.el7.x86_64.rpm
+md5   = ce4d9c2f48d272cc56fea86dc47d3524
+
+[erlang-public_key_R16B_03.10.el7]
+file  = erlang-public_key-R16B-03.10.el7.x86_64.rpm
+md5   = 4a1cb0c4e56f2364fb078331cf210aec
+
+[erlang-runtime_tools_R16B_03.10.el7]
+file  = erlang-runtime_tools-R16B-03.10.el7.x86_64.rpm
+md5   = df0264827a0479014f15877645c11495
+
+[erlang-sasl_R16B_03.10.el7]
+file  = erlang-sasl-R16B-03.10.el7.x86_64.rpm
+md5   = 4c04e669b168e868f5c86ae85ff644ea
+
+[erlang-sd_notify_0.1_2.el7ost]
+file  = erlang-sd_notify-0.1-2.el7ost.x86_64.rpm
+md5   = 8be88f3d00e4d201312af3079bbddca6
+
+[erlang-snmp_R16B_03.10.el7]
+file  = erlang-snmp-R16B-03.10.el7.x86_64.rpm
+md5   = 01f0f2fe203dc7a9f54ea7a20f3b71b2
+
+[erlang-ssl_R16B_03.10.el7]
+file  = erlang-ssl-R16B-03.10.el7.x86_64.rpm
+md5   = 69c871e3cd9cd5c79675d9f79b5f3e14
+
+[erlang-stdlib_R16B_03.10.el7]
+file  = erlang-stdlib-R16B-03.10.el7.x86_64.rpm
+md5   = cf28c2451a92882bd20d101c609ec3eb
+
+[erlang-syntax_tools_R16B_03.10.el7]
+file  = erlang-syntax_tools-R16B-03.10.el7.x86_64.rpm
+md5   = 4b0b3af7c8bd8c3b4936ea6469269520
+
+[erlang-tools_R16B_03.10.el7]
+file  = erlang-tools-R16B-03.10.el7.x86_64.rpm
+md5   = 5e82cc203018b9099e8e27cd9318875b
+
+[erlang-xmerl_R16B_03.10.el7]
+file  = erlang-xmerl-R16B-03.10.el7.x86_64.rpm
+md5   = e4baf95e6656e01126cd7643dc0eabbb
+
+[ethtool_3.15_2.el7]
+file  = ethtool-3.15-2.el7.x86_64.rpm
+md5   = 7e3575560766671b9dccb9c2cb010f24
+
+[euca2ools_1.0_2contrail]
+file  = euca2ools-1.0-2contrail.x86_64.rpm
+md5   = e83decbf4017da6f47696842aa909e13
+package_type = contrail-install-packages
+
+[firewalld_0.3.9_11.el7]
+file  = firewalld-0.3.9-11.el7.noarch.rpm
+md5   = da00364123645940cf1d24c41634142f
+
+[flac-libs_1.3.0_4.el7]
+file  = flac-libs-1.3.0-4.el7.x86_64.rpm
+md5   = 37d70ac14c3084b21868f29ce96b9d5d
+
+[fontconfig_2.10.95_7.el7]
+file  = fontconfig-2.10.95-7.el7.x86_64.rpm
+md5   = af47bfd6f0f3b66808e7828e8d9298cc
+
+[fontpackages-filesystem_1.44_8.el7]
+file  = fontpackages-filesystem-1.44-8.el7.noarch.rpm
+md5   = 128e6f83f38c03c707c3f7a881df2452
+
+[fuse-libs_2.9.2_5.el7]
+file  = fuse-libs-2.9.2-5.el7.x86_64.rpm
+md5   = c1e7e617aabd72deeb9a9476b725fad3
+
+[fuse_2.9.2_5.el7]
+file  = fuse-2.9.2-5.el7.x86_64.rpm
+md5   = c2eb195235b4a42b5bb1637f546828f2
+
+[galera_25.3.5_7.el7]
+file  = galera-25.3.5-7.el7.x86_64.rpm
+md5   = 570e23bf1187d82798f1c15f34807800
+
+[gcc_4.8.3_9.el7]
+file  = gcc-4.8.3-9.el7.x86_64.rpm
+md5   = 4842bac9536694570a117bf7fbc9ed06
+
+[gdb_7.6.1_64.el7]
+file  = gdb-7.6.1-64.el7.x86_64.rpm
+md5   = d69b9c52099b27ac2feafdbe130f47df
+
+[gdisk_0.8.6_5.el7]
+file  = gdisk-0.8.6-5.el7.x86_64.rpm
+md5   = 5c355f4d685d721b88e34102e7317f4c
+
+[gdk-pixbuf2_2.28.2_4.el7]
+file  = gdk-pixbuf2-2.28.2-4.el7.x86_64.rpm
+md5   = e405fc03fb8e07baad954e64fc9604a6
+
+[genisoimage_1.1.11_22.el7]
+file  = genisoimage-1.1.11-22.el7.x86_64.rpm
+md5   = dd64e2307d0eae2fb5d05a332855941a
+
+[geronimo-jms_1.1.1_19.el7]
+file  = geronimo-jms-1.1.1-19.el7.noarch.rpm
+md5   = 97b3204207f3527407072f0174c092c3
+
+[ghostscript-fonts_5.50_32.el7]
+file  = ghostscript-fonts-5.50-32.el7.noarch.rpm
+md5   = 8c7e919b0eea0c060b279964cd06f209
+
+[ghostscript_9.07_18.el7]
+file  = ghostscript-9.07-18.el7.x86_64.rpm
+md5   = 61ee82eb144de88d37fa412379790a9c
+
+[giflib_4.1.6_9.el7]
+file  = giflib-4.1.6-9.el7.x86_64.rpm
+md5   = e697a7ca22a4da2db558a5d6a05d2a45
+
+[glib-networking_2.40.0_1.el7]
+file  = glib-networking-2.40.0-1.el7.x86_64.rpm
+md5   = 849d9b3bcf0738fb5e241c0684c57d54
+
+[glib2_2.40.0_4.el7]
+file  = glib2-2.40.0-4.el7.x86_64.rpm
+md5   = cf921647d64be1074859770927ca5614
+
+[glibc-common_2.17_78.el7]
+file  = glibc-common-2.17-78.el7.x86_64.rpm
+md5   = 7f2731aab1ad06f963d5f57f090340eb
+
+[glibc-devel_2.17_78.el7]
+file  = glibc-devel-2.17-78.el7.x86_64.rpm
+md5   = 5b711cc6cb2e170a04d1105aded1e7c5
+
+[glibc-headers_2.17_78.el7]
+file  = glibc-headers-2.17-78.el7.x86_64.rpm
+md5   = 35bb2968b38e4051cbf8bf950426deb7
+
+[glibc_2.17_78.el7]
+file  = glibc-2.17-78.el7.x86_64.rpm
+md5   = c64e2a2a962c33ec628f2382fe569838
+
+[glusterfs-api_3.6.0.29_2.el7]
+file  = glusterfs-api-3.6.0.29-2.el7.x86_64.rpm
+md5   = 670e7d081ff767543ec69049f75978e9
+
+[glusterfs-libs_3.6.0.29_2.el7]
+file  = glusterfs-libs-3.6.0.29-2.el7.x86_64.rpm
+md5   = 67f132da02eecdb3ddf500c3067c568d
+
+[glusterfs_3.6.0.29_2.el7]
+file  = glusterfs-3.6.0.29-2.el7.x86_64.rpm
+md5   = 05ce9852fa19529070f2003b8c16ba21
+
+[gmp_6.0.0_11.el7]
+file  = gmp-6.0.0-11.el7.x86_64.rpm
+md5   = 078e87a4c490f4367157558d04ffaf1a
+
+[gnutls-dane_3.3.8_12.el7]
+file  = gnutls-dane-3.3.8-12.el7.x86_64.rpm
+md5   = f1f165e28a88147d61be742b1ff93ec4
+
+[gnutls-utils_3.3.8_12.el7]
+file  = gnutls-utils-3.3.8-12.el7.x86_64.rpm
+md5   = a12f78bc0c348da15bcaa21a3515598d
+
+[gnutls_3.3.8_12.el7]
+file  = gnutls-3.3.8-12.el7.x86_64.rpm
+md5   = 4b4875d363f65f0094de70269df314e6
+
+[gperftools-libs_2.1_1.el7ost]
+file  = gperftools-libs-2.1-1.el7ost.x86_64.rpm
+md5   = ae09f2cb0ae49c017af92472809feb5b
+
+[graphite2_1.2.2_5.el7]
+file  = graphite2-1.2.2-5.el7.x86_64.rpm
+md5   = d4ce50f2de8382544b4bb24a3257d596
+
+[grep_2.20_1.el7]
+file  = grep-2.20-1.el7.x86_64.rpm
+md5   = f009d7454bfc662f98599ca29b720f43
+
+[grub2-tools_2.02_0.16.el7]
+file  = grub2-tools-2.02-0.16.el7.x86_64.rpm
+md5   = 6b85bc600b6552f0bea70247b5398593
+
+[grub2_2.02_0.16.el7]
+file  = grub2-2.02-0.16.el7.x86_64.rpm
+md5   = 979383e621b27691c254c9c35a2442aa
+
+[grubby_8.28_11.el7]
+file  = grubby-8.28-11.el7.x86_64.rpm
+md5   = 5ca549f7414c4b1155b9f07a4fc8f0ba
+
+[gsm_1.0.13_11.el7]
+file  = gsm-1.0.13-11.el7.x86_64.rpm
+md5   = 8cf915e4ca4d3b1e0b1db0cfe548a442
+
+[gssproxy_0.3.0_10.el7]
+file  = gssproxy-0.3.0-10.el7.x86_64.rpm
+md5   = b2f1f2750822ee86f1b3e9f9c941557a
+
+[gtk2_2.24.22_5.el7_0.1]
+file  = gtk2-2.24.22-5.el7_0.1.x86_64.rpm
+md5   = 504f14d29855da7715ba01498d5813e1
+
+[haproxy_1.5.4_2.el7]
+file  = haproxy-1.5.4-2.el7.x86_64.rpm
+md5   = 5f99b5f1d0f4d14bbf3770c89afcafaa
+
+[harfbuzz_0.9.20_4.el7]
+file  = harfbuzz-0.9.20-4.el7.x86_64.rpm
+md5   = a1529e6f27b0a1494cf4445e29eb6197
+
+[hc-httpcore_4.1_1.jpp6]
+file  = hc-httpcore-4.1-1.jpp6.noarch.rpm
+md5   = 65d9fbf17070841708643f7eaa000071
+package_type = contrail-install-packages
+
+[hicolor-icon-theme_0.12_7.el7]
+file  = hicolor-icon-theme-0.12-7.el7.noarch.rpm
+md5   = 256afed6b26549eb30523affbfeea96f
+
+[hiera_1.3.4_1.el7]
+file  = hiera-1.3.4-1.el7.noarch.rpm
+md5   = 37ebb0846d3cbbeae185537deb07c098
+
+[hivex_1.3.10_5.7.el7]
+file  = hivex-1.3.10-5.7.el7.x86_64.rpm
+md5   = fc05fae5b3eeb277fdc7b6d3ac344a5f
+
+[hwdata_0.252_7.5.el7]
+file  = hwdata-0.252-7.5.el7.noarch.rpm
+md5   = 3b690faae189a4242ef3b78020ff9605
+
+[icoutils_0.31.0_3.el7]
+file  = icoutils-0.31.0-3.el7.x86_64.rpm
+md5   = a6e1bbeec1fda326e80422be939a3c6c
+
+[ifmap-server_0.3.2_2contrail.el7]
+file  = ifmap-server-0.3.2-2contrail.el7.noarch.rpm
+md5   = 3f89792cf3d8a781e7e38f17e5b2e6f6
+package_type = contrail-install-packages
+
+[initscripts_9.49.24_1.el7]
+file  = initscripts-9.49.24-1.el7.x86_64.rpm
+md5   = d6ad74695ec87720b4ad1df6d220a64c
+
+[ipmitool_1.8.13_7.el7]
+file  = ipmitool-1.8.13-7.el7.x86_64.rpm
+md5   = 100efb63e64e7201075f5ba75dd10bcb
+
+[iproute_3.10.0_21.el7]
+file  = iproute-3.10.0-21.el7.x86_64.rpm
+md5   = 4a93bf58b404a3fe3a5b0a5fb02422ce
+
+[iprutils_2.4.3_3.el7]
+file  = iprutils-2.4.3-3.el7.x86_64.rpm
+md5   = 4c6a3fc96d3a4b91a1ed06325f596c0b
+
+[ipset-libs_6.19_4.el7]
+file  = ipset-libs-6.19-4.el7.x86_64.rpm
+md5   = 1067a8959e95aaa879d8de4bc06b857c
+
+[ipset_6.19_4.el7]
+file  = ipset-6.19-4.el7.x86_64.rpm
+md5   = dbf3aca25f1e7800d35c2dd0ff154dd2
+
+[iptables-services_1.4.21_13.el7]
+file  = iptables-services-1.4.21-13.el7.x86_64.rpm
+md5   = 6b18acd9de56a5e9ceaf4152a691d2fa
+
+[ipxe-roms-qemu_20130517_6.gitc4bce43.el7]
+file  = ipxe-roms-qemu-20130517-6.gitc4bce43.el7.noarch.rpm
+md5   = b099ea9139e8b38e45602d22f1124d3e
+
+[irqbalance_1.0.7_1.el7]
+file  = irqbalance-1.0.7-1.el7.x86_64.rpm
+md5   = a62af51c70429f8c86862d6fe1c525b3
+
+[iscsi-initiator-utils-iscsiuio_6.2.0.873_29.el7]
+file  = iscsi-initiator-utils-iscsiuio-6.2.0.873-29.el7.x86_64.rpm
+md5   = d42d0446530f56d04f67583da56ec413
+
+[iscsi-initiator-utils_6.2.0.873_29.el7]
+file  = iscsi-initiator-utils-6.2.0.873-29.el7.x86_64.rpm
+md5   = e45d45c941b5fcd17fd65f9f851a023d
+
+[iwl100-firmware_39.31.5.1_36.el7]
+file  = iwl100-firmware-39.31.5.1-36.el7.noarch.rpm
+md5   = 6d5d024b17391f668e3b59f76037f26b
+
+[iwl1000-firmware_39.31.5.1_36.el7]
+file  = iwl1000-firmware-39.31.5.1-36.el7.noarch.rpm
+md5   = c7bf376c10b23151e2a96df80a3302b2
+
+[iwl105-firmware_18.168.6.1_36.el7]
+file  = iwl105-firmware-18.168.6.1-36.el7.noarch.rpm
+md5   = 354d76bc9f647fdd136f76db1b9e9767
+
+[iwl135-firmware_18.168.6.1_36.el7]
+file  = iwl135-firmware-18.168.6.1-36.el7.noarch.rpm
+md5   = 5a886d1e99aaf17dc74e57cfe4a94f3a
+
+[iwl2000-firmware_18.168.6.1_36.el7]
+file  = iwl2000-firmware-18.168.6.1-36.el7.noarch.rpm
+md5   = 51b81127d770a3b516db410d13eed087
+
+[iwl2030-firmware_18.168.6.1_36.el7]
+file  = iwl2030-firmware-18.168.6.1-36.el7.noarch.rpm
+md5   = d35abbc380c0c61dc26a221d225837f5
+
+[iwl3160-firmware_22.0.7.0_36.el7]
+file  = iwl3160-firmware-22.0.7.0-36.el7.noarch.rpm
+md5   = 1b08081a6074723255a9ef359571b9e0
+
+[iwl3945-firmware_15.32.2.9_36.el7]
+file  = iwl3945-firmware-15.32.2.9-36.el7.noarch.rpm
+md5   = 725c6379360ae79f5efb3e0aaa671456
+
+[iwl4965-firmware_228.61.2.24_36.el7]
+file  = iwl4965-firmware-228.61.2.24-36.el7.noarch.rpm
+md5   = 56d3aa3a7eecb8991a690aeb15bb5b03
+
+[iwl5000-firmware_8.83.5.1_1_36.el7]
+file  = iwl5000-firmware-8.83.5.1_1-36.el7.noarch.rpm
+md5   = 0f53a37607d393a5ccd223a948f65a32
+
+[iwl5150-firmware_8.24.2.2_36.el7]
+file  = iwl5150-firmware-8.24.2.2-36.el7.noarch.rpm
+md5   = 06387b03a0efed3316350eafdca82e48
+
+[iwl6000-firmware_9.221.4.1_36.el7]
+file  = iwl6000-firmware-9.221.4.1-36.el7.noarch.rpm
+md5   = 7fe5e3069586953913b25caddfdcb7a4
+
+[iwl6000g2a-firmware_17.168.5.3_36.el7]
+file  = iwl6000g2a-firmware-17.168.5.3-36.el7.noarch.rpm
+md5   = 6acb448b475ebfcf9f5036b3a31bd788
+
+[iwl6000g2b-firmware_17.168.5.2_36.el7]
+file  = iwl6000g2b-firmware-17.168.5.2-36.el7.noarch.rpm
+md5   = 71562d6bd77576dc696caf707a3a1473
+
+[iwl6050-firmware_41.28.5.1_36.el7]
+file  = iwl6050-firmware-41.28.5.1-36.el7.noarch.rpm
+md5   = eb2033a983829cf5f1c3e2aa8ab32d20
+
+[iwl7260-firmware_22.0.7.0_36.el7]
+file  = iwl7260-firmware-22.0.7.0-36.el7.noarch.rpm
+md5   = 108038e21b9afbc6148d37209f6609f9
+
+[jasper-libs_1.900.1_26.el7_0.3]
+file  = jasper-libs-1.900.1-26.el7_0.3.x86_64.rpm
+md5   = 935ae6ae65c092cb995682d49c3f8940
+
+[java-1.7.0-openjdk-headless_1.7.0.75_2.5.4.2.el7_0]
+file  = java-1.7.0-openjdk-headless-1.7.0.75-2.5.4.2.el7_0.x86_64.rpm
+md5   = 69c460475f0b622a2f66f52fc9e23f95
+
+[java-1.7.0-openjdk_1.7.0.75_2.5.4.2.el7_0]
+file  = java-1.7.0-openjdk-1.7.0.75-2.5.4.2.el7_0.x86_64.rpm
+md5   = 296dc711575ee92b9dea6c0a9e848c7e
+
+[javamail_1.4.6_8.el7]
+file  = javamail-1.4.6-8.el7.noarch.rpm
+md5   = 83526de1a000cb13e227638eadb22eb3
+
+[javapackages-tools_3.4.1_6.el7_0]
+file  = javapackages-tools-3.4.1-6.el7_0.noarch.rpm
+md5   = 6c9f732521432610cc776dfa41865a25
+
+[javassist_3.16.1_10.el7]
+file  = javassist-3.16.1-10.el7.noarch.rpm
+md5   = 6d3ce91813d113b5a8f01782f818dc0e
+
+[jbigkit-libs_2.0_11.el7]
+file  = jbigkit-libs-2.0-11.el7.x86_64.rpm
+md5   = b529406534f53b01137b43aff7d17791
+
+[json-c_0.11_4.el7_0]
+file  = json-c-0.11-4.el7_0.x86_64.rpm
+md5   = 31736cbc9ff03d3600f286be1fabb540
+
+[kafka-2.11-0.9.0.1.0contrail0.el7]
+file           = kafka-2.11-0.9.0.1.0contrail0.el7.x86_64.rpm
+md5            = 9514e5bd9f7a7f02a3ca0c2642430973
+package_type  = contrail-install-packages
+
+[kbd-legacy_1.15.5_11.el7]
+file  = kbd-legacy-1.15.5-11.el7.noarch.rpm
+md5   = 112b4c37ac62822440f346f36b9aa476
+
+[kbd-misc_1.15.5_11.el7]
+file  = kbd-misc-1.15.5-11.el7.noarch.rpm
+md5   = 1a3575a8aa2c761b0a1836da3945c111
+
+[kbd_1.15.5_11.el7]
+file  = kbd-1.15.5-11.el7.x86_64.rpm
+md5   = 089564023a0deaa7541f191966e97477
+
+[keepalived_1.2.13_6.el7]
+file  = keepalived-1.2.13-6.el7.x86_64.rpm
+md5   = 5d8b5255daa45dda54ed038202d3788e
+
+[kernel-headers_3.10.0_229.el7]
+file  = kernel-headers-3.10.0-229.el7.x86_64.rpm
+md5   = d4ccc6b3552872af2abed6eeba05ecd0
+
+[kernel-tools-libs_3.10.0_229.el7]
+file  = kernel-tools-libs-3.10.0-229.el7.x86_64.rpm
+md5   = 4d6d890b78a00d87b275a5fb03a7aee5
+
+[kernel-tools_3.10.0_229.el7]
+file  = kernel-tools-3.10.0-229.el7.x86_64.rpm
+md5   = 09255be8f5fc0927db42fdc0c801d8b7
+
+[kernel_3.10.0_229.el7]
+file  = kernel-3.10.0-229.el7.x86_64.rpm
+md5   = b85449712d0765e22319f62014c01f57
+
+[kexec-tools_2.0.7_19.el7]
+file  = kexec-tools-2.0.7-19.el7.x86_64.rpm
+md5   = 85163a224ba5e412d829f739730ccce1
+
+[keyutils_1.5.8_3.el7]
+file  = keyutils-1.5.8-3.el7.x86_64.rpm
+md5   = 9cb1fa2fcf4fa8149183f0b592d069ee
+
+[kmod-libs_14_10.el7]
+file  = kmod-libs-14-10.el7.x86_64.rpm
+md5   = 55aa56d15f3db384faf366ea76f49c56
+
+[kmod_14_10.el7]
+file  = kmod-14-10.el7.x86_64.rpm
+md5   = 17e9ef39ea030b97f8be4fd9c3e11cc1
+
+[kpartx_0.4.9_77.el7]
+file  = kpartx-0.4.9-77.el7.x86_64.rpm
+md5   = 8128c7ef1ffaeac755134505b2625eb3
+
+[krb5-libs_1.12.2_14.el7]
+file  = krb5-libs-1.12.2-14.el7.x86_64.rpm
+md5   = 31c3c5bc6ce90bce57daa81051086485
+
+[lcms2_2.5_4.el7]
+file  = lcms2-2.5-4.el7.x86_64.rpm
+md5   = a29576db5d4ce5ed8aa7ddbb927a1733
+
+[ldns_1.6.16_7.el7]
+file  = ldns-1.6.16-7.el7.x86_64.rpm
+md5   = d9dcde95cce860c4018ff49f9972cac8
+
+[libICE_1.0.8_7.el7]
+file  = libICE-1.0.8-7.el7.x86_64.rpm
+md5   = 35037c2a772395f07148332d713e0745
+
+[libSM_1.2.1_7.el7]
+file  = libSM-1.2.1-7.el7.x86_64.rpm
+md5   = b923f15827f38f00ae212b2ad5424437
+
+[libX11-common_1.6.0_2.1.el7]
+file  = libX11-common-1.6.0-2.1.el7.noarch.rpm
+md5   = bc44b3efb37ba8eb73ab88dbe2727fbd
+
+[libX11_1.6.0_2.1.el7]
+file  = libX11-1.6.0-2.1.el7.x86_64.rpm
+md5   = 9450f2e3ac5c1f36054b7e622d697ad3
+
+[libXau_1.0.8_2.1.el7]
+file  = libXau-1.0.8-2.1.el7.x86_64.rpm
+md5   = 749d78c3312431a6d4a3c1ee0eb77a16
+
+[libXcomposite_0.4.4_4.1.el7]
+file  = libXcomposite-0.4.4-4.1.el7.x86_64.rpm
+md5   = c99b9ec0eec16336f632103f560e9c4b
+
+[libXcursor_1.1.14_2.1.el7]
+file  = libXcursor-1.1.14-2.1.el7.x86_64.rpm
+md5   = 459a2de5b86c583e3c3b8dea6cf1b9fd
+
+[libXdamage_1.1.4_4.1.el7]
+file  = libXdamage-1.1.4-4.1.el7.x86_64.rpm
+md5   = 24409d374ed5e9cf58e3be801b7934ca
+
+[libXext_1.3.2_2.1.el7]
+file  = libXext-1.3.2-2.1.el7.x86_64.rpm
+md5   = 36dec1ef4ad8c40d3cdbdb249c4c7354
+
+[libXfixes_5.0.1_2.1.el7]
+file  = libXfixes-5.0.1-2.1.el7.x86_64.rpm
+md5   = 6452369a6afe30942bb513cd84b7242e
+
+[libXfont_1.4.7_2.el7_0]
+file  = libXfont-1.4.7-2.el7_0.x86_64.rpm
+md5   = 6a3b347c4cd875173e6b6b3c86560f40
+
+[libXft_2.3.1_5.1.el7]
+file  = libXft-2.3.1-5.1.el7.x86_64.rpm
+md5   = 53c6a65cc8db14a3ea0183deba5838b5
+
+[libXi_1.7.2_2.1.el7]
+file  = libXi-1.7.2-2.1.el7.x86_64.rpm
+md5   = 3d28452f6c3ec9e2fe4cc5323eb3f9d5
+
+[libXinerama_1.1.3_2.1.el7]
+file  = libXinerama-1.1.3-2.1.el7.x86_64.rpm
+md5   = dae24bcc4e582259c433054b93937e2e
+
+[libXrandr_1.4.1_2.1.el7]
+file  = libXrandr-1.4.1-2.1.el7.x86_64.rpm
+md5   = 34e144eae16a245f5249ecaf503b3f6a
+
+[libXrender_0.9.8_2.1.el7]
+file  = libXrender-0.9.8-2.1.el7.x86_64.rpm
+md5   = 6f014ef69d0329365de4434332eb1fa5
+
+[libXt_1.1.4_6.1.el7]
+file  = libXt-1.1.4-6.1.el7.x86_64.rpm
+md5   = 961bd9be6a16f00eb0cf26f6e19ad1a3
+
+[libXtst_1.2.2_2.1.el7]
+file  = libXtst-1.2.2-2.1.el7.x86_64.rpm
+md5   = 28015f58faf4e73a879b4b9882fea287
+
+[libXxf86vm_1.1.3_2.1.el7]
+file  = libXxf86vm-1.1.3-2.1.el7.x86_64.rpm
+md5   = d6b969e8a68cdd0dcb6daa4656e0eeb3
+
+[libaio_0.3.109_12.el7]
+file  = libaio-0.3.109-12.el7.x86_64.rpm
+md5   = c1a050ce680828078886df695c8b35e1
+
+[libasyncns_0.8_7.el7]
+file  = libasyncns-0.8-7.el7.x86_64.rpm
+md5   = 7b37451f8703880fc3819d7b763d243d
+
+[libbasicobjects_0.1.1_24.el7]
+file  = libbasicobjects-0.1.1-24.el7.x86_64.rpm
+md5   = 86e590b3ed50f54555d1329340cd35c4
+
+[libblkid_2.23.2_21.el7]
+file  = libblkid-2.23.2-21.el7.x86_64.rpm
+md5   = bdf0755db98685ab2b5cb9fa3707f0b0
+
+[libcgroup_0.41_8.el7]
+file  = libcgroup-0.41-8.el7.x86_64.rpm
+md5   = e680fd0940a7dd101725498b0aed9de2
+
+[libcollection_0.6.2_24.el7]
+file  = libcollection-0.6.2-24.el7.x86_64.rpm
+md5   = 7252d13d93eb96eac036301adeb8678e
+
+[libcom_err_1.42.9_7.el7]
+file  = libcom_err-1.42.9-7.el7.x86_64.rpm
+md5   = ff9d9a20a729382fca801505c34d55af
+
+[libdb-utils_5.3.21_17.el7_0.1]
+file  = libdb-utils-5.3.21-17.el7_0.1.x86_64.rpm
+md5   = 33f932b2bb1376bd0318b57321285fdd
+
+[libdb_5.3.21_17.el7_0.1]
+file  = libdb-5.3.21-17.el7_0.1.x86_64.rpm
+md5   = 99030d3138872af88099da34a2431efd
+
+[libdrm_2.4.56_2.el7]
+file  = libdrm-2.4.56-2.el7.x86_64.rpm
+md5   = 881c2904b55f1bc04c55752708e1855c
+
+[libertas-sd8686-firmware_20140804_0.1.git6bce2b0.el7_0]
+file  = libertas-sd8686-firmware-20140804-0.1.git6bce2b0.el7_0.noarch.rpm
+md5   = e7f90001896f7cfa9593ff5a7be74827
+
+[libertas-sd8787-firmware_20140804_0.1.git6bce2b0.el7_0]
+file  = libertas-sd8787-firmware-20140804-0.1.git6bce2b0.el7_0.noarch.rpm
+md5   = 83c3759d793d4d95dc4db4fe46b4bab4
+
+[libertas-usb8388-firmware_20140804_0.1.git6bce2b0.el7_0]
+file  = libertas-usb8388-firmware-20140804-0.1.git6bce2b0.el7_0.noarch.rpm
+md5   = 1bb5a23b83bd7677890be192a7f76c7c
+
+[libev_4.15_4.el7]
+file  = libev-4.15-4.el7.x86_64.rpm
+md5   = 5bea9aed0963cf6ae8708e742502c974
+
+[libevent_2.0.21_4.el7]
+file  = libevent-2.0.21-4.el7.x86_64.rpm
+md5   = e1ec4c473b22fb9d9e87a215e46b91f9
+
+[libfontenc_1.1.1_5.el7]
+file  = libfontenc-1.1.1-5.el7.x86_64.rpm
+md5   = 9bb286fa4200e6be95a13e5c3f4602ac
+
+[libgcc_4.8.3_9.el7]
+file  = libgcc-4.8.3-9.el7.x86_64.rpm
+md5   = ff5e0b6212315baedc6c2acaaaa97b09
+
+[libgcrypt_1.5.3_12.el7]
+file  = libgcrypt-1.5.3-12.el7.x86_64.rpm
+md5   = e8c7bec381e20b1bf5585566281a3742
+
+[libgomp_4.8.3_9.el7]
+file  = libgomp-4.8.3-9.el7.x86_64.rpm
+md5   = 3e09617a9e2d98dade885ca3c2769acf
+
+[libgudev1_208_20.el7]
+file  = libgudev1-208-20.el7.x86_64.rpm
+md5   = 7650584d110c995a222ed2aa3585fb84
+
+[libguestfs_1.28.1_1.18.el7]
+file  = libguestfs-1.28.1-1.18.el7.x86_64.rpm
+md5   = 34da6a549a7c2b00cf17d05b9ca5d8cc
+
+[libibverbs_1.1.8_5.el7]
+file  = libibverbs-1.1.8-5.el7.x86_64.rpm
+md5   = 420f14258717a08049391032cfec0c2a
+
+[libicu_50.1.2_11.el7]
+file  = libicu-50.1.2-11.el7.x86_64.rpm
+md5   = 68145810ec12b253cf71cb8d27fe7307
+
+[libini_config_1.1.0_24.el7]
+file  = libini_config-1.1.0-24.el7.x86_64.rpm
+md5   = 7aa52078d606198bfa010b0a669dec0b
+
+[libiscsi_1.9.0_6.el7]
+file  = libiscsi-1.9.0-6.el7.x86_64.rpm
+md5   = fd7187aaffdb67544e3dad876cafff12
+
+[libjpeg-turbo_1.2.90_5.el7]
+file  = libjpeg-turbo-1.2.90-5.el7.x86_64.rpm
+md5   = 3327473d731b30ff5a21fa142a486aa4
+
+[libmount_2.23.2_21.el7]
+file  = libmount-2.23.2-21.el7.x86_64.rpm
+md5   = 7ccdd0bf58c888f1f556ab9cf848aa59
+
+[libmpc_1.0.1_3.el7]
+file  = libmpc-1.0.1-3.el7.x86_64.rpm
+md5   = 23881c5e60c7493cc30090fd42695826
+
+[libnetfilter_cthelper_1.0.0_4.el7ost]
+file  = libnetfilter_cthelper-1.0.0-4.el7ost.x86_64.rpm
+md5   = 0e0e7cbd21ad23a6d3afb8c71bc227e4
+
+[libnetfilter_cttimeout_1.0.0_2.el7ost]
+file  = libnetfilter_cttimeout-1.0.0-2.el7ost.x86_64.rpm
+md5   = e1c4d9f168b5d314a19cbf8c2ead3364
+
+[libnetfilter_queue_1.0.2_2.el7ost]
+file  = libnetfilter_queue-1.0.2-2.el7ost.x86_64.rpm
+md5   = 2bd41130c32aa334f6c7ab3dc4a15b83
+
+[libnfsidmap_0.25_11.el7]
+file  = libnfsidmap-0.25-11.el7.x86_64.rpm
+md5   = 4dd146f8f2f7a93ee06573ba9d4daf62
+
+[libnl3-cli_3.2.21_8.el7]
+file  = libnl3-cli-3.2.21-8.el7.x86_64.rpm
+md5   = b20c586ce8a714ffe7c82dfd98d410c8
+
+[libnl3_3.2.21_8.el7]
+file  = libnl3-3.2.21-8.el7.x86_64.rpm
+md5   = ae67c3c0dce193a83a32e57cbc58b40e
+
+[libogg_1.3.0_7.el7]
+file  = libogg-1.3.0-7.el7.x86_64.rpm
+md5   = 71ed6949f8f0b74b27bf70fd86c1ec15
+
+[libosinfo_0.2.11_4.el7]
+file  = libosinfo-0.2.11-4.el7.x86_64.rpm
+md5   = 161675e0b92ae6829cc882f92c7a8999
+
+[libpath_utils_0.2.1_24.el7]
+file  = libpath_utils-0.2.1-24.el7.x86_64.rpm
+md5   = 9494ee238cf114e90215b2411a84377e
+
+[libpcap_1.5.3_3.el7_0.1]
+file  = libpcap-1.5.3-3.el7_0.1.x86_64.rpm
+md5   = 975ae69168c147a3c2e55a1002bc9829
+
+[libpng_1.5.13_5.el7]
+file  = libpng-1.5.13-5.el7.x86_64.rpm
+md5   = 0ac76693e21111d2c72f87473ad6dab0
+
+[librabbitmq_0.5.2_1.el7]
+file  = librabbitmq-0.5.2-1.el7.x86_64.rpm
+md5   = 0eee1d2843b46a8bb5c079079729a6ae
+
+[librados2_0.80.7_2.el7]
+file  = librados2-0.80.7-2.el7.x86_64.rpm
+md5   = 371bfc2d56df16030379717990f6f8a4
+
+[librbd1_0.80.7_2.el7]
+file  = librbd1-0.80.7-2.el7.x86_64.rpm
+md5   = 7ca2a815462a6e3771df8b9255eb98ae
+
+[librdkafka-devel_0.8.5_2.0contrail0.el7.centos]
+file  = librdkafka-devel-0.8.5-2.0contrail0.el7.centos.x86_64.rpm
+md5   = 031fadbf1a27758a9bbdb168b4015842
+package_type = contrail-install-packages
+
+[librdkafka1_0.8.5_2.0contrail0.el7.centos]
+file  = librdkafka1-0.8.5-2.0contrail0.el7.centos.x86_64.rpm
+md5   = 31d466cee10e29c3c5e8811163879828
+package_type = contrail-install-packages
+
+[librdmacm_1.0.19.1_1.el7]
+file  = librdmacm-1.0.19.1-1.el7.x86_64.rpm
+md5   = 46d7b85579733cededa1e6c8235d3c5f
+
+[libref_array_0.1.4_24.el7]
+file  = libref_array-0.1.4-24.el7.x86_64.rpm
+md5   = 259b4cc1652ad5d85f1a5b2b56e5e526
+
+[libreport-filesystem_2.1.11_21.el7]
+file  = libreport-filesystem-2.1.11-21.el7.x86_64.rpm
+md5   = e7c6f7a412616ed6de1238339d0ead62
+
+[libreport-plugin-ureport_2.1.11_21.el7]
+file  = libreport-plugin-ureport-2.1.11-21.el7.x86_64.rpm
+md5   = add153624a95d090ad1b94e7df0f9e45
+
+[libreport-python_2.1.11_21.el7]
+file  = libreport-python-2.1.11-21.el7.x86_64.rpm
+md5   = 666ffd31879657ba50a8bef569d402ee
+
+[libreport-web_2.1.11_21.el7]
+file  = libreport-web-2.1.11-21.el7.x86_64.rpm
+md5   = f32171aa42b7621387e8f959435d8f13
+
+[libreport_2.1.11_21.el7]
+file  = libreport-2.1.11-21.el7.x86_64.rpm
+md5   = 8369c120f64052f4f44366c9768c826d
+
+[libseccomp_2.1.1_2.el7]
+file  = libseccomp-2.1.1-2.el7.x86_64.rpm
+md5   = 59cebf8f666435cedf7deabaa3aeb56b
+
+[libselinux-ruby_2.2.2_6.el7]
+file  = libselinux-ruby-2.2.2-6.el7.x86_64.rpm
+md5   = f913b29005557d901d74898c43459d90
+
+[libsndfile_1.0.25_9.el7]
+file  = libsndfile-1.0.25-9.el7.x86_64.rpm
+md5   = 0c4edbaca671e5a7944106271eb87008
+
+[libsoup_2.46.0_3.el7]
+file  = libsoup-2.46.0-3.el7.x86_64.rpm
+md5   = 1dd68b3337f15be3c2788abb3b24d382
+
+[libss_1.42.9_7.el7]
+file  = libss-1.42.9-7.el7.x86_64.rpm
+md5   = 93a596e56176a8bd66eaca78461a90c5
+
+[libstdc++_4.8.3_9.el7]
+file  = libstdc++-4.8.3-9.el7.x86_64.rpm
+md5   = 2b73e689e1ad12cf7ef4283cba251748
+
+[libtalloc_2.1.1_1.el7]
+file  = libtalloc-2.1.1-1.el7.x86_64.rpm
+md5   = a527b470b9abaf2f42d08f9e8b8e5873
+
+[libtasn1_3.8_2.el7]
+file  = libtasn1-3.8-2.el7.x86_64.rpm
+md5   = e86f591a54fff64accc58b24f3ecfd1b
+
+[libteam_1.15_1.el7]
+file  = libteam-1.15-1.el7.x86_64.rpm
+md5   = a18b195b3425d16533cf58c419809de9
+
+[libtevent_0.9.21_3.el7]
+file  = libtevent-0.9.21-3.el7.x86_64.rpm
+md5   = 808d147d1d11eef8819c78cc22e05649
+
+[libthai_0.1.14_9.el7]
+file  = libthai-0.1.14-9.el7.x86_64.rpm
+md5   = 1cc4c0e4a088cc1eae0b8fbe95fe600e
+
+[libtiff_4.0.3_14.el7]
+file  = libtiff-4.0.3-14.el7.x86_64.rpm
+md5   = bd8aa68e44f309435cd8829d990808b3
+
+[libtirpc_0.2.4_0.5.el7]
+file  = libtirpc-0.2.4-0.5.el7.x86_64.rpm
+md5   = 788e0b738b44f1c70334aeda569aa063
+
+[libunwind_1.1_3.el7ost]
+file  = libunwind-1.1-3.el7ost.x86_64.rpm
+md5   = 5e08bb9b2e468136584728b4f00ec40d
+
+[libusal_1.1.11_22.el7]
+file  = libusal-1.1.11-22.el7.x86_64.rpm
+md5   = f759552faa6dbca32341f67a4afb30b6
+
+[libusbx_1.0.15_4.el7]
+file  = libusbx-1.0.15-4.el7.x86_64.rpm
+md5   = 1587a2efa563876d9835f2e952ba79bb
+
+[libuuid_2.23.2_21.el7]
+file  = libuuid-2.23.2-21.el7.x86_64.rpm
+md5   = fb95937a1dc2107f8c9459c16e4a000d
+
+[libuv-1.7.5-1.el7]
+file  = libuv-1.7.5-1.el7.centos.x86_64.rpm
+md5   = 51db754e423fe425d09ed114d5ddd625
+package_type = contrail-install-packages
+
+[libverto-tevent_0.2.5_4.el7]
+file  = libverto-tevent-0.2.5-4.el7.x86_64.rpm
+md5   = 59a09d3b5449fe0f524bc4f97fdae8dc
+
+[libvirt-client_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-client-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 069881c7a949388a8cbc264df6ecc6e2
+package_type = contrail-install-packages
+
+[libvirt-daemon-config-network_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-config-network-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 213613ee579b99e7b234341414035247
+package_type = contrail-install-packages
+
+[libvirt-daemon-config-nwfilter_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-config-nwfilter-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 094411efdff4414bd05b8b48dc10f62e
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-interface_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-interface-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = f47e20296d205fe593e8cc6179780600
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-lxc_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-lxc-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 4ae7371c83780064eb694c6a2fbf201b
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-network_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-network-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 8f9b5f29bef4577ced6fb86132b61899
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-nodedev_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-nodedev-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 36ca95047d568b43964ff0d4e6fb3a74
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-nwfilter_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-nwfilter-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 7b04c4dcdbb2f83253089ff318e5e9df
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-qemu_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-qemu-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 0d4107fd9358bf5d66f223def2b80093
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-secret_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-secret-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 5a17f14ea7057e617441eb6895a95e21
+package_type = contrail-install-packages
+
+[libvirt-daemon-driver-storage_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-driver-storage-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 2ebdb7d968e1c1e9f96987652b8521a8
+package_type = contrail-install-packages
+
+[libvirt-daemon-kvm_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-kvm-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = 1255a2470f379fd20828e65b8bcdc7a4
+package_type = contrail-install-packages
+
+[libvirt-daemon-lxc_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-lxc-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = f853547dbf0b23c62e284723c1fb4f6e
+package_type = contrail-install-packages
+
+[libvirt-daemon_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-daemon-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = eca8dd666c934cc2fb0148805e06cd0c
+package_type = contrail-install-packages
+
+[libvirt-python-1.2.8-7.el7_1.1]
+file  = libvirt-python-1.2.8-7.el7_1.1.x86_64.rpm
+md5   = cb691422157045e3e059155a3d80764d
+
+[libvirt_1.2.8_16.1contrail1.el7.1]
+file  = libvirt-1.2.8-16.1contrail1.el7.1.x86_64.rpm
+md5   = e7bd1158711aab1efe6cede0fc99bb0d
+package_type = contrail-install-packages
+
+[libvorbis_1.3.3_8.el7]
+file  = libvorbis-1.3.3-8.el7.x86_64.rpm
+md5   = 2bdd26653df0897e66f43172f2fd149a
+
+[libwebp_0.3.0_3.el7]
+file  = libwebp-0.3.0-3.el7.x86_64.rpm
+md5   = cab6a021d2d262bb11c648ac44031252
+
+[libxcb_1.9_5.el7]
+file  = libxcb-1.9-5.el7.x86_64.rpm
+md5   = 43019a4dece7674b929ddb58ff42299f
+
+[libxml2-python_2.9.1_5.el7_0.1]
+file  = libxml2-python-2.9.1-5.el7_0.1.x86_64.rpm
+md5   = a9b4e8cda7862ff618422aa3c86c40f1
+
+[libxml2_2.9.1_5.el7_0.1]
+file  = libxml2-2.9.1-5.el7_0.1.x86_64.rpm
+md5   = 6d66b67aaaf4b2518b5416ba756ce24f
+
+[libyaml_0.1.4_11.el7_0]
+file  = libyaml-0.1.4-11.el7_0.x86_64.rpm
+md5   = f1c2b52bf1ed4c3463b5ff5557fafc93
+
+[linux-firmware_20140911_0.1.git365e80c.el7]
+file  = linux-firmware-20140911-0.1.git365e80c.el7.noarch.rpm
+md5   = b6e511ae109eb853d510a685410a2d8e
+
+[lksctp-tools_1.0.13_3.el7]
+file  = lksctp-tools-1.0.13-3.el7.x86_64.rpm
+md5   = 67441a3267ae9cd2cfa0f21a4cc5e8a4
+
+[lm_sensors-libs_3.3.4_11.el7]
+file  = lm_sensors-libs-3.3.4-11.el7.x86_64.rpm
+md5   = e24b845214c8032df18d416f916bc521
+
+[log4j_1.2.17_15.el7]
+file  = log4j-1.2.17-15.el7.noarch.rpm
+md5   = 1c2dcaf91435d28c7837c013ef95a8f4
+
+[lsof_4.87_4.el7]
+file  = lsof-4.87-4.el7.x86_64.rpm
+md5   = 42b0726657d3b51c58064e16682d6d07
+
+[lsscsi_0.27_3.el7]
+file  = lsscsi-0.27-3.el7.x86_64.rpm
+md5   = bdb62a06fa951044059101c4cf949f44
+
+[lvm2-libs_2.02.115_3.el7]
+file  = lvm2-libs-2.02.115-3.el7.x86_64.rpm
+md5   = 43f3ad4969137cf8986758467d8e542c
+
+[lvm2_2.02.115_3.el7]
+file  = lvm2-2.02.115-3.el7.x86_64.rpm
+md5   = 53a1a76c95e2c859a525bc180ec569a2
+
+[lzo_2.06_6.el7_0.2]
+file  = lzo-2.06-6.el7_0.2.x86_64.rpm
+md5   = e4142db6db06f17ac4d0fd1f4654cedd
+
+[lzop_1.03_10.el7]
+file  = lzop-1.03-10.el7.x86_64.rpm
+md5   = 0242ebbaa2b6f41570ae2ae12157bd60
+
+[mailcap_2.1.41_2.el7]
+file  = mailcap-2.1.41-2.el7.noarch.rpm
+md5   = 0bfbfdcef349b726d32ba5ee7ac5c23a
+
+[mariadb-galera-common_5.5.40_6.el7ost]
+file  = mariadb-galera-common-5.5.40-6.el7ost.x86_64.rpm
+md5   = df905f55f091af39b6c30018510c385d
+
+[mariadb-galera-server_5.5.40_6.el7ost]
+file  = mariadb-galera-server-5.5.40-6.el7ost.x86_64.rpm
+md5   = 3a380d6a4202d357e651c41213c5620c
+
+[mariadb-libs_5.5.41_2.el7_0]
+file  = mariadb-libs-5.5.41-2.el7_0.x86_64.rpm
+md5   = 57cc6fa4203862b1f63cdb9a2bafbae3
+
+[mariadb_5.5.41_2.el7_0]
+file  = mariadb-5.5.41-2.el7_0.x86_64.rpm
+md5   = b85fcb657101ef6abb6bc58d8a667db5
+
+[mdadm_3.3.2_2.el7]
+file  = mdadm-3.3.2-2.el7.x86_64.rpm
+md5   = 8d6cc16121e318ddcc6f72740dbb0450
+
+[mesa-libEGL_10.2.7_5.20140910.el7]
+file  = mesa-libEGL-10.2.7-5.20140910.el7.x86_64.rpm
+md5   = f4e21e5f56bfa7f32b25ec3ec9edb905
+
+[mesa-libGL_10.2.7_5.20140910.el7]
+file  = mesa-libGL-10.2.7-5.20140910.el7.x86_64.rpm
+md5   = 44dff9be6916824bdf0c8057ccef54e6
+
+[mesa-libgbm_10.2.7_5.20140910.el7]
+file  = mesa-libgbm-10.2.7-5.20140910.el7.x86_64.rpm
+md5   = a9426409ec034ab25196d7a1a5d88200
+
+[mesa-libglapi_10.2.7_5.20140910.el7]
+file  = mesa-libglapi-10.2.7-5.20140910.el7.x86_64.rpm
+md5   = 00ce8bfa598eece1298c0203b988f76e
+
+[microcode_ctl_2.1_10.el7]
+file  = microcode_ctl-2.1-10.el7.x86_64.rpm
+md5   = 7b4b65c06c45db5ba337c3ef6a23c170
+
+[mpfr_3.1.1_4.el7]
+file  = mpfr-3.1.1-4.el7.x86_64.rpm
+md5   = 96329ffd4bdf3d43f0239a0b5cdc2c30
+
+[mtools_4.0.18_5.el7]
+file  = mtools-4.0.18-5.el7.x86_64.rpm
+md5   = 5b2e5a05518af4ce681f8a172a66a16b
+
+[net-snmp-agent-libs_5.7.2_20.el7]
+file  = net-snmp-agent-libs-5.7.2-20.el7.x86_64.rpm
+md5   = c4649b0085d800e82fa585db845bbc1b
+
+[net-snmp-5.7.2-20.el7]
+file  = net-snmp-5.7.2-20.el7.x86_64.rpm
+md5   = d46b2203dd4ff1b8fe16b2fdbd538611
+
+[net-snmp-libs_5.7.2_20.el7]
+file  = net-snmp-libs-5.7.2-20.el7.x86_64.rpm
+md5   = 297e044dcccd8ae3f8308b07cd899394
+
+[net-snmp-python_5.7.2_20.el7]
+file  = net-snmp-python-5.7.2-20.el7.x86_64.rpm
+md5   = 1e2e20a100a6df831b3fa94da5e067be
+
+[netcf-libs_0.2.6_3.el7]
+file  = netcf-libs-0.2.6-3.el7.x86_64.rpm
+md5   = a3dcb894ca732f0d736a229c0827d433
+
+[netpbm-progs_10.61.02_9.el7]
+file  = netpbm-progs-10.61.02-9.el7.x86_64.rpm
+md5   = a508bcdb3ecbfb62e5646929f2d2b24a
+
+[netpbm_10.61.02_9.el7]
+file  = netpbm-10.61.02-9.el7.x86_64.rpm
+md5   = fe7b9a154f24c6397ef60e0a8e97c320
+
+[nettle_2.7.1_4.el7]
+file  = nettle-2.7.1-4.el7.x86_64.rpm
+md5   = 2c3055680ec3d25cf961654a7036d326
+
+[nfs-utils_1.3.0_0.8.el7]
+file  = nfs-utils-1.3.0-0.8.el7.x86_64.rpm
+md5   = 61b829dd08f87d516adb0296aa2875b4
+
+[nmap-ncat_6.40_4.el7]
+file  = nmap-ncat-6.40-4.el7.x86_64.rpm
+md5   = ce3446047fa3dddd1617b1f54f4ebab2
+
+[nodejs-0.10.35]
+file  = nodejs-0.10.35-1contrail.el7.x86_64.rpm
+md5   = 788131e83c0dc24b64f5623c9c11e7f4
+package_type = contrail-install-packages
+
+[novnc_0.4_7.el7ost]
+file  = novnc-0.4-7.el7ost.noarch.rpm
+md5   = ee0ef815e5d73c1bd71503ec792ebcfc
+
+[nspr_4.10.6_3.el7]
+file  = nspr-4.10.6-3.el7.x86_64.rpm
+md5   = 6b1845f90f03f5a631caa89d1a94a89f
+
+[nss-softokn-freebl_3.16.2.3_9.el7]
+file  = nss-softokn-freebl-3.16.2.3-9.el7.x86_64.rpm
+md5   = 1225ca579f432201b84a9c5523ab1bef
+
+[nss-softokn_3.16.2.3_9.el7]
+file  = nss-softokn-3.16.2.3-9.el7.x86_64.rpm
+md5   = 69e150c9ad886500c1d593eb8dbef8c9
+
+[nss-sysinit_3.16.2.3_5.el7]
+file  = nss-sysinit-3.16.2.3-5.el7.x86_64.rpm
+md5   = aa1e61ce25c746d74da11748a4a5825c
+
+[nss-tools_3.16.2.3_5.el7]
+file  = nss-tools-3.16.2.3-5.el7.x86_64.rpm
+md5   = 34a5245139750e652a266bdab77e573b
+
+[nss-util_3.16.2.3_2.el7]
+file  = nss-util-3.16.2.3-2.el7.x86_64.rpm
+md5   = b0cceb970311a6376c8f57126b370c98
+
+[nss_3.16.2.3_5.el7]
+file  = nss-3.16.2.3-5.el7.x86_64.rpm
+md5   = 8b981bb3c58728edbf20bc2395480edc
+
+[ntp_4.2.6p5_19.el7_0]
+file  = ntp-4.2.6p5-19.el7_0.x86_64.rpm
+md5   = f8c1dd1cc5073491e2e3f80984d91f8c
+
+[ntpdate_4.2.6p5_19.el7_0]
+file  = ntpdate-4.2.6p5-19.el7_0.x86_64.rpm
+md5   = d3306ae037f4f26a2eda853ff33c9290
+
+[numactl-libs_2.0.9_4.el7]
+file  = numactl-libs-2.0.9-4.el7.x86_64.rpm
+md5   = eacb9b556d5d4ee4ea7205e99d827209
+
+[numad_0.5_14.20140620git.el7]
+file  = numad-0.5-14.20140620git.el7.x86_64.rpm
+md5   = f6d41cb6462e7253917cd7bf27ed058c
+
+[openldap_2.4.39_6.el7]
+file  = openldap-2.4.39-6.el7.x86_64.rpm
+md5   = b63f99e35316fae0bca0e475583edaf9
+
+[openssh-clients_6.6.1p1_11.el7]
+file  = openssh-clients-6.6.1p1-11.el7.x86_64.rpm
+md5   = 65f981be5bf99e147f179f0ce5ecc9a8
+
+[openssh-server_6.6.1p1_11.el7]
+file  = openssh-server-6.6.1p1-11.el7.x86_64.rpm
+md5   = 997a61b93aac9198446fc18c9a04e601
+
+[openssh_6.6.1p1_11.el7]
+file  = openssh-6.6.1p1-11.el7.x86_64.rpm
+md5   = 264ba5a874cce44cda1effdaf5e03d06
+
+[openssl-libs_1.0.1e_42.el7]
+file  = openssl-libs-1.0.1e-42.el7.x86_64.rpm
+md5   = dfc1c2e839989dc77587dc554cb7335a
+
+[openssl_1.0.1e_42.el7]
+file  = openssl-1.0.1e-42.el7.x86_64.rpm
+md5   = 7a112ea49df27aceb1f9e75dfb6aac4d
+
+[openstack-ceilometer-common-2014.2.2-1]
+file  = openstack-ceilometer-common-2014.2.2-1.el7ost.noarch.rpm
+md5   = 3f75ce724b3c3d369d7a12cd472c8324
+
+[openstack-ceilometer-compute-2014.2.2-1]
+file  = openstack-ceilometer-compute-2014.2.2-1.el7ost.noarch.rpm
+md5   = 57a44f2faa7f536c19c43a8b5c31f29c
+
+[openstack-neutron_2014.2.2_3.el7ost]
+file  = openstack-neutron-2014.2.2-3.el7ost.noarch.rpm
+md5   = c690e8aedd434115348498db958054ef
+
+[openstack-nova-api_2014.2.2_2.el7ost]
+file  = openstack-nova-api-2014.2.2-2.el7ost.noarch.rpm
+md5   = 6f4b6848148183b4a4d1a5d9a1dd97b8
+
+[openstack-nova-cells_2014.2.2_2.el7ost]
+file  = openstack-nova-cells-2014.2.2-2.el7ost.noarch.rpm
+md5   = 5c65f2feb662331905a02344b0d2c133
+
+[openstack-nova-cert_2014.2.2_2.el7ost]
+file  = openstack-nova-cert-2014.2.2-2.el7ost.noarch.rpm
+md5   = 35e6360df621486594bf4179a00b3398
+
+[openstack-nova-common_2014.2.2_2.el7ost]
+file  = openstack-nova-common-2014.2.2-2.el7ost.noarch.rpm
+md5   = 3088b4a5be343bd95971d6038e20c974
+
+[openstack-nova-compute_2014.2.2_2.el7ost]
+file  = openstack-nova-compute-2014.2.2-2.el7ost.noarch.rpm
+md5   = 92510ee5527eb1627e5282d5d89e3669
+
+[openstack-nova-conductor_2014.2.2_2.el7ost]
+file  = openstack-nova-conductor-2014.2.2-2.el7ost.noarch.rpm
+md5   = 119f5cd9b4458518878a1d4daa23d96f
+
+[openstack-nova-console_2014.2.2_2.el7ost]
+file  = openstack-nova-console-2014.2.2-2.el7ost.noarch.rpm
+md5   = a253bd7d72ad37d34d5f1b6069522524
+
+[openstack-nova-network_2014.2.2_2.el7ost]
+file  = openstack-nova-network-2014.2.2-2.el7ost.noarch.rpm
+md5   = 8cad876a5436a7e24477295803af6647
+
+[openstack-nova-novncproxy_2014.2.2_2.el7ost]
+file  = openstack-nova-novncproxy-2014.2.2-2.el7ost.noarch.rpm
+md5   = 462f1c5caef5cea07003cb3096c13084
+
+[openstack-nova-objectstore_2014.2.2_2.el7ost]
+file  = openstack-nova-objectstore-2014.2.2-2.el7ost.noarch.rpm
+md5   = 3c82c292217c104dbd8640e8e33b4617
+
+[openstack-nova-scheduler_2014.2.2_2.el7ost]
+file  = openstack-nova-scheduler-2014.2.2-2.el7ost.noarch.rpm
+md5   = 204a556f91d6614363abe9455ae20b0f
+
+[openstack-nova_2014.2.2_2.el7ost]
+file  = openstack-nova-2014.2.2-2.el7ost.noarch.rpm
+md5   = 2c2cb2141db12938c17e711d6000e0f2
+
+[openstack-utils_2014.2_1.el7ost]
+file  = openstack-utils-2014.2-1.el7ost.noarch.rpm
+md5   = 110dad66fe541a1aafe8cf2b61f58949
+
+[p11-kit-trust_0.20.7_3.el7]
+file  = p11-kit-trust-0.20.7-3.el7.x86_64.rpm
+md5   = 4f234cff1c5e0d9d1510227b5bb841e5
+
+[p11-kit_0.20.7_3.el7]
+file  = p11-kit-0.20.7-3.el7.x86_64.rpm
+md5   = d43b02a3ef6caa74d97f514272fcfab2
+
+[pam_1.1.8_12.el7]
+file  = pam-1.1.8-12.el7.x86_64.rpm
+md5   = df7e3faed331e268e697d25617a30db4
+
+[pango_1.34.1_5.el7]
+file  = pango-1.34.1-5.el7.x86_64.rpm
+md5   = 0ab17250a077cdbc6a4df809d6fb42d5
+
+[parted_3.1_20.el7]
+file  = parted-3.1-20.el7.x86_64.rpm
+md5   = 6fb2fac0d2967f7f1023c9ec30200052
+
+[pcre_8.32_14.el7]
+file  = pcre-8.32-14.el7.x86_64.rpm
+md5   = d8dc57ad3dee6b756350fb276065794a
+
+[perl-Business-ISBN-Data_20120719.001_2.el7]
+file  = perl-Business-ISBN-Data-20120719.001-2.el7.noarch.rpm
+md5   = 28c14c6de2dda2560a062ea2278d9e75
+
+[perl-Business-ISBN_2.06_2.el7]
+file  = perl-Business-ISBN-2.06-2.el7.noarch.rpm
+md5   = e498681a1c0e60635fa8afeca288ccae
+
+[perl-Carp_1.26_244.el7]
+file  = perl-Carp-1.26-244.el7.noarch.rpm
+md5   = dc5c2c44880bd463b3c85f3a502d706f
+
+[perl-Compress-Raw-Bzip2_2.061_3.el7]
+file  = perl-Compress-Raw-Bzip2-2.061-3.el7.x86_64.rpm
+md5   = 58533f0442afa2848cf75c8db6c2dac5
+
+[perl-Compress-Raw-Zlib_2.061_4.el7]
+file  = perl-Compress-Raw-Zlib-2.061-4.el7.x86_64.rpm
+md5   = ba76f04997df8c32255952e8ff244eed
+
+[perl-DBD-MySQL_4.023_5.el7]
+file  = perl-DBD-MySQL-4.023-5.el7.x86_64.rpm
+md5   = 9c77eeb68c50b14dce56226fe83ef566
+
+[perl-DBI_1.627_4.el7]
+file  = perl-DBI-1.627-4.el7.x86_64.rpm
+md5   = 093755f6ae47f10578b63d0dd981ae83
+
+[perl-Data-Dumper_2.145_3.el7]
+file  = perl-Data-Dumper-2.145-3.el7.x86_64.rpm
+md5   = f5d3ece5cae3fca3050df90c5956be73
+
+[perl-Digest-MD5_2.52_3.el7]
+file  = perl-Digest-MD5-2.52-3.el7.x86_64.rpm
+md5   = 3e7486ef4c021a0639b0eda23d0b507e
+
+[perl-Digest_1.17_245.el7]
+file  = perl-Digest-1.17-245.el7.noarch.rpm
+md5   = 3e6fdff9cbc0113455c85e7a3bfd77e8
+
+[perl-Encode-Locale_1.03_5.el7]
+file  = perl-Encode-Locale-1.03-5.el7.noarch.rpm
+md5   = 67388779f8b0a9242eb3806da0d5de5c
+
+[perl-Encode_2.51_7.el7]
+file  = perl-Encode-2.51-7.el7.x86_64.rpm
+md5   = b8da1ac2931cc769491f229aa1eba5e3
+
+[perl-Exporter_5.68_3.el7]
+file  = perl-Exporter-5.68-3.el7.noarch.rpm
+md5   = 51582b6873cd36aaf524f16922feb4a0
+
+[perl-File-Listing_6.04_7.el7]
+file  = perl-File-Listing-6.04-7.el7.noarch.rpm
+md5   = 3f4683ed3d089d004f9fb2bd7e3acb8a
+
+[perl-File-Path_2.09_2.el7]
+file  = perl-File-Path-2.09-2.el7.noarch.rpm
+md5   = 2243a44d0f903c913204891ec4c649d5
+
+[perl-File-Temp_0.23.01_3.el7]
+file  = perl-File-Temp-0.23.01-3.el7.noarch.rpm
+md5   = 1ef93552d6a10965b375295c3f7126f5
+
+[perl-Filter_1.49_3.el7]
+file  = perl-Filter-1.49-3.el7.x86_64.rpm
+md5   = 729803dfcd71843dc32788a927cbd107
+
+[perl-Getopt-Long_2.40_2.el7]
+file  = perl-Getopt-Long-2.40-2.el7.noarch.rpm
+md5   = 94b3d965c4f6828518d4a5ff97394287
+
+[perl-HTML-Parser_3.71_4.el7]
+file  = perl-HTML-Parser-3.71-4.el7.x86_64.rpm
+md5   = a26372863affe7580691974846f9fceb
+
+[perl-HTML-Tagset_3.20_15.el7]
+file  = perl-HTML-Tagset-3.20-15.el7.noarch.rpm
+md5   = 92d6076e50f8ec1be1213f8af9ad2cd1
+
+[perl-HTTP-Cookies_6.01_5.el7]
+file  = perl-HTTP-Cookies-6.01-5.el7.noarch.rpm
+md5   = 0004ad59bfc8b70a84cc099807ceeb79
+
+[perl-HTTP-Daemon_6.01_5.el7]
+file  = perl-HTTP-Daemon-6.01-5.el7.noarch.rpm
+md5   = 632b157bf08a6bfb4e4d11d25affbcbb
+
+[perl-HTTP-Date_6.02_8.el7]
+file  = perl-HTTP-Date-6.02-8.el7.noarch.rpm
+md5   = 1e723f0990a34a500c477057743658d8
+
+[perl-HTTP-Message_6.06_6.el7]
+file  = perl-HTTP-Message-6.06-6.el7.noarch.rpm
+md5   = ede7fd9815dfab2c4290d872636598d8
+
+[perl-HTTP-Negotiate_6.01_5.el7]
+file  = perl-HTTP-Negotiate-6.01-5.el7.noarch.rpm
+md5   = 9d079e9c80d56844a4cf8fbe4a531ba9
+
+[perl-HTTP-Tiny_0.033_3.el7]
+file  = perl-HTTP-Tiny-0.033-3.el7.noarch.rpm
+md5   = 653a12af6574cf4b1fa33566326ad4c3
+
+[perl-IO-Compress_2.061_2.el7]
+file  = perl-IO-Compress-2.061-2.el7.noarch.rpm
+md5   = a30f601a45e24f0f54dad614767d09a4
+
+[perl-IO-HTML_1.00_2.el7]
+file  = perl-IO-HTML-1.00-2.el7.noarch.rpm
+md5   = 41aa34d16e682c49f23c59a78e86b651
+
+[perl-IO-Socket-IP_0.21_4.el7]
+file  = perl-IO-Socket-IP-0.21-4.el7.noarch.rpm
+md5   = b8650805f993c3df86e1270c04af2904
+
+[perl-IO-Socket-SSL_1.94_3.el7]
+file  = perl-IO-Socket-SSL-1.94-3.el7.noarch.rpm
+md5   = 46e1f17254a6609a528fe38a353538ab
+
+[perl-LWP-MediaTypes_6.02_2.el7]
+file  = perl-LWP-MediaTypes-6.02-2.el7.noarch.rpm
+md5   = 66e5dccda8296ebf369008e2c8252b32
+
+[perl-Net-Daemon_0.48_5.el7]
+file  = perl-Net-Daemon-0.48-5.el7.noarch.rpm
+md5   = e1e72b38bc41aa9544cccb49eea94347
+
+[perl-Net-HTTP_6.06_2.el7]
+file  = perl-Net-HTTP-6.06-2.el7.noarch.rpm
+md5   = 36ef2f0453b557672d2f3ac1ab9aae29
+
+[perl-Net-LibIDN_0.12_15.el7]
+file  = perl-Net-LibIDN-0.12-15.el7.x86_64.rpm
+md5   = e99e29b263552f666b3ad57f465b667d
+
+[perl-Net-SSLeay_1.55_3.el7]
+file  = perl-Net-SSLeay-1.55-3.el7.x86_64.rpm
+md5   = ed3e737db0c810ec6996b5f0a24190b6
+
+[perl-PathTools_3.40_5.el7]
+file  = perl-PathTools-3.40-5.el7.x86_64.rpm
+md5   = 6bbf236e306cd32dee558a1d89e4cd95
+
+[perl-PlRPC_0.2020_14.el7]
+file  = perl-PlRPC-0.2020-14.el7.noarch.rpm
+md5   = 77cb6f0d7e9630388825e442cff279d8
+
+[perl-Pod-Escapes_1.04_285.el7]
+file  = perl-Pod-Escapes-1.04-285.el7.noarch.rpm
+md5   = b5653e17fd74685f63d434020da5d29c
+
+[perl-Pod-Perldoc_3.20_4.el7]
+file  = perl-Pod-Perldoc-3.20-4.el7.noarch.rpm
+md5   = db936a8462194b79fe5c51ab1a5858ed
+
+[perl-Pod-Simple_3.28_4.el7]
+file  = perl-Pod-Simple-3.28-4.el7.noarch.rpm
+md5   = eecb8f466b0d91644f3285c6aa62d200
+
+[perl-Pod-Usage_1.63_3.el7]
+file  = perl-Pod-Usage-1.63-3.el7.noarch.rpm
+md5   = 6cd118fc8f26b8328439564621bb9552
+
+[perl-Scalar-List-Utils_1.27_248.el7]
+file  = perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm
+md5   = 5999fbb48c945ea4823aea32cd4be955
+
+[perl-Socket_2.010_3.el7]
+file  = perl-Socket-2.010-3.el7.x86_64.rpm
+md5   = a6c6376ab45f79cac3668facce5ff332
+
+[perl-Storable_2.45_3.el7]
+file  = perl-Storable-2.45-3.el7.x86_64.rpm
+md5   = 1268c12074dec953b9ebd8d2a5b9de1c
+
+[perl-Text-ParseWords_3.29_4.el7]
+file  = perl-Text-ParseWords-3.29-4.el7.noarch.rpm
+md5   = b0d10c2189d0b5c090a39c70dc800627
+
+[perl-Time-HiRes_1.9725_3.el7]
+file  = perl-Time-HiRes-1.9725-3.el7.x86_64.rpm
+md5   = 46486bf7b1ce9061e6ea417d1322d31b
+
+[perl-Time-Local_1.2300_2.el7]
+file  = perl-Time-Local-1.2300-2.el7.noarch.rpm
+md5   = b32cfd446d0b3e0fd258d028e2ae348d
+
+[perl-TimeDate_2.30_2.el7]
+file  = perl-TimeDate-2.30-2.el7.noarch.rpm
+md5   = 98d9c8f048b62137213916d32474fcaf
+
+[perl-URI_1.60_9.el7]
+file  = perl-URI-1.60-9.el7.noarch.rpm
+md5   = 1ca90d64c95fd14f3de1cabb8bd00314
+
+[perl-WWW-RobotRules_6.02_5.el7]
+file  = perl-WWW-RobotRules-6.02-5.el7.noarch.rpm
+md5   = 78a3fdb101b0cbd40bce39c25d8b0dab
+
+[perl-constant_1.27_2.el7]
+file  = perl-constant-1.27-2.el7.noarch.rpm
+md5   = 26bbdebc36d19006020512823e93ed90
+
+[perl-hivex_1.3.10_5.7.el7]
+file  = perl-hivex-1.3.10-5.7.el7.x86_64.rpm
+md5   = 25348ee79457a316ad2876c31ba76dc5
+
+[perl-libs_5.16.3_285.el7]
+file  = perl-libs-5.16.3-285.el7.x86_64.rpm
+md5   = b11fecc683e4b4ceb3636a2736c2c12d
+
+[perl-libwww-perl_6.05_2.el7]
+file  = perl-libwww-perl-6.05-2.el7.noarch.rpm
+md5   = 0d5cd63ea28a2734c140df323a8b6652
+
+[perl-macros_5.16.3_285.el7]
+file  = perl-macros-5.16.3-285.el7.x86_64.rpm
+md5   = 047f450169ad4047eb8cf7611a00fd16
+
+[perl-parent_0.225_244.el7]
+file  = perl-parent-0.225-244.el7.noarch.rpm
+md5   = 9ca9c8a66cb2d77f2670f9581e1a3b89
+
+[perl-podlators_2.5.1_3.el7]
+file  = perl-podlators-2.5.1-3.el7.noarch.rpm
+md5   = e6b253db81d6acbf1efcc7d84d04c895
+
+[perl-threads-shared_1.43_6.el7]
+file  = perl-threads-shared-1.43-6.el7.x86_64.rpm
+md5   = 54810c647cedebe6243613405430ca98
+
+[perl-threads_1.87_4.el7]
+file  = perl-threads-1.87-4.el7.x86_64.rpm
+md5   = 766b0bf931ed7e96763a38d05cc80b10
+
+[perl_5.16.3_285.el7]
+file  = perl-5.16.3-285.el7.x86_64.rpm
+md5   = d8c64a8b3939cb37932d8a1c89d1b1ba
+
+[pixman_0.32.4_3.el7]
+file  = pixman-0.32.4-3.el7.x86_64.rpm
+md5   = 205c424b6774f5fb7afd5b2d8096fbbb
+
+[plymouth-core-libs_0.8.9_0.13.20140113.el7]
+file  = plymouth-core-libs-0.8.9-0.13.20140113.el7.x86_64.rpm
+md5   = d0d1ba4a9e5e09c0ab94e8b249548250
+
+[plymouth-scripts_0.8.9_0.13.20140113.el7]
+file  = plymouth-scripts-0.8.9-0.13.20140113.el7.x86_64.rpm
+md5   = db5b5ab14ff9d7fcfb8e10a7621db180
+
+[plymouth_0.8.9_0.13.20140113.el7]
+file  = plymouth-0.8.9-0.13.20140113.el7.x86_64.rpm
+md5   = 1f14d0c7f06edeef007c73c28d60845b
+
+[policycoreutils_2.2.5_15.el7]
+file  = policycoreutils-2.2.5-15.el7.x86_64.rpm
+md5   = 5171bb55989af358e33abc4aea00bb7c
+
+[poppler-data_0.4.6_3.el7]
+file  = poppler-data-0.4.6-3.el7.noarch.rpm
+md5   = aab1e290d6463e5d1e8bc0e610cddf40
+
+[procps-ng_3.3.10_3.el7]
+file  = procps-ng-3.3.10-3.el7.x86_64.rpm
+md5   = 8ba72da4f13ed92dfe7fb0e31b613888
+
+[protobuf_2.5.0_7.el7]
+file  = protobuf-2.5.0-7.el7.x86_64.rpm
+md5   = a3738a641538b8008ac0a50a7559c436
+
+[psmisc_22.20_8.el7]
+file  = psmisc-22.20-8.el7.x86_64.rpm
+md5   = e4d011021c3a5ee267d6d5df337c6b61
+
+[pulseaudio-libs_3.0_30.el7]
+file  = pulseaudio-libs-3.0-30.el7.x86_64.rpm
+md5   = fe2bfa84fe35b080c26cbb1c2a496386
+
+[puppet_3.6.2_3.el7]
+file  = puppet-3.6.2-3.el7.noarch.rpm
+md5   = 29a96ea6284001817551a5c536034ef9
+
+[pygobject3-base_3.8.2_6.el7]
+file  = pygobject3-base-3.8.2-6.el7.x86_64.rpm
+md5   = bc78a94d67666a7a5912bb7e864c52db
+
+[pyparsing_2.0.1_3.el7ost]
+file  = pyparsing-2.0.1-3.el7ost.noarch.rpm
+md5   = b5cbeefe78192c5492114b9d467c7523
+
+[pysnmp_4.2.5_1.el7ost]
+file  = pysnmp-4.2.5-1.el7ost.noarch.rpm
+md5   = 992bbfed6f7cdff932ac94741cf3e0a5
+
+[python-alembic_0.6.5_3.el7ost]
+file  = python-alembic-0.6.5-3.el7ost.noarch.rpm
+md5   = 816255de7e2bb616f62207ccf1742ea1
+
+[python-amqp_1.4.6_1.el7ost]
+file  = python-amqp-1.4.6-1.el7ost.noarch.rpm
+md5   = c5e7f85267700fc4492e5d501bbee8c9
+
+[python-anyjson_0.3.3_3.el7ost]
+file  = python-anyjson-0.3.3-3.el7ost.noarch.rpm
+md5   = 28790bfdb37a0a4694e180ac7b967c67
+
+[python-augeas_0.4.1_5.el7]
+file  = python-augeas-0.4.1-5.el7.noarch.rpm
+md5   = 847009d4b786739a34dac75036eefa84
+
+[python-babel_1.3_6.el7ost]
+file  = python-babel-1.3-6.el7ost.noarch.rpm
+md5   = 0b8236e9924cf4e0803abe8435f869e2
+
+[python-backports_1.0_8.el7]
+file  = python-backports-1.0-8.el7.x86_64.rpm
+md5   = 413be5e22f9cdfb8315e074cf3f3a077
+
+[python-beaker_1.5.4_10.el7]
+file  = python-beaker-1.5.4-10.el7.noarch.rpm
+md5   = 026bf37eda9a31905f7ca7790e85f14e
+
+[python-bitarray_0.8.0_0contrail.el7]
+file  = python-bitarray-0.8.0-0contrail.el7.x86_64.rpm
+md5   = d1330f60ab5e7b9102da9706345f671d
+package_type = contrail-install-packages
+
+[python-boto_2.12.0_2contrail.el7]
+file  = python-boto-2.12.0-2contrail.el7.x86_64.rpm
+md5   = de2aa10a5958e7f16b7dcbac3d1d952b
+package_type = contrail-install-packages
+
+[python-bottle_0.11.6_0contrail.el7]
+file  = python-bottle-0.11.6-0contrail.el7.noarch.rpm
+md5   = 3fa8a2c1b303252e21a08f78cb4b8b18
+package_type = contrail-install-packages
+
+[python-bson_2.5.2_2.el7ost]
+file  = python-bson-2.5.2-2.el7ost.x86_64.rpm
+md5   = 96f8e18b49f11b868160a8710620b2b5
+
+[python-cassandra-driver-3.0.0-0contrail1.el7]
+file  = python-cassandra-driver-3.0.0-0contrail1.el7.x86_64.rpm
+md5   = 71a86febc460a84d3e82838336f6fe6f
+
+[python-chardet_2.0.1_7.el7]
+file  = python-chardet-2.0.1-7.el7.noarch.rpm
+md5   = 67d9d53b654bf4065726770e9ab6315c
+
+[python-cheetah_2.4.4_5.el7]
+file  = python-cheetah-2.4.4-5.el7.x86_64.rpm
+md5   = fb8e34e3c02e4a6624b7cfba93ee66a1
+
+[python-ceilometer-2014.2.2-1]
+file  = python-ceilometer-2014.2.2-1.el7ost.noarch.rpm
+md5   = 8ead07f9f399188e396949859b16c175
+
+[python-cinderclient_1.1.1_1.el7ost]
+file  = python-cinderclient-1.1.1-1.el7ost.noarch.rpm
+md5   = 9eb1d492b67fb02823e95fe90186f53f
+
+[python-cliff_1.7.0_1.el7ost]
+file  = python-cliff-1.7.0-1.el7ost.noarch.rpm
+md5   = 34dade507ef9b0704934e6f16586a0da
+
+[python-cmd2_0.6.7_5.el7ost]
+file  = python-cmd2-0.6.7-5.el7ost.noarch.rpm
+md5   = 114f0901ec05876e6633eec9eb28ecf3
+
+[python-croniter-0.3.4-2]
+file  = python-croniter-0.3.4-2.el7ost.noarch.rpm
+md5   = 22e7eb59b987df69ed44941cb99754c0
+
+[python-crypto_2.6.1_1.el7ost]
+file  = python-crypto-2.6.1-1.el7ost.x86_64.rpm
+md5   = f508e430c6926ef81d18a767470e2d3d
+
+[python-devel_2.7.5_16.el7]
+file  = python-devel-2.7.5-16.el7.x86_64.rpm
+md5   = 4a8ded18422c9b7e2c551b78eaa680f5
+
+[python-docker-py-0.7.2-1.1contrail1.el7]
+file  = python-docker-py-0.7.2-1.1contrail1.el7.noarch.rpm
+md5   = 73393400804fc254a6b24d3b35065a9a
+package_type  = contrail-install-packages
+
+[python-dogpile-cache_0.5.5_1.el7]
+file  = python-dogpile-cache-0.5.5-1.el7.noarch.rpm
+md5   = fd0cb9c1c2154c6d81d574378ec3ebb4
+
+[python-dogpile-core_0.4.1_2.el7ost]
+file  = python-dogpile-core-0.4.1-2.el7ost.noarch.rpm
+md5   = 0eb7a6083cedc0b259a1d0a7447c87f9
+
+[python-ecdsa_0.11_3.el7ost]
+file  = python-ecdsa-0.11-3.el7ost.noarch.rpm
+md5   = 635f3c837e78de07f3c2b4e14c90b9ab
+
+[python-eventlet_0.15.2_1.el7ost]
+file  = python-eventlet-0.15.2-1.el7ost.noarch.rpm
+md5   = 8d9e5caec558defff4f18daab490565f
+
+[python-Fabric-1.7.5-1.1contrail0]
+file           = python-Fabric-1.7.5-1.1contrail0.noarch.rpm
+md5            = 67ccac8fb4b7add866d274e878f036ad
+package_type   = contrail-install-packages
+source         = repo:contrail-thirdparty
+
+[python-gevent_1.0_2.el7]
+file  = python-gevent-1.0-2.el7.x86_64.rpm
+md5   = 4e2922218d4224fa3c30eb2ba2571300
+
+[python-geventhttpclient_1.0a_0contrail.el7]
+file  = python-geventhttpclient-1.0a-0contrail.el7.x86_64.rpm
+md5   = 045388afa560fce0ebdd47bf18bef3b5
+package_type = contrail-install-packages
+
+[python-glanceclient_0.14.2_2.el7ost]
+file  = python-glanceclient-0.14.2-2.el7ost.noarch.rpm
+md5   = c5ccea19520db569d47334af77848d42
+
+[python-greenlet_0.4.2_3.el7]
+file  = python-greenlet-0.4.2-3.el7.x86_64.rpm
+md5   = 61f301ee5847bbae9695f19215bfffde
+
+[python-httplib2_0.7.7_3.el7ost]
+file  = python-httplib2-0.7.7-3.el7ost.noarch.rpm
+md5   = 673736430563b797d67016cf32c4b21e
+
+[python-ipaddr_2.1.9_5.el7]
+file  = python-ipaddr-2.1.9-5.el7.noarch.rpm
+md5   = 1ac9ea7e3be370c28a872b6da7960ae1
+
+[python-iso8601_0.1.10_2.el7ost]
+file  = python-iso8601-0.1.10-2.el7ost.noarch.rpm
+md5   = ec3c72ec3dc88795bb3db4de8be9ce31
+
+[python-javapackages_3.4.1_6.el7_0]
+file  = python-javapackages-3.4.1-6.el7_0.noarch.rpm
+md5   = 40ada9aa898f7cc25b5f729fe8be68e9
+
+[python-jinja2_2.7.2_2.el7]
+file  = python-jinja2-2.7.2-2.el7.noarch.rpm
+md5   = e992ae72fd86959d12d66eacd412aee9
+
+[python-jsonpatch_1.2_2.el7]
+file  = python-jsonpatch-1.2-2.el7.noarch.rpm
+md5   = f2c14a7a39c1ba74d71703145329df3f
+
+[python-jsonpath-rw_1.2.3_2.el7ost]
+file  = python-jsonpath-rw-1.2.3-2.el7ost.noarch.rpm
+md5   = 48043617d480801c944855489d5c04be
+
+[python-jsonpickle_0.3.1_2.1.el7]
+file  = python-jsonpickle-0.3.1-2.1.el7.noarch.rpm
+md5   = b8686001c5202e5ee4eb25230dd7ba1d
+package_type = contrail-install-packages
+
+[python-jsonpointer_1.0_2.el7]
+file  = python-jsonpointer-1.0-2.el7.noarch.rpm
+md5   = 3c840ed835b725b208c79e04ab2aa09a
+
+[python-jsonrpclib_0.1.3_2.el7]
+file  = python-jsonrpclib-0.1.3-2.el7.noarch.rpm
+md5   = 326143409019965bed1bef2d6e8b8fa0
+
+[python-jsonschema_2.3.0_1.el7ost]
+file  = python-jsonschema-2.3.0-1.el7ost.noarch.rpm
+md5   = 7dcee27a91bf51c999f2f0c3df71ce7d
+
+[python-kafka-1.0.1-0contrail0.el7.noarch]
+file           = python-kafka-1.0.1-0contrail0.el7.noarch.rpm
+md5            = ac166cc3e5fd6d5f44f3070443f2ef26
+package_type   = contrail-install-packages
+
+[python-kafka-python-0.9.4-1.1.noarch]
+file  = python-kafka-python-0.9.4-1.1.noarch.rpm
+md5   = d6901cbe82f61880ba7c741f65e68fb3
+package_type = contrail-install-packages
+
+[python-kazoo-1.3.1_1.1contrail2.el7]
+file  = python-kazoo-1.3.1-1.1contrail2.el7.noarch.rpm
+md5   = 2e8af639466a04468a0be23b3bdb2e2d
+package_type = contrail-install-packages
+
+[python-keyring_5.0_1.el7]
+file  = python-keyring-5.0-1.el7.noarch.rpm
+md5   = c80d232117c06601fd316dde36b15ac2
+
+[python-keystone_2014.2.2_1.el7ost]
+file  = python-keystone-2014.2.2-1.el7ost.noarch.rpm
+md5   = f7c1fe19560b9c0f8825f7921c940be2
+
+[python-keystoneclient_0.11.1_1.el7ost]
+file  = python-keystoneclient-0.11.1-1.el7ost.noarch.rpm
+md5   = 38ec41fa2e0e603138bb761eb171760b
+
+[python-keystonemiddleware_1.2.0_2.el7ost]
+file  = python-keystonemiddleware-1.2.0-2.el7ost.noarch.rpm
+md5   = 5d5c29d289ebefc08c4c2d4e5c77329d
+
+[python-kitchen_1.1.1_5.el7]
+file  = python-kitchen-1.1.1-5.el7.noarch.rpm
+md5   = 59bcde88a452919ae9a2f49964344d77
+
+[python-kombu_3.0.23_1.el7ost]
+file  = python-kombu-3.0.23-1.el7ost.noarch.rpm
+md5   = 913b998bdd3cda62b8b5fe97aa0e4adf
+
+[python-ldap_2.4.15_2.el7]
+file  = python-ldap-2.4.15-2.el7.x86_64.rpm
+md5   = bd8992607b5e4ed8ed167a312f2f9c14
+
+[python-ldappool_1.0_4.el7ost]
+file  = python-ldappool-1.0-4.el7ost.noarch.rpm
+md5   = fd74bfaeb40a73b6bdeee1bed7fc79d8
+
+[python-libguestfs_1.28.1_1.18.el7]
+file  = python-libguestfs-1.28.1-1.18.el7.x86_64.rpm
+md5   = 68f48ee758d9da50bd08ae8c46d3f396
+
+[python-mako_0.8.1_2.el7]
+file  = python-mako-0.8.1-2.el7.noarch.rpm
+md5   = 359cb0254903d18d15661af70eecaf42
+
+[python-markdown_2.4.1_1.el7]
+file  = python-markdown-2.4.1-1.el7.noarch.rpm
+md5   = b8a46854c9ea926c3273a52fb1a58729
+
+[python-markupsafe_0.11_10.el7]
+file  = python-markupsafe-0.11-10.el7.x86_64.rpm
+md5   = 2765df306e0ab0b96120331c6f99f4f6
+
+[python-meld3_0.6.10_1.el7]
+file  = python-meld3-0.6.10-1.el7.x86_64.rpm
+md5   = 68b9297bb86f87ce02673106da68ea99
+
+[python-memcached_1.48_4.el7]
+file  = python-memcached-1.48-4.el7.noarch.rpm
+md5   = 8e90470cb63b2ac23a163085685778cd
+
+[python-migrate_0.9.2_2.el7]
+file  = python-migrate-0.9.2-2.el7.noarch.rpm
+md5   = c95ca6aa0590d5f214064bf0a2886172
+
+[python-msgpack-0.4.2-4]
+file  = python-msgpack-0.4.2-4.el7ost.x86_64.rpm
+md5   = ec669b7221cb626a19ce42d09ee853a5
+
+[python-ncclient-0.3.2_1.1contrail0.el7]
+file  = python-ncclient-0.3.2-1.1contrail0.el7.noarch.rpm
+md5   = 6a803d6a3635b2fec925e85413fa4abd
+package_type = contrail-install-packages
+
+[python-netaddr_0.7.12_1.el7ost]
+file  = python-netaddr-0.7.12-1.el7ost.noarch.rpm
+md5   = fe283c43230d90a9768a95cde9532692
+
+[python-netifaces_0.5_4.el7]
+file  = python-netifaces-0.5-4.el7.x86_64.rpm
+md5   = a102a4e3d4c049afa2282ca3d6f6ea03
+
+[python-neutron_2014.2.2_3.el7ost]
+file  = python-neutron-2014.2.2-3.el7ost.noarch.rpm
+md5   = f5b8673af05326d9ebd2caf920d0e40d
+
+[python-neutronclient-2.3.9-4contrail]
+file  = python-neutronclient-2.3.9-4contrail.el7.noarch.rpm
+md5   = ddf52a15cd81c14f516b6c52545a6501
+package_type = contrail-install-packages
+
+[python-nova_2014.2.2_2.el7ost]
+file  = python-nova-2014.2.2-2.el7ost.noarch.rpm
+md5   = 03d46631a591bd7f20833c5ee4779449
+
+[python-novaclient_2.20.0_1.el7ost]
+file  = python-novaclient-2.20.0-1.el7ost.noarch.rpm
+md5   = 60b584bd677c87991ad79cc76d93df3a
+
+[python-oauthlib_0.6.0_3.el7ost]
+file  = python-oauthlib-0.6.0-3.el7ost.noarch.rpm
+md5   = 74b5e6b9e3b4596871cdb742e715635f
+
+[python-oslo-config_1.4.0_1.el7ost]
+file  = python-oslo-config-1.4.0-1.el7ost.noarch.rpm
+md5   = 491740dbbd5d5641f544970b8fb5ea09
+
+[python-oslo-db_1.0.2_2.el7ost]
+file  = python-oslo-db-1.0.2-2.el7ost.noarch.rpm
+md5   = 59b3f94451dd451ea547d88848df1c45
+
+[python-oslo-i18n_1.0.0_1.el7ost]
+file  = python-oslo-i18n-1.0.0-1.el7ost.noarch.rpm
+md5   = e622d883c9f910b8305c225b843619bd
+
+[python-oslo-messaging_1.4.1_3.el7ost]
+file  = python-oslo-messaging-1.4.1-3.el7ost.noarch.rpm
+md5   = 5ca8948ac8eef05dcfb1101f3cfa5132
+
+[python-oslo-rootwrap_1.3.0.0_1.el7ost]
+file  = python-oslo-rootwrap-1.3.0.0-1.el7ost.noarch.rpm
+md5   = 06817c4ccce545479d4f3f77b3502ee3
+
+[python-oslo-utils_1.0.0_1.el7ost]
+file  = python-oslo-utils-1.0.0-1.el7ost.noarch.rpm
+md5   = 2c79b7a806f0735ca39f8c4bd17762aa
+
+[python-oslo-vmware_0.6.0_1.el7ost]
+file  = python-oslo-vmware-0.6.0-1.el7ost.noarch.rpm
+md5   = 493466e2253388142a949c0289bcdbb4
+
+[python-paramiko_1.15.1_1.el7ost]
+file  = python-paramiko-1.15.1-1.el7ost.noarch.rpm
+md5   = 92cf513699b73d257544cbfa21eb5879
+
+[python-passlib_1.5.3_4.el7ost]
+file  = python-passlib-1.5.3-4.el7ost.noarch.rpm
+md5   = 46ad052d0cbfcdca6ae852a82b4faa5a
+
+[python-paste-deploy_1.5.0_10.el7ost]
+file  = python-paste-deploy-1.5.0-10.el7ost.noarch.rpm
+md5   = 782ff7aea496c76dcb4e43c3a7784686
+
+[python-paste_1.7.5.1_9.20111221hg1498.el7]
+file  = python-paste-1.7.5.1-9.20111221hg1498.el7.noarch.rpm
+md5   = e02982ad16e14f3d23b38469004b7eb0
+
+[python-pbr-0.10.0-1.el7]
+file  = python-pbr-0.10.0-1.el7.noarch.rpm
+md5   = 1019fa4546ba3a9d337fb7bb1d6e36a5
+
+[python-pecan_0.4.5_3.el7ost]
+file  = python-pecan-0.4.5-3.el7ost.noarch.rpm
+md5   = 5340047c7b9823680a359c0e3ef2d747
+
+[python-pillow_2.0.0_17.gitd1c6db8.el7]
+file  = python-pillow-2.0.0-17.gitd1c6db8.el7.x86_64.rpm
+md5   = cb7ef812d65273190695a177951a6676
+
+[python-posix_ipc_0.9.8_1.el7ost]
+file  = python-posix_ipc-0.9.8-1.el7ost.x86_64.rpm
+md5   = cd23627fe1d2b82b1ef0a25f3bcf1b29
+
+[python-prettytable_0.7.2_1.el7]
+file  = python-prettytable-0.7.2-1.el7.noarch.rpm
+md5   = a78f1fffe904b1fad741d2302eec471b
+
+[python-psutil_1.2.1_1.el7]
+file  = python-psutil-1.2.1-1.el7.x86_64.rpm
+md5   = fc3f313ffed33b04d13e1d2cd2a93fff
+
+[python-pyasn1_0.1.6_2.el7]
+file  = python-pyasn1-0.1.6-2.el7.noarch.rpm
+md5   = fb8e4a0afc610e9c9c7432b0c50497d4
+
+[python-pymongo_2.5.2_2.el7ost]
+file  = python-pymongo-2.5.2-2.el7ost.x86_64.rpm
+md5   = a993d4c3aee5b38995dccf7cad0e33a0
+
+[python-pycadf_0.6.0_2.el7ost]
+file  = python-pycadf-0.6.0-2.el7ost.noarch.rpm
+md5   = e563675b05aa40f6e3a607c7472ca438
+
+[python-pycassa_1.10.0_0contrail.el7]
+file  = python-pycassa-1.10.0-0contrail.el7.noarch.rpm
+md5   = 62641a22f76d2b5a1c030a9e32f8f897
+package_type = contrail-install-packages
+
+[python-pygments_1.4_9.el7]
+file  = python-pygments-1.4-9.el7.noarch.rpm
+md5   = 41d9791faee27a93aaf2b0efd287c5ac
+
+[python-qpid-common_0.28_4.el7]
+file  = python-qpid-common-0.28-4.el7.noarch.rpm
+md5   = 4e7879d6188fb1d6d1e8dae83852bd28
+
+[python-qpid_0.28_4.el7]
+file  = python-qpid-0.28-4.el7.noarch.rpm
+md5   = c8bc7476b77b2dc5e5007dccd2269d2b
+
+[python-repoze-lru_0.4_3.el7ost]
+file  = python-repoze-lru-0.4-3.el7ost.noarch.rpm
+md5   = 146a4e4215e993f6ed5d1d43b31aeb6b
+
+[python-requests-2.6.0-1.1contrail1.el7]
+file  = python-requests-2.6.0-1.1contrail1.el7.noarch.rpm
+md5   = 6316c0ae19e6063c0c4af8aee36e501f
+package_type  = contrail-install-packages
+
+[python-rfc3986_0.2.0_1.el7ost]
+file  = python-rfc3986-0.2.0-1.el7ost.noarch.rpm
+md5   = d62589b0193d70d1990d469c35ea043a
+
+[python-rhsm_1.13.10_1.el7]
+file  = python-rhsm-1.13.10-1.el7.x86_64.rpm
+md5   = ed48c84be40d0744c520c10fefac445e
+
+[python-routes_1.13_2.el7ost]
+file  = python-routes-1.13-2.el7ost.noarch.rpm
+md5   = 1530b32dbdf71f44a6f5c504cfada999
+
+[python-rsa_3.1.1_5.el7]
+file  = python-rsa-3.1.1-5.el7.noarch.rpm
+md5   = 978bb0eab235430618c8534b82d73c5e
+
+[python-simplejson_3.5.3_1.el7ost]
+file  = python-simplejson-3.5.3-1.el7ost.x86_64.rpm
+md5   = aceec17f2cd9d25e2c71e65e31ba95cc
+
+[python-simplegeneric_0.8_7.el7ost]
+file  = python-simplegeneric-0.8-7.el7ost.noarch.rpm
+md5   = e86e1eb3911ffae157f71d1dd5fbaef4
+
+[python-singledispatch_3.4.0.2_2.el7ost]
+file  = python-singledispatch-3.4.0.2-2.el7ost.noarch.rpm
+md5   = cb9cfc57c3a88b1d99f30b831082e488
+
+[python-six_1.7.3_1.el7]
+file  = python-six-1.7.3-1.el7.noarch.rpm
+md5   = e0c99e59f6dbad0522f90d514c529f8e
+
+[python-sqlalchemy_0.9.7_3.el7]
+file  = python-sqlalchemy-0.9.7-3.el7.x86_64.rpm
+md5   = 3f91ff9a8cbd14fb3693d78a422f9560
+
+[python-sqlparse_0.1.11_2.el7]
+file  = python-sqlparse-0.1.11-2.el7.noarch.rpm
+md5   = 0f28e4f50f87c0213280819e1890daf0
+
+[python-stevedore_1.1.0_1.el7ost]
+file  = python-stevedore-1.1.0-1.el7ost.noarch.rpm
+md5   = 08d0420ed56388d1dff52b699d2cbc0e
+
+[python-sseclient-0.0.11-0contrail0]
+file  = python-sseclient-0.0.11-0contrail0.el7.noarch.rpm
+md5   = 6459fb0be6021030504a9509649c796c
+package_type = contrail-install-packages
+
+[python-suds_0.4.1_5.el7]
+file  = python-suds-0.4.1-5.el7.noarch.rpm
+md5   = 082b27c1bb25bd7e0454251c5f11bb13
+
+[python-tempita_0.5.1_6.el7]
+file  = python-tempita-0.5.1-6.el7.noarch.rpm
+md5   = e95d2a2455ecf0a21678ced2411fd72b
+
+[python-thrift_0.9.1_0contrail.el7]
+file  = python-thrift-0.9.1-0contrail.el7.x86_64.rpm
+md5   = 8a57025dfd403b8f719a83012f7d7b4a
+package_type = contrail-install-packages
+
+[python-unittest2-0.5.1-6.el7]
+file  = python-unittest2-0.5.1-6.el7.noarch.rpm
+md5   = dcdb827f880ab35707a2cbc1ca51a45d
+package_type  = contrail-install-packages
+
+[python-urlgrabber_3.10_6.el7]
+file  = python-urlgrabber-3.10-6.el7.noarch.rpm
+md5   = 4d95e110e85f898addcb6497eae815e5
+
+[python-urllib3_1.8.2_5.el7ost]
+file  = python-urllib3-1.8.2-5.el7ost.noarch.rpm
+md5   = abacd297b15e819000a9e94f6e4d8618
+
+[python-warlock_1.0.1_1.el7ost]
+file  = python-warlock-1.0.1-1.el7ost.noarch.rpm
+md5   = 90b65029473fb666fb023c606761dc3f
+
+[python-webob_1.2.3_6.el7]
+file  = python-webob-1.2.3-6.el7.noarch.rpm
+md5   = 5ef697717dcb4cd6f93226ca84dfd6bd
+
+[python-websockify_0.5.1_1.el7ost]
+file  = python-websockify-0.5.1-1.el7ost.noarch.rpm
+md5   = 186fd97709f099bfdf602021aeba3857
+
+[python-webtest_1.3.4_6.el7]
+file  = python-webtest-1.3.4-6.el7.noarch.rpm
+md5   = d0f440ba2209ea340db12e2a6d136ce9
+
+[python-wsme_0.6_2.el7ost]
+file  = python-wsme-0.6-2.el7ost.noarch.rpm
+md5   = d1629f66fad627ed937c39c0cbdaac24
+
+[python-zope-interface_4.0.5_4.el7]
+file  = python-zope-interface-4.0.5-4.el7.x86_64.rpm
+md5   = 0cbda18bcde2bf875c3b2c8cfaa06a18
+
+[pytz_2012d_5.el7]
+file  = pytz-2012d-5.el7.noarch.rpm
+md5   = 876870a57cb1c3e197959631735edcda
+
+[qemu-img-rhev_2.1.2_23.el7]
+file  = qemu-img-rhev-2.1.2-23.el7.x86_64.rpm
+md5   = 8413b49536d5e226b80d93e1f0087548
+
+[qemu-kvm-common-rhev_2.1.2_23.el7]
+file  = qemu-kvm-common-rhev-2.1.2-23.el7.x86_64.rpm
+md5   = 96f80c1e78ff1d74b8ef91dd659362cb
+
+[qemu-kvm-rhev_2.1.2_23.el7]
+file  = qemu-kvm-rhev-2.1.2-23.el7.x86_64.rpm
+md5   = 89910d88c9a0b5da06233616252a938b
+
+[qt-settings_19_23.5.el7]
+file  = qt-settings-19-23.5.el7.noarch.rpm
+md5   = 7f1231f703dee6cca15f017337996d86
+
+[qt_4.8.5_8.el7]
+file  = qt-4.8.5-8.el7.x86_64.rpm
+md5   = 540070221a088db497be6915f92f2a17
+
+[quota-nls_4.01_11.el7]
+file  = quota-nls-4.01-11.el7.noarch.rpm
+md5   = 7aa2735188620f1bcaebafeceb3c8717
+
+[quota_4.01_11.el7]
+file  = quota-4.01-11.el7.x86_64.rpm
+md5   = 2826848838c4fc6d7fc81fc5e94ff00b
+
+[rabbitmq-server_3.3.5_4.el7]
+file  = rabbitmq-server-3.3.5-4.el7.noarch.rpm
+md5   = cf07fa899d9687159e24a26de688469f
+
+[radvd_1.9.2_7.el7]
+file  = radvd-1.9.2-7.el7.x86_64.rpm
+md5   = f1431c8a06d838e9d1d714ecee74a585
+
+[rdma_7.1_3.17_5.el7]
+file  = rdma-7.1_3.17-5.el7.noarch.rpm
+md5   = 9a9eb45afbca645a32d510c4e85d0654
+
+[redhat-release-server_7.1_1.el7]
+file  = redhat-release-server-7.1-1.el7.x86_64.rpm
+md5   = 4ec865ff23479629ae0710e68f585369
+
+[redhat-support-lib-python_0.9.7_0.el7]
+file  = redhat-support-lib-python-0.9.7-0.el7.noarch.rpm
+md5   = 0023bd30a1485a44d14f8b0849adb3e7
+
+[redhat-support-tool_0.9.7_1.el7]
+file  = redhat-support-tool-0.9.7-1.el7.noarch.rpm
+md5   = 051f417423c4870f1235990e93ce0523
+
+[redis-py_0.1_2contrail.el7]
+file  = redis-py-0.1-2contrail.el7.noarch.rpm
+md5   = 7c402a8bd07a9d54c4a7193fabc71fd1
+package_type = contrail-install-packages
+
+[redis_2.8.15_2.el7ost]
+file  = redis-2.8.15-2.el7ost.x86_64.rpm
+md5   = 003432336cd382906bcf5205d5542ee2
+
+[rhn-check_2.0.2_6.el7]
+file  = rhn-check-2.0.2-6.el7.noarch.rpm
+md5   = 530f16fd8dfc1d8a87dd75bc622c22c1
+
+[rhn-client-tools_2.0.2_6.el7]
+file  = rhn-client-tools-2.0.2-6.el7.noarch.rpm
+md5   = 8d9033b88dde5d65786ac8a6ab47f8d4
+
+[rhn-setup_2.0.2_6.el7]
+file  = rhn-setup-2.0.2-6.el7.noarch.rpm
+md5   = 8538fd2a7462f594fe596b9f26d5d430
+
+[rpcbind_0.2.0_26.el7]
+file  = rpcbind-0.2.0-26.el7.x86_64.rpm
+md5   = 43b507ee289dd2ccaf470feba7090c7c
+
+[rpm-build-libs_4.11.1_25.el7]
+file  = rpm-build-libs-4.11.1-25.el7.x86_64.rpm
+md5   = 48314d1faf7beff14e2710bceda800f6
+
+[rpm-libs_4.11.1_25.el7]
+file  = rpm-libs-4.11.1-25.el7.x86_64.rpm
+md5   = e7f7db3f102a305fd3eb8f3f9dc5d62c
+
+[rpm-python_4.11.1_25.el7]
+file  = rpm-python-4.11.1-25.el7.x86_64.rpm
+md5   = 52479700008cf2df1fd7d998fae1ca8d
+
+[rpm_4.11.1_25.el7]
+file  = rpm-4.11.1-25.el7.x86_64.rpm
+md5   = 1ae032d01ad5a77cc82566a2abc4bde1
+
+[rsync_3.0.9_15.el7]
+file  = rsync-3.0.9-15.el7.x86_64.rpm
+md5   = e59c648e4f26bb291b1619f035448eeb
+
+[rsyslog-mmjsonparse_7.4.7_7.el7_0]
+file  = rsyslog-mmjsonparse-7.4.7-7.el7_0.x86_64.rpm
+md5   = ab81f0f49ba2a836f42c93f638dcc3eb
+
+[rsyslog_7.4.7_7.el7_0]
+file  = rsyslog-7.4.7-7.el7_0.x86_64.rpm
+md5   = aeed068e9ca8e8a5480634640d54c1e3
+
+[ruby-augeas_0.5.0_1.el7]
+file  = ruby-augeas-0.5.0-1.el7.x86_64.rpm
+md5   = 3e7d1e8ba825845e9a789eb8f1ad2f59
+
+[ruby-irb_2.0.0.598_24.el7]
+file  = ruby-irb-2.0.0.598-24.el7.noarch.rpm
+md5   = 67559e3b7c6bc81fd6cd81879c428830
+
+[ruby-libs_2.0.0.598_24.el7]
+file  = ruby-libs-2.0.0.598-24.el7.x86_64.rpm
+md5   = 8e0d5af44b781af7665a2b72fb8c9c29
+
+[ruby-shadow_1.4.1_23.el7]
+file  = ruby-shadow-1.4.1-23.el7.x86_64.rpm
+md5   = 299862bce9a1ef3c01bb3f1056d90c86
+
+[ruby_2.0.0.598_24.el7]
+file  = ruby-2.0.0.598-24.el7.x86_64.rpm
+md5   = f9098110a5a433b6d46557d775e2e71a
+
+[rubygem-bigdecimal_1.2.0_24.el7]
+file  = rubygem-bigdecimal-1.2.0-24.el7.x86_64.rpm
+md5   = fbcbac79c030c0e6b1e5d7b5bc33aa19
+
+[rubygem-io-console_0.4.2_24.el7]
+file  = rubygem-io-console-0.4.2-24.el7.x86_64.rpm
+md5   = e6ccda031a14eff4870adb9bc35e5060
+
+[rubygem-json_1.7.7_24.el7]
+file  = rubygem-json-1.7.7-24.el7.x86_64.rpm
+md5   = 8ca8efd1632b08afeaeaba6a1b0e9444
+
+[rubygem-psych_2.0.0_24.el7]
+file  = rubygem-psych-2.0.0-24.el7.x86_64.rpm
+md5   = f3765cec4f03fdf9b6d06d49fd40ec8f
+
+[rubygem-rdoc_4.0.0_24.el7]
+file  = rubygem-rdoc-4.0.0-24.el7.noarch.rpm
+md5   = 5c834178c324a7352d3d5d7d7664f1f8
+
+[rubygem-rgen_0.6.6_2.1.el7]
+file  = rubygem-rgen-0.6.6-2.1.el7.noarch.rpm
+md5   = 226f070f804ac2f34b39b70c759ab8eb
+
+[rubygems_2.0.14_24.el7]
+file  = rubygems-2.0.14-24.el7.noarch.rpm
+md5   = 5e5073bb5fcf34db41f0a6b3c26ac10a
+
+[satyr_0.13_8.el7]
+file  = satyr-0.13-8.el7.x86_64.rpm
+md5   = a0a026d6f46dbe0b19b6f8412983875c
+
+[scrub_2.5.2_5.el7]
+file  = scrub-2.5.2-5.el7.x86_64.rpm
+md5   = d841d420ea819e4a35c56426839991ff
+
+[seabios-bin_1.7.5_8.el7]
+file  = seabios-bin-1.7.5-8.el7.noarch.rpm
+md5   = 9e34e4e0c99c80b51078bb6f7e110106
+
+[seavgabios-bin_1.7.5_8.el7]
+file  = seavgabios-bin-1.7.5-8.el7.noarch.rpm
+md5   = c38cd1f58054eb22e4e6037f6965130c
+
+[selinux-policy-targeted_3.13.1_23.el7]
+file  = selinux-policy-targeted-3.13.1-23.el7.noarch.rpm
+md5   = 558c5f222627faaa808d63ce88df4b99
+
+[selinux-policy_3.13.1_23.el7]
+file  = selinux-policy-3.13.1-23.el7.noarch.rpm
+md5   = 2d766d46fbfb4f1398321cd98d6337ae
+
+[setup_2.8.71_5.el7]
+file  = setup-2.8.71-5.el7.noarch.rpm
+md5   = 81b94a5f51b1f36647a3e29c66773d9b
+
+[sgabios-bin_0.20110622svn_4.el7]
+file  = sgabios-bin-0.20110622svn-4.el7.noarch.rpm
+md5   = 7dd4a80f6e40d635dd9c4b700f8af441
+
+[shadow-utils_4.1.5.1_18.el7]
+file  = shadow-utils-4.1.5.1-18.el7.x86_64.rpm
+md5   = 8c3b705251f7ba57129b38068408dde7
+
+[slf4j_1.7.4_3.el7]
+file  = slf4j-1.7.4-3.el7.noarch.rpm
+md5   = 31d2c429a5fc22e84bd73f3907625cf2
+
+[sos_3.2_15.el7]
+file  = sos-3.2-15.el7.noarch.rpm
+md5   = 840d1bc84327504733fd77fe386b5401
+
+[spice-server_0.12.4_9.el7]
+file  = spice-server-0.12.4-9.el7.x86_64.rpm
+md5   = 1e2a992b9f6a03245e3504727ced70d6
+
+[subscription-manager_1.13.22_1.el7]
+file  = subscription-manager-1.13.22-1.el7.x86_64.rpm
+md5   = 3cee7187d284b0977226c07820e36b9c
+
+[sudo_1.8.6p7_13.el7]
+file  = sudo-1.8.6p7-13.el7.x86_64.rpm
+md5   = d29b5f98f3736cf02696e5f9eaaafe75
+
+[supermin5_5.1.10_1.2.el7]
+file  = supermin5-5.1.10-1.2.el7.x86_64.rpm
+md5   = 7409f58bdfb7a798e329588ab57219f4
+
+[supervisor_3.0_1.el7]
+file  = supervisor-3.0-1.el7.noarch.rpm
+md5   = 72533f2de1f31647f8e8882db269a69a
+
+[syslinux-extlinux_4.05_12.el7]
+file  = syslinux-extlinux-4.05-12.el7.x86_64.rpm
+md5   = eef4467cc04f7022d3ce5b82b1054a7a
+
+[syslinux_4.05_12.el7]
+file  = syslinux-4.05-12.el7.x86_64.rpm
+md5   = 0ba98d85678eb8d35d67aaff5536a669
+
+[systemd-libs_208_20.el7]
+file  = systemd-libs-208-20.el7.x86_64.rpm
+md5   = 975fb27ab29fd2bf7be7b739b3dbb1d9
+
+[systemd-sysv_208_20.el7]
+file  = systemd-sysv-208-20.el7.x86_64.rpm
+md5   = ea8e07ba358b9efb4e45909376e3dbc6
+
+[systemd_208_20.el7]
+file  = systemd-208-20.el7.x86_64.rpm
+md5   = 1b4ab78e53d23788a8582fb8ae01a400
+
+[tcp_wrappers_7.6_77.el7]
+file  = tcp_wrappers-7.6-77.el7.x86_64.rpm
+md5   = 36716904a36af40a56895f8425e61d36
+
+[tcpdump-4.5.1-2.el7]
+file  = tcpdump-4.5.1-2.el7.x86_64.rpm
+md5   = 659dc932eff288f2fcd5aff4a816881a
+
+[teamd_1.15_1.el7]
+file  = teamd-1.15-1.el7.x86_64.rpm
+md5   = 9fefccfc6c7de7322ea23f29c89c95f6
+
+[thrift_0.9.1_12.el7]
+file  = thrift-0.9.1-12.el7.x86_64.rpm
+md5   = 0336c328090402b53e3bae0a86f6c95f
+
+[tomcat-servlet-3.0-api_7.0.54_1.el7]
+file  = tomcat-servlet-3.0-api-7.0.54-1.el7.noarch.rpm
+md5   = 7f28f64799fe00cc4deb611a7eeb29d2
+
+[trousers_0.3.11.2_3.el7]
+file  = trousers-0.3.11.2-3.el7.x86_64.rpm
+md5   = 17c1c8d3abaac79ecb5d551e3ace1c06
+
+[ttmkfdir_3.0.9_41.el7]
+file  = ttmkfdir-3.0.9-41.el7.x86_64.rpm
+md5   = 4718bc9ebc2b9717ec00fa879cbec28e
+
+[tunctl_1.5_3.el6]
+file  = tunctl-1.5-3.el6.x86_64.rpm
+md5   = 5bd82e4f47b1e0fc7843de49c7afa5f1
+package_type = contrail-install-packages
+
+[tuned_2.4.1_1.el7]
+file  = tuned-2.4.1-1.el7.noarch.rpm
+md5   = bab5a59171a4064556ec6184e282c705
+
+[tzdata-java_2015a_1.el7]
+file  = tzdata-java-2015a-1.el7.noarch.rpm
+md5   = bec6177022aed459370487b63846f091
+
+[tzdata_2015a_1.el7]
+file  = tzdata-2015a-1.el7.noarch.rpm
+md5   = 5cefe5eac0c719547a929b82dc90ecf9
+
+[unbound-libs_1.4.20_19.el7]
+file  = unbound-libs-1.4.20-19.el7.x86_64.rpm
+md5   = c73fc9625eb2b2876cc6de8ce93a0983
+
+[urw-fonts_2.4_16.el7]
+file  = urw-fonts-2.4-16.el7.noarch.rpm
+md5   = 7751c841b34e643e632e2daf1773bd77
+
+[usbredir_0.6_7.el7]
+file  = usbredir-0.6-7.el7.x86_64.rpm
+md5   = 5c04d6d2d1d3af47ce95e2fab2927f4b
+
+[util-linux_2.23.2_21.el7]
+file  = util-linux-2.23.2-21.el7.x86_64.rpm
+md5   = 39b6b68dd598a4f9c704f0a0a24d20ff
+
+[wget_1.14_10.el7_0.1]
+file  = wget-1.14-10.el7_0.1.x86_64.rpm
+md5   = a3884a3070c8388566c6aeef2ea73aa3
+
+[wpa_supplicant_2.0_13.el7_0]
+file  = wpa_supplicant-2.0-13.el7_0.x86_64.rpm
+md5   = 6d3fd314c5e6bf070ddb71ac2165ae6e
+
+[xalan-j2_2.7.1_23.el7]
+file  = xalan-j2-2.7.1-23.el7.noarch.rpm
+md5   = b47a0d86c3414e0a421181ff8420eeef
+
+[xerces-j2_2.11.0_17.el7_0]
+file  = xerces-j2-2.11.0-17.el7_0.noarch.rpm
+md5   = 7463749f336e09189ba9ef76051d860a
+
+[xfsprogs_3.2.1_6.el7]
+file  = xfsprogs-3.2.1-6.el7.x86_64.rpm
+md5   = 2a785c7fefd8ef7e030d3f0be854ee9f
+
+[xml-commons-apis_1.4.01_16.el7]
+file  = xml-commons-apis-1.4.01-16.el7.noarch.rpm
+md5   = 4a2b561477bef8d607ddee318305c637
+
+[xml-commons-resolver_1.2_15.el7]
+file  = xml-commons-resolver-1.2-15.el7.noarch.rpm
+md5   = 6ad2e3ac8ae2a1b938ce5608b3c39966
+
+[xmlrpc-c-client_1.32.5_1905.svn2451.el7]
+file  = xmlrpc-c-client-1.32.5-1905.svn2451.el7.x86_64.rpm
+md5   = 06e75be1937f43c08d4b7f1df7e9ed3d
+
+[xmlrpc-c_1.32.5_1905.svn2451.el7]
+file  = xmlrpc-c-1.32.5-1905.svn2451.el7.x86_64.rpm
+md5   = 1d6c7535c61a1b311a4b3b3be80452ed
+
+[xmltodict_0.7.0_0contrail.el7]
+file  = xmltodict-0.7.0-0contrail.el7.noarch.rpm
+md5   = dc1d4fe49d51c5d80597dfe51502de26
+package_type = contrail-install-packages
+
+[xorg-x11-font-utils_7.5_18.1.el7]
+file  = xorg-x11-font-utils-7.5-18.1.el7.x86_64.rpm
+md5   = 1a35eaaae496983193f9a8dae46e2495
+
+[xorg-x11-fonts-Type1_7.5_9.el7]
+file  = xorg-x11-fonts-Type1-7.5-9.el7.noarch.rpm
+md5   = 7af27a9be2944d3b82b87cfb65320fd7
+
+[xz-libs_5.1.2_9alpha.el7]
+file  = xz-libs-5.1.2-9alpha.el7.x86_64.rpm
+md5   = 1e9493f22f254574b6acb98c684b859b
+
+[xz_5.1.2_9alpha.el7]
+file  = xz-5.1.2-9alpha.el7.x86_64.rpm
+md5   = f9db1fcb44f41950f783e456e2b7b2bc
+
+[yajl_2.0.4_4.el7]
+file  = yajl-2.0.4-4.el7.x86_64.rpm
+md5   = fb79cf841269e6d52efe9aa9ab960b59
+
+[yum-rhn-plugin_2.0.1_5.el7]
+file  = yum-rhn-plugin-2.0.1-5.el7.noarch.rpm
+md5   = 86839ccffcef8eb7b24488cdae22e73a
+
+[yum-utils_1.1.31_29.el7]
+file  = yum-utils-1.1.31-29.el7.noarch.rpm
+md5   = a68cdeca42d629c77820ccc5a9f45fcb
+
+[yum_3.4.3_125.el7]
+file  = yum-3.4.3-125.el7.noarch.rpm
+md5   = b167c5900ec2dca3aeabd84b23b322c5
+
+[zookeeper_3.4.3_1.el6]
+file  = zookeeper-3.4.3-1.el6.noarch.rpm
+md5   = 40295fd03e32a767acda161dca3a04db
+package_type = contrail-install-packages
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source /opt/contrail/bin/vrouter-functions.sh
+
+if [ ! -L /sys/class/net/vhost0 ]; then
+    insert_vrouter &>> $LOG
+fi
+
