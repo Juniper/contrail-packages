@@ -2,7 +2,6 @@
 %define         _supervisordir /etc/contrail/supervisord_vrouter_files
 %define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 %define 	_opt_bin /opt/contrail/bin
-%define         _nodemgr_config %{_sbtop}controller/src/nodemgr/vrouter_nodemgr
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
 %else
@@ -42,7 +41,6 @@ install -d -m 755 %{buildroot}%{_supervisordir}
 install -d -m 755 %{buildroot}/%{_initddir}
 install -d -m 777 %{buildroot}/var/log/contrail
 pushd %{_builddir}/..
-install -p -m 644 %{_nodemgr_config}/contrail-vrouter-nodemgr.ini %{buildroot}%{_supervisordir}
 install -p -m 644 %{_distropkgdir}/contrail-vrouter.rules %{buildroot}%{_supervisordir}
 install -p -m 755 %{_distropkgdir}/vnagent_ExecStartPre.sh  %{buildroot}%{_contrailetc}/vnagent_ExecStartPre.sh
 install -p -m 755 %{_distropkgdir}/vnagent_ExecStartPost.sh %{buildroot}%{_contrailetc}/vnagent_ExecStartPost.sh
@@ -55,7 +53,6 @@ install -p -m 755 %{_distropkgdir}/agent.conf  %{buildroot}/etc/contrail/rpm_age
 
 %files
 /opt/*
-%config(noreplace) %{_supervisordir}/contrail-vrouter-nodemgr.ini
 %config(noreplace) /etc/contrail/rpm_agent.conf
 /etc/*
 /var/*
