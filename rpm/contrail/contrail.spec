@@ -245,7 +245,11 @@ install -p -m 755 %{buildroot}/usr/bin/fabric_ansible_playbooks*.tar.gz %{buildr
 # Install section of contrail-manifest package - Start
 %if %{with debuginfo}
 mkdir -p %{buildroot}/opt/contrail/
+%if 0%{?_manifestFile:1}
+cp %{_manifestFile} %{buildroot}/opt/contrail/manifest.xml
+%else
 cp %{_sbtop}/.repo/manifest.xml %{buildroot}/opt/contrail/manifest.xml
+%endif
 %endif
 # Install section of contrail-manifest package - End
 
