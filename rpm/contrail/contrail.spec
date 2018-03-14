@@ -637,6 +637,7 @@ Requires:           python-ncclient >= 0.3.2
 Requires:           ansible >= 2.4.2
 Requires:           python2-pysnmp
 Requires:           python-keystoneclient
+Requires:           python-keystonemiddleware
 Requires:           python-swiftclient
 
 %description config
