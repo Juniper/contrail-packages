@@ -6,13 +6,14 @@ SPEC_FILES 		:= $(wildcard $(SPEC_DIR)/*/*.spec)
 PACKAGES 			:= $(patsubst %.spec,rpm-%,$(notdir $(SPEC_FILES)))
 DEPENDENCIES 	:= $(patsubst %.spec,dep-%,$(notdir $(SPEC_FILES)))
 
-DEBUGINFO ?= TRUE
-TOPDIR 		?= $(SB_TOP)
-SCONSOPT 	?= production
-SRCVER 		?= $(shell cat $(SB_TOP)/controller/src/base/version.info)
-KVERS 		?= $(shell rpm -q --qf "%{VERSION}-%{RELEASE}.%{ARCH}" kernel-devel)
-BUILDTAG 	?= $(shell date +%m%d%Y%H%M)
-SKUTAG 		?= ocata
+DEBUGINFO    ?= TRUE
+TOPDIR       ?= $(SB_TOP)
+SCONSOPT     ?= production
+SRCVER       ?= $(shell cat $(SB_TOP)/controller/src/base/version.info)
+KVERS        ?= $(shell rpm -q --qf "%{VERSION}-%{RELEASE}.%{ARCH}" kernel-devel)
+BUILDTAG     ?= $(shell date +%m%d%Y%H%M)
+SKUTAG       ?= ocata
+MANIFESTFILE ?= $(SB_TOP).repo/manifest.xml
 
 RPMBUILD_FLAGS := -bb --define "_sbtop $(SB_TOP)"
 RPMBUILD_FLAGS += --define "_topdir $(TOPDIR)"
@@ -26,6 +27,10 @@ ifeq ($(DEBUGINFO),TRUE)
 	RPMBUILD_FLAGS += --with debuginfo
 else
 	RPMBUILD_FLAGS += --without debuginfo
+endif
+
+ifdef MANIFESTFILE
+	RPMBUILD_FLAGS += --define "_manifestFile $(MANIFESTFILE)"
 endif
 
 SCONSFLAGS := -j $(shell nproc)
@@ -57,6 +62,7 @@ list:
 info:
 	@echo SPEC_FILES=$(SPEC_FILES)
 	@echo DEBUGINFO=$(DEBUGINFO)
+	@echo MANIFESTFILE=$(MANIFESTFILE)
 	@echo TOPDIR=$(TOPDIR)
 	@echo SCONSOPT=$(SCONSOPT)
 	@echo SRCVER=$(SRCVER)
