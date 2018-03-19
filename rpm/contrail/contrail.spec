@@ -59,7 +59,6 @@ BuildRequires: gcc-c++
 BuildRequires: grok
 BuildRequires: grok-devel
 BuildRequires: libcurl-devel
-BuildRequires: libipfix
 BuildRequires: librdkafka-devel >= 0.9.0
 BuildRequires: libstdc++-devel
 BuildRequires: libtool
