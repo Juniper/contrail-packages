@@ -196,8 +196,11 @@ _dpdk_conf_read() {
 ##
 _is_vrouter_dpdk_running() {
     # check for NetLink TCP socket
-    lsof -ni:${DPDK_NETLINK_TCP_PORT} -sTCP:LISTEN > /dev/null
+    #lsof -ni:${DPDK_NETLINK_TCP_PORT} -sTCP:LISTEN > /dev/null
 
+    # check for netlink uds socket usage
+    ret=`lsof /var/run/vrouter/dpdk_netlink | wc -l`
+    test ! $ret -eq 0
     return $?
 }
 
