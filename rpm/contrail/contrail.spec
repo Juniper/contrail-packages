@@ -417,6 +417,8 @@ Summary:            Contrail vRouter
 
 Group:              Applications/System
 
+Requires:           tcpdump
+
 %description vrouter-utils
 Contrail Virtual Router utils package
 
