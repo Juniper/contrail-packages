@@ -52,6 +52,7 @@ BuildRequires: gcc-c++
 BuildRequires: python2-pip
 Requires: liburcu2
 Requires: libnl3
+Requires: numactl-libs
 Requires: contrail-vrouter-utils >= %{_verstr}-%{_relstr}
 
 %description
