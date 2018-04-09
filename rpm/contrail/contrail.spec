@@ -671,7 +671,8 @@ in a NoSQL database.
 %{python_sitelib}/device_api*
 %{python_sitelib}/contrail_issu*
 %if 0%{?rhel} > 6
-%docdir /usr/share/doc/contrail-config/*
+%docdir /usr/share/doc/contrail-config/
+/usr/share/doc/contrail-config/
 %endif
 /etc/contrail/supervisord_config.conf
 /etc/contrail/supervisord_config_files/contrail-api.ini
