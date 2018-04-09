@@ -227,31 +227,6 @@ if [ $1 == 0 ]; then
     fi
 else
     echo "Skip removing /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko for upgrade"
-
-    # change file permissions during upgrade
-    if [ -f /var/log/contrail/contrail-config-nodemgr-stdout.log ]; then
-        chown contrail:contrail /var/log/contrail/process_statecontrail-config.json
-        chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stderr.log
-        chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stdout.log
-    fi
-
-    if [ -f /var/log/contrail/contrail-control-nodemgr-stdout.log ]; then
-        chown contrail:contrail /var/log/contrail/process_statecontrail-control.json
-        chown contrail:contrail /var/log/contrail/contrail-control-nodemgr-stderr.log
-        chown contrail:contrail /var/log/contrail/contrail-control-nodemgr-stdout.log
-    fi
-
-    if [ -f /var/log/contrail/contrail-analytics-nodemgr-stdout.log ]; then
-        chown contrail:contrail /var/log/contrail/process_statecontrail-analytics.json
-        chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stderr.log
-        chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stdout.log
-    fi
-
-    if [ -f /var/log/contrail/contrail-vrouter-nodemgr-stdout.log ]; then
-        chown contrail:contrail /var/log/contrail/process_statecontrail-vrouter.json
-        chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stderr.log
-        chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stdout.log
-    fi
 fi
 exit 0
 
