@@ -638,7 +638,7 @@ Requires:           python-jsonpickle
 Requires:           python-amqp
 Requires:           python-kazoo >= 1.3.1
 Requires:           python-ncclient >= 0.3.2
-Requires:           ansible >= 2.4.2
+Requires:           ansible >= 2.4.3
 %if 0%{?rhel}
 Requires:           python-pysnmp
 %else
