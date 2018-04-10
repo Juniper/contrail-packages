@@ -8,6 +8,8 @@ import os
 import sys
 import json
 
+# License: Apache-2.0
+# https://github.com/openstack/cliff/blob/master/cliff/complete.py
 class CompleteDictionary:
     """dictionary for bash completion
     """
