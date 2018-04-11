@@ -647,6 +647,7 @@ Requires:           python2-pysnmp
 Requires:           python-keystoneclient
 Requires:           python-keystonemiddleware
 Requires:           python-swiftclient
+Requires:           python-subprocess32 >= 3.2.6
 
 %description config
 Contrail Config package
