@@ -98,6 +98,7 @@ popd
 
 %install
 install -d %{buildroot}%{_contrailvcenterplugin}/lib
+install -d %{buildroot}%{_contrailvcenterplugin}/webs
 install -d %{buildroot}%{_bindir}
 
 # Begin install for libcontrail-java-api
@@ -131,6 +132,9 @@ install -p -m 755 \
 install -p -m 644 \
   %{_vcenterplugindir}/log4j.properties \
   %{buildroot}%{_contrailvcenterplugin}
+cp -a \
+  %{_vcenterplugindir}/webs \
+  %{buildroot}%{_contrailvcenterplugin}
 install -p -m 755 \
   %{_vcenterplugindir}/control_files/contrail-vcenter-plugin \
   %{buildroot}%{_bindir}/contrail-vcenter-plugin
@@ -160,6 +164,7 @@ ln -s \
 %defattr(-, root, root)
 %dir %{_contrailvcenterplugin}
 %{_contrailvcenterplugin}/lib
+%{_contrailvcenterplugin}/webs
 %{_contrailvcenterplugin}/juniper-contrail-vcenter*.jar
 %{_contrailvcenterplugin}/log4j.properties
 %{_bindir}/contrail-vcenter-plugin
