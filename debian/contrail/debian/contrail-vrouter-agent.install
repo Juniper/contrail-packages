@@ -9,3 +9,4 @@ usr/lib/python*/dist-packages/ContrailVrouterCli*
 usr/lib/python*/dist-packages/contrail_vrouter_provisioning*
 usr/bin/contrail-toragent-setup
 usr/bin/contrail-toragent-cleanup
+usr/bin/contrail_crypt_tunnel_client.py
