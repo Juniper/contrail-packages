@@ -467,6 +467,7 @@ package provides the contrail-vrouter user space agent.
 %{_bindir}/contrail-toragent-setup
 %{_bindir}/contrail-toragent-cleanup
 %{_bindir}/contrail-vrouter-agent-health-check.py
+%{_bindir}/contrail_crypt_tunnel_client.py
 %config(noreplace) %{_contrailetc}/contrail-vrouter-agent.conf
 %config(noreplace) %{_contrailetc}/supervisord_vrouter.conf
 /etc/init.d/contrail-vrouter-agent
