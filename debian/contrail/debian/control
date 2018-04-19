@@ -269,7 +269,9 @@ Package: contrail-vrouter-agent
 Depends: adduser,
          contrail-lib (>= ${binary:Version}),
          contrail-vrouter,
+         python-passlib,
          ${misc:Depends},
+         ${python:Depends},
          ${shlibs:Depends},
          ${dist:Depends}
 Recommends: contrail-nodemgr (>= ${source:Version}),

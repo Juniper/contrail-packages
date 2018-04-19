@@ -450,6 +450,7 @@ Group:              Applications/System
 
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           python-paramiko
+Requires:           python2-passlib
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
