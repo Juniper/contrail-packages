@@ -20,6 +20,6 @@ kafka python-kafka
 sseclient python-sseclient
 amqp python-amqp
 cfgm_common python-contrail
-vnc_api python-contrail
+contrail-api-client python-contrail
 sandesh python-contrail
 sandesh-common python-contrail
