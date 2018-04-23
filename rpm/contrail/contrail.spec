@@ -406,7 +406,7 @@ in the OpenContrail API server.
 %{python_sitelib}/pysandesh*
 %{python_sitelib}/sandesh-0.1*dev*
 %{python_sitelib}/sandesh_common*
-%{python_sitelib}/vnc_api*
+%{python_sitelib}/contrail_api_client*
 %{python_sitelib}/ContrailCli*
 %config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 /etc/bash_completion.d/bashrc_contrail_cli
