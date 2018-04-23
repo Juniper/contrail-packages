@@ -33,12 +33,6 @@ if [ "$1" = "configure" ]; then
   chmod 0750 /var/lib/contrail/dhcp
   chmod 0700 /etc/contrail/ssl/private/
 
-  # change file permissions during upgrade
-  if [ -f /var/log/contrail/contrail-vrouter-nodemgr-stdout.log ]; then
-    chown contrail:contrail /var/log/contrail/process_statecontrail-vrouter.json
-    chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stderr.log
-    chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stdout.log
-  fi
 fi
 
 #DEBHELPER#
