@@ -1,2 +1,2 @@
-vnc_api python-contrail
+contrail-api-client python-contrail
 cfgm_common python-contrail
