@@ -552,7 +552,7 @@ _dpdk_vrouter_ini_bond_info_collect() {
         -e "/^ *${VROUTER_DPDK_CMD_KEY} *=/ {
             s/slave=/\x1/g
             s/[^\x1]+//
-            s/\x1([0-9:\.]+)[^\x1]+/ \1/g
+            s/\x1([0-9a-f:\.]+)[^\x1]+/ \1/g
             p
         }" \
         ${VROUTER_DPDK_INI}`
