@@ -336,7 +336,7 @@ set -e
 getent group contrail >/dev/null || groupadd -r contrail
 getent passwd contrail >/dev/null || \
   useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-  -c "OpenContail daemon" contrail
+  -c "OpenContrail daemon" contrail
 
 %post vrouter-agent
 mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
@@ -351,6 +351,13 @@ chmod 0700 /etc/contrail/ssl/private/
 chmod 0750 /var/lib/contrail/dhcp/
 chmod +x /etc/init.d/contrail-vrouter-agent
 chmod +x /etc/init.d/supervisor-vrouter
+
+# change file permissions during upgrade
+if [ -f /var/log/contrail/contrail-vrouter-nodemgr-stdout.log ]; then
+  chown contrail:contrail /var/log/contrail/process_statecontrail-vrouter.json
+  chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stderr.log
+  chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stdout.log
+fi
 
 %package control
 Summary:          Contrail Control
@@ -383,7 +390,7 @@ set -e
 getent group contrail >/dev/null || groupadd -r contrail
 getent passwd contrail >/dev/null || \
   useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-  -c "OpenContail daemon" contrail
+  -c "OpenContrail daemon" contrail
 
 %post control
 set -e
@@ -392,6 +399,14 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
+
+# change file permissions during upgrade
+if [ -f /var/log/contrail/contrail-control-nodemgr-stdout.log ]; then
+  chown contrail:contrail /var/log/contrail/process_statecontrail-control.json
+  chown contrail:contrail /var/log/contrail/contrail-control-nodemgr-stderr.log
+  chown contrail:contrail /var/log/contrail/contrail-control-nodemgr-stdout.log
+fi
+
 # Use authbind to bind contrail-control on a reserved port,
 # with contrail user privileges
 if [ ! -f /etc/authbind/byport/179 ]; then
@@ -519,7 +534,7 @@ set -e
 getent group contrail >/dev/null || groupadd -r contrail
 getent passwd contrail >/dev/null || \
   useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-  -c "OpenContail daemon" contrail
+  -c "OpenContrail daemon" contrail
 
 %post config
 set -e
@@ -533,6 +548,24 @@ chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/contrail-discovery
 chmod +x /etc/init.d/supervisor-config
+chown contrail:contrail /usr/share/contrail-utils/contrail-cassandra-status.py
+chown -h contrail:contrail /usr/bin/contrail-cassandra-status
+chown contrail:contrail /usr/share/contrail-utils/contrail-cassandra-repair.py
+chown -h contrail:contrail /usr/bin/contrail-cassandra-repair
+
+if [ -f /var/log/cassandra/status.log]; then
+    mv /var/log/cassandra/status-up /var/log/contrail/cassandra-status-up
+    chown contrail:contrail /var/log/contrail/cassandra-status-up
+    mv /var/log/cassandra/status.log /var/log/contrail/cassandra-status.log
+    chown contrail:contrail /var/log/contrail/cassandra-status.log
+fi
+
+# change file permissions during upgrade
+if [ -f /var/log/contrail/contrail-config-nodemgr-stdout.log ]; then
+  chown contrail:contrail /var/log/contrail/process_statecontrail-config.json
+  chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stderr.log
+  chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stdout.log
+fi
 
 %package analytics
 Summary:            Contrail Analytics
@@ -619,7 +652,7 @@ set -e
 getent group contrail >/dev/null || groupadd -r contrail
 getent passwd contrail >/dev/null || \
   useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-  -c "OpenContail daemon" contrail
+  -c "OpenContrail daemon" contrail
 
 %post analytics
 set -e
@@ -635,6 +668,13 @@ chmod +x /etc/init.d/contrail-collector
 chmod +x /etc/init.d/contrail-query-engine
 chmod +x /etc/init.d/contrail-snmp-collector
 chmod +x /etc/init.d/contrail-topology
+
+# change file permissions during upgrade
+if [ -f /var/log/contrail/contrail-analytics-nodemgr-stdout.log ]; then
+  chown contrail:contrail /var/log/contrail/process_statecontrail-analytics.json
+  chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stderr.log
+  chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stdout.log
+fi
 
 %package dns
 Summary:            Contrail Dns
@@ -654,7 +694,7 @@ set -e
 getent group contrail >/dev/null || groupadd -r contrail
 getent passwd contrail >/dev/null || \
   useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
-  -c "OpenContail daemon" contrail
+  -c "OpenContrail daemon" contrail
 
 %post dns
 set -e
