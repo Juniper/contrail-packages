@@ -109,13 +109,6 @@ cd ContrailProvisioning-0.1dev
 popd
 
 install -d -m 755 %{buildroot}/etc/contrail
-pushd %{_sbtop}/tools/packages
-if [ %{_flist} = None ]; then 
-    %{_sbtop}/tools/packages/utils/create_pkg_list_file.py --sku %{_sku} %{buildroot}/etc/contrail/rpm_list.txt
-else 
-    cp %{_flist} %{buildroot}/etc/contrail/rpm_list.txt
-fi
-popd
 #install -p -m 644 %{_builddir}/../tools/packaging/common/rpm/rpm_list.txt  %{buildroot}/etc/contrail/rpm_list.txt
 
 %post
