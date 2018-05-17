@@ -49,6 +49,7 @@ BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: bison
 BuildRequires: boost-devel
+BuildRequires: gperftools-devel
 BuildRequires: cassandra-cpp-driver
 BuildRequires: cassandra-cpp-driver-devel
 BuildRequires: cmake
