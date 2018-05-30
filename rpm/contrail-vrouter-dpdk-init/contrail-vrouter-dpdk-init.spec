@@ -37,6 +37,10 @@ Requires: supervisor
 %description
 Provides init files and utils for DPDK vRouter
 
+%prep
+
+%build
+
 %install
 # Cleanup
 rm -rf %{buildroot}

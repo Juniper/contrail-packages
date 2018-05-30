@@ -5,7 +5,6 @@
 %else
 %define         _relstr      %(date -u +%y%m%d%H%M)
 %endif
-%{echo: "Building release %{_relstr}\n"}
 %if 0%{?_srcVer:1}
 %define         _verstr      %{_srcVer}
 %else
@@ -13,13 +12,13 @@
 %endif
 
 
-Name:		    contrail-fabric-utils
-Version:	    %{_verstr}
-Release:	    %{_relstr}
-Summary:	    Contrail Fabric Utilities%{?_gitVer}
+Name:        contrail-fabric-utils
+Version:      %{_verstr}
+Release:      %{_relstr}
+Summary:      Contrail Fabric Utilities%{?_gitVer}
 BuildArch:      noarch
-Group:		    Applications/System
-License:	    Commercial
+Group:        Applications/System
+License:      Commercial
 Source0:        git_root
 
 BuildRequires:  systemd-units
