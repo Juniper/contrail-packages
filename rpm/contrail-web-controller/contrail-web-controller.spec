@@ -1,4 +1,4 @@
-%define		_contrailwebsrc 	/usr/src/contrail/contrail-web-controller
+%define    _contrailwebsrc   /usr/src/contrail/contrail-web-controller
 
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
@@ -12,24 +12,24 @@
 %define         _verstr      1
 %endif
 
-Name:		contrail-web-controller
-Version:	%{_verstr}
-Release:	%{_relstr}
-Summary:	Contrail Web UI %{?_gitVer}
+Name:    contrail-web-controller
+Version:  %{_verstr}
+Release:  %{_relstr}
+Summary:  Contrail Web UI %{?_gitVer}
 
 Group:      Applications/System
 License:    Commercial
 URL:        http://www.juniper.net/
 Vendor:     Juniper Networks Inc
 
-BuildRequires:	nodejs-dev >= nodejs-0.10.35-1contrail
-Requires:	redis
-Requires:	supervisor
-Requires:	contrail-web-core >= %{_verstr}-%{_relstr}
+BuildRequires:  nodejs-dev >= nodejs-0.10.35-1contrail
+Requires:  redis
+Requires:  supervisor
+Requires:  contrail-web-core >= %{_verstr}-%{_relstr}
 
-Obsoletes:  contrail-webui
+Obsoletes:  contrail-webui >= 0
 
-Source:		%{name}
+Source:    %{name}
 
 %description
 Contrail Web UI package
@@ -72,24 +72,24 @@ rm -rf %{buildroot}
 
 %preun
 if [ $1 = 1 ] ; then 
-	echo "Upgrading contrail-web-controller Package"
+  echo "Upgrading contrail-web-controller Package"
 %if 0%{?rhel}
-	/etc/init.d/supervisor-webui restart
+  /etc/init.d/supervisor-webui restart
 %else
-	/bin/systemctl restart supervisor-webui.service
+  /bin/systemctl restart supervisor-webui.service
 %endif
 elif [ $1 = 0 ] ; then
-	echo "Removing contrail-web-controller Package"
+  echo "Removing contrail-web-controller Package"
 %if 0%{?rhel}
-	/etc/init.d/supervisor-webui stop
+  /etc/init.d/supervisor-webui stop
 %else
-	/bin/systemctl stop supervisor-webui.service
-	/bin/systemctl --no-reload disable supervisor-webui.service
+  /bin/systemctl stop supervisor-webui.service
+  /bin/systemctl --no-reload disable supervisor-webui.service
 %endif
 fi
 exit 0
 
 %changelog
-* Mon May 26 2013 - bmandal@juniper.net
+* Sun May 26 2013 - bmandal@juniper.net
 - first release
 
