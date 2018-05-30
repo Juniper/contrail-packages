@@ -1,15 +1,15 @@
 %define     _distropkgdir       %{_sbtop}tools/packages/rpm/%{name}
-%define		_contrailetc 		/etc/contrail
-%define		_contrailwebsrc 	/usr/src/contrail/contrail-web-core
+%define    _contrailetc     /etc/contrail
+%define    _contrailwebsrc   /usr/src/contrail/contrail-web-core
 %if 0%{?fedora} >= 17
-%define		_servicedir  		/usr/lib/systemd/system
+%define    _servicedir      %{_libdir}/systemd/system
 %endif
-%define		_nodemodules		node_modules/
-%define		_config			    %{_sbtop}contrail-web-core/config
-%define		_contrailuitoolsdir	src/tools
-%define		_supervisordir		/etc/contrail/supervisord_webui_files
-%define		_websslpath		    /etc/pki/ca-trust/source/anchors/contrail_webui_ssl/
-%define		_sslsub			    /C=US/ST=CA/L=Sunnyvale/O=JuniperNetworks/OU=JuniperCA/CN=ContrailCA
+%define    _nodemodules    node_modules/
+%define    _config          %{_sbtop}contrail-web-core/config
+%define    _contrailuitoolsdir  src/tools
+%define    _supervisordir    /etc/contrail/supervisord_webui_files
+%define    _websslpath        /etc/pki/ca-trust/source/anchors/contrail_webui_ssl/
+%define    _sslsub          /C=US/ST=CA/L=Sunnyvale/O=JuniperNetworks/OU=JuniperCA/CN=ContrailCA
 
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
@@ -23,25 +23,25 @@
 %define         _verstr      1
 %endif
 
-Name:		contrail-web-core
-Version:	%{_verstr}
-Release:	%{_relstr}
-Summary:	Contrail Web UI %{?_gitVer}
+Name:    contrail-web-core
+Version:  %{_verstr}
+Release:  %{_relstr}
+Summary:  Contrail Web UI %{?_gitVer}
 
 Group:     Applications/System
 License:   Commercial
 URL:       http://www.juniper.net/
 Vendor:    Juniper Networks Inc
 
-Requires:	redis
-BuildRequires:	nodejs >= nodejs-0.10.35-1contrail
-Requires:	nodejs >= nodejs-0.10.35-1contrail
-Requires:	supervisor
-Requires:	openssl
+Requires:  redis
+BuildRequires:  nodejs >= nodejs-0.10.35-1contrail
+Requires:  nodejs >= nodejs-0.10.35-1contrail
+Requires:  supervisor
+Requires:  openssl
 
-Obsoletes:  contrail-webui
+Obsoletes:  contrail-webui >= 0
 
-Source:		%{name}
+Source:    %{name}
 
 %description
 Contrail Web UI package
@@ -80,7 +80,6 @@ mkdir -p %{buildroot}%{_servicedir}
 mkdir -p %{buildroot}%{_libdir}/node_modules
 mkdir -p %{buildroot}%{_contrailetc}
 
-#cp -r -p %{_sourcedir}/%{name}/contrail-ui/* %{buildroot}%{_contrailwebsrc}/
 pushd %{_sbtop}
 cp -r -p contrail-web-core/* %{buildroot}%{_contrailwebsrc}/
 
@@ -94,7 +93,6 @@ install -p -m 755 %{_distropkgdir}/contrail-webui-middleware.initd.supervisord %
 %endif
 install -p -m 755 %{_distropkgdir}/contrailWebServer.sh %{buildroot}%{_contrailwebsrc}/
 install -p -m 755 %{_distropkgdir}/contrailWebMiddleware.sh %{buildroot}%{_contrailwebsrc}/
-#cp -r -p %{_distropkgdir}/%{name}/%{_nodemodules}/* %{buildroot}%{_libdir}/node_modules
 cp -r -p %{buildroot}%{_contrailwebsrc}/%{_nodemodules}/* %{buildroot}%{_libdir}/node_modules
 rm -rf  %{buildroot}%{_contrailwebsrc}/node_modules
 ln -s %{_libdir}/node_modules %{buildroot}%{_contrailwebsrc}/node_modules
@@ -132,9 +130,9 @@ rm -rf %{buildroot}
 
 %pre
 if [ ! -e %{_websslpath} ]; then
-	mkdir -p %{_websslpath}
-	openssl req -new -newkey rsa:2048 -nodes -out %{_websslpath}/certrequest.csr -keyout %{_websslpath}/cs-key.pem -subj %{_sslsub}
-	openssl x509 -req -days 730 -in %{_websslpath}/certrequest.csr -signkey %{_websslpath}/cs-key.pem -out %{_websslpath}/cs-cert.pem
+  mkdir -p %{_websslpath}
+  openssl req -new -newkey rsa:2048 -nodes -out %{_websslpath}/certrequest.csr -keyout %{_websslpath}/cs-key.pem -subj %{_sslsub}
+  openssl x509 -req -days 730 -in %{_websslpath}/certrequest.csr -signkey %{_websslpath}/cs-key.pem -out %{_websslpath}/cs-cert.pem
 fi
 
 %post
@@ -145,25 +143,25 @@ fi
 
 %preun
 if [ $1 = 1 ] ; then 
-	echo "Upgrading contrail-webui Package"
+  echo "Upgrading contrail-webui Package"
 %if 0%{?rhel}
-	/etc/init.d/supervisor-webui restart
+  /etc/init.d/supervisor-webui restart
 %else
-	/bin/systemctl restart supervisor-webui.service
+  /bin/systemctl restart supervisor-webui.service
 %endif
 elif [ $1 = 0 ] ; then
-	echo "Removing contrail-webui Package"
+  echo "Removing contrail-webui Package"
 %if 0%{?rhel}
-	/etc/init.d/supervisor-webui stop
+  /etc/init.d/supervisor-webui stop
 %else
-	/bin/systemctl stop supervisor-webui.service
-	/bin/systemctl --no-reload disable supervisor-webui.service
+  /bin/systemctl stop supervisor-webui.service
+  /bin/systemctl --no-reload disable supervisor-webui.service
 %endif
 fi
 exit 0
 
 %changelog
-* Tue Jan 30 2013 - bmandal@contrailsystems.com
+* Wed Jan 30 2013 - bmandal@contrailsystems.com
 - Added log file in package.
 * Fri Jan 18 2013 - bmandal@contrailsystems.com
 - first release

@@ -39,6 +39,10 @@ Requires: contrail-vrouter-agent
 %description
 Contrail vCenter Manager package
 
+%prep
+
+%build
+
 %install
 pushd %{_sbtop}
 scons --opt=%{_sconsOpt} --root=%{buildroot} cvm-install

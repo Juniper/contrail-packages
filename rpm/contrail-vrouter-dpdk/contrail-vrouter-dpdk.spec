@@ -65,7 +65,6 @@ Provides contrail-vrouter-dpdk binary
 
 %prep
 # Cleanup
-rm -rf %{buildroot}
 pushd %{_sbtop}
 RTE_KERNELDIR=%{_kernel_dir} scons -c \
     --opt=%{_sconsOpt} \

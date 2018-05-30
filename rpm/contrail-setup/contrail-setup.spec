@@ -24,10 +24,10 @@
 %define       _sku     None
 %endif
 
-Name:		      contrail-setup
-Version:	    %{_verstr}
-Release:	    %{_relstr}%{?dist}
-Summary:	    Contrail Setup %{?_gitVer}
+Name:          contrail-setup
+Version:      %{_verstr}
+Release:      %{_relstr}%{?dist}
+Summary:      Contrail Setup %{?_gitVer}
 BuildArch:    noarch
 
 Group:        Applications/System
@@ -35,23 +35,23 @@ License:      Commercial
 URL:          http://www.juniper.net/
 Vendor:       Juniper Networks Inc
 
-Requires:	    tar
-Requires:	    python-netifaces
-Requires:	    gcc
-Requires:	    python-devel
-Requires:	    python-netaddr
-Requires:	    openstack-utils
+Requires:      tar
+Requires:      python-netifaces
+Requires:      gcc
+Requires:      python-devel
+Requires:      python-netaddr
+Requires:      openstack-utils
 Requires:     crudini
 %if 0%{?fedora} >= 17
-#Requires:	    python-Fabric
-Requires:	    python-crypto
+#Requires:      python-Fabric
+Requires:      python-crypto
 %endif
 %if 0%{?suse_version}
 Requires:     python-pycrypto
 %endif
 %if 0%{?rhel}
-Requires:	    python-argparse
-Requires:	    gdb
+Requires:      python-argparse
+Requires:      gdb
 %endif
 %if 0%{?rhel} > 6
 Requires:     net-tools
@@ -65,6 +65,7 @@ BuildRequires:  systemd-units
 %description
 Contrail Setup package with scripts for provisioning
 
+%prep
 
 %build
 pushd %{_provdir}
@@ -116,7 +117,6 @@ else
     cp %{_flist} %{buildroot}/etc/contrail/rpm_list.txt
 fi
 popd
-#install -p -m 644 %{_builddir}/../tools/packaging/common/rpm/rpm_list.txt  %{buildroot}/etc/contrail/rpm_list.txt
 
 %post
 cd %{_contrailopt}
