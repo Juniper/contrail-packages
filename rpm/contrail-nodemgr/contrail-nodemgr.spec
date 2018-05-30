@@ -4,7 +4,7 @@
 %define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 
 %if 0%{?fedora} >= 17
-%define         _servicedir  /usr/lib/systemd/system
+%define         _servicedir  %{_libdir}/systemd/system
 %endif
 
 %if 0%{?_buildTag:1}
@@ -40,18 +40,15 @@ Vendor:           Juniper Networks Inc
 Requires:         contrail-lib >= %{_verstr}-%{_relstr}
 Requires:         supervisor
 Requires:         xmltodict >= 0.7.0
-Requires:	      python-bottle >= 0.11.6
-Requires:	      python-contrail >= %{_verstr}-%{_relstr}
-Requires:	      ntp
+Requires:        python-bottle >= 0.11.6
+Requires:        python-contrail >= %{_verstr}-%{_relstr}
+Requires:        ntp
 Requires:         python-psutil
 Requires:         PyYAML
 
 %if 0%{?rhel} && 0%{?rhel} <= 6
 Requires:         python-importlib
 %endif
-
-%define _pyver        %( %{__python} -c "import sys; print '%s.%s' % sys.version_info[0:2]" )
-%define _pysitepkg    /lib/python%{_pyver}/site-packages
 
 BuildRequires:    make
 BuildRequires:    gcc
@@ -63,6 +60,8 @@ Contrail Nodemgr package
 %if %{with debuginfo}
 %debug_package
 %endif
+
+%prep
 
 %build
 pushd %{_sbtop}/controller

@@ -9,10 +9,10 @@
 %define         _verstr      1
 %endif
 
-Name:		    neutron-plugin-contrail
-Version:	    %{_verstr}
-Release:	    %{_relstr}%{?dist}
-Summary:	    Contrail Neutron Plugin and Extensions%{?_gitVer}
+Name:        neutron-plugin-contrail
+Version:      %{_verstr}
+Release:      %{_relstr}%{?dist}
+Summary:      Contrail Neutron Plugin and Extensions%{?_gitVer}
 
 Group:          Applications/System
 License:        Commercial
@@ -23,6 +23,10 @@ BuildArch: noarch
 
 %description
 Contrail Neutron Plugin and Extensions package
+
+%prep
+
+%build
 
 %install
 pushd %{_sbtop}openstack/neutron_plugin

@@ -94,6 +94,8 @@ run open contrail.
 
 %prep
 
+%build
+
 %install
 pushd %{_sbtop}
 scons --opt=%{_sconsOpt} --root=%{buildroot} --without-dpdk install
@@ -135,10 +137,10 @@ popd
 # Move schema specific files to opserver
 for mod_dir in %{buildroot}/usr/share/doc/contrail-docs/html/messages/*; do \
     if [ -d $mod_dir ]; then \
-        for python_dir in %{buildroot}/usr/lib/python*; do \
-            install -d -m 0755 -p $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`; \
+        for python_dir in %{buildroot}%{python2_sitelib} %{buildroot}%{python3_sitelib}; do \
+            install -d -m 0755 -p $python_dir/opserver/stats_schema/`basename $mod_dir`; \
             for statsfile in %{buildroot}/usr/share/doc/contrail-docs/html/messages/`basename $mod_dir`/*_stats_tables.json; do \
-                install -p -m 644 -t $python_dir/site-packages/opserver/stats_schema/`basename $mod_dir`/ $statsfile; \
+                install -p -m 644 -t $python_dir/opserver/stats_schema/`basename $mod_dir`/ $statsfile; \
                 rm -f $statsfile; \
             done \
         done \
