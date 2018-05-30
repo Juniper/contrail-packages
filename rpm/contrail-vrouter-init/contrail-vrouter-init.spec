@@ -1,13 +1,12 @@
 %define         _contrailetc /etc/contrail
 %define         _supervisordir /etc/contrail/supervisord_vrouter_files
 %define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
-%define 	_opt_bin /opt/contrail/bin
+%define         _opt_bin /opt/contrail/bin
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
 %else
 %define         _relstr      %(date -u +%y%m%d%H%M)
 %endif
-%{echo: "Building release %{_relstr}\n"}
 %if 0%{?_srcVer:1}
 %define         _verstr      %{_srcVer}
 %else
@@ -33,6 +32,10 @@ Requires: python-contrail >= %{_verstr}-%{_relstr}
 
 %description
 contrail vrouter init packages provides init files 
+
+%prep
+
+%build
 
 %install
 install -d -m 755 %{buildroot}%{_opt_bin}

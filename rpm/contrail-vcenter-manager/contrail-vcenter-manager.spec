@@ -32,6 +32,10 @@ Requires: python-ipaddress
 %description
 Contrail vCenter Manager package
 
+%prep
+
+%build
+
 %install
 pushd %{_sbtop}/vcenter-manager
 %{__python} setup.py install --root=%{buildroot}

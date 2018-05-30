@@ -9,10 +9,10 @@
 %define         _verstr      1
 %endif
 
-Name:		    contrail-heat
-Version:	  %{_verstr}
-Release:	  %{_relstr}%{?dist}
-Summary:	  Contrail Heat Resources and Templates%{?_gitVer}
+Name:        contrail-heat
+Version:    %{_verstr}
+Release:    %{_relstr}%{?dist}
+Summary:    Contrail Heat Resources and Templates%{?_gitVer}
 
 Group:      Applications/System
 License:    Commercial
@@ -24,6 +24,10 @@ BuildRequires: python-setuptools
 
 %description
 Contrail Heat Resources and Templates package
+
+%prep
+
+%build
 
 %install
 pushd %{_sbtop}/openstack/contrail-heat
