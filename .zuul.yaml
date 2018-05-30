@@ -1,0 +1,9 @@
+- project:
+    name: Juniper/contrail-packages
+    check:
+      jobs:
+        - name: lint-rpm-specs
+    gate:
+      jobs:
+        - name: lint-rpm-specs
+
