@@ -54,6 +54,14 @@ Requires: liburcu2
 Requires: libnl3
 Requires: numactl-libs
 Requires: contrail-vrouter-utils >= %{_verstr}-%{_relstr}
+%if 0%{?_enableMellanox:1}
+BuildRequires: rdma-core-devel
+Requires: rdma-core-devel
+%define         _sconsAddOpts      enableMellanox
+%else
+%define         _sconsAddOpts      none
+%endif
+
 
 %description
 Provides contrail-vrouter-dpdk binary
@@ -70,6 +78,7 @@ RTE_KERNELDIR=%{_kernel_dir} scons -c \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
     --root=%{_builddir} \
+    --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
 popd
 
@@ -79,6 +88,7 @@ RTE_KERNELDIR=%{_kernel_dir} scons \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
     --root=%{_builddir} \
+    --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
 popd
 
