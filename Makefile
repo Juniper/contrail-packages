@@ -13,6 +13,7 @@ SRCVER       ?= $(shell cat $(SB_TOP)controller/src/base/version.info)
 KVERS        ?= $(shell $(MKFILE_DIR)utils/get_kvers.sh)
 BUILDTAG     ?= $(shell date +%m%d%Y%H%M)
 SKUTAG       ?= ocata
+ENABLEMLX    ?= FALSE
 MANIFESTFILE ?= $(SB_TOP).repo/manifest.xml
 
 RPMBUILD_FLAGS := -bb --define "_sbtop $(SB_TOP)"
@@ -22,6 +23,12 @@ RPMBUILD_FLAGS += --define "_kVers $(KVERS)"
 RPMBUILD_FLAGS += --define "_skuTag $(SKUTAG)"
 RPMBUILD_FLAGS += --define "_srcVer $(SRCVER)"
 RPMBUILD_FLAGS += --define "_buildTag $(BUILDTAG)"
+DEPBUILD_FLAGS :=
+
+ifeq ($(ENABLEMLX),TRUE)
+	RPMBUILD_FLAGS += --define "_enableMellanox $(ENABLEMLX)"
+	DEPBUILD_FLAGS += --define "_enableMellanox $(ENABLEMLX)"
+endif
 
 ifeq ($(DEBUGINFO),TRUE)
 	RPMBUILD_FLAGS += --with debuginfo
@@ -50,7 +57,7 @@ rpm: $(PACKAGES)
 dep-%:
 	$(eval SPECFILE = $(filter %/$(patsubst dep-%,%.spec,$@), $(SPEC_FILES)))
 	@echo Installing dependencies for $(SPECFILE)...
-	@yum-builddep -y $(SPECFILE)
+	@yum-builddep $(DEPBUILD_FLAGS) -y $(SPECFILE)
 
 rpm-%:
 	$(eval SPECFILE = $(filter %/$(patsubst rpm-%,%.spec,$@), $(SPEC_FILES)))
