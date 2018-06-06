@@ -674,9 +674,9 @@ chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/supervisor-config
 chmod +x /etc/init.d/contrail-config-nodemgr
-chown contrail:contrail /usr/share/contrail-utils/contrail-cassandra-status.py
+chown contrail:contrail /usr/share/contrail/contrail-cassandra-status.py
 chown -h contrail:contrail /usr/bin/contrail-cassandra-status
-chown contrail:contrail /usr/share/contrail-utils/contrail-cassandra-repair.py
+chown contrail:contrail /usr/share/contrail/contrail-cassandra-repair.py
 chown -h contrail:contrail /usr/bin/contrail-cassandra-repair
 
 if [ -f /var/log/cassandra/status.log]; then
