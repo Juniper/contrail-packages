@@ -43,3 +43,6 @@ popd
 %{python_sitelib}/contrail_vcenter_manager*
 %exclude %{python_sitelib}/tests*
 
+%post
+mkdir -p /etc/contrail/contrail-vcenter-manager
+
