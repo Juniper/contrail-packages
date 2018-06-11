@@ -548,10 +548,8 @@ chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/contrail-discovery
 chmod +x /etc/init.d/supervisor-config
-chown contrail:contrail /usr/share/contrail/contrail-cassandra-status.py
-chown -h contrail:contrail /usr/bin/contrail-cassandra-status
-chown contrail:contrail /usr/share/contrail/contrail-cassandra-repair.py
-chown -h contrail:contrail /usr/bin/contrail-cassandra-repair
+chown contrail:contrail /usr/bin/contrail-cassandra-status
+chown contrail:contrail /usr/bin/contrail-cassandra-repair
 
 if [ -f /var/log/cassandra/status.log]; then
     mv /var/log/cassandra/status-up /var/log/contrail/cassandra-status-up
