@@ -58,6 +58,7 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: grok
 BuildRequires: grok-devel
+BuildRequires: kernel-devel
 BuildRequires: libcurl-devel
 BuildRequires: librdkafka-devel >= 0.9.0
 BuildRequires: libstdc++-devel
@@ -66,6 +67,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libzookeeper-devel
 BuildRequires: lz4-devel
 BuildRequires: make
+BuildRequires: openssl
 BuildRequires: openssl-devel
 BuildRequires: protobuf
 BuildRequires: protobuf-compiler
