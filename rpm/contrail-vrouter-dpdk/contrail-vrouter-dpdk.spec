@@ -25,6 +25,12 @@
 %define         _kvers      3.10.0-327.10.1.el7.x86_64
 %endif
 
+%if 0%{?_enableMellanox:1}
+%define         _enableMlx %{_enableMellanox}
+%else
+%define         _enableMlx FALSE
+%endif
+
 %define         _kernel_dir /lib/modules/%{_kVers}/build
 
 
@@ -54,6 +60,14 @@ Requires: liburcu2
 Requires: libnl3
 Requires: numactl-libs
 Requires: contrail-vrouter-utils >= %{_verstr}-%{_relstr}
+%if %{_enableMlx} == "TRUE"
+BuildRequires: rdma-core-devel >= 43mlnx1-1.43101
+Requires: rdma-core-devel >= 43mlnx1-1.43101
+%define         _sconsAddOpts      enableMellanox
+%else
+%define         _sconsAddOpts      none
+%endif
+
 
 %description
 Provides contrail-vrouter-dpdk binary
@@ -70,6 +84,7 @@ RTE_KERNELDIR=%{_kernel_dir} scons -c \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
     --root=%{_builddir} \
+    --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
 popd
 
@@ -79,6 +94,7 @@ RTE_KERNELDIR=%{_kernel_dir} scons \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
     --root=%{_builddir} \
+    --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
 popd
 
