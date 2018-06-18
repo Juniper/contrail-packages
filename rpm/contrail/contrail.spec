@@ -218,7 +218,6 @@ popd
 # Install section of contrail-utils package - END
 
 # Install section of contrail-test package - Start
-cp -a %{_sbtop}/tools/contrail-test-ci %{buildroot}/contrail-test
 cp -a %{_sbtop}/third_party/contrail-test/* %{buildroot}/contrail-test/
 rm -rf %{buildroot}/contrail-test/.git*
 # Install section of contrail-test package - End
