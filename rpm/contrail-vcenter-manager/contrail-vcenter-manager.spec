@@ -28,6 +28,7 @@ Requires: python-gevent
 Requires: PyYAML
 Requires: python2-pyvmomi
 Requires: python-ipaddress
+Requires: contrail-vrouter-agent
 
 %description
 Contrail vCenter Manager package
