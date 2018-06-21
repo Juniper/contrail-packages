@@ -25,6 +25,11 @@ Vendor:         Juniper Networks Inc
 
 BuildArch:      noarch
 
+BuildRequires: bison
+BuildRequires: boost-devel
+BuildRequires: flex
+BuildRequires: gcc-c++
+
 Requires: python-ironicclient
 Requires: python-keystoneclient >= 0.2.0
 Requires: python-gevent
