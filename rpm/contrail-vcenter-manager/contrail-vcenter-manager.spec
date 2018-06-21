@@ -8,6 +8,11 @@
 %else
 %define         _verstr      1
 %endif
+%if 0%{?_opt:1}
+%define         _sconsOpt      %{_opt}
+%else
+%define         _sconsOpt      debug
+%endif
 
 Name:       contrail-vcenter-manager
 Version:    %{_verstr}
@@ -21,6 +26,7 @@ Vendor:     Juniper Networks Inc
 
 BuildArch: noarch
 BuildRequires: python-setuptools
+BuildRequires: scons
 
 Requires: python-contrail-vrouter-api
 Requires: python-contrail
@@ -34,8 +40,8 @@ Requires: contrail-vrouter-agent
 Contrail vCenter Manager package
 
 %install
-pushd %{_sbtop}/vcenter-manager
-%{__python} setup.py install --root=%{buildroot}
+pushd %{_sbtop}
+scons --opt=%{_sconsOpt} --root=%{buildroot} cvm-install
 popd
 
 %files
@@ -46,4 +52,3 @@ popd
 
 %post
 mkdir -p /etc/contrail/contrail-vcenter-manager
-
