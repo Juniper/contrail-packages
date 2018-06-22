@@ -1404,21 +1404,25 @@ md5   = 96329ffd4bdf3d43f0239a0b5cdc2c30
 file  = mtools-4.0.18-5.el7.x86_64.rpm
 md5   = 5b2e5a05518af4ce681f8a172a66a16b
 
-[net-snmp-agent-libs_5.7.2_20.el7]
-file  = net-snmp-agent-libs-5.7.2-20.el7.x86_64.rpm
-md5   = c4649b0085d800e82fa585db845bbc1b
+[net-snmp-5.7.2-33.el7]
+file  = net-snmp-5.7.2-33.el7_5.2.x86_64.rpm
+md5   = 1a06bb19ec1fb1b9ce2d9c1731436ed4
 
-[net-snmp-5.7.2-20.el7]
-file  = net-snmp-5.7.2-20.el7.x86_64.rpm
-md5   = d46b2203dd4ff1b8fe16b2fdbd538611
+[net-snmp-libs-5.7.2-33.el7]
+file  = net-snmp-libs-5.7.2-33.el7_5.2.x86_64.rpm
+md5   = a9b7f7278008a2f13d40f827c0df7609
 
-[net-snmp-libs_5.7.2_20.el7]
-file  = net-snmp-libs-5.7.2-20.el7.x86_64.rpm
-md5   = 297e044dcccd8ae3f8308b07cd899394
+[net-snmp-agent-libs-5.7.2-33.el7]
+file  = net-snmp-agent-libs-5.7.2-33.el7_5.2.x86_64.rpm
+md5   = 2e7302229c5de071cfda7b2761fc3979
 
-[net-snmp-python_5.7.2_20.el7]
-file  = net-snmp-python-5.7.2-20.el7.x86_64.rpm
-md5   = 1e2e20a100a6df831b3fa94da5e067be
+[net-snmp-utils-5.7.2-33.el7]
+file  = net-snmp-utils-5.7.2-33.el7_5.2.x86_64.rpm
+md5   = fd3d64547434d0c57ed3b16b4a7a8f08
+
+[net-snmp-python-5.7.2-33]
+file  = net-snmp-python-5.7.2-33.el7_5.2.x86_64.rpm
+md5   = 87700d1f9b31b1fb878a4dc0cdd58484
 
 [netcf-libs_0.2.6_3.el7]
 file  = netcf-libs-0.2.6-3.el7.x86_64.rpm
