@@ -476,7 +476,6 @@ package provides the contrail-vrouter user space agent.
 %config(noreplace) %{_contrailetc}/contrail-vrouter-agent.conf
 %config(noreplace) %{_contrailetc}/supervisord_vrouter.conf
 /etc/init.d/contrail-vrouter-agent
-/etc/init.d/contrail-vrouter-nodemgr
 %config(noreplace) /etc/contrail/supervisord_vrouter_files/contrail-vrouter-agent.ini
 /etc/init.d/supervisor-vrouter
 %{python_sitelib}/contrail_vrouter_provisioning*
@@ -503,7 +502,6 @@ chmod 0700 /etc/contrail/ssl/private/
 chmod 0750 /var/lib/contrail/dhcp/
 chmod 0750 /var/lib/contrail/backup/
 chmod +x /etc/init.d/contrail-vrouter-agent
-chmod +x /etc/init.d/contrail-vrouter-nodemgr
 chmod +x /etc/init.d/supervisor-vrouter
 
 %package control
@@ -686,7 +684,6 @@ in a NoSQL database.
 %config(noreplace) %{_sysconfdir}/contrail/contrail-schema.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
 %config(noreplace) %{_sysconfdir}/contrail/contrail-fabric-ansible.conf
-%config(noreplace) %{_sysconfdir}/contrail/contrail-config-nodemgr.conf
 %defattr(-,root,root,-)
 %{_bindir}/contrail-api*
 %{_bindir}/contrail-schema*
@@ -713,12 +710,10 @@ in a NoSQL database.
 /etc/contrail/supervisord_config_files/contrail-config.rules
 /etc/contrail/supervisord_config_files/contrail-schema.ini
 /etc/contrail/supervisord_config_files/contrail-device-manager.ini
-/etc/contrail/supervisord_config_files/contrail-config-nodemgr.ini
 /etc/init.d/contrail-schema
 /etc/init.d/contrail-device-manager
 /etc/init.d/contrail-api
 /etc/init.d/supervisor-config
-/etc/init.d/contrail-config-nodemgr
 
 %pre config
 set -e
@@ -739,7 +734,6 @@ chmod +x /etc/init.d/contrail-api
 chmod +x /etc/init.d/contrail-schema
 chmod +x /etc/init.d/contrail-device-manager
 chmod +x /etc/init.d/supervisor-config
-chmod +x /etc/init.d/contrail-config-nodemgr
 tar -xvzf %{_fabricansible}/*.tar.gz -C %{_fabricansible}
 mv %{_fabricansible}/fabric_ansible_playbooks-0.1dev/* %{_fabricansible}/
 rmdir  %{_fabricansible}/fabric_ansible_playbooks-0.1dev/
