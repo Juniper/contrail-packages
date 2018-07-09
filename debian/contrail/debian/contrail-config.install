@@ -10,6 +10,7 @@ etc/contrail/contrail-schema.conf
 etc/contrail/contrail-device-manager.conf
 usr/lib/python*/dist-packages/contrail_issu*
 usr/lib/python*/dist-packages/device_api*
+usr/lib/python*/dist-packages/abstract_device_api*
 usr/lib/python*/dist-packages/device_manager*
 usr/lib/python*/dist-packages/schema_transformer*
 usr/lib/python*/dist-packages/vnc_cfg_api_server*
