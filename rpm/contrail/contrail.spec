@@ -697,6 +697,7 @@ in a NoSQL database.
 %{python_sitelib}/device_manager*
 %{python_sitelib}/job_manager*
 %{python_sitelib}/device_api*
+%{python_sitelib}/abstract_device_api*
 %{python_sitelib}/contrail_issu*
 %if 0%{?rhel} > 6
 %docdir /usr/share/doc/contrail-config/
