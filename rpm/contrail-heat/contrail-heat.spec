@@ -14,6 +14,8 @@ Version:    %{_verstr}
 Release:    %{_relstr}%{?dist}
 Summary:    Contrail Heat Resources and Templates%{?_gitVer}
 
+Requires:   python-gevent
+
 Group:      Applications/System
 License:    Commercial
 URL:        http://www.juniper.net/
