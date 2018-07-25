@@ -1,6 +1,5 @@
 %define         _contrailetc /etc/contrail
 %define         _contrailcontrol /opt/contrail/control-node
-%define         _supervisordir /etc/contrail/supervisord_control_files
 %define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 
 %if 0%{?fedora} >= 17
@@ -38,7 +37,6 @@ URL:              http://www.juniper.net/
 Vendor:           Juniper Networks Inc
 
 Requires:         contrail-lib >= %{_verstr}-%{_relstr}
-Requires:         supervisor
 Requires:         xmltodict >= 0.7.0
 Requires:        python-bottle >= 0.11.6
 Requires:        python-contrail >= %{_verstr}-%{_relstr}

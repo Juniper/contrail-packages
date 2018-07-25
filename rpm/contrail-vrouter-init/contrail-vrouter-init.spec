@@ -1,5 +1,4 @@
 %define         _contrailetc /etc/contrail
-%define         _supervisordir /etc/contrail/supervisord_vrouter_files
 %define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 %define         _opt_bin /opt/contrail/bin
 %if 0%{?_buildTag:1}
@@ -27,7 +26,6 @@ Requires: contrail-vrouter >= %{_verstr}-%{_relstr}
 Requires: contrail-vrouter-utils >= %{_verstr}-%{_relstr}
 Requires: contrail-vrouter-agent >= %{_verstr}-%{_relstr}
 Requires: python-contrail-vrouter-api >= %{_verstr}-%{_relstr}
-Requires: supervisor
 Requires: python-contrail >= %{_verstr}-%{_relstr}
 
 %description
@@ -40,11 +38,8 @@ contrail vrouter init packages provides init files
 %install
 install -d -m 755 %{buildroot}%{_opt_bin}
 install -d -m 755 %{buildroot}%{_contrailetc}
-install -d -m 755 %{buildroot}%{_supervisordir}
-install -d -m 755 %{buildroot}/%{_initddir}
 install -d -m 777 %{buildroot}/var/log/contrail
 pushd %{_builddir}/..
-install -p -m 644 %{_distropkgdir}/contrail-vrouter.rules %{buildroot}%{_supervisordir}
 install -p -m 755 %{_distropkgdir}/vnagent_ExecStartPre.sh  %{buildroot}%{_contrailetc}/vnagent_ExecStartPre.sh
 install -p -m 755 %{_distropkgdir}/vnagent_ExecStartPost.sh %{buildroot}%{_contrailetc}/vnagent_ExecStartPost.sh
 install -p -m 755 %{_distropkgdir}/vnagent_ExecStopPost.sh  %{buildroot}%{_contrailetc}/vnagent_ExecStopPost.sh
