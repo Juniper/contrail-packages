@@ -7,7 +7,6 @@
 %define    _nodemodules    node_modules/
 %define    _config          %{_sbtop}contrail-web-core/config
 %define    _contrailuitoolsdir  src/tools
-%define    _supervisordir    /etc/contrail/supervisord_webui_files
 %define    _websslpath        /etc/pki/ca-trust/source/anchors/contrail_webui_ssl/
 %define    _sslsub          /C=US/ST=CA/L=Sunnyvale/O=JuniperNetworks/OU=JuniperCA/CN=ContrailCA
 
@@ -36,7 +35,6 @@ Vendor:    Juniper Networks Inc
 Requires:  redis
 BuildRequires:  nodejs >= nodejs-0.10.35-1contrail
 Requires:  nodejs >= nodejs-0.10.35-1contrail
-Requires:  supervisor
 Requires:  openssl
 
 Obsoletes:  contrail-webui >= 0
@@ -83,14 +81,6 @@ mkdir -p %{buildroot}%{_contrailetc}
 pushd %{_sbtop}
 cp -r -p contrail-web-core/* %{buildroot}%{_contrailwebsrc}/
 
-%if 0%{?fedora} >= 17
-cp -p %{_distropkgdir}/supervisor-webui.service  %{buildroot}%{_servicedir}/supervisor-webui.service
-%endif
-%if 0%{?rhel}
-install -p -m 755 %{_distropkgdir}/supervisor-webui.initd %{buildroot}%{_initddir}/supervisor-webui
-install -p -m 755 %{_distropkgdir}/contrail-webui.initd.supervisord          %{buildroot}%{_initddir}/contrail-webui
-install -p -m 755 %{_distropkgdir}/contrail-webui-middleware.initd.supervisord %{buildroot}%{_initddir}/contrail-webui-middleware
-%endif
 install -p -m 755 %{_distropkgdir}/contrailWebServer.sh %{buildroot}%{_contrailwebsrc}/
 install -p -m 755 %{_distropkgdir}/contrailWebMiddleware.sh %{buildroot}%{_contrailwebsrc}/
 cp -r -p %{buildroot}%{_contrailwebsrc}/%{_nodemodules}/* %{buildroot}%{_libdir}/node_modules
@@ -104,11 +94,6 @@ perl -pi -e '{ s/opencontrail-favicon/juniper-networks-favicon/g; }' %{buildroot
 rm %{buildroot}%{_contrailwebsrc}/config/userAuth.js
 cp -p %{_config}/userAuth.js %{buildroot}%{_contrailetc}/contrail-webui-userauth.js
 ln -s %{_contrailetc}/contrail-webui-userauth.js %{buildroot}%{_contrailwebsrc}/config/userAuth.js
-
-install -d -m 755 %{buildroot}%{_supervisordir}
-install -p -m 755 %{_distropkgdir}/supervisord_webui.conf %{buildroot}%{_contrailetc}/supervisord_webui.conf
-install -p -m 755 %{_distropkgdir}/contrail-webui.ini %{buildroot}%{_supervisordir}/contrail-webui.ini
-install -p -m 755 %{_distropkgdir}/contrail-webui-middleware.ini %{buildroot}%{_supervisordir}/contrail-webui-middleware.ini
 
 %clean
 rm -rf %{buildroot}
@@ -125,8 +110,6 @@ rm -rf %{buildroot}
 %{_libdir}/*
 %config(noreplace) %{_contrailetc}/config.global.js
 %config(noreplace) %{_contrailetc}/contrail-webui-userauth.js
-%config(noreplace) %{_supervisordir}/*
-%config(noreplace) %{_contrailetc}/supervisord_webui.conf
 
 %pre
 if [ ! -e %{_websslpath} ]; then
@@ -144,19 +127,8 @@ fi
 %preun
 if [ $1 = 1 ] ; then 
   echo "Upgrading contrail-webui Package"
-%if 0%{?rhel}
-  /etc/init.d/supervisor-webui restart
-%else
-  /bin/systemctl restart supervisor-webui.service
-%endif
 elif [ $1 = 0 ] ; then
   echo "Removing contrail-webui Package"
-%if 0%{?rhel}
-  /etc/init.d/supervisor-webui stop
-%else
-  /bin/systemctl stop supervisor-webui.service
-  /bin/systemctl --no-reload disable supervisor-webui.service
-%endif
 fi
 exit 0
 
