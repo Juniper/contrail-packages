@@ -15,6 +15,8 @@ Release:    %{_relstr}%{?dist}
 Summary:    Contrail Heat Resources and Templates%{?_gitVer}
 
 Requires:   python-gevent
+Requires:   python-contrail
+Requires:   python-pycassa
 
 Group:      Applications/System
 License:    Commercial
