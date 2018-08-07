@@ -590,7 +590,7 @@ Requires:           python-docker-py
 Requires:           python-unittest2
 Requires:           iproute >= 3.1.0
 Requires:           python-requests >= 2.5.1
-Requires:           python-eventlet
+Requires:           python-eventlet < 0.19.0
 Requires:           python-enum34
 Requires:           python-keystoneclient
 Requires:           python-barbicanclient
