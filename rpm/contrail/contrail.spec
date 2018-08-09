@@ -654,6 +654,7 @@ Requires:           python-keystonemiddleware
 Requires:           python-swiftclient
 Requires:           python-subprocess32 >= 3.2.6
 Requires:           python2-jsonschema >= 2.5.1
+Requires:           openssh-clients
 
 %description config
 Contrail Config package
