@@ -652,6 +652,7 @@ Requires:           python2-pysnmp
 Requires:           python-keystoneclient
 Requires:           python-keystonemiddleware
 Requires:           python-swiftclient
+Requires:           python2-jmespath
 Requires:           python-subprocess32 >= 3.2.6
 Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
