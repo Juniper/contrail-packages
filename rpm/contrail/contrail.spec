@@ -85,6 +85,7 @@ BuildRequires: tokyocabinet-devel
 BuildRequires: unzip
 BuildRequires: vim-common
 BuildRequires: zlib-devel
+BuildRequires: libcmocka-devel
 
 %description
 Contrail package describes all sub packages that are required to
