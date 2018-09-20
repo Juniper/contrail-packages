@@ -43,9 +43,13 @@ end script
 
 pre-stop script
     if [ -e /tmp/supervisord_vrouter.sock ]; then
+        supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop contrail-vrouter-agent
+        sleep 3
         supervisorctl -s unix:///tmp/supervisord_vrouter.sock stop all
         supervisorctl -s unix:///tmp/supervisord_vrouter.sock shutdown
     else
+        supervisorctl -s unix:///var/run/supervisord_vrouter.sock stop contrail-vrouter-agent
+        sleep 3
         supervisorctl -s unix:///var/run/supervisord_vrouter.sock stop all
         supervisorctl -s unix:///var/run/supervisord_vrouter.sock shutdown
     fi
