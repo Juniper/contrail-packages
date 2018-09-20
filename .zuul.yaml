@@ -3,7 +3,8 @@
     check:
       jobs:
         - lint-rpm-specs
+        - test-dev-env
     gate:
       jobs:
         - lint-rpm-specs
-
+        - test-dev-env
