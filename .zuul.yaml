@@ -3,7 +3,10 @@
     check:
       jobs:
         - lint-rpm-specs
+        - test-dev-env
+        - contrail-vnc-build-package-rhel7-queens
     gate:
       jobs:
         - lint-rpm-specs
-
+        - test-dev-env
+        - contrail-vnc-build-package-rhel7-queens
