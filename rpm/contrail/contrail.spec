@@ -86,6 +86,7 @@ BuildRequires: unzip
 BuildRequires: vim-common
 BuildRequires: zlib-devel
 BuildRequires: libcmocka-devel
+BuildRequires: libxslt-devel
 
 %description
 Contrail package describes all sub packages that are required to
