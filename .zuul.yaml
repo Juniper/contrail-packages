@@ -7,3 +7,13 @@
       jobs:
         - lint-rpm-specs
 
+    experimental:
+      jobs:
+        - contrail-vnc-build-containers-ci-centos7-newton
+
+- job:
+    name: contrail-vnc-build-containers-ci-centos7-newton
+    parent: contrail-vnc-build-containers-ci-base                                                                                                                                                                                               
+    nodeset: builder-centos-7
+    vars:
+      openstack_version: newton
