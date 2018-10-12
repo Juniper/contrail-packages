@@ -639,6 +639,10 @@ Requires:           python2-jmespath
 Requires:           python-subprocess32 >= 3.2.6
 Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
+Requires:           python2-tenacity == 4.10
+Requires:           python-grpcio == 1.16.0rc1
+Requires:           python-protobuf == 3.6.1
+Requires:           python-etcd3 == 0.8.1
 
 %description config
 Contrail Config package
@@ -743,6 +747,10 @@ Requires:           python-kazoo >= 2.3.0
 Requires:           python-sseclient
 Requires:           python-amqp
 Requires:           grok
+Requires:           python2-tenacity == 4.10
+Requires:           python-grpcio == 1.16.0rc1
+Requires:           python-protobuf == 3.6.1
+Requires:           python-etcd3 == 0.8.1
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
 %endif
@@ -958,6 +966,10 @@ Group:              Applications/System
 Requires:    python-contrail >= %{_verstr}-%{_relstr}
 Requires:    python-gevent
 Requires:    python-requests
+Requires:    python2-tenacity == 4.10
+Requires:    python-grpcio == 1.16.0rc1
+Requires:    python-protobuf == 3.6.1
+Requires:    python-etcd3 == 0.8.1
 
 %description kube-manager
 Contrail kubernetes network manager package
