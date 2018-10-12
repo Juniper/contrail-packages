@@ -639,6 +639,10 @@ Requires:           python2-jmespath
 Requires:           python-subprocess32 >= 3.2.6
 Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
+Requires:           python2-tenacity == 4.10
+Requires:           python-grpcio == 1.16.0rc1
+Requires:           python-protobuf == 3.6.1
+Requires:           python-etcd3 == 0.8.1
 
 %description config
 Contrail Config package
