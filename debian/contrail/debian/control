@@ -284,6 +284,7 @@ Description: OpenContrail python-libs
 Package: contrail-lib
 Architecture: amd64
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: libtbb2
 Description: OpenContrail libraries
  OpenContrail is a network virtualization solution that provides an overlay
  virtual-network to virtual-machines, containers or network namespaces.
