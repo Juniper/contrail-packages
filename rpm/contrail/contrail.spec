@@ -448,6 +448,7 @@ Contrail Virtual Router NetNS package
 Summary:  Libraries used by the Contrail Virtual Router %{?_gitVer}
 Group:              Applications/System
 Obsoletes:          contrail-libs
+Obsoletes:          libtbb2
 
 %description lib
 Libraries used by the Contrail Virtual Router.
