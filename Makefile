@@ -12,7 +12,6 @@ SCONSOPT     ?= production
 SRCVER       ?= $(shell cat $(SB_TOP)controller/src/base/version.info)
 KVERS        ?= $(shell $(MKFILE_DIR)utils/get_kvers.sh)
 BUILDTAG     ?= $(shell date +%m%d%Y%H%M)
-SKUTAG       ?= ocata
 ENABLEMLX    ?= FALSE
 MANIFESTFILE ?= $(SB_TOP).repo/manifest.xml
 
@@ -20,7 +19,6 @@ RPMBUILD_FLAGS := -bb --define "_sbtop $(SB_TOP)"
 RPMBUILD_FLAGS += --define "_topdir $(TOPDIR)"
 RPMBUILD_FLAGS += --define "_opt $(SCONSOPT)"
 RPMBUILD_FLAGS += --define "_kVers $(KVERS)"
-RPMBUILD_FLAGS += --define "_skuTag $(SKUTAG)"
 RPMBUILD_FLAGS += --define "_srcVer $(SRCVER)"
 RPMBUILD_FLAGS += --define "_buildTag $(BUILDTAG)"
 DEPBUILD_FLAGS :=
@@ -75,5 +73,4 @@ info:
 	@echo SRCVER=$(SRCVER)
 	@echo KVERS=$(KVERS)
 	@echo BUILDTAG=$(BUILDTAG)
-	@echo SKUTAG=$(SKUTAG)
 	@echo RPMBUILD_FLAGS=$(RPMBUILD_FLAGS)
