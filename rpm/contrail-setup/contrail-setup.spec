@@ -18,11 +18,6 @@
 %else
 %define       _verstr  1
 %endif
-%if 0%{?_skuTag:1}
-%define       _sku     %{_skuTag}
-%else
-%define       _sku     None
-%endif
 
 Name:          contrail-setup
 Version:      %{_verstr}
@@ -110,13 +105,6 @@ cd ContrailProvisioning-0.1dev
 popd
 
 install -d -m 755 %{buildroot}/etc/contrail
-pushd %{_sbtop}/tools/packages
-if [ %{_flist} = None ]; then 
-    %{_sbtop}/tools/packages/utils/create_pkg_list_file.py --sku %{_sku} %{buildroot}/etc/contrail/rpm_list.txt
-else 
-    cp %{_flist} %{buildroot}/etc/contrail/rpm_list.txt
-fi
-popd
 
 %post
 cd %{_contrailopt}
@@ -134,9 +122,6 @@ ln -sbf %{_contrailopt}/bin/* %{_bindir}
 %{_contrailopt}/dns_scripts.tgz
 %{python_sitelib}/ContrailProvisioning-*.egg-info
 %{python_sitelib}/contrail_provisioning
-%if 0%{?_fileList:1}
-    /etc/contrail/rpm_list.txt
-%endif
 /etc/contrail
 %dir %attr(0777, contrail, contrail) %{_localstatedir}/log/contrail
 
