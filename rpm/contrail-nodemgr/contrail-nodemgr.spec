@@ -43,6 +43,7 @@ Requires:        python-contrail >= %{_verstr}-%{_relstr}
 Requires:        ntp
 Requires:         python-psutil
 Requires:         PyYAML
+Requires:        python2-pyroute2 >= 0.4.21
 
 %if 0%{?rhel} && 0%{?rhel} <= 6
 Requires:         python-importlib
