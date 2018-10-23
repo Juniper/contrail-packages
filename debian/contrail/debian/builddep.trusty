@@ -11,7 +11,6 @@
 	       google-mock,
 	       libgoogle-perftools-dev,
 	       liblog4cplus-dev,
-	       libtbb-dev,
 	       libhttp-parser-dev,
 	       libxml2-dev,
 	       libicu-dev,
