@@ -60,7 +60,7 @@ BuildRequires: grok
 BuildRequires: grok-devel
 BuildRequires: kernel-devel
 BuildRequires: libcurl-devel
-BuildRequires: librdkafka-devel >= 0.9.0
+BuildRequires: librdkafka-devel < 0.11.5
 BuildRequires: libstdc++-devel
 BuildRequires: libtool
 BuildRequires: libxml2-devel
@@ -736,7 +736,7 @@ Requires:           protobuf
 Requires:           cassandra-cpp-driver
 Requires:           libzookeeper
 Requires:           net-snmp-python
-Requires:           librdkafka1 >= 0.11.0
+Requires:           librdkafka1 < 0.11.5
 Requires:           python-kafka >= 1.0.1
 Requires:           python-stevedore
 Requires:           python-kazoo >= 2.3.0
