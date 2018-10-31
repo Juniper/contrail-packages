@@ -732,7 +732,7 @@ Requires:           protobuf
 Requires:           cassandra-cpp-driver
 Requires:           libzookeeper
 Requires:           net-snmp-python
-Requires:           librdkafka1 >= 0.11.0
+Requires:           librdkafka1 == 0.11.4
 Requires:           python-kafka >= 1.0.1
 Requires:           python-stevedore
 Requires:           python-kazoo >= 2.3.0
