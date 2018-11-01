@@ -231,17 +231,33 @@ fi
 exit 0
 
 %post vrouter
+step=$1
 act_kver=$(uname -r)
-kver=$(uname -r | cut -d "-" -f1)
+link_path_dir="/lib/modules/${act_kver}/extra/net/vrouter"
+link_path="${link_path_dir}/vrouter.ko"
+if [[ $step -gt 1 ]] ; then
+  kver=%{_kvers}
+  echo "Upgrade vrouter: new version ${kver}, current kernel version $act_kver"
+  if [ -f "$link_path" ] ; then
+    echo "Remove old link $link_path"
+    rm -f "$link_path"
+  fi
+fi
+  
+major_kver=$(echo "$act_kver" | cut -d "-" -f1)
+minor_kver=$(echo "$act_kver" | cut -sd "-" -f2 | cut -d "." -f1)
+kver=$major_kver
+[ -n "$minor_kver" ] && kver+="-$minor_kver"
+
 vrouter_actual_path=$(ls -1rt /lib/modules/${kver}*/extra/net/vrouter/vrouter.ko | tail -1)
 
-if [ -f "/lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko" ]; then
+if [ -f "$link_path" ]; then
     depmod -a
-    echo "Installed vrouter at /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko"
+    echo "Installed vrouter at $link_path"
 elif [ -f "$vrouter_actual_path" ]; then
-    echo "Create symbolic link to $vrouter_actual_path at /lib/modules/$(uname -r)/extra/net/vrouter/vrouter.ko"
-    mkdir -p /lib/modules/$(uname -r)/extra/net/vrouter/
-    ln -s "$vrouter_actual_path" /lib/modules/$(uname -r)/extra/net/vrouter/
+    echo "Create symbolic link to $vrouter_actual_path at $link_path"
+    mkdir -p "$link_path_dir"
+    ln -s "$vrouter_actual_path" "${link_path_dir}/"
     if [ $? != 0 ]; then
         echo "ERROR: Unable to create symlink to $vrouter_actual_path"
         exit 126
