@@ -57,6 +57,8 @@ BuildRequires: flex
 BuildRequires: bison
 BuildRequires: gcc-c++
 BuildRequires: python2-pip
+BuildRequires: libpcap
+BuildRequires: libpcap-devel
 Requires: liburcu2
 Requires: libnl3
 Requires: numactl-libs
