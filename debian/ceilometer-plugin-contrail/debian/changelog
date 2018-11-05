@@ -1,5 +1,0 @@
-ceilometer-plugin-contrail (VERSION) SERIES; urgency=low
-
-  * Initial release.
-
- -- Megh Bhatt <meghb@juniper.net>  Fri, 20 Feb 2015 17:21:32 -0800

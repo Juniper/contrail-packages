@@ -1,5 +1,0 @@
-contrail-vrouter-dpdk (VERSION) SERIES; urgency=low
-
-  * OpenContrail DPDK vRouter initial release.
-
- -- Michal Dubiel <md@semihalf.com>  Wed, 4 Mar 2015 18:30:00 +0100

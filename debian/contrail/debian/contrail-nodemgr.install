@@ -1,8 +1,0 @@
-usr/lib/python*/dist-packages/nodemgr*
-usr/lib/python*/dist-packages/analytics*
-usr/lib/python*/dist-packages/node_mgr-*.egg-info
-usr/lib/python*/dist-packages/control_node*
-usr/lib/python*/dist-packages/Control_Node-*.egg-info
-usr/lib/python*/dist-packages/vrouter*
-usr/lib/python*/dist-packages/database*
-usr/bin/contrail-nodemgr
