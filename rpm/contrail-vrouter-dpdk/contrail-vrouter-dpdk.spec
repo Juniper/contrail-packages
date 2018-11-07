@@ -64,8 +64,9 @@ Requires: libnl3
 Requires: numactl-libs
 Requires: contrail-vrouter-utils >= %{_verstr}-%{_relstr}
 %if %{_enableMlx} == "TRUE"
-BuildRequires: rdma-core-devel >= 43mlnx1-1.43101
-Requires: rdma-core-devel >= 43mlnx1-1.43101
+BuildRequires: rdma-core-devel
+Requires: rdma-core
+Requires: libibverbs
 %define         _sconsAddOpts      enableMellanox
 %else
 %define         _sconsAddOpts      none
