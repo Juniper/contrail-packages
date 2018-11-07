@@ -2,12 +2,15 @@ Source: contrail-vrouter-dpdk
 Maintainer: OpenContrail Developers <dev@lists.opencontrail.org>
 Section: net
 Priority: optional
-Build-Depends: dh-systemd
+Build-Depends: dh-systemd, libibverbs-dev
 
 Package: contrail-vrouter-dpdk
 Architecture: all
 Depends: contrail-vrouter-utils (= ${binary:Version}),
-         liburcu4, ${misc:Depends}
+         liburcu4, ${misc:Depends},
+         libibverbs1,
+         ibverbs-providers
+
 Provides: contrail-vrouter
 Description: OpenContrail VRouter - DPDK version
  OpenContrail is a network virtualization solution that provides an overlay
