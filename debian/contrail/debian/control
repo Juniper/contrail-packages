@@ -67,6 +67,7 @@ Build-Depends: autoconf,
                libhttp-parser-dev,
                libxml2-dev,
                libicu-dev,
+               liburcu-dev,
                dh-systemd
 
 Package: contrail-analytics
