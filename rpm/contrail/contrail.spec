@@ -27,7 +27,7 @@
 %define         _kvers      3.10.0-229.el7.x86_64 3.10.0-327.10.1.el7.x86_64
 %endif
 %if 0%{?_is_centos65} == 1
-%define         _kvers      2.6.32-431.el6.x86_64 2.6.32-573.26.1.el6.x86_64 2.6.32-642.6.2.el6.x86_64 2.6.32-696.3.1.el6.centos.plus.x86_64 2.6.32-696.10.2.el6.centos.plus.x86_64
+%define         _kvers      2.6.32-431.el6.x86_64 2.6.32-573.26.1.el6.x86_64 2.6.32-642.6.2.el6.x86_64 2.6.32-696.3.1.el6.centos.plus.x86_64 2.6.32-696.10.2.el6.centos.plus.x86_64 kernel-2.6.32-754.3.5.el6.centos.plus.x86_64
 %endif
 
 %{echo: "Building release %{_relstr}\n"}
