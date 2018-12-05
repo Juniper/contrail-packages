@@ -23,7 +23,7 @@
 %if 0%{?_kVers:1}
 %define         _kvers      %{_kVers}
 %else
-%define         _kvers      3.10.0-229.el7.x86_64 3.10.0-327.10.1.el7.x86_64
+%define         _kvers      3.10.0-862.el7.x86_64
 %endif
 
 %{echo: "Building release %{_relstr}\n"}
