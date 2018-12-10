@@ -339,6 +339,9 @@ Group:              Applications/System
 Requires:           contrail-config >= %{_verstr}-%{_relstr}
 Requires:           python-keystoneclient
 Requires:           python-novaclient
+Requires:           python-ironic-inspector-client
+Requires:           python-ironicclient
+Requires:           ipmitool
 
 %description config-openstack
 Contrail config openstack package
