@@ -34,6 +34,9 @@ if [ "$1" = "configure" ]; then
     chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stderr.log
     chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stdout.log
   fi
+  if [ -f /var/log/contrail/contrail-analytics-nodemgr.log ]; then
+    chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr.log
+  fi
 fi
 
 #DEBHELPER#
