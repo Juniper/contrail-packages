@@ -418,6 +418,9 @@ if [ -f /var/log/contrail/contrail-vrouter-nodemgr-stdout.log ]; then
   chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stderr.log
   chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr-stdout.log
 fi
+if [ -f /var/log/contrail/contrail-vrouter-nodemgr.log ]; then
+  chown contrail:contrail /var/log/contrail/contrail-vrouter-nodemgr.log
+fi
 
 %package control
 Summary:          Contrail Control
@@ -466,6 +469,9 @@ if [ -f /var/log/contrail/contrail-control-nodemgr-stdout.log ]; then
   chown contrail:contrail /var/log/contrail/process_statecontrail-control.json
   chown contrail:contrail /var/log/contrail/contrail-control-nodemgr-stderr.log
   chown contrail:contrail /var/log/contrail/contrail-control-nodemgr-stdout.log
+fi
+if [ -f /var/log/contrail/contrail-control-nodemgr.log ]; then
+  chown contrail:contrail /var/log/contrail/contrail-control-nodemgr.log
 fi
 
 # Use authbind to bind contrail-control on a reserved port,
@@ -623,6 +629,9 @@ if [ -f /var/log/contrail/contrail-config-nodemgr-stdout.log ]; then
   chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stderr.log
   chown contrail:contrail /var/log/contrail/contrail-config-nodemgr-stdout.log
 fi
+if [ -f /var/log/contrail/contrail-config-nodemgr.log ]; then
+  chown contrail:contrail /var/log/contrail/contrail-config-nodemgr.log
+fi
 
 %package analytics
 Summary:            Contrail Analytics
@@ -732,6 +741,9 @@ if [ -f /var/log/contrail/contrail-analytics-nodemgr-stdout.log ]; then
   chown contrail:contrail /var/log/contrail/process_statecontrail-analytics.json
   chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stderr.log
   chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr-stdout.log
+fi
+if [ -f /var/log/contrail/contrail-analytics-nodemgr.log ]; then
+  chown contrail:contrail /var/log/contrail/contrail-analytics-nodemgr.log
 fi
 
 %package dns
