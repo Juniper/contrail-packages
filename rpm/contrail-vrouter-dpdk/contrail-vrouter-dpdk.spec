@@ -83,7 +83,7 @@ Provides contrail-vrouter-dpdk binary
 %prep
 # Cleanup
 pushd %{_sbtop}
-RTE_KERNELDIR=%{_kernel_dir} scons -c \
+scons -c \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
     --root=%{_builddir} \
@@ -93,7 +93,7 @@ popd
 
 %build
 pushd %{_sbtop}
-RTE_KERNELDIR=%{_kernel_dir} scons \
+scons \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
     --root=%{_builddir} \
