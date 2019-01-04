@@ -38,9 +38,11 @@ Vendor:           Juniper Networks Inc
 
 Requires:         contrail-lib >= %{_verstr}-%{_relstr}
 Requires:         xmltodict >= 0.7.0
-Requires:        python-bottle >= 0.11.6
-Requires:        python-contrail >= %{_verstr}-%{_relstr}
-Requires:        ntp
+Requires:         python-bottle >= 0.11.6
+Requires:         python-contrail >= %{_verstr}-%{_relstr}
+Requires:         ntp
+Requires:         chrony
+Requires:         python-setuptools
 Requires:         python-psutil
 Requires:         PyYAML
 
