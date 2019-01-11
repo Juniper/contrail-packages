@@ -66,7 +66,7 @@ install -p -m 755 %{_distropkgdir}/core-pattern.upstart %{buildroot}%{_etc_init}
 %defattr(-,root,root,-)
 %{_opt_bin}/*
 %{_usr_bin}/*
-%{_contrailetc}/*
+%config(noreplace) %{_contrailetc}/*
 %{_etc_init}/*
 
 %post
