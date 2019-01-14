@@ -51,9 +51,15 @@ Requires:         python-importlib
 %define _pyver        %( %{__python} -c "import sys; print '%s.%s' % sys.version_info[0:2]" )
 %define _pysitepkg    /lib/python%{_pyver}/site-packages
 
-BuildRequires:    make
-BuildRequires:    gcc
-BuildRequires:    python2-pip
+BuildRequires: bison
+BuildRequires: boost-devel
+BuildRequires: flex
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: make
+%if 0%{?centos}
+BuildRequires: python2-pip
+%endif
 
 %description
 Contrail Nodemgr package
