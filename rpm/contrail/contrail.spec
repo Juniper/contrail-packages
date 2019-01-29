@@ -658,6 +658,7 @@ configuration state and translate the high-level data model into the lower
 level model suitable for interacting with network elements. Both these are kept
 in a NoSQL database.
 
+# TODO: remove devicemanager specific after commit of contrail-container-builder
 %files config
 %defattr(-,contrail,contrail,-)
 %defattr(-,root,root,-)
@@ -692,6 +693,36 @@ getent passwd contrail >/dev/null || \
   -c "OpenContail daemon" contrail
 
 %post config
+set -e
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+chown -R contrail:adm /var/log/contrail
+chmod 0750 /var/log/contrail
+chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
+chmod 0750 /etc/contrail/
+tar -xvzf %{_fabricansible}/*.tar.gz -C %{_fabricansible}
+mv %{_fabricansible}/fabric_ansible_playbooks-0.1dev/* %{_fabricansible}/
+rmdir  %{_fabricansible}/fabric_ansible_playbooks-0.1dev/
+cat %{_fabricansible}/ansible.cfg > /etc/ansible/ansible.cfg
+
+%files devicemgr
+%defattr(-,contrail,contrail,-)
+%defattr(-,root,root,-)
+%{_bindir}/contrail-device-manager*
+%{_fabricansible}/*.tar.gz
+%{python_sitelib}/device_manager*
+%{python_sitelib}/job_manager*
+%{python_sitelib}/device_api*
+%{python_sitelib}/abstract_device_api*
+
+%pre devicemgr
+set -e
+# Create the "contrail" user
+getent group contrail >/dev/null || groupadd -r contrail
+getent passwd contrail >/dev/null || \
+  useradd -r -g contrail -d /var/lib/contrail -s /bin/false \
+  -c "OpenContail daemon" contrail
+
+%post devicemgr
 set -e
 mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
 chown -R contrail:adm /var/log/contrail
