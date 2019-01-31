@@ -568,7 +568,7 @@ Group:              Applications/System
 
 %if 0%{?rhel} > 6
 Requires:           python-websocket-client >= 0.32.0
-Requires:           python-docker-py >= 1.4.0
+Requires:           python2-docker
 %else
 Requires:           python-docker-py
 %endif
@@ -643,7 +643,11 @@ Requires:           python-subprocess32 >= 3.2.6
 Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
 Requires:           python-attrdict
+%if 0%{?rhel} > 6
+Requires:           python2-docker
+%else
 Requires:           python-docker-py
+%endif
 
 %description config
 Contrail Config package
