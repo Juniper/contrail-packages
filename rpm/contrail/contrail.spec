@@ -350,12 +350,7 @@ This package contains the configuration management modules that interface with O
 %{python_sitelib}/svc_monitor*
 %{python_sitelib}/vnc_openstack*
 %{_bindir}/contrail-svc-monitor
-%config(noreplace) %{_contrailetc}/contrail-svc-monitor.conf
 /usr/share/contrail
-/etc/init.d/contrail-svc-monitor
-
-%post config-openstack
-chmod +x /etc/init.d/contrail-svc-monitor
 
 %package -n python-contrail-vrouter-api
 Summary:            Contrail vrouter api
@@ -468,8 +463,6 @@ package provides the contrail-vrouter user space agent.
 %{_bindir}/contrail-toragent-cleanup
 %{_bindir}/contrail-vrouter-agent-health-check.py
 %{_bindir}/contrail_crypt_tunnel_client.py
-%config(noreplace) %{_contrailetc}/contrail-vrouter-agent.conf
-/etc/init.d/contrail-vrouter-agent
 %{python_sitelib}/contrail_vrouter_provisioning*
 %{python_sitelib}/ContrailVrouterCli*
 
@@ -493,7 +486,6 @@ chmod 0750 /etc/contrail/ /etc/contrail/ssl/ /etc/contrail/ssl/certs/
 chmod 0700 /etc/contrail/ssl/private/
 chmod 0750 /var/lib/contrail/dhcp/
 chmod 0750 /var/lib/contrail/backup/
-chmod +x /etc/init.d/contrail-vrouter-agent
 
 %package control
 Summary:          Contrail Control
@@ -532,8 +524,6 @@ eventually consistent.
 %files control
 %defattr(-,root,root,-)
 %{_bindir}/contrail-control*
-%config(noreplace) %{_contrailetc}/contrail-control.conf
-/etc/init.d/contrail-control
 %{python_sitelib}/ContrailControlCli*
 
 %pre control
@@ -558,7 +548,6 @@ if [ ! -f /etc/authbind/byport/179 ]; then
   chown contrail. /etc/authbind/byport/179
   chmod 0755 /etc/authbind/byport/179
 fi
-chmod +x /etc/init.d/contrail-control
 
 %package -n python-opencontrail-vrouter-netns
 
@@ -675,10 +664,6 @@ in a NoSQL database.
 
 %files config
 %defattr(-,contrail,contrail,-)
-%config(noreplace) %{_sysconfdir}/contrail/contrail-api.conf
-%config(noreplace) %{_sysconfdir}/contrail/contrail-schema.conf
-%config(noreplace) %{_sysconfdir}/contrail/contrail-device-manager.conf
-%config(noreplace) %{_sysconfdir}/contrail/contrail-fabric-ansible.conf
 %defattr(-,root,root,-)
 %{_bindir}/contrail-api*
 %{_bindir}/contrail-schema*
@@ -701,9 +686,6 @@ in a NoSQL database.
 %docdir /usr/share/doc/contrail-config/
 /usr/share/doc/contrail-config/
 %endif
-/etc/init.d/contrail-schema
-/etc/init.d/contrail-device-manager
-/etc/init.d/contrail-api
 
 %pre config
 set -e
@@ -720,9 +702,6 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/contrail-api
-chmod +x /etc/init.d/contrail-schema
-chmod +x /etc/init.d/contrail-device-manager
 tar -xvzf %{_fabricansible}/*.tar.gz -C %{_fabricansible}
 mv %{_fabricansible}/fabric_ansible_playbooks-0.1dev/* %{_fabricansible}/
 rmdir  %{_fabricansible}/fabric_ansible_playbooks-0.1dev/
@@ -775,12 +754,6 @@ This information includes statistics,logs, events, and errors.
 %files analytics
 # Setup directories
 %defattr(-,contrail,contrail,)
-%config(noreplace) %{_contrailetc}/contrail-collector.conf
-%config(noreplace) %{_contrailetc}/contrail-analytics-api.conf
-%config(noreplace) %{_contrailetc}/contrail-query-engine.conf
-%config(noreplace) %{_contrailetc}/contrail-snmp-collector.conf
-%config(noreplace) %{_contrailetc}/contrail-topology.conf
-%config(noreplace) %{_contrailetc}/contrail-alarm-gen.conf
 %defattr(-, root, root)
 %{_bindir}/contrail-collector*
 %{_bindir}/contrail-query-engine*
@@ -800,12 +773,6 @@ This information includes statistics,logs, events, and errors.
 %{_bindir}/contrail-snmp-*
 %{_bindir}/contrail-topology
 /usr/share/doc/contrail-analytics-api
-/etc/init.d/contrail-analytics-api
-/etc/init.d/contrail-alarm-gen
-/etc/init.d/contrail-collector
-/etc/init.d/contrail-query-engine
-/etc/init.d/contrail-snmp-collector
-/etc/init.d/contrail-topology
 /usr/share/mibs/netsnmp
 /etc/contrail/snmp.conf
 
@@ -824,12 +791,6 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/contrail-analytics-api
-chmod +x /etc/init.d/contrail-alarm-gen
-chmod +x /etc/init.d/contrail-collector
-chmod +x /etc/init.d/contrail-query-engine
-chmod +x /etc/init.d/contrail-snmp-collector
-chmod +x /etc/init.d/contrail-topology
 
 %package dns
 Summary:            Contrail Dns
@@ -858,8 +819,6 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail. /etc/contrail/dns
 chmod 0750 /etc/contrail/dns
-chmod +x /etc/init.d/contrail-dns
-chmod +x /etc/init.d/contrail-named
 
 # Use authbind to bind amed on a reserved port,
 # with contrail user privileges
@@ -872,10 +831,7 @@ fi
 %files dns
 %defattr(-,contrail,contrail,-)
 %{_contraildns}
-%config(noreplace) %{_contraildns}/contrail-named.conf
-%config(noreplace) %{_contraildns}/contrail-rndc.conf
 %config(noreplace) %{_contraildns}/applynamedconfig.py
-%config(noreplace) %{_contrailetc}/contrail-dns.conf
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
 %{_bindir}/contrail-named*
@@ -885,8 +841,6 @@ fi
 %if 0%{?rhel} > 6
 %docdir %{python2_sitelib}/doc/*
 %endif
-/etc/init.d/contrail-dns
-/etc/init.d/contrail-named
 
 %package nova-vif
 Summary:            Contrail nova vif driver
