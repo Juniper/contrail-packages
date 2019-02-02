@@ -3,6 +3,7 @@
     check:
       jobs:
         - lint-rpm-specs
+        - contrail-build-containers-centos7-rocky
     gate:
       jobs:
         - lint-rpm-specs
