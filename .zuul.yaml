@@ -3,6 +3,10 @@
     check:
       jobs:
         - lint-rpm-specs
+        - contrail-build-containers-centos7-rocky
+            dependencies:
+              - contrail-vnc-build-package-centos74
+
     gate:
       jobs:
         - lint-rpm-specs
