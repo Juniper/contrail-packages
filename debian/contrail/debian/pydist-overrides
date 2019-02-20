@@ -19,7 +19,7 @@ netsnmp-python libsnmp-python
 kafka python-kafka
 sseclient python-sseclient
 amqp python-amqp
-cfgm_common python-contrail
+contrail-config-common python-contrail
 contrail-api-client python-contrail
 sandesh python-contrail
 sandesh-common python-contrail
