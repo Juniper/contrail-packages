@@ -1,2 +1,2 @@
 contrail-api-client python-contrail
-cfgm_common python-contrail
+contrail-config-common python-contrail
