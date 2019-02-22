@@ -7,3 +7,19 @@
       jobs:
         - lint-rpm-specs
 
+    experimental:
+      jobs:
+        - contrail-vnc-build-package-centos74
+        - contrail-build-test-containers:
+            dependencies:
+              - contrail-vnc-build-package-centos74
+        - contrail-build-containers-centos7-ocata:
+            dependencies:
+              - contrail-vnc-build-package-centos74
+        - contrail-sanity-centos7-k8s:
+            vars:
+              setup_docker_registry: false
+            dependencies:
+              - contrail-build-containers-centos7-ocata
+              - contrail-build-test-containers
+        #      - contrail-build-test-containers-ci
