@@ -385,6 +385,7 @@ Requires:          python-consistent_hash
 Requires:          python-importlib
 %endif
 Requires:          python-sqlalchemy
+Requires:          python-crypto
 
 %description -n python-contrail
 Contrail Virtual Router utils package
