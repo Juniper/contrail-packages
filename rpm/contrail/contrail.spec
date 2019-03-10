@@ -634,6 +634,7 @@ Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
 Requires:           python-attrdict
 Requires:           python-jsnapy
+Requires:           python-pyhash
 %if 0%{?rhel} > 6
 Requires:           python2-docker
 %else
@@ -747,6 +748,7 @@ Requires:           python-subprocess32 >= 3.2.6
 Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
 Requires:           python-attrdict
+Requires:           python-pyhash
 %if 0%{?rhel} > 6
 Requires:           python2-docker
 %else
