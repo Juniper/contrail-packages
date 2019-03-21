@@ -22,7 +22,7 @@ KEYOPT=-k$(KEYID)
 #
 SOURCE_CONTRAIL_DIRS:=$(shell xmllint --xpath '//manifest/project/@path' .repo/manifest.xml | sed -r 's/path=\"([^\"]+)\"/\1/g' | sed 's/tools\/packages//')
 SOURCE_CONTRAIL_ARCHIVE:=SConstruct $(SOURCE_CONTRAIL_DIRS)
-SERIES=$(shell lsb_release -c -s)
+SERIES= (shell lsb_release -c -s)
 
 # DPDK vRouter is currently supported only on Ubuntu 12.04 Precise and 14.04 Trusty
 ifeq ($(SERIES),precise)
