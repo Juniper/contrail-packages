@@ -318,7 +318,7 @@ This package contains the configuration management modules that interface with O
 /etc/init.d/contrail-svc-monitor
 
 %post config-openstack
-chmod +x /etc/init.d/contrail-svc-monitor
+chmod 0744 /etc/init.d/contrail-svc-monitor
 
 %package -n python-contrail-vrouter-api
 Summary:            Contrail vrouter api
@@ -455,9 +455,9 @@ chmod 0750 /etc/contrail/ /etc/contrail/ssl/ /etc/contrail/ssl/certs/
 chmod 0700 /etc/contrail/ssl/private/
 chmod 0750 /var/lib/contrail/dhcp/
 chmod 0750 /var/lib/contrail/backup/
-chmod +x /etc/init.d/contrail-vrouter-agent
-chmod +x /etc/init.d/contrail-vrouter-nodemgr
-chmod +x /etc/init.d/supervisor-vrouter
+chmod 0744 /etc/init.d/contrail-vrouter-agent
+chmod 0744 /etc/init.d/contrail-vrouter-nodemgr
+chmod 0744 /etc/init.d/supervisor-vrouter
 
 # change file permissions during upgrade
 if [ -f /var/log/contrail/contrail-vrouter-nodemgr-stdout.log ]; then
@@ -547,8 +547,8 @@ if [ ! -f /etc/authbind/byport/179 ]; then
   chown contrail. /etc/authbind/byport/179
   chmod 0755 /etc/authbind/byport/179
 fi
-chmod +x /etc/init.d/supervisor-control
-chmod +x /etc/init.d/contrail-control
+chmod 0744 /etc/init.d/supervisor-control
+chmod 0744 /etc/init.d/contrail-control
 
 %package -n python-opencontrail-vrouter-netns
 
@@ -692,11 +692,11 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/contrail-api
-chmod +x /etc/init.d/contrail-schema
-chmod +x /etc/init.d/contrail-device-manager
-chmod +x /etc/init.d/supervisor-config
-chmod +x /etc/init.d/contrail-config-nodemgr
+chmod 0744 /etc/init.d/contrail-api
+chmod 0744 /etc/init.d/contrail-schema
+chmod 0744 /etc/init.d/contrail-device-manager
+chmod 0744 /etc/init.d/supervisor-config
+chmod 0744 /etc/init.d/contrail-config-nodemgr
 chown contrail:contrail /usr/bin/contrail-cassandra-status
 chown contrail:contrail /usr/bin/contrail-cassandra-repair
 
@@ -822,13 +822,13 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
-chmod +x /etc/init.d/supervisor-analytics
-chmod +x /etc/init.d/contrail-analytics-api
-chmod +x /etc/init.d/contrail-alarm-gen
-chmod +x /etc/init.d/contrail-collector
-chmod +x /etc/init.d/contrail-query-engine
-chmod +x /etc/init.d/contrail-snmp-collector
-chmod +x /etc/init.d/contrail-topology
+chmod 0744 /etc/init.d/supervisor-analytics
+chmod 0744 /etc/init.d/contrail-analytics-api
+chmod 0744 /etc/init.d/contrail-alarm-gen
+chmod 0744 /etc/init.d/contrail-collector
+chmod 0744 /etc/init.d/contrail-query-engine
+chmod 0744 /etc/init.d/contrail-snmp-collector
+chmod 0744 /etc/init.d/contrail-topology
 
 # change file permissions during upgrade
 if [ -f /var/log/contrail/contrail-analytics-nodemgr-stdout.log ]; then
@@ -867,8 +867,8 @@ chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail. /etc/contrail/dns
 chmod 0750 /etc/contrail/dns
-chmod +x /etc/init.d/contrail-dns
-chmod +x /etc/init.d/contrail-named
+chmod 0744 /etc/init.d/contrail-dns
+chmod 0744 /etc/init.d/contrail-named
 
 # Use authbind to bind amed on a reserved port,
 # with contrail user privileges
