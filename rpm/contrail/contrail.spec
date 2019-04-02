@@ -617,6 +617,7 @@ Requires:           python-zope-interface
 Requires:           xmltodict >= 0.7.0
 Requires:           python-jsonpickle
 Requires:           python-amqp
+Requires:           python-fysom
 Requires:           python-kazoo >= 2.3.0
 Requires:           python-ncclient >= 0.3.2
 Requires:           ansible < 2.5.0
@@ -734,6 +735,7 @@ Requires:           python-zope-interface
 Requires:           xmltodict >= 0.7.0
 Requires:           python-jsonpickle
 Requires:           python-amqp
+Requires:           python-fysom
 Requires:           python-kazoo >= 2.3.0
 Requires:           python-ncclient >= 0.3.2
 Requires:           ansible < 2.5.0
@@ -811,6 +813,7 @@ Requires:           python-stevedore
 Requires:           python-kazoo >= 2.3.0
 Requires:           python-sseclient
 Requires:           python-amqp
+Requires:           python-fysom
 Requires:           grok
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
