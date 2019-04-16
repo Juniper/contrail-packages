@@ -386,6 +386,7 @@ Requires:          python-importlib
 %endif
 Requires:          python-sqlalchemy
 Requires:          python-crypto
+Requires:          python-fysom
 
 %description -n python-contrail
 Contrail Virtual Router utils package
@@ -634,7 +635,6 @@ Requires:           python2-jsonschema >= 2.5.1
 Requires:           openssh-clients
 Requires:           python-attrdict
 Requires:           python-pyhash
-Requires:           python-fysom
 %if 0%{?rhel} > 6
 Requires:           python2-docker
 %else
@@ -811,7 +811,6 @@ Requires:           python-stevedore
 Requires:           python-kazoo >= 2.3.0
 Requires:           python-sseclient
 Requires:           python-amqp
-Requires:           python-fysom
 Requires:           grok
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
@@ -1003,7 +1002,6 @@ Group:              Applications/System
 Requires:    python-contrail >= %{_verstr}-%{_relstr}
 Requires:    python-gevent
 Requires:    python-requests
-Requires:    python-fysom
 
 %description kube-manager
 Contrail kubernetes network manager package
