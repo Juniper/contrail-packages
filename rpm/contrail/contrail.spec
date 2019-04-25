@@ -349,7 +349,7 @@ This package contains the configuration management modules that interface with O
 %files config-openstack
 %{python_sitelib}/svc_monitor*
 %{python_sitelib}/vnc_openstack*
-%{_bindir}/contrail-svc-monitor
+%attr(744, root, root) %{_bindir}/contrail-svc-monitor
 /usr/share/contrail
 
 %package -n python-contrail-vrouter-api
@@ -457,7 +457,7 @@ package provides the contrail-vrouter user space agent.
 
 %files vrouter-agent
 %defattr(-, root, root)
-%{_bindir}/contrail-vrouter-agent*
+%attr(744, root, root) %{_bindir}/contrail-vrouter-agent*
 %{_bindir}/contrail-tor-agent*
 %{_bindir}/vrouter-port-control
 %{_bindir}/contrail-compute-setup
@@ -525,7 +525,7 @@ eventually consistent.
 
 %files control
 %defattr(-,root,root,-)
-%{_bindir}/contrail-control*
+%attr(744, root, root) %{_bindir}/contrail-control*
 %{python_sitelib}/ContrailControlCli*
 
 %pre control
@@ -668,9 +668,9 @@ in a NoSQL database.
 %files config
 %defattr(-,contrail,contrail,-)
 %defattr(-,root,root,-)
-%{_bindir}/contrail-api*
-%{_bindir}/contrail-schema*
-%{_bindir}/contrail-device-manager*
+%attr(744, root, root) %{_bindir}/contrail-api*
+%attr(744, root, root) %{_bindir}/contrail-schema*
+%attr(744, root, root) %{_bindir}/contrail-device-manager*
 %{_bindir}/contrail-issu-pre-sync
 %{_bindir}/contrail-issu-post-sync
 %{_bindir}/contrail-issu-run-sync
@@ -758,10 +758,10 @@ This information includes statistics,logs, events, and errors.
 # Setup directories
 %defattr(-,contrail,contrail,)
 %defattr(-, root, root)
-%{_bindir}/contrail-collector*
-%{_bindir}/contrail-query-engine*
-%{_bindir}/contrail-analytics-api*
-%{_bindir}/contrail-alarm-gen*
+%attr(744, root, root) %{_bindir}/contrail-collector*
+%attr(744, root, root) %{_bindir}/contrail-query-engine*
+%attr(744, root, root) %{_bindir}/contrail-analytics-api*
+%attr(744, root, root) %{_bindir}/contrail-alarm-gen*
 %{python_sitelib}/opserver*
 %{python_sitelib}/contrail_snmp_collector*
 %{python_sitelib}/contrail_topology*
@@ -773,8 +773,8 @@ This information includes statistics,logs, events, and errors.
 %{_bindir}/contrail-stats
 %{_bindir}/contrail-alarm-notify
 %{_bindir}/contrail-logs-api-audit
-%{_bindir}/contrail-snmp-*
-%{_bindir}/contrail-topology
+%attr(744, root, root) %{_bindir}/contrail-snmp-*
+%attr(744, root, root) %{_bindir}/contrail-topology
 /usr/share/doc/contrail-analytics-api
 /usr/share/mibs/netsnmp
 /etc/contrail/snmp.conf
@@ -837,10 +837,10 @@ fi
 %config(noreplace) %{_contraildns}/applynamedconfig.py
 %{_contraildns}/COPYRIGHT
 %defattr(-, root, root)
-%{_bindir}/contrail-named*
+%attr(744, root, root) %{_bindir}/contrail-named*
 %{_bindir}/contrail-rndc
 %{_bindir}/contrail-rndc-confgen
-%{_bindir}/contrail-dns*
+%attr(744, root, root) %{_bindir}/contrail-dns*
 %if 0%{?rhel} > 6
 %docdir %{python2_sitelib}/doc/*
 %endif
