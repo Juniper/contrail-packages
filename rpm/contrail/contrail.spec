@@ -387,6 +387,7 @@ Requires:          python-importlib
 Requires:          python-sqlalchemy
 Requires:          python-crypto
 Requires:          python-fysom
+Requires:          xmltodict >= 0.7.0
 
 %description -n python-contrail
 Contrail Virtual Router utils package
@@ -447,6 +448,7 @@ Group:              Applications/System
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           python-paramiko
 Requires:           python2-passlib
+Requires:           python-contrail >= %{_verstr}-%{_relstr}
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
@@ -495,6 +497,7 @@ Group:            Applications/System
 
 Requires:         contrail-lib >= %{_verstr}-%{_relstr}
 Requires:         authbind
+Requires:         python-contrail >= %{_verstr}-%{_relstr}
 
 %description control
 Contrail Control package
