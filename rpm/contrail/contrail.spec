@@ -447,6 +447,7 @@ Group:              Applications/System
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           python-paramiko
 Requires:           python2-passlib
+Requires:           xmltodict >= 0.7.0
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
@@ -495,6 +496,7 @@ Group:            Applications/System
 
 Requires:         contrail-lib >= %{_verstr}-%{_relstr}
 Requires:         authbind
+Requires:         xmltodict >= 0.7.0
 
 %description control
 Contrail Control package
