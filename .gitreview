@@ -10,7 +10,7 @@
 # (gerrit) System.
 #
 [gerrit]
-host=review.opencontrail.org
+host=gerrit.sytes.net
 port=29418
 project=Juniper/contrail-packages.git
 defaultbranch=R5.0
