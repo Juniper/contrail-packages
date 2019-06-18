@@ -397,6 +397,7 @@ in the OpenContrail API server.
 
 %files -n python-contrail
 %{python_sitelib}/cfgm_common*
+%{python_sitelib}/contrail_config_common*
 %{python_sitelib}/libpartition*
 %{python_sitelib}/pysandesh*
 %{python_sitelib}/sandesh-0.1*dev*
