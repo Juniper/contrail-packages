@@ -67,6 +67,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libzookeeper-devel
 BuildRequires: lz4-devel
 BuildRequires: make
+BuildRequires: openssl
 BuildRequires: openssl-devel
 BuildRequires: protobuf
 BuildRequires: protobuf-compiler
