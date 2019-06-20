@@ -438,7 +438,7 @@ configure and diagnose the OpenContrail Linux kernel module.
 %{_bindir}/vrmemstats
 %{_bindir}/qosmap
 %{_bindir}/vifdump
-
+%{_bindir}/vrouter_agent_debug_info.py
 %package vrouter-agent
 
 Summary:            Contrail vRouter
