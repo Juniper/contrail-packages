@@ -101,7 +101,7 @@ run open contrail.
 
 %install
 pushd %{_sbtop}
-scons --opt=%{_sconsOpt} --root=%{buildroot} --without-dpdk install
+scons -j 4 --opt=%{_sconsOpt} --root=%{buildroot} --without-dpdk install
 for kver in %{_kvers}; do
     echo "Kver = ${kver}"
     set +e
@@ -110,7 +110,7 @@ for kver in %{_kvers}; do
     set -e
     if [ $exit_code == 0 ]; then
         sed 's/{kver}/%{_kver}/g' %{_distropkgdir}/dkms.conf.in.tmpl > %{_distropkgdir}/dkms.conf.in
-        scons --opt=%{_sconsOpt} --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
+        scons -j 4 --opt=%{_sconsOpt} --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
     else
         echo "WARNING: kernel-devel-$kver is not installed, Skipping building vrouter for $kver"
     fi
@@ -130,7 +130,7 @@ rm -rf %{buildroot}/_centos
 popd
 #Build nova-contrail-vif
 pushd %{_sbtop}
-scons --opt=%{_sconsOpt} -U nova-contrail-vif
+scons -j 4 --opt=%{_sconsOpt} -U nova-contrail-vif
 popd
 pushd %{_sbtop}/build/noarch/nova_contrail_vif
 python setup.py install --root=%{buildroot}

@@ -46,7 +46,7 @@ rm -rf %{_sbtop}build/debug/config/ironic-notification-manager/
 
 %build
 pushd %{_sbtop}controller
-scons -U src/config/ironic-notification-manager
+scons -j 4 -U src/config/ironic-notification-manager
 popd
 
 %install

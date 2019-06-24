@@ -45,7 +45,7 @@ Contrail vCenter Manager package
 
 %install
 pushd %{_sbtop}
-scons --opt=%{_sconsOpt} --root=%{buildroot} cvm-install
+scons -j 4 --opt=%{_sconsOpt} --root=%{buildroot} cvm-install
 popd
 
 %files
