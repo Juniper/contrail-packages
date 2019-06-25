@@ -33,6 +33,12 @@
 
 %define         _kernel_dir /lib/modules/%{_kVers}/build
 
+%if 0%{?_dpdk_build_dir:1}
+%define         _dpdk_args --dpdk-dir=%{_dpdk_build_dir}
+%else
+%define         _dpdk_args %{nil}
+%endif
+
 
 %bcond_without debuginfo
 
@@ -88,6 +94,7 @@ pushd %{_sbtop}
 RTE_KERNELDIR=%{_kernel_dir} scons -c \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
+    %{_dpdk_args} \
     --root=%{_builddir} \
     --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
@@ -98,6 +105,7 @@ pushd %{_sbtop}
 RTE_KERNELDIR=%{_kernel_dir} scons \
     --opt=%{_sconsOpt} \
     --kernel-dir=%{_kernel_dir} \
+    %{_dpdk_args} \
     --root=%{_builddir} \
     --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
