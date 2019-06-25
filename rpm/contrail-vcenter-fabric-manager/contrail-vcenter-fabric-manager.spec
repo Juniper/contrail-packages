@@ -32,7 +32,10 @@ Requires: python-contrail
 Requires: python-gevent
 Requires: PyYAML
 Requires: python2-pyvmomi
-Requires: python-ipaddress
+Requires: python-kazoo
+Requires: python-bitarray
+Requires: python-pycassa
+Requires: python-attrdict
 
 %description
 Contrail vCenter Fabric Manager package
