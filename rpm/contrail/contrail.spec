@@ -701,7 +701,7 @@ getent passwd contrail >/dev/null || \
 
 %post config
 set -e
-mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/
+mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/ /etc/ansible
 chown -R contrail:adm /var/log/contrail
 chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
