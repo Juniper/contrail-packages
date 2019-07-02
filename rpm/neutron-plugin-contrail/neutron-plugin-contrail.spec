@@ -31,8 +31,8 @@ Contrail Neutron Plugin and Extensions package
 %install
 pushd %{_sbtop}openstack/neutron_plugin
 %{__python} setup.py install --root=%{buildroot}
-install -d -m 755 %{buildroot}%{_sysconfdir}/neutron/plugins/opencontrail
-install -p -m 755 etc/neutron/plugins/opencontrail/ContrailPlugin.ini %{buildroot}/etc/neutron/plugins/opencontrail/ContrailPlugin.ini
+install -d -m 755 %{buildroot}%{_sysconfdir}/neutron/plugins/contrail
+install -p -m 755 etc/neutron/plugins/contrail/contrail_conf.ini %{buildroot}/etc/neutron/plugins/contrail/contrail_conf.ini
 popd
 
 %files
@@ -42,4 +42,4 @@ popd
 
 %post
 rm -rf /etc/neutron/plugin.ini
-ln -sf /etc/neutron/plugins/opencontrail/ContrailPlugin.ini /etc/neutron/plugin.ini
+ln -sf /etc/neutron/plugins/contrail/contrail_conf.ini /etc/neutron/plugin.ini
