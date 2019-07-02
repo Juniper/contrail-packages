@@ -37,7 +37,7 @@ popd
 
 %files
 %defattr(-,root,root,-)
-%{python_sitelib}/neutron_plugin_contrail*
+%{python_sitelib}/networking_contrail*
 %config(noreplace) %{_sysconfdir}/neutron
 
 %post
