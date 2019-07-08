@@ -75,7 +75,6 @@ BuildRequires: protobuf-devel
 BuildRequires: python-devel
 BuildRequires: python-fixtures
 BuildRequires: python-lxml
-BuildRequires: python-requests
 BuildRequires: python-setuptools
 BuildRequires: python-sphinx
 BuildRequires: scons
