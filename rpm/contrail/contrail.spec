@@ -75,7 +75,6 @@ BuildRequires: protobuf-devel
 BuildRequires: python-devel
 BuildRequires: python-fixtures
 BuildRequires: python-lxml
-BuildRequires: python-requests
 BuildRequires: python-setuptools
 BuildRequires: python-sphinx
 BuildRequires: scons
@@ -96,6 +95,7 @@ run open contrail.
 %endif
 
 %prep
+yum erase -y python-requests
 
 %build
 
