@@ -57,7 +57,7 @@ rpm: $(PACKAGES)
 dep-%:
 	$(eval SPECFILE = $(filter %/$(patsubst dep-%,%.spec,$@), $(SPEC_FILES)))
 	@echo Installing dependencies for $(SPECFILE)...
-	@yum-builddep $(DEPBUILD_FLAGS) -y $(SPECFILE)
+	@yum-builddep $(DEPBUILD_FLAGS) -q -y $(SPECFILE)
 
 rpm-%:
 	$(eval SPECFILE = $(filter %/$(patsubst rpm-%,%.spec,$@), $(SPEC_FILES)))
