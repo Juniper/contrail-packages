@@ -569,7 +569,7 @@ Requires:           python-docker-py
 
 Requires:           python-unittest2
 Requires:           iproute >= 3.1.0
-Requires:           python-requests >= 2.5.1
+Requires:           python2-requests >= 2.20.0
 Requires:           python-eventlet < 0.19.0
 Requires:           python-enum34
 Requires:           python-keystoneclient
@@ -616,7 +616,7 @@ Requires:           python-lxml >= 2.3.2
 Requires:           python-pycassa
 Requires:           python-thrift >= 0.9.1
 Requires:           python-psutil >= 0.6.0
-Requires:           python-requests
+Requires:           python2-requests >= 2.20.0
 Requires:           python-zope-interface
 Requires:           xmltodict >= 0.7.0
 Requires:           python-jsonpickle
@@ -866,7 +866,7 @@ Group: Applications/System
 
 Requires:           lsof
 Requires:           python-lxml >= 2.3.2
-Requires:           python-requests
+Requires:           python2-requests >= 2.20.0
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 
 %description utils
@@ -925,7 +925,7 @@ Group:              Applications/System
 
 Requires:    python-contrail >= %{_verstr}-%{_relstr}
 Requires:    python-gevent
-Requires:    python-requests
+Requires:    python2-requests >= 2.20.0
 
 %description kube-manager
 Contrail kubernetes network manager package
@@ -957,7 +957,7 @@ Group:              Applications/System
 
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python-gevent
-Requires:           python-requests
+Requires:           python2-requests >= 2.20.0
 
 %description mesos-manager
 Contrail Mesos network manager package
