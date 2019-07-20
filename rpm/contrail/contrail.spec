@@ -45,48 +45,6 @@ License:        ASL 2.0
 URL:            www.opencontrail.org
 Vendor:         OpenContrail Project.
 
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: bison
-BuildRequires: boost-devel
-BuildRequires: cassandra-cpp-driver
-BuildRequires: cassandra-cpp-driver-devel
-BuildRequires: cmake
-BuildRequires: cyrus-sasl-devel
-BuildRequires: flex
-BuildRequires: gcc
-BuildRequires: gcc-c++
-BuildRequires: grok
-BuildRequires: grok-devel
-BuildRequires: kernel-devel
-BuildRequires: libcurl-devel
-BuildRequires: librdkafka-devel < 0.11.5
-BuildRequires: libstdc++-devel
-BuildRequires: libtool
-BuildRequires: libxml2-devel
-BuildRequires: libzookeeper-devel
-BuildRequires: lz4-devel
-BuildRequires: make
-BuildRequires: openssl
-BuildRequires: openssl-devel
-BuildRequires: protobuf
-BuildRequires: protobuf-compiler
-BuildRequires: protobuf-devel
-BuildRequires: python-devel
-BuildRequires: python-fixtures
-BuildRequires: python-lxml
-BuildRequires: python-requests
-BuildRequires: python-setuptools
-BuildRequires: python-sphinx
-BuildRequires: scons
-BuildRequires: systemd-units
-BuildRequires: tbb-devel
-BuildRequires: tokyocabinet-devel
-BuildRequires: unzip
-BuildRequires: vim-common
-BuildRequires: zlib-devel
-BuildRequires: libcmocka-devel
-
 %description
 Contrail package describes all sub packages that are required to
 run open contrail.
