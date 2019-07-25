@@ -235,6 +235,7 @@ popd
 # Install section of contrail-config package - Start
 install -d -m 755 %{buildroot}%{_fabricansible}
 install -p -m 755 %{buildroot}/usr/bin/fabric_ansible_playbooks*.tar.gz %{buildroot}%{_fabricansible}/
+install -p -m 755 %{buildroot}/usr/bin/vcenter-import %{buildroot}%{_contrailutils}/
 # Install section of contrail-config package - End
 
 # Install section of contrail-manifest package - Start
@@ -350,6 +351,7 @@ This package contains the configuration management modules that interface with O
 %{python_sitelib}/svc_monitor*
 %{python_sitelib}/vnc_openstack*
 %attr(755, root, root) %{_bindir}/contrail-svc-monitor
+%{_bindir}/vcenter-import
 /usr/share/contrail
 
 %package -n python-contrail-vrouter-api
