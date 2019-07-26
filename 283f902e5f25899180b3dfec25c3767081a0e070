@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7aa2b1_bbcda422",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-07-26T21:05:45Z",
+      "side": 1,
+      "message": "Can you add this binary part of config package here  https://github.com/Juniper/contrail-packages/blob/master/rpm/contrail/contrail.spec#L671,\n\nconfig-openstack package \"contains the configuration management modules that interface with OpenStack.\"",
+      "revId": "283f902e5f25899180b3dfec25c3767081a0e070",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
