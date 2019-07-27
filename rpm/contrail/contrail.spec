@@ -778,6 +778,7 @@ This information includes statistics,logs, events, and errors.
 %{_bindir}/contrail-logs-api-audit
 %attr(755, root, root) %{_bindir}/contrail-snmp-*
 %attr(755, root, root) %{_bindir}/contrail-topology
+%attr(755, contrail, contrail) %{_bindir}/contrail-snmp-scanner
 /usr/share/doc/contrail-analytics-api
 /usr/share/mibs/netsnmp
 /etc/contrail/snmp.conf
