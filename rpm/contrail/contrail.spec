@@ -58,7 +58,11 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: grok
 BuildRequires: grok-devel
-BuildRequires: kernel-devel
+%if 0%{?rhel}
+BuildRequires: kernel-devel = 3.10.0-957.21.3.el7
+%else
+BuildRequires: kernel-devel = 3.10.0-957.27.2.el7
+%endif
 BuildRequires: libcurl-devel
 BuildRequires: librdkafka-devel < 0.11.5
 BuildRequires: libstdc++-devel
