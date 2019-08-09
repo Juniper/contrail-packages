@@ -48,7 +48,11 @@ Vendor:     Juniper Networks Inc
 
 BuildRequires: boost-devel
 BuildRequires: liburcu-devel
-BuildRequires: kernel-devel
+%if 0%{?rhel}
+BuildRequires: kernel-devel = 3.10.0-957.21.3.el7
+%else
+BuildRequires: kernel-devel = 3.10.0-957.27.2.el7
+%endif
 BuildRequires: numactl-devel
 BuildRequires: libnl3-devel
 BuildRequires: scons
