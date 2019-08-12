@@ -59,7 +59,7 @@ BuildRequires: gcc-c++
 BuildRequires: grok
 BuildRequires: grok-devel
 %if 0%{?rhel}
-BuildRequires: kernel-devel = 3.10.0-957.21.3.el7
+BuildRequires: kernel-devel < 3.10.0-957.27.2.el7
 %else
 BuildRequires: kernel-devel = 3.10.0-957.27.2.el7
 %endif
