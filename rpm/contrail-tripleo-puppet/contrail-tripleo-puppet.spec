@@ -25,6 +25,10 @@ BuildArch:      noarch
 %description
 Contrail tripleo puppet modules for tripleo composable roles deployment
     
+%prep
+
+%build
+
 %install
 rm -rf %{buildroot}%{_installdir}
 install -d -m 0755 %{buildroot}%{_installdir}
