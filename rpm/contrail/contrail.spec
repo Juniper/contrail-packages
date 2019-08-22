@@ -225,20 +225,6 @@ cp -a %{_sbtop}/third_party/contrail-test %{buildroot}/contrail-test
 rm -rf %{buildroot}/contrail-test/.git*
 # Install section of contrail-test package - End
 
-# Install section of contrail-fabric-utils package - Start
-rm -rf %{_sbtop}/third_party/fabric-utils/contrail_fabric_utils-0.1dev
-rm -rf %{_sbtop}/third_party/fabric-utils/contrail_fabric_utils.egg-info
-pushd %{_sbtop}/third_party/fabric-utils
-%{__python} setup.py sdist
-tar zxf dist/contrail_fabric_utils-0.1dev.tar.gz
-cd contrail_fabric_utils-0.1dev
-%{__python} setup.py install --root=%{buildroot}
-mkdir -p %{buildroot}%{_contrailutils}/
-cp README %{buildroot}%{_contrailutils}/README.fabric
-cp -R %{buildroot}%{python_sitelib}/contrail_fabric_utils/fabfile %{buildroot}%{_contrailutils}/fabfile
-popd
-# Install section of contrail-fabric-utils package - End
-
 # Install section of contrail-config package - Start
 install -d -m 755 %{buildroot}%{_fabricansible}
 install -p -m 755 %{buildroot}/usr/bin/fabric_ansible_playbooks*.tar.gz %{buildroot}%{_fabricansible}/
@@ -899,23 +885,6 @@ modules/daemons.
 
 %files docs
 %doc /usr/share/doc/contrail-docs/html/*
-
-%package fabric-utils
-Summary: Contrail Fabric Utilities
-Group: Applications/System
-Requires: python-yaml
-Requires: python-Fabric
-Requires: python-netaddr
-
-%description fabric-utils
-Contrail Fabric Utilities for cluster management
-
-%files fabric-utils
-%defattr(-, root, root)
-%{python_sitelib}/contrail_fabric_utils
-%{python_sitelib}/contrail_fabric_utils-*.egg-info
-%doc %{_contrailutils}/README.fabric
-%{_contrailutils}/fabfile
 
 %package test
 Summary: Contrail Test
