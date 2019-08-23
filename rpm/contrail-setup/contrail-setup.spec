@@ -68,11 +68,6 @@ Contrail Setup package with scripts for provisioning
 %prep
 
 %build
-pushd %{_provdir}
-rm -rf ContrailProvisioning.egg-info
-rm -rf ContrailProvisioning-0.1dev
-%{__python} setup.py sdist
-popd
 
 pushd %{_sbtop}/controller/src/config
 tar cvfz %{_builddir}/cfgm_utils.tgz utils
@@ -103,20 +98,8 @@ popd
 # install etc files
 install -p -m 644 %{_builddir}/cfgm_utils.tgz  %{buildroot}%{_contrailopt}/cfgm_utils.tgz
 install -p -m 644 %{_builddir}/dns_scripts.tgz  %{buildroot}%{_contrailopt}/dns_scripts.tgz
-pushd %{_provdir}
-tar zxf dist/ContrailProvisioning-0.1dev.tar.gz
-cd ContrailProvisioning-0.1dev
-%{__python} setup.py install --root=%{buildroot} --install-scripts %{_contrailopt}/bin/
-popd
 
 install -d -m 755 %{buildroot}/etc/contrail
-pushd %{_sbtop}/tools/packages
-if [ %{_flist} = None ]; then 
-    %{_sbtop}/tools/packages/utils/create_pkg_list_file.py --sku %{_sku} %{buildroot}/etc/contrail/rpm_list.txt
-else 
-    cp %{_flist} %{buildroot}/etc/contrail/rpm_list.txt
-fi
-popd
 
 %post
 cd %{_contrailopt}
@@ -132,8 +115,6 @@ ln -sbf %{_contrailopt}/bin/* %{_bindir}
 %{_contrailopt}/contrail_packages/README
 %{_contrailopt}/cfgm_utils.tgz
 %{_contrailopt}/dns_scripts.tgz
-%{python_sitelib}/ContrailProvisioning-*.egg-info
-%{python_sitelib}/contrail_provisioning
 %if 0%{?_fileList:1}
     /etc/contrail/rpm_list.txt
 %endif
@@ -141,5 +122,7 @@ ln -sbf %{_contrailopt}/bin/* %{_bindir}
 %dir %attr(0777, contrail, contrail) %{_localstatedir}/log/contrail
 
 %changelog
+* Wed Aug 21 2019 Dheeraj Gautam <dgautam@juniper.net>
+- Removed contrail-provisioning and call to create_pkg_list_file.py
 * Mon Dec 14 2015 Nagendra Maynattamai <npchandran@juniper.net>
 - Removed 1. Dependency for python-pip, 2. Dont package sources of fabric, paramiko, pycrypto and zope as tgz
