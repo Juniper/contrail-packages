@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c65433_6ee000af",
+        "filename": "rpm/contrail-vcenter-fabric-manager/contrail-vcenter-fabric-manager.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 772
+      },
+      "writtenOn": "2019-08-23T11:06:20Z",
+      "side": 1,
+      "message": "This package is in EPEL repo. Contrail-base (which is base for this container) does not have EPEL repo configured. Try to install EPEL repo in a step before. Or download and install this package in other way. But the first seems to be better.",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "bb59aa4befc9af118594ee3d92560cae9c02c101",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
