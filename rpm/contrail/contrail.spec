@@ -60,8 +60,8 @@ BuildRequires: grok
 BuildRequires: grok-devel
 # kernel is required for /lib/modules content
 %if 0%{?rhel}
-BuildRequires: kernel = 3.10.0-957.21.3.el7
-BuildRequires: kernel-devel = 3.10.0-957.21.3.el7
+BuildRequires: kernel = 3.10.0-1062.el7
+BuildRequires: kernel-devel = 3.10.0-1062.el7
 %else
 BuildRequires: kernel = 3.10.0-957.27.2.el7
 BuildRequires: kernel-devel = 3.10.0-957.27.2.el7
