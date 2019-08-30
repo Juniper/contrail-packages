@@ -25,6 +25,10 @@ RPMBUILD_FLAGS += --define "_srcVer $(SRCVER)"
 RPMBUILD_FLAGS += --define "_buildTag $(BUILDTAG)"
 DEPBUILD_FLAGS :=
 
+ifdef DPDK_BUILD_DIR
+	RPMBUILD_FLAGS += --define "_dpdk_build_dir $(DPDK_BUILD_DIR)"
+endif
+
 ifeq ($(ENABLEMLX),TRUE)
 	RPMBUILD_FLAGS += --define "_enableMellanox $(ENABLEMLX)"
 	DEPBUILD_FLAGS += --define "_enableMellanox $(ENABLEMLX)"
