@@ -16,6 +16,24 @@
       "revId": "8dc4115ab6bb6a9a200a72a01cb2bdb99d9d1c7e",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcb6401_109e85ca",
+        "filename": "rpm/contrail-vrouter-dpdk/contrail-vrouter-dpdk.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 631
+      },
+      "writtenOn": "2019-09-03T06:25:28Z",
+      "side": 1,
+      "message": "As per dheeraj, the old variable always evaluates to \"True\" for both RHEL and Centos.\nHence only the \u0027True\u0027 part of if stmt is executed.",
+      "parentUuid": "da613a78_15cd0988",
+      "revId": "8dc4115ab6bb6a9a200a72a01cb2bdb99d9d1c7e",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     }
   ]
 }
