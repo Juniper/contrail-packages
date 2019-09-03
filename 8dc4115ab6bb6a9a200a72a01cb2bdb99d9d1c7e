@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da613a78_15cd0988",
+        "filename": "rpm/contrail-vrouter-dpdk/contrail-vrouter-dpdk.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 641
+      },
+      "writtenOn": "2019-09-03T06:11:42Z",
+      "side": 1,
+      "message": "Just curious, how was the old variable rhel used previously?",
+      "revId": "8dc4115ab6bb6a9a200a72a01cb2bdb99d9d1c7e",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
