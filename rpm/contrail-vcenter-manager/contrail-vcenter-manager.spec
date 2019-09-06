@@ -35,6 +35,8 @@ Requires: PyYAML
 Requires: python2-pyvmomi
 Requires: python-ipaddress
 Requires: contrail-vrouter-agent
+Requires: python2-future
+Requires: python-configparser
 
 %description
 Contrail vCenter Manager package
