@@ -30,9 +30,9 @@ BuildRequires: scons
 
 Requires: python-contrail
 Requires: python-gevent
-Requires: PyYAML
 Requires: python2-pyvmomi
 Requires: python-kazoo
+Requires: python-kombu
 Requires: python-bitarray
 Requires: python-pycassa
 Requires: python-attrdict
