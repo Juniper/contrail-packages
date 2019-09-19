@@ -33,8 +33,8 @@ URL:       http://www.juniper.net/
 Vendor:    Juniper Networks Inc
 
 Requires:  redis
-BuildRequires:  nodejs >= nodejs-0.10.35-1contrail
-Requires:  nodejs >= nodejs-0.10.35-1contrail
+BuildRequires:  nodejs >= nodejs-0.10.44-1contrail
+Requires:  nodejs >= nodejs-0.10.44-1contrail
 Requires:  openssl
 
 Obsoletes:  contrail-webui >= 0
