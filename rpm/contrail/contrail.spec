@@ -64,8 +64,8 @@ BuildRequires: grok-devel
 BuildRequires: kernel = 3.10.0-1062.el7
 BuildRequires: kernel-devel = 3.10.0-1062.el7
 %else
-BuildRequires: kernel = 3.10.0-957.27.2.el7
-BuildRequires: kernel-devel = 3.10.0-957.27.2.el7
+BuildRequires: kernel = 3.10.0-1062.el7
+BuildRequires: kernel-devel = 3.10.0-1062.el7
 %endif
 BuildRequires: libcurl-devel
 BuildRequires: librdkafka-devel < 0.11.5
