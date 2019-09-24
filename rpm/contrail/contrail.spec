@@ -733,6 +733,7 @@ Requires:           python-kazoo >= 2.3.0
 Requires:           python-sseclient
 Requires:           python-amqp
 Requires:           grok
+Requires:           python2-future
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
 %endif
