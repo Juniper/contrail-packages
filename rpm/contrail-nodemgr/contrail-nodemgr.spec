@@ -44,6 +44,7 @@ Requires:         ntp
 Requires:         python-psutil
 Requires:         PyYAML
 Requires:         python-setuptools
+Requires:         python2-future
 
 %if 0%{?rhel} && 0%{?rhel} <= 6
 Requires:         python-importlib

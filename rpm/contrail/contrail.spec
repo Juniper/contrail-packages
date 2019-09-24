@@ -445,6 +445,7 @@ Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           python-paramiko
 Requires:           python2-passlib
 Requires:           xmltodict >= 0.7.0
+Requires:           python2-future
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
@@ -600,6 +601,7 @@ Group:              Applications/System
 
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python-bitarray >= 0.8.0
+Requires:           python2-future
 %if 0%{?rhel} >= 7
 Requires: python-gevent >= 1.0
 %endif
@@ -733,6 +735,7 @@ Requires:           python-kazoo >= 2.3.0
 Requires:           python-sseclient
 Requires:           python-amqp
 Requires:           grok
+Requires:           python2-future
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
 %endif
