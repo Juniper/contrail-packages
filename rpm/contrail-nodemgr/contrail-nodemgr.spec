@@ -70,11 +70,11 @@ Contrail Nodemgr package
 
 %build
 pushd %{_sbtop}/controller
-scons --opt=%{_sconsOpt} -U control-node:node_mgr
-scons --opt=%{_sconsOpt} -U vrouter:node_mgr
-scons --opt=%{_sconsOpt} -U opserver:node_mgr
-scons --opt=%{_sconsOpt} -U database:node_mgr
-scons --opt=%{_sconsOpt} -U src:nodemgr
+scons -j8 --opt=%{_sconsOpt} -U control-node:node_mgr
+scons -j8 --opt=%{_sconsOpt} -U vrouter:node_mgr
+scons -j8 --opt=%{_sconsOpt} -U opserver:node_mgr
+scons -j8 --opt=%{_sconsOpt} -U database:node_mgr
+scons -j8 --opt=%{_sconsOpt} -U src:nodemgr
 
 if [ $? -ne 0 ] ; then
   echo "build failed"

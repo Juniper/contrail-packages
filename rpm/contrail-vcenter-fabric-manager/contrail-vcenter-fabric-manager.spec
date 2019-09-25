@@ -46,7 +46,7 @@ Contrail vCenter Fabric Manager package
 
 %install
 pushd %{_sbtop}
-scons --opt=%{_sconsOpt} --root=%{buildroot} cvfm-install
+scons -j8 --opt=%{_sconsOpt} --root=%{buildroot} cvfm-install
 popd
 
 %files
