@@ -637,6 +637,11 @@ Requires:           python2-docker
 %else
 Requires:           python-docker-py
 %endif
+%if 0%{?rhel} > 6
+Requires:           python2-crypto
+%else
+Requires:           python-crypto
+%endif
 
 %description config
 Contrail Config package
