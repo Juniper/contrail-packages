@@ -58,7 +58,7 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: make
 %if 0%{?centos}
-BuildRequires: python2-pip
+BuildRequires: python3-pip
 %endif
 
 %description
