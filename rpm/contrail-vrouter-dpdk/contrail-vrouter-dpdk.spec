@@ -74,6 +74,7 @@ BuildRequires: libpcap
 BuildRequires: libpcap-devel
 %if 0%{?centos}
 BuildRequires: python2-pip
+BuildRequires: python3-pip
 %endif
 Requires: liburcu2
 Requires: libnl3

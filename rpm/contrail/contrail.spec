@@ -66,6 +66,9 @@ BuildRequires: kernel-devel = 3.10.0-1062.el7
 %else
 BuildRequires: kernel = 3.10.0-1062.el7
 BuildRequires: kernel-devel = 3.10.0-1062.el7
+BuildRequires: python3-sphinx
+BuildRequires: python36-requests
+BuildRequires: python3-lxml
 %endif
 BuildRequires: libcurl-devel
 BuildRequires: librdkafka-devel < 0.11.5
@@ -81,10 +84,11 @@ BuildRequires: protobuf
 BuildRequires: protobuf-compiler
 BuildRequires: protobuf-devel
 BuildRequires: python-devel
-BuildRequires: python-fixtures
+BuildRequires: python3-devel
 BuildRequires: python-lxml
 BuildRequires: python-requests
 BuildRequires: python-setuptools
+BuildRequires: python3-setuptools
 BuildRequires: python-sphinx
 BuildRequires: scons
 BuildRequires: systemd-units
