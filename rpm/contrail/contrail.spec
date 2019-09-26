@@ -81,11 +81,15 @@ BuildRequires: protobuf
 BuildRequires: protobuf-compiler
 BuildRequires: protobuf-devel
 BuildRequires: python-devel
-BuildRequires: python-fixtures
+BuildRequires: python3-devel
 BuildRequires: python-lxml
+BuildRequires: python3-lxml
 BuildRequires: python-requests
+BuildRequires: python36-requests
 BuildRequires: python-setuptools
+BuildRequires: python3-setuptools
 BuildRequires: python-sphinx
+BuildRequires: python3-sphinx
 BuildRequires: scons
 BuildRequires: systemd-units
 BuildRequires: tbb-devel
