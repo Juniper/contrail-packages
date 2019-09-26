@@ -66,6 +66,7 @@ BuildRequires: kernel-devel = 3.10.0-1062.el7
 BuildRequires: numactl-devel
 BuildRequires: libnl3-devel
 BuildRequires: scons
+BuildRequires: python3-scons
 BuildRequires: gcc
 BuildRequires: flex
 BuildRequires: bison
@@ -74,6 +75,7 @@ BuildRequires: libpcap
 BuildRequires: libpcap-devel
 %if 0%{?centos}
 BuildRequires: python2-pip
+BuildRequires: python3-pip
 %endif
 Requires: liburcu2
 Requires: libnl3

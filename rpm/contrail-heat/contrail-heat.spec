@@ -23,6 +23,7 @@ Vendor:     Juniper Networks Inc
 
 BuildArch: noarch
 BuildRequires: python-setuptools
+BuildRequires: python3-setuptools
 
 %description
 Contrail Heat Resources and Templates package
