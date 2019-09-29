@@ -1,3 +1,7 @@
+%global _enable_debug_package 0
+%global debug_package %{nil}
+%global __os_install_post /usr/lib/rpm/brp-compress %{nil}
+
 %define     _contrailetc  /etc/contrail
 %define     _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 
