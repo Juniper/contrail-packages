@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 0
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
 %else
@@ -52,6 +53,7 @@ popd
 %defattr(-,root,root,-)
 %{python_sitelib}/cvm*
 %{python_sitelib}/contrail_vcenter_manager*
+%ghost %attr(755, root, root) %{_bindir}/contrail-vcenter-manager*
 %exclude %{python_sitelib}/tests*
 
 %post
