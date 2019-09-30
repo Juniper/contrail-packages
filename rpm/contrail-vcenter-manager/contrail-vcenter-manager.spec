@@ -13,6 +13,7 @@
 %else
 %define         _sconsOpt      debug
 %endif
+%define _unpackaged_files_terminate_build 0
 
 Name:       contrail-vcenter-manager
 Version:    %{_verstr}
@@ -52,6 +53,7 @@ popd
 %defattr(-,root,root,-)
 %{python_sitelib}/cvm*
 %{python_sitelib}/contrail_vcenter_manager*
+%attr(755, root, root) %{_bindir}/contrail-vcenter-manager*
 %exclude %{python_sitelib}/tests*
 
 %post

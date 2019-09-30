@@ -13,6 +13,7 @@
 %else
 %define         _sconsOpt      debug
 %endif
+%define _unpackaged_files_terminate_build 0
 
 Name:       contrail-vcenter-fabric-manager
 Version:    %{_verstr}
@@ -53,6 +54,7 @@ popd
 %defattr(-,root,root,-)
 %{python_sitelib}/cvfm*
 %{python_sitelib}/contrail_vcenter_fabric_manager*
+%attr(755, root, root) %{_bindir}/contrail-vcenter-fabric-manager*
 %exclude %{python_sitelib}/tests*
 
 %post
