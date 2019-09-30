@@ -26,6 +26,7 @@ Build and packaging scripts for OpenContrail.
 2. Keep all additional files in directories specific to package
 3. Use absolute paths for sandbox-related variables (e.g. `%define _distropkgdir %{_sbtop}tools/packages/rpm/%{name}`)
 
+
 ## Using Makefile for RPM
 
 1. Makefile can be used from anywhere within the contrail sandbox, e.g. `make -f <current_path_to_packages>/Makefile`
