@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 0
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
 %else
