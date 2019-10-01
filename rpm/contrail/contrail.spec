@@ -573,6 +573,7 @@ Requires:           python-enum34
 Requires:           python-keystoneclient
 Requires:           python-barbicanclient
 Requires:           python-pyOpenSSL
+Requires:           python2-future
 
 %description -n python-opencontrail-vrouter-netns
 Contrail Virtual Router NetNS package
@@ -871,6 +872,7 @@ Requires:           lsof
 Requires:           python-lxml >= 2.3.2
 Requires:           python2-requests >= 2.20.0
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
+Requires:           python2-future
 
 %description utils
 Contrail utility sctipts package
@@ -912,6 +914,7 @@ Group:              Applications/System
 Requires:    python-contrail >= %{_verstr}-%{_relstr}
 Requires:    python-gevent
 Requires:    python2-requests >= 2.20.0
+Requires:    python2-future
 
 %description kube-manager
 Contrail kubernetes network manager package
