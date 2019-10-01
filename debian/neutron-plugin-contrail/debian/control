@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
 Uploaders: Sebastien Badia <seb@sebian.fr>
-Build-Depends: debhelper (>= 9), python-all (>= 2.6.6-3~), python-setuptools
+Build-Depends: debhelper (>= 9), python-all (>= 2.6.6-3~), python-setuptools, python3-all (>= 2.6.6-3~), python3-setuptools
 Standards-Version: 3.9.5
 Vcs-Browser: https://github.com/Juniper/contrail-neutron-plugin/
 Vcs-Git: git://github.com/Juniper/contrail-neutron-plugin.git
