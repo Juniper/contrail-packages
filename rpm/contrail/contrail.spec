@@ -1009,6 +1009,9 @@ Summary:            Mesos/Kubernetes cni plugin
 
 Group:              Applications/System
 
+Requires:           python2-future
+Requires:           python-configparser
+
 %description cni
 Contrail mesos/kubernetes cni plugin package
 This package contains the mesos/kubernetes cni plugin modules.
