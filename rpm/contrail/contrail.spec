@@ -336,6 +336,8 @@ Requires:           python-keystoneclient
 Requires:           python-novaclient
 Requires:           python-ironic-inspector-client
 Requires:           python-ironicclient
+Requires:           python2-future
+Requires:           python-configparser
 Requires:           ipmitool
 
 %description config-openstack
