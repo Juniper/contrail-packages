@@ -965,6 +965,8 @@ Group:              Applications/System
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python-gevent
 Requires:           python2-requests >= 2.20.0
+Requires:           python2-future
+Requires:           python-configparser
 
 %description mesos-manager
 Contrail Mesos network manager package
@@ -1005,6 +1007,9 @@ This package contains the kubernetes cni plugin modules.
 Summary:            Mesos/Kubernetes cni plugin
 
 Group:              Applications/System
+
+Requires:           python2-future
+Requires:           python-configparser
 
 %description cni
 Contrail mesos/kubernetes cni plugin package
