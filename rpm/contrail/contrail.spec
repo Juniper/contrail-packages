@@ -968,6 +968,8 @@ Group:              Applications/System
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python-gevent
 Requires:           python2-requests >= 2.20.0
+Requires:           python2-future
+Requires:           python-configparser
 
 %description mesos-manager
 Contrail Mesos network manager package
