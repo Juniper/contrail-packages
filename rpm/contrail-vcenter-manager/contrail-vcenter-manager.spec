@@ -26,6 +26,7 @@ Vendor:     Juniper Networks Inc
 
 BuildArch: noarch
 BuildRequires: python-setuptools
+BuildRequires: python3-setuptools
 BuildRequires: scons
 
 Requires: python-contrail-vrouter-api
