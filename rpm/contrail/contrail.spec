@@ -23,7 +23,7 @@
 %if 0%{?_kVers:1}
 %define         _kvers      %{_kVers}
 %else
-%define         _kvers      3.10.0-862.el7.x86_64
+%define         _kvers      3.10.0-1062.el7.x86_64
 %endif
 
 %{echo: "Building release %{_relstr}\n"}
@@ -71,6 +71,11 @@ BuildRequires:  cassandra-cpp-driver-devel
 BuildRequires:  libzookeeper-devel
 BuildRequires:  librdkafka-devel >= 0.9.0
 BuildRequires:  grok-devel
+%define is_rhel %(cat /etc/os-release | grep ^NAME | cut -d = -f 2 | sed  's/\"//g')
+%if "%{is_rhel}" == "Red Hat Enterprise Linux Server"
+BuildRequires: kernel = 3.10.0-1062.1.2.el7
+BuildRequires: kernel-devel = 3.10.0-1062.1.2.el7
+%endif
 
 %prep
 
