@@ -37,6 +37,8 @@ Requires: python-kombu
 Requires: python-bitarray
 Requires: python-pycassa
 Requires: python-attrdict
+Requires: python2-future
+Requires: python-configparser
 
 %description
 Contrail vCenter Fabric Manager package
