@@ -22,7 +22,7 @@ License:    Commercial
 URL:        http://www.juniper.net/
 Vendor:     Juniper Networks Inc
 
-BuildRequires:  nodejs = nodejs-0.10.48-1contrail
+BuildRequires:  nodejs = 0.10.48-1contrail.el7
 Requires:  redis
 Requires:  contrail-web-core >= %{_verstr}-%{_relstr}
 
@@ -78,6 +78,8 @@ fi
 exit 0
 
 %changelog
+* Fri Oct 04 2019 - zsong@juniper.net
+- Upgrade nodejs to 0.10.48
 * Sun May 26 2013 - bmandal@juniper.net
 - first release
 

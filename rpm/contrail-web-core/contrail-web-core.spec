@@ -33,8 +33,8 @@ URL:       http://www.juniper.net/
 Vendor:    Juniper Networks Inc
 
 Requires:  redis
-BuildRequires:  nodejs = nodejs-0.10.48-1contrail
-Requires:  nodejs = nodejs-0.10.48-1contrail
+BuildRequires:  nodejs = 0.10.48-1contrail.el7
+Requires:  nodejs = 0.10.48-1contrail.el7
 Requires:  openssl
 
 Obsoletes:  contrail-webui >= 0
@@ -127,6 +127,8 @@ fi
 exit 0
 
 %changelog
+* Fri Oct 04 2019 - zsong@juniper.net
+- Upgrade nodejs to 0.10.48
 * Wed Jan 30 2013 - bmandal@contrailsystems.com
 - Added log file in package.
 * Fri Jan 18 2013 - bmandal@contrailsystems.com
