@@ -53,6 +53,7 @@ popd
 %defattr(-,root,root,-)
 %{python_sitelib}/cvm*
 %{python_sitelib}/contrail_vcenter_manager*
+%attr(755, root, root) %{_bindir}/contrail-vcenter-manager
 %exclude %{python_sitelib}/tests*
 
 %post
