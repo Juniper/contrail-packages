@@ -252,6 +252,8 @@ Group:              Applications/System
 Requires:           contrail-vrouter-agent >= %{_verstr}-%{_relstr}
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           xmltodict >= 0.7.0
+Requires:           python2-future
+Requires:           python-configparser
 
 %description vrouter
 vrouter kernel module
@@ -355,6 +357,8 @@ This package contains the configuration management modules that interface with O
 Summary:            Contrail vrouter api
 
 Group:              Applications/System
+Requires:           python2-future
+Requires:           python-configparser
 
 %description -n python-contrail-vrouter-api
 Contrail Virtual Router apis package
@@ -577,6 +581,8 @@ Requires:           python-enum34
 Requires:           python-keystoneclient
 Requires:           python-barbicanclient
 Requires:           python-pyOpenSSL
+Requires:           python2-future
+Requires:           python-configparser
 
 %description -n python-opencontrail-vrouter-netns
 Contrail Virtual Router NetNS package
@@ -814,6 +820,8 @@ Summary:            Contrail Dns
 Group:              Applications/System
 
 Requires:           authbind
+Requires:           python2-future
+Requires:           python-configparser
 
 %description dns
 Contrail dns  package
@@ -880,6 +888,8 @@ Requires:           lsof
 Requires:           python-lxml >= 2.3.2
 Requires:           python2-requests >= 2.20.0
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
+Requires:           python2-future
+Requires:           python-configparser
 
 %description utils
 Contrail utility sctipts package
@@ -921,6 +931,8 @@ Group:              Applications/System
 Requires:    python-contrail >= %{_verstr}-%{_relstr}
 Requires:    python-gevent
 Requires:    python2-requests >= 2.20.0
+Requires:    python2-future
+Requires:    python-configparser
 
 %description kube-manager
 Contrail kubernetes network manager package
