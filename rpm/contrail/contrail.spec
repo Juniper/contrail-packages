@@ -392,6 +392,8 @@ Requires:          python-importlib
 Requires:          python-sqlalchemy
 Requires:          python-crypto
 Requires:          python-fysom
+Requires:          python2-future
+Requires:          python-configparser
 
 %description -n python-contrail
 Contrail Virtual Router utils package
