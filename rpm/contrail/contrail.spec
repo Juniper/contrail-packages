@@ -390,9 +390,15 @@ Requires:          python-consistent_hash
 %if 0%{?rhel} <= 6
 Requires:          python-importlib
 %endif
-Requires:          python-sqlalchemy
-Requires:          python-crypto
 Requires:          python-fysom
+Requires:          python2-future
+Requires:          python-configparser
+Requires:          python-greenlet
+Requires:          python-simplejson
+Requires:          python-six
+Requires:          python-stevedore
+Requires:          python-kazoo >= 2.3.0
+Requires:          python-pycassa
 
 %description -n python-contrail
 Contrail Virtual Router utils package
