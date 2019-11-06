@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17357176_69238b69",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 6
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2019-11-06T05:24:54Z",
+      "side": 1,
+      "message": "can any one tell which CNI is used?\nthese packages were added to contrail-cni. above we can find one more and below we can find two other cni packages. and sometime ago I heard that Go implementation is used in deployments.",
+      "revId": "db1de6db8fe3a011585bec3dafc4b49980a09394",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
