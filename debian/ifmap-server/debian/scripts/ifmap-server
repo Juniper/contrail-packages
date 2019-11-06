@@ -1,7 +1,0 @@
-#!/bin/sh
-
-cd /usr/share/ifmap-server
-# exec to allow supervisor reap for ifmap process, enabling proper detection and life cycle
-# management of the ifmap process. Use the explicit Dlog4j option to allow ifmap process to
-# be noticed by ps command and also for user contrail to run ifmap process
-exec /usr/bin/java -jar ./irond.jar -Dlog4j.configuration=file:////usr/share/ifmap-server/log4j.properties

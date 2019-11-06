@@ -6,9 +6,6 @@ Build and packaging scripts for OpenContrail.
 ## Contents of this repository
 
 ```
-├── debian/                  # Debian packaging
-│   ├── contrail/            # Debian package for contrail
-│   └── <pkg-name>/          # Debian package <pkg-name>
 ├── rpm/                     # RPM packaging
 │   ├── contrail/            # RPMs for contrail
 │   │   ├── contrail.spec    # RPM spec for package contrail
@@ -44,13 +41,3 @@ Build and packaging scripts for OpenContrail.
     5. `KVERS` - kernel version to build against (default: installed version of `kernel-devel`)
     6. `BUILDTAG` - additional tag for versioning (default: `date +%m%d%Y%H%M`)
     7. `SKUTAG` - OpenStack SKU (default: `ocata`)
-
----
-
-## Debian Packaging (Deprecated)
-
-In order to build the debian packages execute the following set of commands from the top level directory of your sandbox.
-
-```
-make -f packages.make
-```

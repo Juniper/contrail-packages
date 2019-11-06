@@ -1,5 +1,0 @@
-#! /usr/bin/perl -wnp
-##
-## This script removes commented and empty (or whitespace-only) lines
-## from its input.
-$_ = "" if /^\#|^\s*$/;
