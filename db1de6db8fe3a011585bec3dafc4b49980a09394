@@ -16,6 +16,23 @@
       "revId": "db1de6db8fe3a011585bec3dafc4b49980a09394",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b5b403_6b13ca71",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 6
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2019-11-06T05:28:09Z",
+      "side": 1,
+      "message": "i see that containers use contrail-k8s-cni and contrail-mesos-cni",
+      "revId": "db1de6db8fe3a011585bec3dafc4b49980a09394",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
