@@ -825,6 +825,11 @@ Group:              Applications/System
 Requires:           authbind
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+%else
+Requires:           python36-future
+%endif
 
 %description dns
 Contrail dns  package
