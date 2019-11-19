@@ -825,6 +825,7 @@ Group:              Applications/System
 Requires:           authbind
 Requires:           python2-future
 Requires:           python-configparser
+Requires:           python36-future
 
 %description dns
 Contrail dns  package
