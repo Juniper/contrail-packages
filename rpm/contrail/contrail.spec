@@ -255,6 +255,13 @@ Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           xmltodict >= 0.7.0
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description vrouter
 vrouter kernel module
@@ -346,6 +353,13 @@ Requires:           python-ironicclient
 Requires:           python2-future
 Requires:           python-configparser
 Requires:           ipmitool
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description config-openstack
 Contrail config openstack package
@@ -362,6 +376,13 @@ Summary:            Contrail vrouter api
 Group:              Applications/System
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description -n python-contrail-vrouter-api
 Contrail Virtual Router apis package
@@ -458,6 +479,13 @@ Requires:           python2-passlib
 Requires:           xmltodict >= 0.7.0
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
@@ -586,6 +614,13 @@ Requires:           python-barbicanclient
 Requires:           python-pyOpenSSL
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description -n python-opencontrail-vrouter-netns
 Contrail Virtual Router NetNS package
@@ -617,6 +652,13 @@ Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python-bitarray >= 0.8.0
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 %if 0%{?rhel} >= 7
 Requires: python-gevent >= 1.0
 %endif
@@ -757,6 +799,13 @@ Requires:           python-amqp
 Requires:           grok
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 %if 0%{?rhel} >= 7
 Requires:           python-cassandra-driver >= 3.0.0
 %endif
@@ -893,6 +942,13 @@ Requires:           python2-requests >= 2.20.0
 Requires:           python-contrail >= %{_verstr}-%{_relstr}
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description utils
 Contrail utility sctipts package
@@ -936,6 +992,13 @@ Requires:    python-gevent
 Requires:    python2-requests >= 2.20.0
 Requires:    python2-future
 Requires:    python-configparser
+%if 0%{?rhel} > 6
+Requires:    python3-future
+Requires:    python3-six
+%else
+Requires:    python36-future
+Requires:    python36-six
+%endif
 
 %description kube-manager
 Contrail kubernetes network manager package
@@ -970,6 +1033,13 @@ Requires:           python-gevent
 Requires:           python2-requests >= 2.20.0
 Requires:           python2-future
 Requires:           python-configparser
+%if 0%{?rhel} > 6
+Requires:           python3-future
+Requires:           python3-six
+%else
+Requires:           python36-future
+Requires:           python36-six
+%endif
 
 %description mesos-manager
 Contrail Mesos network manager package

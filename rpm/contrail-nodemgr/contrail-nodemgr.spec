@@ -46,6 +46,13 @@ Requires:         PyYAML
 Requires:         python-setuptools
 Requires:         python2-future
 Requires:         python-configparser
+%if 0%{?rhel} > 6
+Requires:         python3-future
+Requires:         python3-six
+%else
+Requires:         python36-future
+Requires:         python36-six
+%endif
 
 %if 0%{?rhel} && 0%{?rhel} <= 6
 Requires:         python-importlib
