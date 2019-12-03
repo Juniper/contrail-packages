@@ -664,6 +664,7 @@ Requires:           python2-crypto
 %else
 Requires:           python-crypto
 %endif
+Requires:           python-pyroute2
 
 %description config
 Contrail Config package
