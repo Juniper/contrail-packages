@@ -54,6 +54,7 @@ BuildRequires: cassandra-cpp-driver-devel
 BuildRequires: cmake
 BuildRequires: cyrus-sasl-devel
 BuildRequires: flex
+BuildRequires: python2-future
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: grok
