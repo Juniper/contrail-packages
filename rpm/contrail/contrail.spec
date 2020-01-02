@@ -415,9 +415,31 @@ in the OpenContrail API server.
 %{python_sitelib}/sandesh_common*
 %{python_sitelib}/vnc_api*
 %{python_sitelib}/contrail_api_client*
+%{python3_sitelib}/contrail_api_client*
 %{python_sitelib}/ContrailCli*
 %config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 /etc/bash_completion.d/bashrc_contrail_cli
+
+%package -n python3-contrail
+Summary:            Contrail Python3 Lib
+
+Group:             Applications/System
+Obsoletes:         contrail-api-lib <= 0.0.1
+Obsoletes:         python-contrail
+Requires:          python-simplejson
+Requires:          python-six
+
+%description -n python3-contrail
+Contrail common python package
+
+The package python3-contrail provides vncAPI client library
+and common api server libraries.
+
+%files -n python-contrail
+# packaging only api client library, other python packages
+# should be packaged as needed.
+%{python3_sitelib}/contrail_api_client*
+%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 
 %package vrouter-utils
 Summary:            Contrail vRouter
