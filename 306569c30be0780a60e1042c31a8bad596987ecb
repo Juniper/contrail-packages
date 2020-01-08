@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daa7646d_26c95321",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 64
+      },
+      "writtenOn": "2020-01-08T19:13:03Z",
+      "side": 1,
+      "message": "Since this package is distributing only vnc api, obsoleting python-contrail may prevent to get python-contrail installed, Instead can it be made to co-exist?",
+      "revId": "306569c30be0780a60e1042c31a8bad596987ecb",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
