@@ -16,6 +16,24 @@
       "revId": "306569c30be0780a60e1042c31a8bad596987ecb",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72cbc72_f7098966",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2020-01-08T19:43:05Z",
+      "side": 1,
+      "message": "The service containers who are in stage 4 and who want only vnc_api will install only python3-contrail by changing their Requires: \n\nStage3 services, will not change Requires: to python3-contrail untill all other config common libraries are moved to python3-contrail pkg.",
+      "parentUuid": "daa7646d_26c95321",
+      "revId": "306569c30be0780a60e1042c31a8bad596987ecb",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
