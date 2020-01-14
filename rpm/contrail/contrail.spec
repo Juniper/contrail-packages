@@ -667,7 +667,7 @@ Requires:           python-pysnmp
 Requires:           python2-pysnmp
 %endif
 Requires:           python-keystoneclient
-Requires:           python-keystonemiddleware >= 5.0.0
+Requires:           python-keystonemiddleware
 Requires:           python-swiftclient
 Requires:           python2-jmespath
 Requires:           python-subprocess32 >= 3.2.6
