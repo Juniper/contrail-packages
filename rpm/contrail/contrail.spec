@@ -1021,49 +1021,25 @@ chmod 0750 /var/log/contrail
 chown -R contrail:contrail /var/lib/contrail/ /etc/contrail/
 chmod 0750 /etc/contrail/
 
-%package kube-cni
-Summary:            Kubernetes cni plugin
-
-Group:              Applications/System
-
-%description kube-cni
-Contrail kubernetes cni plugin package
-This package contains the kubernetes cni plugin modules.
-%files kube-cni
-%{python_sitelib}/kube_cni*
-%{_bindir}/contrail-kube-cni
-
-%package cni
-Summary:            Mesos/Kubernetes cni plugin
-
-Group:              Applications/System
-
-%description cni
-Contrail mesos/kubernetes cni plugin package
-This package contains the mesos/kubernetes cni plugin modules.
-%files cni
-%{python_sitelib}/cni*
-%{_bindir}/contrail-cni
-
 %package k8s-cni
 Summary:            Kubernetes cni plugin
-
 Group:              Applications/System
 
 %description k8s-cni
 Contrail kubernetes cni plugin package
 This package contains the kubernetes cni plugin modules.
+
 %files k8s-cni
 %{_bindir}/contrail-k8s-cni
 
 %package mesos-cni
 Summary:            Mesos cni plugin
-
 Group:              Applications/System
 
 %description mesos-cni
 Contrail mesos cni plugin package
 This package contains the mesos cni plugin modules.
+
 %files mesos-cni
 %{_bindir}/contrail-mesos-cni
 
