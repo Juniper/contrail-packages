@@ -256,7 +256,6 @@ Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           xmltodict >= 0.7.0
 Requires:           python2-future
 Requires:           python-configparser
-
 %description vrouter
 vrouter kernel module
 
@@ -484,6 +483,7 @@ Requires:           python2-passlib
 Requires:           xmltodict >= 0.7.0
 Requires:           python2-future
 Requires:           python-configparser
+Requires:           python3-contrail
 
 %description vrouter-agent
 Contrail Virtual Router Agent package
@@ -852,6 +852,7 @@ Group:              Applications/System
 Requires:           authbind
 Requires:           python2-future
 Requires:           python-configparser
+Requires:           python3-contrail
 
 %description dns
 Contrail dns  package
