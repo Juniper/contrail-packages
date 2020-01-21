@@ -436,6 +436,7 @@ and common api server libraries.
 %files -n python3-contrail
 # packaging only api client library, other python packages
 # should be packaged as needed.
+%{python3_sitelib}/vnc_api*
 %{python3_sitelib}/contrail_api_client*
 %config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 
