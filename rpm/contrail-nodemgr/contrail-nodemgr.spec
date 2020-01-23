@@ -46,6 +46,7 @@ Requires:         PyYAML
 Requires:         python-setuptools
 Requires:         python2-future
 Requires:         python-configparser
+Requires:         python3-contrail
 
 %if 0%{?rhel} && 0%{?rhel} <= 6
 Requires:         python-importlib
