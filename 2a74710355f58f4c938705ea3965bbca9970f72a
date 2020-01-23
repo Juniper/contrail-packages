@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10381937_6e762a51",
+        "filename": "rpm/contrail-nodemgr/contrail-nodemgr.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2020-01-23T23:05:54Z",
+      "side": 1,
+      "message": "does both python-contrail and  python3-contrail required?",
+      "revId": "2a74710355f58f4c938705ea3965bbca9970f72a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e090310f_2c4a398f",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2020-01-23T23:05:54Z",
+      "side": 1,
+      "message": "dns pkg is originally not dependent on python-contrail, Why is is dependent on python3-contrail?",
+      "revId": "2a74710355f58f4c938705ea3965bbca9970f72a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
