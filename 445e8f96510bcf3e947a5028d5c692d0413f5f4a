@@ -16,6 +16,24 @@
       "revId": "445e8f96510bcf3e947a5028d5c692d0413f5f4a",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0836b2_78cd127e",
+        "filename": "rpm/contrail-vrouter-dpdk/contrail-vrouter-dpdk.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2020-01-29T04:50:53Z",
+      "side": 1,
+      "message": "this is coming from scons _kVers variable. by default it is currently running kernel. but MakeFile allows use to send multiple kernel as space separated array. e.g KVERS\u003d\"KERNEL-VERSION-1 KERNEL-VERSION-2 KERNEL-VERSION-3\"",
+      "parentUuid": "dd65d0df_bfcd777b",
+      "revId": "445e8f96510bcf3e947a5028d5c692d0413f5f4a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
