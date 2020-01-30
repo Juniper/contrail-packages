@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6aada8a6_2c10f424",
+        "filename": "rpm/contrail-nodemgr/contrail-nodemgr.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 77
+      },
+      "writtenOn": "2020-01-30T13:52:15Z",
+      "side": 1,
+      "message": "\u003e Some of utils scripts still have dependency on packages from python-contrail, so keeping both for now.",
+      "parentUuid": "ad5d18af_63d3163c",
+      "revId": "2a74710355f58f4c938705ea3965bbca9970f72a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e090310f_2c4a398f",
         "filename": "rpm/contrail/contrail.spec",
         "patchSetId": 4
