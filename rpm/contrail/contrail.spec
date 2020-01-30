@@ -853,6 +853,7 @@ Group:              Applications/System
 Requires:           authbind
 Requires:           python2-future
 Requires:           python-configparser
+Requires:           python3-contrail >= %{_verstr}-%{_relstr}
 
 %description dns
 Contrail dns  package
