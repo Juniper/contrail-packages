@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad5d18af_63d3163c",
+        "filename": "rpm/contrail-nodemgr/contrail-nodemgr.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 77
+      },
+      "writtenOn": "2020-01-30T13:51:44Z",
+      "side": 1,
+      "message": "All of utils scripts still have dependency on packages from python-contrail, so keeping both for now.",
+      "parentUuid": "10381937_6e762a51",
+      "revId": "2a74710355f58f4c938705ea3965bbca9970f72a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e090310f_2c4a398f",
         "filename": "rpm/contrail/contrail.spec",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2020-01-23T23:05:54Z",
       "side": 1,
       "message": "dns pkg is originally not dependent on python-contrail, Why is is dependent on python3-contrail?",
+      "revId": "2a74710355f58f4c938705ea3965bbca9970f72a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0819a0d2_0d8597e4",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 77
+      },
+      "writtenOn": "2020-01-30T13:51:44Z",
+      "side": 1,
+      "message": "utils package is installed in each container, so dns container has utils script in path /opt/contrail/utils but dns container does not have python3-contrail package so including it here .\n\nCurrently python-contrail container is installed in base container which is inherited by contrail-dns so python-contrail is not required here, once we update base container to use python3-contrail it will not be required .",
+      "parentUuid": "e090310f_2c4a398f",
       "revId": "2a74710355f58f4c938705ea3965bbca9970f72a",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
