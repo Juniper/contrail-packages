@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb353e59_7b6a984f",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2020-02-04T05:44:43Z",
+      "side": 1,
+      "message": "The same is here - if we need just provision scripts in dns container then let\u0027s install them there by yum and do not abuse main binary.",
+      "revId": "4e8a62cd47323f00e62421c24ff33fd5a25af84d",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
