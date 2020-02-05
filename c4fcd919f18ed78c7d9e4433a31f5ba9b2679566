@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfe4b6e_d9da839a",
+        "filename": "kernel_version.info",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2020-02-05T15:41:58Z",
+      "side": 1,
+      "message": "need to add latest 9.1 (current master/2003 kernel)",
+      "revId": "c4fcd919f18ed78c7d9e4433a31f5ba9b2679566",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
