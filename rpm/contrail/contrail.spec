@@ -423,7 +423,7 @@ in the OpenContrail API server.
 Summary:            Contrail Python3 Lib
 
 Group:             Applications/System
-Obsoletes:         contrail-api-lib <= 0.0.1   
+Obsoletes:         contrail-api-lib <= 0.0.1
 Requires:          python-simplejson
 Requires:          python-six
 
@@ -436,6 +436,8 @@ and common api server libraries.
 %files -n python3-contrail
 # packaging only api client library, other python packages
 # should be packaged as needed.
+%{python3_sitelib}/cfgm_common*
+%{python3_sitelib}/contrail_config_common*
 %{python3_sitelib}/vnc_api*
 %{python3_sitelib}/contrail_api_client*
 %config(noreplace) %{_contrailetc}/vnc_api_lib.ini
