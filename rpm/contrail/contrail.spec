@@ -440,6 +440,10 @@ and common api server libraries.
 %{python3_sitelib}/contrail_config_common*
 %{python3_sitelib}/vnc_api*
 %{python3_sitelib}/contrail_api_client*
+%{python3_sitelib}/libpartition*
+%{python3_sitelib}/pysandesh*
+%{python3_sitelib}/sandesh-0.1*dev*
+%{python3_sitelib}/sandesh_common*
 %config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 
 %package vrouter-utils
