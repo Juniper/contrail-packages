@@ -16,7 +16,12 @@ SKUTAG       ?= ocata
 ENABLEMLX    ?= FALSE
 MANIFESTFILE ?= $(SB_TOP).repo/manifest.xml
 
-RPMBUILD_FLAGS := -bb --define "_sbtop $(SB_TOP)"
+ifeq ($(CONTRAIL_BUILD_FROM_SOURCE),true)
+	RPMBUILD_FLAGS := -bi
+else
+	RPMBUILD_FLAGS := -bb
+endif
+RPMBUILD_FLAGS += --define "_sbtop $(SB_TOP)"
 RPMBUILD_FLAGS += --define "_topdir $(TOPDIR)"
 RPMBUILD_FLAGS += --define "_opt $(SCONSOPT)"
 RPMBUILD_FLAGS += --define "_kVers $(KVERS)"
