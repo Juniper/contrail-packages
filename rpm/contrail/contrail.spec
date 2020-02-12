@@ -33,6 +33,7 @@
 
 %global _dwz_low_mem_die_limit 0
 
+%bcond_with testdepsonly
 %bcond_without debuginfo
 
 Name:           contrail
@@ -105,7 +106,7 @@ BuildRequires: libxslt-devel
 Contrail package describes all sub packages that are required to
 run open contrail.
 
-%if %{with debuginfo}
+%if  %{without testdepsonly} && %{with debuginfo}
 %debug_package
 %endif
 
@@ -113,7 +114,10 @@ run open contrail.
 
 %build
 
+%if %{without testdepsonly}
+
 %install
+
 pushd %{_sbtop}
 scons --opt=%{_sconsOpt} --root=%{buildroot} --without-dpdk install
 for kver in %{_kvers}; do
@@ -369,78 +373,6 @@ Contrail Virtual Router apis package
 
 %files -n python-contrail-vrouter-api
 %{python_sitelib}/contrail_vrouter_api*
-
-%package -n python-contrail
-Summary:            Contrail Python Lib
-
-Group:             Applications/System
-Obsoletes:         contrail-api-lib <= 0.0.1
-Requires:          python-kombu
-Requires:          python-bottle >= 0.11.6
-%if 0%{?rhel} >= 7
-Requires:          python-gevent >= 1.0
-%endif
-%if 0%{?rhel} <= 6
-Requires:          python-gevent
-%endif
-%if 0%{?rhel}
-Requires:          consistent_hash
-%else
-Requires:          python-consistent_hash
-%endif
-%if 0%{?rhel} <= 6
-Requires:          python-importlib
-%endif
-Requires:          python-fysom
-Requires:          python2-future
-Requires:          python-greenlet
-Requires:          python-simplejson
-Requires:          python-six
-Requires:          python-stevedore
-Requires:          python-pycassa
-
-%description -n python-contrail
-Contrail Virtual Router utils package
-
-The VRouter Agent API is used to inform the VRouter agent of the association
-between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
-in the OpenContrail API server.
-
-%files -n python-contrail
-%{python_sitelib}/cfgm_common*
-%{python_sitelib}/contrail_config_common*
-%{python_sitelib}/libpartition*
-%{python_sitelib}/pysandesh*
-%{python_sitelib}/sandesh-0.1*dev*
-%{python_sitelib}/sandesh_common*
-%{python_sitelib}/vnc_api*
-%{python_sitelib}/contrail_api_client*
-%{python_sitelib}/ContrailCli*
-%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
-/etc/bash_completion.d/bashrc_contrail_cli
-
-%package -n python3-contrail
-Summary:            Contrail Python3 Lib
-
-Group:             Applications/System
-Obsoletes:         contrail-api-lib <= 0.0.1
-Requires:          python-simplejson
-Requires:          python-six
-
-%description -n python3-contrail
-Contrail common python package
-
-The package python3-contrail provides vncAPI client library
-and common api server libraries.
-
-%files -n python3-contrail
-# packaging only api client library, other python packages
-# should be packaged as needed.
-%{python3_sitelib}/cfgm_common*
-%{python3_sitelib}/contrail_config_common*
-%{python3_sitelib}/vnc_api*
-%{python3_sitelib}/contrail_api_client*
-%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
 
 %package vrouter-utils
 Summary:            Contrail vRouter
@@ -945,17 +877,6 @@ modules/daemons.
 %files docs
 %doc /usr/share/doc/contrail-docs/html/*
 
-%package test
-Summary: Contrail Test
-Group: Applications/System
-
-%description test
-Source code of Contrail Test and Test CI
-
-%files test
-%defattr(-, root, root)
-/contrail-test
-
 %package kube-manager
 Summary:            Kubernetes network manager
 
@@ -1062,3 +983,89 @@ Used for Android repo code checkout of OpenContrail
 /opt/contrail/manifest.xml
 
 %endif
+
+%endif
+
+%package test
+Summary: Contrail Test
+Group: Applications/System
+
+%description test
+Source code of Contrail Test and Test CI
+
+%files test
+%defattr(-, root, root)
+/contrail-test
+
+%package -n python-contrail
+Summary:            Contrail Python Lib
+
+Group:             Applications/System
+Obsoletes:         contrail-api-lib <= 0.0.1
+Requires:          python-kombu
+Requires:          python-bottle >= 0.11.6
+%if 0%{?rhel} >= 7
+Requires:          python-gevent >= 1.0
+%endif
+%if 0%{?rhel} <= 6
+Requires:          python-gevent
+%endif
+%if 0%{?rhel}
+Requires:          consistent_hash
+%else
+Requires:          python-consistent_hash
+%endif
+%if 0%{?rhel} <= 6
+Requires:          python-importlib
+%endif
+Requires:          python-fysom
+Requires:          python2-future
+Requires:          python-greenlet
+Requires:          python-simplejson
+Requires:          python-six
+Requires:          python-stevedore
+Requires:          python-pycassa
+
+%description -n python-contrail
+Contrail Virtual Router utils package
+
+The VRouter Agent API is used to inform the VRouter agent of the association
+between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
+in the OpenContrail API server.
+
+%files -n python-contrail
+%{python_sitelib}/cfgm_common*
+%{python_sitelib}/contrail_config_common*
+%{python_sitelib}/libpartition*
+%{python_sitelib}/pysandesh*
+%{python_sitelib}/sandesh-0.1*dev*
+%{python_sitelib}/sandesh_common*
+%{python_sitelib}/vnc_api*
+%{python_sitelib}/contrail_api_client*
+%{python_sitelib}/ContrailCli*
+%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
+/etc/bash_completion.d/bashrc_contrail_cli
+
+%package -n python3-contrail
+Summary:            Contrail Python3 Lib
+
+Group:             Applications/System
+Obsoletes:         contrail-api-lib <= 0.0.1
+Requires:          python-simplejson
+Requires:          python-six
+
+%description -n python3-contrail
+Contrail common python package
+
+The package python3-contrail provides vncAPI client library
+and common api server libraries.
+
+%files -n python3-contrail
+# packaging only api client library, other python packages
+# should be packaged as needed.
+%{python3_sitelib}/cfgm_common*
+%{python3_sitelib}/contrail_config_common*
+%{python3_sitelib}/vnc_api*
+%{python3_sitelib}/contrail_api_client*
+%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
+
