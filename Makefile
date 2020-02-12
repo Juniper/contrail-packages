@@ -16,7 +16,12 @@ SKUTAG       ?= ocata
 ENABLEMLX    ?= FALSE
 MANIFESTFILE ?= $(SB_TOP).repo/manifest.xml
 
-RPMBUILD_FLAGS := -bb --define "_sbtop $(SB_TOP)"
+ifeq ($(CONTRAIL_BUILD_FROM_SOURCE),true)
+	RPMBUILD_MODE := -bi
+else
+	RPMBUILD_MODE := -bb
+endif
+RPMBUILD_FLAGS := --define "_sbtop $(SB_TOP)"
 RPMBUILD_FLAGS += --define "_topdir $(TOPDIR)"
 RPMBUILD_FLAGS += --define "_opt $(SCONSOPT)"
 RPMBUILD_FLAGS += --define "_kVers $(KVERS)"
@@ -63,9 +68,12 @@ dep-%:
 	@echo Installing dependencies for $(SPECFILE)...
 	@yum-builddep $(DEPBUILD_FLAGS) -q -y $(SPECFILE)
 
+rpm-contrail-tripleo-puppet:
+	rpmbuild -bb $(RPMBUILD_FLAGS) $(SPEC_DIR)/contrail-tripleo-puppet/contrail-tripleo-puppet.spec
+
 rpm-%:
 	$(eval SPECFILE = $(filter %/$(patsubst rpm-%,%.spec,$@), $(SPEC_FILES)))
-	rpmbuild $(RPMBUILD_FLAGS) $(SPECFILE)
+	rpmbuild $(RPMBUILD_MODE) $(RPMBUILD_FLAGS) $(SPECFILE)
 
 list:
 	@echo $(sort $(patsubst rpm-%,%,$(PACKAGES)))
@@ -80,4 +88,4 @@ info:
 	@echo KVERS=$(KVERS)
 	@echo BUILDTAG=$(BUILDTAG)
 	@echo SKUTAG=$(SKUTAG)
-	@echo RPMBUILD_FLAGS=$(RPMBUILD_FLAGS)
+	@echo RPMBUILD_FLAGS=$(RPMBUILD_MODE) $(RPMBUILD_FLAGS)
