@@ -147,7 +147,7 @@ pushd %{_sbtop}
 scons --opt=%{_sconsOpt} -U nova-contrail-vif
 popd
 pushd %{_sbtop}/build/noarch/nova_contrail_vif
-python setup.py install --root=%{buildroot}
+python setup.py install --root=%{buildroot} --no-compile
 popd
 
 # contrail-docs
@@ -169,11 +169,11 @@ python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/sha
 # contrail-cli
 install -d -m 0755 %{buildroot}/etc/bash_completion.d
 python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli %{buildroot}
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot} --no-compile; popd
 
 #Needed for agent container env
 # install vrouter.ko at /opt/contrail/vrouter-kernel-modules to use with containers

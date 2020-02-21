@@ -104,7 +104,7 @@ pushd build/python_dist
 
 tar zxf %{_build_dist}/control-node/dist/Control-Node-0.1dev.tar.gz
 pushd Control-Node-0.1dev
-%{__python} setup.py install --root=%{buildroot}
+%{__python} setup.py install --root=%{buildroot} --no-compile
 install -d -m 755 %{buildroot}/usr/share/doc/python-Control-Node
 if [ -d doc ]; then
   cp -R doc/* %{buildroot}/usr/share/doc/python-Control-Node
@@ -113,7 +113,7 @@ popd
 
 tar zxf %{_build_dist}/vnsw/agent/uve/dist/vrouter-0.1dev.tar.gz
 pushd vrouter-0.1dev
-%{__python} setup.py install --root=%{buildroot}
+%{__python} setup.py install --root=%{buildroot} --no-compile
 install -d -m 755 %{buildroot}/usr/share/doc/python-vrouter
 if [ -d doc ]; then
   cp -R doc/* %{buildroot}/usr/share/doc/python-vrouter
@@ -122,17 +122,17 @@ popd
 
 tar zxf %{_build_dist}/opserver/node_mgr/dist/node_mgr-0.1dev.tar.gz
 pushd node_mgr-0.1dev
-%{__python} setup.py install --root=%{buildroot}
+%{__python} setup.py install --root=%{buildroot} --no-compile
 popd
 
 tar zxf %{_build_dist}/nodemgr/dist/nodemgr-0.1dev.tar.gz
 pushd nodemgr-0.1dev
-%{__python} setup.py install --root=%{buildroot}
+%{__python} setup.py install --root=%{buildroot} --no-compile
 popd
 
 tar zxvf %{_build_dist}/analytics/database/dist/database-0.1dev.tar.gz
 pushd database-0.1dev
-%{__python} setup.py install --root=%{buildroot}
+%{__python} setup.py install --root=%{buildroot} --no-compile
 popd
 
 %files

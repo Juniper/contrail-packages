@@ -64,7 +64,7 @@ install -d -m 755 %{buildroot}%{python_sitelib}/ironic-notification-manager/
 pushd %{_sbtop}build/debug/config/ironic-notification-manager/
 tar zxf dist/ironic-notification-manager-0.1dev.tar.gz
 cd ironic-notification-manager-0.1dev
-%{__python} setup.py install --root=%{buildroot}  %{?_venvtr}
+%{__python} setup.py install --root=%{buildroot} --no-compile %{?_venvtr}
 popd
 
 pushd %{_sbtop}
