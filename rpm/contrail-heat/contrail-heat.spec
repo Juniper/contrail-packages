@@ -34,7 +34,7 @@ Contrail Heat Resources and Templates package
 
 %install
 pushd %{_sbtop}/openstack/contrail-heat
-%{__python} setup.py install --root=%{buildroot}
+%{__python} setup.py install --root=%{buildroot} --no-compile
 popd
 
 %files

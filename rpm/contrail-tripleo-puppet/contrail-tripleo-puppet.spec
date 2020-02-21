@@ -26,11 +26,14 @@ BuildArch:      noarch
 Contrail tripleo puppet modules for tripleo composable roles deployment
     
 %prep
-
+%if 0%{?_pre_cleanup:1}
+# Cleanup
+rm -rf %{buildroot}%{_installdir}
+%endif
+  
 %build
 
 %install
-rm -rf %{buildroot}%{_installdir}
 install -d -m 0755 %{buildroot}%{_installdir}
 cp -rp  %{_sbtop}openstack/contrail-tripleo-puppet/* %{buildroot}%{_installdir}
 

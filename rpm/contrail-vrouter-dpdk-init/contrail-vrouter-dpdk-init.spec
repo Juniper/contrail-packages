@@ -35,12 +35,14 @@ Requires: python-contrail-vrouter-api >= %{_verstr}-%{_relstr}
 Provides init files and utils for DPDK vRouter
 
 %prep
+%if 0%{?_pre_cleanup:1}
+# Cleanup
+rm -rf %{buildroot}
+%endif
 
 %build
 
 %install
-# Cleanup
-rm -rf %{buildroot}
 
 # Install Directories
 install -d -m 755 %{buildroot}%{_opt_bin}

@@ -102,7 +102,8 @@ Provides contrail-vrouter-dpdk binary
 %endif
 
 %prep
-# Cleanup
+%if 0%{?_pre_cleanup:1}
+    # Cleanup
 pushd %{_sbtop}
 RTE_KERNELDIR=%{_kernel_dir} scons -c \
     --opt=%{_sconsOpt} \
@@ -112,6 +113,7 @@ RTE_KERNELDIR=%{_kernel_dir} scons -c \
     --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
 popd
+%endif
 
 %build
 pushd %{_sbtop}

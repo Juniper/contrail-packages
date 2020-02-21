@@ -66,6 +66,7 @@ Requires:   java-1.7.0-openjdk-headless
 Provides libcontrail-vijava binary
 
 %prep
+%if 0%{?_pre_cleanup:1}
 pushd %{_javaapidir}
 %{_maven} -q clean
 popd
@@ -78,6 +79,7 @@ popd
 pushd %{_vcenterplugindir}
 %{_maven} -q clean
 popd
+%endif
 
 %build
 pushd %{_javaapidir}

@@ -56,9 +56,6 @@ pushd %{_sbtop}
 cp -rp contrail-web-controller/* %{buildroot}%{_contrailwebsrc}/
 ln -s %{_libdir}/node_modules %{buildroot}%{_contrailwebsrc}/node_modules
 
-%clean
-rm -rf %{buildroot}
-
 %files
 %defattr(-,root,root)
 %{_contrailwebsrc}/*
