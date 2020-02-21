@@ -66,7 +66,10 @@ BuildRequires:  systemd-units
 Contrail Setup package with scripts for provisioning
 
 %prep
-
+%if 0%{?_pre_cleanup:1}
+rm -rf %{buildroot}
+%endif
+    
 %build
 
 pushd %{_sbtop}/controller/src/config
@@ -80,7 +83,6 @@ popd
 %install
 
 # Setup directories
-rm -rf %{buildroot}
 install -d -m 755 %{buildroot}%{_contrailopt}
 install -d -m 755 %{buildroot}%{_contrailopt}
 install -d -m 755 %{buildroot}%{_contrailopt}/bin

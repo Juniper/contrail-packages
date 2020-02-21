@@ -67,6 +67,10 @@ rpm-%:
 	$(eval SPECFILE = $(filter %/$(patsubst rpm-%,%.spec,$@), $(SPEC_FILES)))
 	rpmbuild $(RPMBUILD_FLAGS) $(SPECFILE)
 
+# depends to enable -j x option for make
+rpm-contrail-web-core: rpm-contrail-web-controller
+rpm-ironic-notification-manager: rpm-contrail
+
 list:
 	@echo $(sort $(patsubst rpm-%,%,$(PACKAGES)))
 

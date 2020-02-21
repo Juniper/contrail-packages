@@ -147,7 +147,7 @@ pushd %{_sbtop}
 scons --opt=%{_sconsOpt} -U nova-contrail-vif
 popd
 pushd %{_sbtop}/build/noarch/nova_contrail_vif
-python setup.py install --root=%{buildroot}
+python setup.py install --root=%{buildroot} --no-compile
 popd
 
 # contrail-docs
@@ -169,11 +169,11 @@ python %{_sbtop}/tools/packages/utils/generate_doc_index.py %{buildroot}/usr/sha
 # contrail-cli
 install -d -m 0755 %{buildroot}/etc/bash_completion.d
 python %{_sbtop}/tools/packages/utils/generate_cli_commands.py %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli %{buildroot}
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot}; popd
-pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot}; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_analytics_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_config_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_control_cli; python setup.py install --root=%{buildroot} --no-compile; popd
+pushd %{_sbtop}/build/%{_sconsOpt}/utils/contrail-cli/contrail_vrouter_cli; python setup.py install --root=%{buildroot} --no-compile; popd
 
 #Needed for agent container env
 # install vrouter.ko at /opt/contrail/vrouter-kernel-modules to use with containers
@@ -188,7 +188,6 @@ done
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
 pushd %{buildroot}/usr/src/vrouter
 find . -print | sed 's;^;'"%{buildroot}/usr/src/vrouter-%{_verstr}/"';'| xargs install -d -m 755
-rm -rf %{buildroot}/usr/src/vrouter
 
 #Install the remaining files in /usr/share to /opt/contrail/utils
 pushd %{buildroot}/usr/share/contrail
@@ -198,7 +197,6 @@ find . -print | sed 's;^;'"%{buildroot}%{_contrailutils}"';'| xargs install -d -
 install -d -m 755 %{buildroot}/etc/sudoers.d/
 echo 'Defaults:root !requiretty' >> %{buildroot}/contrail-lbaas
 install -m 755 %{buildroot}/contrail-lbaas  %{buildroot}/etc/sudoers.d/contrail-lbaas
-rm -rf %{buildroot}/contrail-lbaas
 
 # Install section of contrail-utils package - START
 install -d -m 755 %{buildroot}/usr/share/contrail-utils
