@@ -10,7 +10,7 @@ DEBUGINFO    ?= TRUE
 TOPDIR       ?= $(SB_TOP)
 SCONSOPT     ?= production
 SRCVER       ?= $(shell cat $(SB_TOP)controller/src/base/version.info)
-KVERS        ?= $(shell $(MKFILE_DIR)utils/get_kvers.sh)
+KVERS        ?= $(shell cat $(SB_TOP)tools/packages/kernel_version.info)
 BUILDTAG     ?= $(shell date +%m%d%Y%H%M)
 SKUTAG       ?= ocata
 ENABLEMLX    ?= FALSE
@@ -77,6 +77,10 @@ rpm-contrail-tripleo-puppet:
 	rpmbuild -bb $(RPMBUILD_FLAGS) $(SPEC_DIR)/contrail-tripleo-puppet/contrail-tripleo-puppet.spec
 
 rpm-%:
+	for VROUTER_VER in $(KVERS); do \
+	 echo "Installing kernel-devel-$$VROUTER_VER kernel-$$VROUTER_VER ..." ; \
+	 sudo yum install -y kernel-devel-$$VROUTER_VER kernel-$$VROUTER_VER || (echo "kernel install of $$VROUTER_VER failed $$?"; exit 1) ; \
+	done
 	$(eval SPECFILE = $(filter %/$(patsubst rpm-%,%.spec,$@), $(SPEC_FILES)))
 	rpmbuild $(RPMBUILD_MODE) $(RPMBUILD_FLAGS) $(SPECFILE)
 
