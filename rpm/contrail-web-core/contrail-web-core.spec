@@ -92,9 +92,6 @@ rm %{buildroot}%{_contrailwebsrc}/config/userAuth.js
 cp -p %{_config}/userAuth.js %{buildroot}%{_contrailetc}/contrail-webui-userauth.js
 ln -s %{_contrailetc}/contrail-webui-userauth.js %{buildroot}%{_contrailwebsrc}/config/userAuth.js
 
-%clean
-rm -rf %{buildroot}
-
 %files
 %defattr(-,root,root)
 %{_contrailwebsrc}/*

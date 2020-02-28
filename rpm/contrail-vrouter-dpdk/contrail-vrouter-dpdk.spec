@@ -102,7 +102,8 @@ Provides contrail-vrouter-dpdk binary
 %endif
 
 %prep
-# Cleanup
+%if 0%{?_pre_cleanup:1}
+    # Cleanup
 pushd %{_sbtop}
 scons -c \
     --opt=%{_sconsOpt} \
@@ -111,6 +112,7 @@ scons -c \
     --add-opts=%{_sconsAddOpts} \
     vrouter/dpdk
 popd
+%endif
 
 %build
 pushd %{_sbtop}
