@@ -5,6 +5,7 @@
 %define         _distropkgdir %{_sbtop}tools/packages/rpm/%{name}
 %define         _contraildns /etc/contrail/dns
 
+
 %if 0%{?_kernel_dir:1}
 %define         _osVer  %(cat %{_kernel_dir}/include/linux/utsrelease.h | cut -d'"' -f2)
 %else
