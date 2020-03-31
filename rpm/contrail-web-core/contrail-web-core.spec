@@ -10,6 +10,7 @@
 %define    _websslpath        /etc/pki/ca-trust/source/anchors/contrail_webui_ssl/
 %define    _sslsub          /C=US/ST=CA/L=Sunnyvale/O=JuniperNetworks/OU=JuniperCA/CN=ContrailCA
 
+
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
 %else
