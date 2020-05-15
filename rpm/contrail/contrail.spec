@@ -23,7 +23,7 @@
 %if 0%{?_kVers:1}
 %define         _kvers      %{_kVers}
 %else
-%define         _kvers      3.10.0-1062.el7.x86_64 3.10.0-862.el7.x86_64
+%define         _kvers      3.10.0-1062.el7.x86_64 3.10.0-862.el7.x86_64 3.10.0-1127.el7.x86_64 3.10.0-862.51.1.el7.x86_64
 %endif
 
 %{echo: "Building release %{_relstr}\n"}
@@ -77,6 +77,10 @@ BuildRequires: kernel = 3.10.0-1062.el7
 BuildRequires: kernel-devel = 3.10.0-1062.el7
 BuildRequires: kernel = 3.10.0-862.el7
 BuildRequires: kernel-devel = 3.10.0-862.el7
+BuildRequires: kernel = 3.10.0-1127.el7.x86_64
+BuildRequires: kernel-devel = 3.10.0-1127.el7.x86_64
+BuildRequires: kernel = 3.10.0-862.51.1.el7.x86_64
+BuildRequires: kernel-devel = 3.10.0-862.51.1.el7.x86_64
 %endif
 
 %prep
