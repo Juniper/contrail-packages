@@ -65,7 +65,7 @@ BuildRequires:  vim-common
 BuildRequires:  protobuf
 BuildRequires:  protobuf-compiler
 BuildRequires:  protobuf-devel
-BuildRequires:  net-snmp-python
+BuildRequires:  net-snmp-python >= 5.7.2-48
 BuildRequires:  cassandra-cpp-driver
 BuildRequires:  cassandra-cpp-driver-devel
 BuildRequires:  libzookeeper-devel
@@ -744,7 +744,7 @@ Requires:           python-geventhttpclient
 Requires:           protobuf
 Requires:           cassandra-cpp-driver
 Requires:           libzookeeper
-Requires:           net-snmp-python
+Requires:           net-snmp-python >= 5.7.2-48
 Requires:           librdkafka1
 Requires:           python-kafka >= 1.0.1
 Requires:           python-stevedore
