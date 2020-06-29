@@ -117,11 +117,7 @@ pushd %{_sbtop}
 scons --opt=%{_sconsOpt} --root=%{buildroot} --without-dpdk install
 for kver in %{_kvers}; do
     echo "Kver = ${kver}"
-    set +e
-    ls /lib/modules/${kver}/build
-    exit_code=$?
-    set -e
-    if [ $exit_code == 0 ]; then
+    if ls /lib/modules/${kver}/build ; then
         sed 's/{kver}/%{_kver}/g' %{_distropkgdir}/dkms.conf.in.tmpl > %{_distropkgdir}/dkms.conf.in
         scons --opt=%{_sconsOpt} --kernel-dir=/lib/modules/${kver}/build build-kmodule --root=%{buildroot}
     else
@@ -130,6 +126,7 @@ for kver in %{_kvers}; do
 done
 mkdir -p %{buildroot}/_centos/tmp
 popd
+
 pushd %{buildroot}
 mkdir -p %{buildroot}/centos
 cp %{_distropkgdir}/dkms.conf.in %{buildroot}/centos/
@@ -141,6 +138,7 @@ install -p -m 755 %{buildroot}/_centos/tmp/contrail-vrouter*.tar.gz %{buildroot}
 rm %{buildroot}/_centos/tmp/contrail-vrouter*.tar.gz
 rm -rf %{buildroot}/_centos
 popd
+
 #Build nova-contrail-vif
 pushd %{_sbtop}
 scons --opt=%{_sconsOpt} -U nova-contrail-vif
@@ -182,6 +180,9 @@ for vrouter_ko in $(ls -1 %{buildroot}/lib/modules/*/extra/net/vrouter/vrouter.k
   install -d -m 755 %{buildroot}/%{_contrailutils}/../vrouter-kernel-modules/$kernel_ver/
   install -p -m 755 $vrouter_ko %{buildroot}/%{_contrailutils}/../vrouter-kernel-modules/$kernel_ver/vrouter.ko
 done
+
+# contrail-tools package
+install -p -m 755 %{_sbtop}/build/%{_sconsOpt}/vrouter/utils/dpdkinfo %{buildroot}/usr/bin/dpdkinfo
 
 #Needed for vrouter-dkms
 install -d -m 755 %{buildroot}/usr/src/vrouter-%{_verstr}
@@ -369,59 +370,53 @@ Contrail Virtual Router apis package
 %files -n python-contrail-vrouter-api
 %{python_sitelib}/contrail_vrouter_api*
 
-%package -n python-contrail
-Summary:            Contrail Python Lib
+%package tools
+Summary: Contrail tools
+Group: Applications/System
 
-Group:             Applications/System
-Obsoletes:         contrail-api-lib <= 0.0.1
-Requires:          python-kombu
-Requires:          python-bottle >= 0.11.6
-%if 0%{?rhel} >= 7
-Requires:          python-gevent >= 1.0
-%endif
-%if 0%{?rhel} <= 6
-Requires:          python-gevent
-%endif
-%if 0%{?rhel}
-Requires:          consistent_hash
-%else
-Requires:          python-consistent_hash
-%endif
-%if 0%{?rhel} <= 6
-Requires:          python-importlib
-%endif
-Requires:          python-sqlalchemy
-Requires:          python-crypto
-Requires:          python-fysom
+Requires: tcpdump
+Requires: wireshark
+Requires: socat
 
-%description -n python-contrail
-Contrail Virtual Router utils package
+%description tools
+Contrail tools package
 
-The VRouter Agent API is used to inform the VRouter agent of the association
-between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
-in the OpenContrail API server.
+The package contrail-tools provides command line utilities to
+configure and diagnose the OpenContrail Linux kernel module and other stuff.
+It will be available in contrail-tools container
 
-%files -n python-contrail
-%{python_sitelib}/cfgm_common*
-%{python_sitelib}/contrail_config_common*
-%{python_sitelib}/libpartition*
-%{python_sitelib}/pysandesh*
-%{python_sitelib}/sandesh-0.1*dev*
-%{python_sitelib}/sandesh_common*
-%{python_sitelib}/vnc_api*
-%{python_sitelib}/contrail_api_client*
-%{python_sitelib}/ContrailCli*
-%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
-/etc/bash_completion.d/bashrc_contrail_cli
+%files tools
+%{_bindir}/dropstats
+%{_bindir}/flow
+%{_bindir}/mirror
+%{_bindir}/mpls
+%{_bindir}/nh
+%{_bindir}/rt
+%{_bindir}/vrfstats
+%{_bindir}/vif
+%{_bindir}/vxlan
+%{_bindir}/vrouter
+%{_bindir}/vrmemstats
+%{_bindir}/qosmap
+%{_bindir}/vifdump
+%{_bindir}/vrftable
+%{_bindir}/vrinfo
+%{_bindir}/dpdkinfo
+%{_bindir}/dpdkvifstats.py
+%{_bindir}/sandump
+/usr/share/lua/5.1/common.lua
+/usr/share/lua/5.1/helpers.lua
+/usr/local/share/wireshark/init.lua
+/usr/local/lib64/wireshark/plugins/main.lua
 
 %package vrouter-utils
 Summary:            Contrail vRouter
-
 Group:              Applications/System
 
 Requires:           tcpdump
 
 %description vrouter-utils
+WARNING! this package will be deprecated soon. Please use contrail-tools instead.
 Contrail Virtual Router utils package
 
 The OpenContrail vRouter is a forwarding plane (of a distributed router)that
@@ -1057,3 +1052,112 @@ Used for Android repo code checkout of OpenContrail
 /opt/contrail/manifest.xml
 
 %endif
+
+%package test
+Summary: Contrail Test
+Group: Applications/System
+
+%description test
+Source code of Contrail Test and Test CI
+
+%files test
+%defattr(-, root, root)
+/contrail-test
+
+%package -n python-contrail
+Summary:            Contrail Python Lib
+
+Group:             Applications/System
+Obsoletes:         contrail-api-lib <= 0.0.1
+Requires:          python-kombu
+Requires:          python-bottle >= 0.11.6
+%if 0%{?rhel} >= 7
+Requires:          python-gevent >= 1.0
+%endif
+%if 0%{?rhel} <= 6
+Requires:          python-gevent
+%endif
+%if 0%{?rhel}
+Requires:          consistent_hash
+%else
+Requires:          python-consistent_hash
+%endif
+%if 0%{?rhel} <= 6
+Requires:          python-importlib
+%endif
+Requires:          python-fysom
+Requires:          python2-future
+Requires:          python-greenlet
+Requires:          python-simplejson
+Requires:          python-six
+Requires:          python-stevedore
+Requires:          python-pycassa
+Requires:          python-attrdict
+Requires:          python-bitarray
+
+%description -n python-contrail
+Contrail Virtual Router utils package
+
+The VRouter Agent API is used to inform the VRouter agent of the association
+between local interfaces (e.g. tap/tun or veth) and the interface uuid defined
+in the OpenContrail API server.
+
+%files -n python-contrail
+%{python_sitelib}/cfgm_common*
+%{python_sitelib}/contrail_config_common*
+%{python_sitelib}/libpartition*
+%{python_sitelib}/pysandesh*
+%{python_sitelib}/sandesh-0.1*dev*
+%{python_sitelib}/sandesh_common*
+%{python_sitelib}/vnc_api*
+%{python_sitelib}/contrail_api_client*
+%{python_sitelib}/ContrailCli*
+%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
+/etc/bash_completion.d/bashrc_contrail_cli
+
+%package -n python3-contrail
+Summary:            Contrail Python3 Lib
+
+Group:             Applications/System
+Obsoletes:         contrail-api-lib <= 0.0.1
+
+# most of packages in rhel-8 repos for rhel
+# and in epel with name like python36 for centos
+#Requires:          python3-future
+#Requires:          python3-six
+#Requires:          python3-simplejson
+#Requires:          python3-kombu
+#Requires:          python3-bottle >= 0.11.6
+#%if 0%{?rhel} >= 7
+#Requires:          python3-gevent >= 1.0
+#%endif
+#%if 0%{?rhel}
+#Requires:          consistent_hash
+#%else
+#Requires:          python-consistent_hash
+#%endif
+#Requires:          python3-fysom
+#Requires:          python3-greenlet
+#Requires:          python3-stevedore
+#Requires:          python3-pycassa
+#Requires:          python3-attrdict
+#Requires:          python-bitarray
+
+%description -n python3-contrail
+Contrail common python package
+
+The package python3-contrail provides vncAPI client library
+and common api server libraries.
+
+%files -n python3-contrail
+# packaging only api client library, other python packages
+# should be packaged as needed.
+%{python3_sitelib}/cfgm_common*
+%{python3_sitelib}/contrail_config_common*
+%{python3_sitelib}/libpartition*
+%{python3_sitelib}/pysandesh*
+%{python3_sitelib}/sandesh-0.1*dev*
+%{python3_sitelib}/sandesh_common*
+%{python3_sitelib}/vnc_api*
+%{python3_sitelib}/contrail_api_client*
+%config(noreplace) %{_contrailetc}/vnc_api_lib.ini
