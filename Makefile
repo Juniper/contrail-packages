@@ -53,15 +53,28 @@ all: dep rpm
 	@echo $(PACKAGES)
 	@echo $(DEPENDENCIES)
 
-.PHONY: all rpm dep
+.PHONY: all rpm dep kernel-deps testdeps-rpms
 
-dep: $(DEPENDENCIES)
-rpm: $(PACKAGES)
+dep: $(DEPENDENCIES) kernel-deps
+rpm: $(PACKAGES) testdeps-rpms
 
 dep-%:
 	$(eval SPECFILE = $(filter %/$(patsubst dep-%,%.spec,$@), $(SPEC_FILES)))
 	@echo Installing dependencies for $(SPECFILE)...
 	@yum-builddep $(DEPBUILD_FLAGS) -q -y $(SPECFILE)
+
+kernel-deps:
+ifeq ($(MULTI_KERNEL_BUILD),true)
+	$(MKFILE_DIR)utils/install_kernels.sh
+endif
+
+testdeps-rpms:
+ifeq ($(CONTRAIL_BUILD_FROM_SOURCE),true)
+	rpmbuild --noclean -bb --with testdepsonly $(RPMBUILD_FLAGS) $(SPEC_DIR)/contrail/contrail.spec
+endif
+
+rpm-contrail-tripleo-puppet:
+	rpmbuild -bb $(RPMBUILD_FLAGS) $(SPEC_DIR)/contrail-tripleo-puppet/contrail-tripleo-puppet.spec
 
 rpm-%:
 	$(eval SPECFILE = $(filter %/$(patsubst rpm-%,%.spec,$@), $(SPEC_FILES)))
