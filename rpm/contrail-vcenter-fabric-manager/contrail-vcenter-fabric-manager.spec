@@ -30,8 +30,12 @@ BuildRequires: scons
 
 Requires: python-contrail
 Requires: python-gevent
+<<<<<<< HEAD   (1fdf79 Adding kafka-python version change fix, made for master AND )
 Requires: PyYAML
 Requires: python2-pyvmomi
+=======
+Requires: python2-pyvmomi = 6.5-1.el7
+>>>>>>> CHANGE (12ae43 Pin some packages to not break build by new packages uploade)
 Requires: python-kazoo
 Requires: python-bitarray
 Requires: python-pycassa
