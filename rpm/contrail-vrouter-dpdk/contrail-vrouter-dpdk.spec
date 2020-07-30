@@ -69,13 +69,14 @@ BuildRequires: libpcap-devel
 BuildRequires: python2-pip
 %endif
 Requires: liburcu2
+Requires: userspace-rcu = 0.10.0-1.el7
 Requires: libnl3
 Requires: numactl-libs
 Requires: contrail-vrouter-utils >= %{_verstr}-%{_relstr}
 %if %{_enableMlx} == "TRUE"
-BuildRequires: rdma-core-devel
-Requires: rdma-core
-Requires: libibverbs
+BuildRequires: rdma-core-devel = 45mlnx1-1.45101
+Requires: rdma-core = 45mlnx1-1.45101
+Requires: libibverbs = 45mlnx1-1.45101
 %define         _sconsAddOpts      enableMellanox
 %else
 %define         _sconsAddOpts      none

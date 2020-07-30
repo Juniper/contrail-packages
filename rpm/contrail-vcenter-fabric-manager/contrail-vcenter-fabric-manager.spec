@@ -31,7 +31,7 @@ BuildRequires: scons
 Requires: python-contrail
 Requires: python-gevent
 Requires: PyYAML
-Requires: python2-pyvmomi
+Requires: python2-pyvmomi = 6.5-1.el7
 Requires: python-kazoo
 Requires: python-bitarray
 Requires: python-pycassa
