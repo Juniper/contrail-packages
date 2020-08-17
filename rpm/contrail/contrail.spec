@@ -445,6 +445,7 @@ configure and diagnose the OpenContrail Linux kernel module.
 %{_bindir}/qosmap
 %{_bindir}/vifdump
 %{_bindir}/dpdkvifstats.py
+%{_bindir}/pkt_droplog.py
 
 %package vrouter-agent
 
