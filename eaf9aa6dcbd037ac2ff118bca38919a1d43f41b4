@@ -16,6 +16,24 @@
       "revId": "eaf9aa6dcbd037ac2ff118bca38919a1d43f41b4",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108dbc0a_7c47fab9",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 844
+      },
+      "writtenOn": "2021-01-12T15:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b69fe4_6750b044",
+      "revId": "eaf9aa6dcbd037ac2ff118bca38919a1d43f41b4",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     }
   ]
 }
