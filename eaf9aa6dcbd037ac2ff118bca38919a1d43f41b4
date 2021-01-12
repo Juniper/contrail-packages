@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b69fe4_6750b044",
+        "filename": "rpm/contrail/contrail.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2021-01-12T15:32:11Z",
+      "side": 1,
+      "message": "looks like this new block is not needed here",
+      "revId": "eaf9aa6dcbd037ac2ff118bca38919a1d43f41b4",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
