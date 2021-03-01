@@ -721,6 +721,15 @@ getent passwd contrail >/dev/null || \
   -c "OpenContail daemon" contrail
 
 %post config
+
+# CEM-21188 Config requires to upgrade `python-keystonemiddleware` version.
+# To fix 'API slowness on one of the Contrail Controller' config-api requires
+# new version of keystonemiddleware library >= 5.0.0. Cause it's not present
+# in RHEL 7 repos we have to install it from python package in post steps.
+# yum dependency must stay in Requires section to install required deps
+# from yum repos.
+python2 -m pip install --upgrade "keystonemiddleware>=5.0.0,<7.0.0"
+
 set -e
 mkdir -p /var/log/contrail /var/lib/contrail/ /etc/contrail/ /etc/ansible
 chown -R contrail:adm /var/log/contrail
