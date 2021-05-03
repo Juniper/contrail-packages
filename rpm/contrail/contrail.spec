@@ -481,7 +481,7 @@ Requires: python-zope-interface
 Requires: xmltodict >= 0.7.0
 Requires: python-jsonpickle
 Requires: python-amqp
-Requires: python-kazoo >= 2.2.1
+Requires: python-kazoo >= 1.3.1
 Requires: python-ncclient >= 0.3.2
 
 %description config
@@ -586,7 +586,7 @@ Requires:           net-snmp-python
 Requires:           librdkafka1
 Requires:           python-kafka >= 1.0.1, python-kafka <= 1.0.2
 Requires:           python-stevedore
-Requires:           python-kazoo >= 2.2.1
+Requires:           python-kazoo >= 1.3.1
 Requires:           python-sseclient
 Requires:           python-amqp
 %if 0%{?rhel} >= 7
