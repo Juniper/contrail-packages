@@ -75,7 +75,7 @@ BuildRequires: librdkafka-devel < 0.11.5
 BuildRequires: libstdc++-devel
 BuildRequires: libtool
 BuildRequires: libxml2-devel
-BuildRequires: libzookeeper-devel
+BuildRequires: libzookeeper-devel = 3.4.8-0contrail0.el7
 BuildRequires: lz4-devel
 BuildRequires: make
 BuildRequires: openssl
@@ -756,7 +756,7 @@ Requires:           python-prettytable
 Requires:           python-geventhttpclient
 Requires:           protobuf
 Requires:           cassandra-cpp-driver
-Requires:           libzookeeper
+Requires:           libzookeeper = 3.4.8-0contrail0.el7
 Requires:           net-snmp-python
 Requires:           librdkafka1 < 0.11.5
 Requires:           python-kafka >= 1.4.0
