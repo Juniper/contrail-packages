@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c5778c9_e7ffcebe",
+        "filename": "debian/contrail/debian/contrail-vrouter-utils.install",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 984
+      },
+      "writtenOn": "2021-05-13T06:44:47Z",
+      "side": 1,
+      "message": "shouldn\u0027t it be /usr/bin",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "6b304300c42df75bd570936b562d0c84142a458a",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
