@@ -11,3 +11,4 @@ usr/bin/vxlan
 usr/bin/vrouter
 usr/bin/vrmemstats
 usr/bin/qosmap
+user/bin/dpdkinfo
