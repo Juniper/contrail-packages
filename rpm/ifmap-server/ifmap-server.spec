@@ -10,7 +10,7 @@ Group:              Applications/System
 License:            Commercial
 #URL:                http://trust.f4.hs-hannover.de
 Vendor:             Juniper Networks Inc
-Source0:            http://trust.f4.hs-hannover.de/download/iron/archive/irond-0.3.2-src.zip 
+Source0:            https://svl-artifactory.juniper.net/contrail-legacy/irond-0.3.2-src.zip 
 Patch0:		    001_build_xml_use_common.patch
 Patch1:		    002_ifmap_0.3.2.patch
 Patch2:		    003_ifmap_split_results.patch
