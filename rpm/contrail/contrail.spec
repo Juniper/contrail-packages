@@ -255,6 +255,7 @@ Requires:           contrail-vrouter-agent >= %{_verstr}-%{_relstr}
 Requires:           contrail-lib >= %{_verstr}-%{_relstr}
 Requires:           xmltodict >= 0.7.0
 Requires:           python2-future
+Requires:          python-greenlet < 2.0.0
 Requires:           python-configparser
 
 %description vrouter
